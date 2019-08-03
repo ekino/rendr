@@ -1,0 +1,26 @@
+{
+    "name": "@ekino/rendr-api",
+    "license": "MIT",
+    "version": "0.0.1-DEV",
+    "main": "dist/lib/index.js",
+    "typing": "dist/lib/index.d.ts",
+    "files": [
+        "lib"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@ekino/rendr-core": "0.0.1-DEV",
+        "@ekino/rendr-loader": "0.0.1-DEV",
+        "express": "^4.16.4"
+    },
+    "devDependencies": {
+        "@types/express": "^4.16.1",
+        "@types/node": "^11.9.4"
+    },
+    "scripts": {
+        "build": "tsc",
+        "test": "jest --verbose"
+    }
+}

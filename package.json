@@ -1,0 +1,41 @@
+{
+  "dependencies": {
+    "@types/jest": "^24.0.16",
+    "jest": "23.6.0",
+    "lerna": "^3.13.0",
+    "license-checker": "^25.0.1",
+    "prettier": "^1.16.4",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.3.3"
+  },
+  "devDependencies": {
+    "@zeit/next-bundle-analyzer": "^0.1.2",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "bootstrap": "^4.3.1",
+    "express": "^4.16.4",
+    "next": "^9.0.3",
+    "node-sass": "^4.11.0",
+    "react": "^16.8.1",
+    "react-bootstrap": "^1.0.0-beta.5",
+    "react-dom": "^16.8.1"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "setup": "yarn install && lerna bootstrap",
+    "build": "lerna run build",
+    "example-nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node server.js",
+    "fmt": "prettier --color --write \"**/*.{js,jsx,ts,tsx,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
+    "fmt:check": "prettier --color --list-different \"packages/*/**/*.{js,ts,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
+    "lint:ts": "tslint -p . -c tslint.json \"packages/*/src/**/*.ts\"",
+    "test": "lerna run test",
+    "test:all": "yarn fmt:check && yarn lint:ts && yarn test && yarn build",
+    "publish": "lerna publish"
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "dependencies": {
+        "@ekino/rendr-api": "@ekino/rendr-api",
+        "@zeit/next-bundle-analyzer": "^0.1.2",
+        "@zeit/next-css": "^1.0.1",
+        "@zeit/next-sass": "^1.0.1",
+        "bootstrap": "^4.3.1",
+        "express": "^4.16.4",
+        "jest": "23.6.0",
+        "lerna": "^3.13.0",
+        "license-checker": "^25.0.1",
+        "next": "^8.0.1",
+        "node-sass": "^4.11.0",
+        "prettier": "^1.16.4",
+        "react": "^16.8.1",
+        "react-bootstrap": "^1.0.0-beta.5",
+        "react-dom": "^16.8.1"
+    },
+    "scripts": {
+        "setup": "yarn install"
+    }
+}

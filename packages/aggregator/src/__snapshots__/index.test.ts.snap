@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test inmemory code test createAggregator - with handlers 1`] = `
+Page {
+  "blocks": Array [
+    Object {
+      "container": "body",
+      "order": 0,
+      "settings": Object {
+        "test": "Salut",
+      },
+      "type": "handler",
+    },
+  ],
+  "cache": Object {
+    "ttl": 0,
+  },
+  "head": Object {
+    "defaultTitle": "-",
+    "htmlAttributes": Object {},
+    "link": "",
+    "meta": Array [],
+    "title": "-",
+    "titleTemplate": "%s",
+  },
+  "id": "",
+  "settings": Array [],
+  "statusCode": 200,
+  "template": "default",
+  "type": "document",
+}
+`;

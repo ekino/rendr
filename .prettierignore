@@ -1,0 +1,3 @@
+packages/*/dist
+examples/*/node_modules
+examples/*/.next

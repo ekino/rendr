@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test create page empty page 1`] = `
+Page {
+  "blocks": Array [],
+  "cache": Object {
+    "ttl": 0,
+  },
+  "head": Object {
+    "defaultTitle": "-",
+    "htmlAttributes": Object {},
+    "link": "",
+    "meta": Array [],
+    "title": "-",
+    "titleTemplate": "%s",
+  },
+  "id": "id",
+  "settings": Array [],
+  "statusCode": 200,
+  "template": "default",
+  "type": "document",
+}
+`;

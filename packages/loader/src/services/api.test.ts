@@ -40,9 +40,7 @@ describe("test API Loader", () => {
 
     const ctx = {
       pathname: "/",
-      params: {},
-      query: "/",
-      asPath: "",
+      query: {},
       req: req,
       res: res
     };
@@ -91,9 +89,7 @@ describe("test API Loader", () => {
 
     const ctx = {
       pathname: "/",
-      params: {},
-      query: "/",
-      asPath: "",
+      query: {},
       req: req,
       res: res
     };

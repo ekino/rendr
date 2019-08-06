@@ -28,15 +28,11 @@ export function createInMemoryLoader(paths: InMemorySettings): Loader {
   }
 
   return async (ctx: RequestCtx) => {
-    ctx.params = {};
     const result = routes.find(conf => {
       const { matcher, path } = conf;
 
-      // need to parse the query, to get the URL
-      const query = ctx.asPath;
-
       // @ts-ignore - definition does not exist...
-      const params = matcher(query);
+      const params = matcher(ctx.pathname);
 
       if (!params) {
         return false;

@@ -10,9 +10,8 @@ function createContext(data: {}): RequestCtx {
     // @ts-ignore
     res: jest.fn(),
     pathname: "/",
-    params: {},
-    query: "/",
-    asPath: ""
+    query: {},
+    asPath: "/"
   };
 
   return {
@@ -45,9 +44,9 @@ describe("test inmemory code", () => {
 
   it("test match", async () => {
     const checks = [
-      { query: "/", statusCode: 418 },
-      { query: "/blog/hello-world", statusCode: 419 },
-      { query: "/not-found", statusCode: 404 }
+      { pathname: "/", statusCode: 418 },
+      { pathname: "/blog/hello-world", statusCode: 419 },
+      { pathname: "/not-found", statusCode: 404 }
     ];
 
     const loader = createInMemoryLoader(paths);
@@ -57,7 +56,7 @@ describe("test inmemory code", () => {
         continue;
       }
       const check = checks[k];
-      const page = await loader(createContext({ asPath: check.query }));
+      const page = await loader(createContext({ pathname: check.pathname }));
       expect(page).not.toBeNull();
 
       if (page) {

@@ -17,5 +17,9 @@
     },
     "scripts": {
         "build": "tsc && tsc -m es6 --outDir dist/lib-esm && tsc -m amd --outFile dist/_bundles/rendr-core.js"
+    },
+    "dependencies": {
+        "@types/url-parse": "^1.4.3",
+        "url-parse": "^1.4.7"
     }
 }

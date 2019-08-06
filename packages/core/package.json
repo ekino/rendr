@@ -16,7 +16,6 @@
         "@types/node": "^11.9.4"
     },
     "scripts": {
-        "build": "tsc && tsc -m es6 --outDir dist/lib-esm && tsc -m amd --outFile dist/_bundles/rendr-core.js",
-        "test": "jest --verbose"
+        "build": "tsc && tsc -m es6 --outDir dist/lib-esm && tsc -m amd --outFile dist/_bundles/rendr-core.js"
     }
 }

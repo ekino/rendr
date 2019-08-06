@@ -2,8 +2,6 @@ import { Loader } from "@ekino/rendr-loader";
 
 import Express from "express";
 
-// export * from "./types";
-
 // should return a middleware api to return page definition through http
 export function createApi(loader: Loader): Express.RequestHandler {
   return async (req, res, next) => {

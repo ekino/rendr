@@ -34,7 +34,7 @@
     "fmt": "prettier --color --write \"**/*.{js,jsx,ts,tsx,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "fmt:check": "prettier --color --list-different \"packages/*/**/*.{js,ts,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "lint:ts": "tslint -p . -c tslint.json \"packages/*/src/**/*.ts\"",
-    "test": "lerna run test",
+    "test": "jest packages",
     "test:all": "yarn fmt:check && yarn lint:ts && yarn test && yarn build",
     "publish": "lerna publish"
   }

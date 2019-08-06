@@ -13,10 +13,10 @@ const headersToTransfers = [
   "Date"
 ];
 
-// The loader is used by NextJS to load the Page definition from the API
+// The loader is used to load the Page definition from an API
 // This code can be called from the nodejs or the browser.
 // However the pipe for raw binary are not likely to be run by the browser
-// as the server will stream the content, and so cannot be run be the browser.
+// as the server will stream the content, and so cannot be run by the browser.
 export function createApiLoader(baseUrl: string): Loader {
   return async (ctx: RequestCtx) => {
     const url = `${baseUrl}${ctx.req.url}`;
@@ -49,7 +49,8 @@ export function createApiLoader(baseUrl: string): Loader {
       return pipeToPage(response.data);
     }
 
-    // This code should be called only from node, there is reason why this code should be called on the client
+    // This code should be called only from node, there is no reason why this code should
+    // be called from the client
     if (
       response.headers["x-rendr-content-type"] !== "rendr/document" &&
       ctx.res &&
@@ -101,7 +102,7 @@ function pipe(source: Readable, dest: Writable): Promise<void> {
 function pipeToPage(source: Readable): Promise<Page> {
   let data = "";
   const dest = new Writable({
-    write: chunk => {
+    write(chunk) {
       data += chunk;
     }
   });

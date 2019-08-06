@@ -19,7 +19,7 @@ export function normalizeCache(data: any): Cache {
     return cache;
   }
 
-  cache.ttl = "ttl" in data ? data.ttl : 0;
+  cache.ttl = "ttl" in data ? parseInt(data.ttl, 0) : 0;
 
   return cache;
 }
@@ -43,7 +43,7 @@ export function normalizeHead(data: any): Head {
   }
 
   if ("defaultTitle" in data) {
-    head.titleTemplate = data.defaultTitle;
+    head.defaultTitle = data.defaultTitle;
   }
 
   if ("title" in data) {

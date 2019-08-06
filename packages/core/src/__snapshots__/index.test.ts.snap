@@ -21,3 +21,78 @@ Page {
   "type": "document",
 }
 `;
+
+exports[`test create page with block definitions 1`] = `
+Page {
+  "blocks": Array [
+    Object {
+      "container": "main",
+      "order": 0,
+      "settings": Object {
+        "foo": "bar",
+      },
+      "type": "my.container",
+    },
+  ],
+  "cache": Object {
+    "ttl": 0,
+  },
+  "head": Object {
+    "defaultTitle": "-",
+    "htmlAttributes": Object {},
+    "link": "",
+    "meta": Array [],
+    "title": "-",
+    "titleTemplate": "%s",
+  },
+  "id": "id",
+  "settings": Array [],
+  "statusCode": 200,
+  "template": "default",
+  "type": "document",
+}
+`;
+
+exports[`test create page with cache 1`] = `
+Page {
+  "blocks": Array [],
+  "cache": Object {
+    "ttl": 999,
+  },
+  "head": Object {
+    "defaultTitle": "-",
+    "htmlAttributes": Object {},
+    "link": "",
+    "meta": Array [],
+    "title": "-",
+    "titleTemplate": "%s",
+  },
+  "id": "id",
+  "settings": Array [],
+  "statusCode": 200,
+  "template": "default",
+  "type": "document",
+}
+`;
+
+exports[`test create page with head 1`] = `
+Page {
+  "blocks": Array [],
+  "cache": Object {
+    "ttl": 0,
+  },
+  "head": Object {
+    "defaultTitle": "-",
+    "htmlAttributes": Object {},
+    "link": "",
+    "meta": Array [],
+    "title": "My Custom Title",
+    "titleTemplate": "%s",
+  },
+  "id": "id",
+  "settings": Array [],
+  "statusCode": 200,
+  "template": "default",
+  "type": "document",
+}
+`;

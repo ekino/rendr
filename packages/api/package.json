@@ -17,7 +17,7 @@
     },
     "devDependencies": {
         "@types/express": "^4.16.1",
-        "@types/node": "^11.9.4"
+        "@types/node": "^12.6.9"
     },
     "scripts": {
         "build": "tsc"

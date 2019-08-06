@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "@types/jest": "^24.0.16",
-    "jest": "23.6.0",
+    "jest": "24.8.0",
     "lerna": "^3.13.0",
     "license-checker": "^25.0.1",
     "prettier": "^1.16.4",
-    "ts-jest": "^23.10.5",
+    "ts-jest": "^24.0.2",
     "ts-node": "^8.0.2",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
@@ -30,7 +30,7 @@
   "scripts": {
     "setup": "yarn install && lerna bootstrap",
     "build": "lerna run build",
-    "example-nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node server.js",
+    "examples/nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node server.js",
     "fmt": "prettier --color --write \"**/*.{js,jsx,ts,tsx,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "fmt:check": "prettier --color --list-different \"packages/*/**/*.{js,ts,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "lint:ts": "tslint -p . -c tslint.json \"packages/*/src/**/*.ts\"",

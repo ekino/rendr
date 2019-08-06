@@ -10,6 +10,10 @@ export interface Settings {
   [index: string]: any;
 }
 
+export interface Map {
+  [index: string]: string;
+}
+
 export interface Cache {
   ttl: number;
 }
@@ -46,10 +50,10 @@ export class Page {
 
 // -- NextJs Controller signature
 export interface RequestCtx {
-  pathname: string;
-  params: {};
-  query: string;
-  asPath: string;
+  pathname: string; // the path - without the query string
+  query: Map; // the query string, parsed
+  params: Map; // the params from the routing, ie param from nice url
+  asPath: string; // the complete path - pathname + query
   req: IncomingMessage;
   res: ServerResponse;
 }

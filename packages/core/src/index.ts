@@ -1,4 +1,6 @@
-import { Page, Cache, Head, BlockDefinition } from "./types";
+import { Page, Cache, Head, BlockDefinition, RequestCtx } from "./types";
+import { IncomingMessage, ServerResponse } from "http";
+import parse from "url-parse";
 
 export * from "./types";
 
@@ -116,4 +118,22 @@ export function createPage(data: any): Page {
   page.settings = "settings" in data ? data.settings : [];
 
   return page;
+}
+
+export function createContext(
+  req: IncomingMessage,
+  res: ServerResponse
+): RequestCtx {
+  const url = parse(req.url, true);
+
+  const ctx: RequestCtx = {
+    pathname: url.pathname,
+    query: url.query,
+    params: {},
+    asPath: req.url,
+    req: req,
+    res: res
+  };
+
+  return ctx;
 }

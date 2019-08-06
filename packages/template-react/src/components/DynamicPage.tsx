@@ -1,5 +1,8 @@
 import React from "react";
-import { Page, RequestCtx } from "@ekino/rendr-core";
+import { NextPageContext } from "next";
+import parse from "url-parse";
+
+import { Page, createContext } from "@ekino/rendr-core";
 import { Loader } from "@ekino/rendr-loader";
 
 import { TemplateRegistry, ContainerRenderer } from "../types";
@@ -14,16 +17,9 @@ export function createDynamicPage(
   containerRenderer: ContainerRenderer
 ) {
   return class DynamicPage extends React.Component<DynamicPageProps> {
-    public static async getInitialProps(originalCtx: RequestCtx) {
+    public static async getInitialProps(originalCtx: NextPageContext) {
       // create a new context from the original context
-      const ctx = {
-        pathname: originalCtx.pathname,
-        params: {},
-        query: originalCtx.query,
-        asPath: originalCtx.req.url,
-        req: originalCtx.req,
-        res: originalCtx.res
-      };
+      const ctx = createContext(originalCtx.req, originalCtx.res);
 
       const page = await loader(ctx);
 
@@ -36,9 +32,8 @@ export function createDynamicPage(
 
       return {
         page,
-        params: ctx.params,
-        pathname: ctx.pathname,
         query: ctx.query,
+        pathname: ctx.pathname,
         asPath: ctx.asPath
       };
     }

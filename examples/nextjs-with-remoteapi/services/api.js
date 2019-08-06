@@ -78,6 +78,19 @@ module.exports.loader = basePageLoader(
 
       return page;
     },
+    "/post/:slug": (page, ctx) => {
+      // add related blocks for the page
+      page.blocks.push({
+        container: "body",
+        type: "rendr.text",
+        settings: {
+          message: `You are asking for a post with slug: ${ctx.params.slug}`
+        },
+        order: 0
+      });
+
+      return page;
+    },
     "/about": (page, ctx) => {
       // add related blocks for the page
       page.blocks.push({

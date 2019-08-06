@@ -9,9 +9,8 @@ function createContext(data: {} = {}): RequestCtx {
     // @ts-ignore
     res: jest.fn(),
     pathname: "/",
-    params: {},
-    query: "/",
-    asPath: ""
+    query: {},
+    params: {}
   };
 
   return {

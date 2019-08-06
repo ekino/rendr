@@ -1,5 +1,6 @@
-import { createAggregator } from "./index";
 import { RequestCtx, Page } from "@ekino/rendr-core";
+
+import { createAggregator } from "./index";
 
 function createContext(data: {} = {}): RequestCtx {
   const ctx: RequestCtx = {

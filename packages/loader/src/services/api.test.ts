@@ -1,8 +1,9 @@
-import { createApiLoader } from "./api";
+import { createPage } from "@ekino/rendr-core";
 import { IncomingMessage, ServerResponse } from "http";
 import axios from "axios";
 import { Readable, Writable } from "stream";
-import { createPage } from "@ekino/rendr-core";
+
+import { createApiLoader } from "./api";
 
 jest.mock("axios");
 

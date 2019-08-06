@@ -1,7 +1,7 @@
 import Express from "express";
+import { RequestCtx, createPage } from "@ekino/rendr-core";
 
 import { createApi } from "./index";
-import { RequestCtx, createPage, Page } from "@ekino/rendr-core";
 
 describe("test createApi", () => {
   it("with no valid page found by the loader", async () => {

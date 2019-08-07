@@ -12,15 +12,15 @@ As you are going to enter to a new home, please make sure you respect those 3 ba
 
 Everything is there for you to contribute on the project:
     
-    - a set of packages with small dependencies and limited scope.
-    - a full set example with nextjs using the code from packages (build)
-    - unit tests to ensure you don't introduce any regression.
+- a set of packages with small dependencies and limited scope.
+- a full set example with nextjs using the code from packages (build)
+- unit tests to ensure you don't introduce any regression.
 
 What's do you need to know ?
 
-    - TypeScript... yeah !
-    - Understand issues with Server Side Rendering (mainly, there is no browser API on nodejs side, and there is no stream on Browsers too...)
-    - Portion on the code can run either on client and/or on server.
+- TypeScript... yeah !
+- Understand issues with Server Side Rendering (mainly, there is no browser API on nodejs side, and there is no stream on Browsers too...)
+- Portion on the code can run either on client and/or on server.
 
 Start contributing!
 

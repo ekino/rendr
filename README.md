@@ -47,4 +47,4 @@ The folder `examples/nextjs-with-remoteapi` is an example of all those packages 
 
 ## Contributing
 
-Please see our [CONTRIBUTING.md](https://github.com/ekino/rendr/contributing.md).
+Please see our [CONTRIBUTING.md](https://github.com/ekino/rendr/CONTRIBUTING.md).

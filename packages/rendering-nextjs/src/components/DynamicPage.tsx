@@ -1,11 +1,9 @@
 import React from "react";
 import { NextPageContext } from "next";
-import parse from "url-parse";
 
 import { Page, createContext } from "@ekino/rendr-core";
 import { Loader } from "@ekino/rendr-loader";
-
-import { TemplateRegistry, ContainerRenderer } from "../types";
+import { TemplateRegistry, ContainerRenderer } from "@ekino/rendr-template-react";
 
 export interface DynamicPageProps {
   page: Page;

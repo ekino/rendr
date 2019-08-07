@@ -1,6 +1,6 @@
 import React from "react";
 import App, { Container } from "next/app";
-import PageComponent from "./_pages";
+import Rendr from "./_rendr";
 
 class MyApp extends App {
   // always call on server side, not on client side ...
@@ -22,7 +22,7 @@ class MyApp extends App {
       return { pageProps };
     }
 
-    pageProps = await PageComponent.getInitialProps(ctx);
+    pageProps = await Rendr.getInitialProps(ctx);
 
     if (!pageProps || !("page" in pageProps)) {
       return {};
@@ -36,9 +36,9 @@ class MyApp extends App {
 
     // once loaded in the javascript, the router will return
     // the original ErrorPage component. So for the browser,
-    // we just set back the original PageComponent.
+    // we just set back the original Rendr Component.
     if (!pageProps || "page" in pageProps) {
-      Component = PageComponent;
+      Component = Rendr;
     }
 
     return (

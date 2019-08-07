@@ -9,7 +9,7 @@ export default function RendrText({ message, rawHtml, link }) {
   }
 
   if (link) {
-    components.push(<Link key="3" href="/_pages" as={link.href}><a>{link.href}</a></Link>)
+    components.push(<Link key="3" href="/_rendr" as={link.href}><a>{link.href}</a></Link>)
   }
   
   return components;

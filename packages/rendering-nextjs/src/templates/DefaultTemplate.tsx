@@ -1,11 +1,18 @@
 import React from "react";
-import { TemplateProps } from "../types";
+import Head from 'next/head';
+
+import { TemplateProps } from "@ekino/rendr-template-react";
 
 export default function DefaultTemplate(props: TemplateProps) {
   const { containerRenderer, blocks } = props;
 
   return (
     <>
+      <Head>
+        <title>{props.page.head.title}</title>
+        {props.page.head.meta.map((settings) => <meta {...settings} />) }
+      </Head>
+
       <header>{containerRenderer("header", blocks)}</header>
       <nav>{containerRenderer("nav", blocks)}</nav>
       <article>{containerRenderer("article", blocks)}</article>

@@ -1,6 +1,6 @@
 // @ts-check
 
-import { createPage } from "@ekino/rendr-template-react";
+import { createPage } from "@ekino/rendr-rendering-nextjs";
 import { createAggregator } from "@ekino/rendr-aggregator";
 import { createApiLoader } from "@ekino/rendr-loader";
 

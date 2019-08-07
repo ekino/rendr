@@ -42,7 +42,9 @@ describe("test API Loader", () => {
       pathname: "/",
       query: {},
       req: req,
-      res: res
+      res: res,
+      isServerSide: true,
+      isClientSide: false
     };
 
     // @ts-ignore
@@ -90,8 +92,11 @@ describe("test API Loader", () => {
     const ctx = {
       pathname: "/",
       query: {},
+      params: {},
       req: req,
-      res: res
+      res: res,
+      isServerSide: true,
+      isClientSide: false
     };
 
     // @ts-ignore

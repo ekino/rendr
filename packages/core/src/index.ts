@@ -120,19 +120,34 @@ export function createPage(data: any): Page {
   return page;
 }
 
+/**
+ * This code can be called from nodejs or the browser, so the context source will be different
+ * @param req 
+ * @param res 
+ */
 export function createContext(
-  req: IncomingMessage,
+  req: IncomingMessage | {url: string},
   res: ServerResponse
 ): RequestCtx {
-  const url = parse(req.url, true);
+
+  const isServerSide = res ? true : false;
+  const asPath = req.url;
+  const url = parse(asPath, true);
 
   const ctx: RequestCtx = {
     pathname: url.pathname,
     query: url.query,
-    params: {},
-    asPath: req.url,
-    req: req,
-    res: res
+    // params is empty because for now there are no
+    // routing to analyse the pathname, this will be done later on
+    // in the query process
+    params: {}, 
+    asPath: asPath,
+    isServerSide: isServerSide,
+    isClientSide: !isServerSide,
+    // @ts-ignore
+    req: isServerSide ? req : null,
+    // @ts-ignore
+    res: isServerSide ? res : null
   };
 
   return ctx;

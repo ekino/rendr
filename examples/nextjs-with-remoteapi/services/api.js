@@ -84,7 +84,11 @@ module.exports.loader = basePageLoader(
         container: "body",
         type: "rendr.text",
         settings: {
-          message: `You are asking for a post with slug: ${ctx.params.slug}`
+          message: `You are asking for a post with slug: ${ctx.params.slug}`,
+          link: {
+            href: `/post/${Math.random().toString(36).substring(7)}`,
+            title: `next article`
+          }
         },
         order: 0
       });

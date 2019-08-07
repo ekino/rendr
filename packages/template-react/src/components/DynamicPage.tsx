@@ -19,8 +19,14 @@ export function createDynamicPage(
   return class DynamicPage extends React.Component<DynamicPageProps> {
     public static async getInitialProps(originalCtx: NextPageContext) {
       // create a new context from the original context
-      const ctx = createContext(originalCtx.req, originalCtx.res);
-
+      
+      let ctx;
+      if (originalCtx.res) { // server side
+        ctx = createContext(originalCtx.req, originalCtx.res);
+      } else {
+        ctx = createContext({url: originalCtx.asPath}, null);
+      }
+      
       const page = await loader(ctx);
 
       // no page returned, the loader failed or take care of the response
@@ -28,8 +34,10 @@ export function createDynamicPage(
         return {};
       }
 
-      ctx.res.statusCode = page.statusCode;
-
+      if (ctx.isServerSide) {
+        ctx.res.statusCode = page.statusCode;
+      }
+      
       return {
         page,
         query: ctx.query,

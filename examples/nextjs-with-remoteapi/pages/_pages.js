@@ -1,10 +1,12 @@
 // @ts-check
 
-import { createPage } from "@ekino/rendr-template";
+import { createPage } from "@ekino/rendr-template-react";
 import { createAggregator } from "@ekino/rendr-aggregator";
 import { createApiLoader } from "@ekino/rendr-loader";
 
 import dynamic from "next/dynamic";
+
+import RendrTemplate from "../templates/RendrTemplate";
 
 // Configure components used on pages. A component is a standard React component.
 const components = {
@@ -17,7 +19,8 @@ const components = {
 
 // Configure the template available for the page. A template is a standard React component.
 const templates = {
-  rendr: dynamic(() => import("../templates/RendrTemplate"))
+  // rendr: dynamic(() => import("../templates/RendrTemplate"))
+  rendr: RendrTemplate
 };
 
 // optional handlers, only use this if you need to add information into block

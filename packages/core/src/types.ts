@@ -54,6 +54,8 @@ export interface RequestCtx {
   query: Map; // the query string, parsed
   params: Map; // the params from the routing, ie param from nice url
   asPath: string; // the complete path - pathname + query
+  isServerSide: boolean,
+  isClientSide: boolean,
   req: IncomingMessage;
   res: ServerResponse;
 }

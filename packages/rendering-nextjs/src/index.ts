@@ -1,11 +1,9 @@
 import { Loader } from "@ekino/rendr-loader";
 
-import { ComponentList } from "./types";
 import {
   createBlockRegistry,
-  createTemplateRegistry
-} from "@ekino/rendr-template-react";
-import {
+  createTemplateRegistry,
+  ComponentList,
   createBlockRenderer,
   createContainerRenderer
 } from "@ekino/rendr-template-react";

@@ -1,5 +1,5 @@
 import React from "react";
-import Head from 'next/head';
+import Head from "next/head";
 
 import { TemplateProps } from "@ekino/rendr-template-react";
 
@@ -10,7 +10,9 @@ export default function DefaultTemplate(props: TemplateProps) {
     <>
       <Head>
         <title>{props.page.head.title}</title>
-        {props.page.head.meta.map((settings) => <meta {...settings} />) }
+        {props.page.head.meta.map(settings => (
+          <meta {...settings} />
+        ))}
       </Head>
 
       <header>{containerRenderer("header", blocks)}</header>

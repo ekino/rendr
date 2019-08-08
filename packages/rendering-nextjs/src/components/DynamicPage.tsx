@@ -3,7 +3,10 @@ import { NextPageContext } from "next";
 
 import { Page, createContext } from "@ekino/rendr-core";
 import { Loader } from "@ekino/rendr-loader";
-import { TemplateRegistry, ContainerRenderer } from "@ekino/rendr-template-react";
+import {
+  TemplateRegistry,
+  ContainerRenderer
+} from "@ekino/rendr-template-react";
 
 export interface DynamicPageProps {
   page: Page;
@@ -17,14 +20,15 @@ export function createDynamicPage(
   return class DynamicPage extends React.Component<DynamicPageProps> {
     public static async getInitialProps(originalCtx: NextPageContext) {
       // create a new context from the original context
-      
+
       let ctx;
-      if (originalCtx.res) { // server side
+      if (originalCtx.res) {
+        // server side
         ctx = createContext(originalCtx.req, originalCtx.res);
       } else {
-        ctx = createContext({url: originalCtx.asPath}, null);
+        ctx = createContext({ url: originalCtx.asPath }, null);
       }
-      
+
       const page = await loader(ctx);
 
       // no page returned, the loader failed or take care of the response
@@ -35,7 +39,7 @@ export function createDynamicPage(
       if (ctx.isServerSide) {
         ctx.res.statusCode = page.statusCode;
       }
-      
+
       return {
         page,
         query: ctx.query,

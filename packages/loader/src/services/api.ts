@@ -1,6 +1,6 @@
 import { RequestCtx, createPage, Page } from "@ekino/rendr-core";
 import { Readable, Writable } from "stream";
-import Axios, {ResponseType} from "axios";
+import Axios, { ResponseType } from "axios";
 
 import { Loader } from "../types";
 
@@ -27,7 +27,7 @@ export function createApiLoader(baseUrl: string): Loader {
 
     let responseType: ResponseType = "json";
 
-    if (ctx.isServerSide) { 
+    if (ctx.isServerSide) {
       if ("range" in ctx.req.headers) {
         headers["range"] = ctx.req.headers["range"];
       }
@@ -62,13 +62,13 @@ export function createApiLoader(baseUrl: string): Loader {
 
       if (response.headers["x-rendr-content-type"] !== "rendr/document") {
         ctx.res.statusCode = response.status;
-  
+
         headersToTransfers.forEach(n => {
           if (n.toLowerCase() in response.headers) {
             ctx.res.setHeader(n, response.headers[n.toLowerCase()]);
           }
         });
-  
+
         return pipe(
           response.data,
           ctx.res

@@ -8,18 +8,18 @@ This project try to resolve these two challenges.
 
 When do you need this kind of solution?
 
- - You have internal data sources (microservices or legacy system)
- - You have a CMS but don't want to add custom codes or don't want to expose it to the world
- - You CMS cannot do the aggregation from different data sources
- - You need to add some cache mechanisms to protect your internals systems
+- You have internal data sources (microservices or legacy system)
+- You have a CMS but don't want to add custom codes or don't want to expose it to the world
+- You CMS cannot do the aggregation from different data sources
+- You need to add some cache mechanisms to protect your internals systems
 
 Understanding the different layers
 
- - **Data**: Data sources, can be anything as long as the aggregation layer can access to those data. This data layer can be protected or cached by some middlewares. This is up to the implementation to do that work.
- - **Aggregation**: The aggregation knows how to fetch the data and how to compose a page definition with all the required contents. The page is a set of information: page title, blocks with container name, cache information, etc ... The page structure can either be hard coded in the project or coming from an external CMS with a proper page builder or similar headless solutions.
- - **Rendering engine**: This layer knows how to communicate with the aggregation layer, and render the final output to the client. The output can be anything, most of the case this will be html. But the rendering engine can be a PDF engine, a mobile application, mainly anything that can display information and interact with the user. 
+- **Data**: Data sources, can be anything as long as the aggregation layer can access to those data. This data layer can be protected or cached by some middlewares. This is up to the implementation to do that work.
+- **Aggregation**: The aggregation knows how to fetch the data and how to compose a page definition with all the required contents. The page is a set of information: page title, blocks with container name, cache information, etc ... The page structure can either be hard coded in the project or coming from an external CMS with a proper page builder or similar headless solutions.
+- **Rendering engine**: This layer knows how to communicate with the aggregation layer, and render the final output to the client. The output can be anything, most of the case this will be html. But the rendering engine can be a PDF engine, a mobile application, mainly anything that can display information and interact with the user.
 
- Note: The rendering engine should not contain any business rules, but only visual rules. All business rules have to be in the aggregation layer.
+Note: The rendering engine should not contain any business rules, but only visual rules. All business rules have to be in the aggregation layer.
 
 On a nutshell, the architecture is something like this:
 

@@ -1,4 +1,4 @@
-import { createPage } from "./index";
+import { createPage, mergePages, Page } from "./index";
 
 describe("test create page", () => {
   it("empty page", () => {
@@ -48,5 +48,62 @@ describe("test create page", () => {
     });
 
     expect(page).toMatchSnapshot();
+  });
+});
+
+describe("test mergePages", () => {
+  it("should merge properly", () => {
+    const parent = new Page();
+    parent.id = "parent";
+    parent.cache.ttl = 200;
+    parent.head.defaultTitle = "The default title";
+    parent.head.meta = [{ name: "foo" }];
+    parent.path = "/";
+    parent.statusCode = 401;
+    parent.template = "3-columns";
+    parent.blocks = [
+      {
+        container: "header",
+        order: 1,
+        settings: {},
+        type: "type-parent-1"
+      },
+      {
+        container: "header",
+        order: 1,
+        settings: {},
+        type: "type-parent-2"
+      }
+    ];
+
+    const page = new Page();
+    page.id = "the child page";
+    page.head.defaultTitle = "";
+    page.head.htmlAttributes = {
+      foo: "bar"
+    };
+    page.head.meta = [{ property: "value" }];
+    page.cache.ttl = 100;
+    page.path = "/the-child";
+    page.statusCode = 403;
+    page.template = "2-columns";
+    page.blocks = [
+      {
+        container: "header",
+        order: 1,
+        settings: {},
+        type: "type-child-1"
+      },
+      {
+        container: "header",
+        order: 1,
+        settings: {},
+        type: "type-child-2"
+      }
+    ];
+
+    const p = mergePages([parent, page]);
+
+    expect(p).toMatchSnapshot();
   });
 });

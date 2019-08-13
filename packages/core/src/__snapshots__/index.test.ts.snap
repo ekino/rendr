@@ -15,7 +15,8 @@ Page {
     "titleTemplate": "%s",
   },
   "id": "id",
-  "settings": Array [],
+  "path": "",
+  "settings": Object {},
   "statusCode": 200,
   "template": "default",
   "type": "document",
@@ -46,7 +47,8 @@ Page {
     "titleTemplate": "%s",
   },
   "id": "id",
-  "settings": Array [],
+  "path": "",
+  "settings": Object {},
   "statusCode": 200,
   "template": "default",
   "type": "document",
@@ -68,7 +70,8 @@ Page {
     "titleTemplate": "%s",
   },
   "id": "id",
-  "settings": Array [],
+  "path": "",
+  "settings": Object {},
   "statusCode": 200,
   "template": "default",
   "type": "document",
@@ -90,9 +93,67 @@ Page {
     "titleTemplate": "%s",
   },
   "id": "id",
-  "settings": Array [],
+  "path": "",
+  "settings": Object {},
   "statusCode": 200,
   "template": "default",
+  "type": "document",
+}
+`;
+
+exports[`test mergePages should merge properly 1`] = `
+Page {
+  "blocks": Array [
+    Object {
+      "container": "header",
+      "order": 1,
+      "settings": Object {},
+      "type": "type-parent-1",
+    },
+    Object {
+      "container": "header",
+      "order": 1,
+      "settings": Object {},
+      "type": "type-parent-2",
+    },
+    Object {
+      "container": "header",
+      "order": 1,
+      "settings": Object {},
+      "type": "type-child-1",
+    },
+    Object {
+      "container": "header",
+      "order": 1,
+      "settings": Object {},
+      "type": "type-child-2",
+    },
+  ],
+  "cache": Object {
+    "ttl": 100,
+  },
+  "head": Object {
+    "defaultTitle": "The default title",
+    "htmlAttributes": Object {
+      "foo": "bar",
+    },
+    "link": "",
+    "meta": Array [
+      Object {
+        "name": "foo",
+      },
+      Object {
+        "property": "value",
+      },
+    ],
+    "title": "-",
+    "titleTemplate": "%s",
+  },
+  "id": "the child page",
+  "path": "/the-child",
+  "settings": Object {},
+  "statusCode": 403,
+  "template": "2-columns",
   "type": "document",
 }
 `;

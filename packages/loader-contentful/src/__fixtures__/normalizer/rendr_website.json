@@ -1,0 +1,42 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "f5bx295b472q"
+            }
+        },
+        "id": "75Vqk3IpfxlzQfvhdSASZV",
+        "type": "Entry",
+        "createdAt": "2019-08-20T18:50:08.851Z",
+        "updatedAt": "2019-08-20T18:50:08.851Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "rendr_website"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "name": "Ekino.com",
+        "domains": [
+            "www.ekino.com"
+        ],
+        "path": "/",
+        "culture": "en_GB",
+        "country_code": "FRA",
+        "order": 1,
+        "enabled": true
+    }
+}

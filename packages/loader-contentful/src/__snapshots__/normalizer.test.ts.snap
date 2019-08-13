@@ -1,0 +1,240 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test normalizer test asset.json 1`] = `
+Object {
+  "id": "8VoLF5Jla5JcMnhNV74Oj",
+  "title": "test",
+  "url": "https://images.ctfassets.net/f5bx295b472q/8VoLF5Jla5JcMnhNV74Oj/4f3afcf599ffbcc55528e2026e40cd0d/Screenshot_2019-07-18_at_16.39.23.png",
+}
+`;
+
+exports[`test normalizer test rendr_article.json 1`] = `
+Object {
+  "abstract": "The challenge of using a Headless CMS but still want to control how the template is managed",
+  "authors": Array [
+    Object {
+      "biography": "Just a guy...",
+      "id": "4JSAPT1jf0J8XJa0cg1aCa",
+      "image": Object {
+        "id": "2pSrRlUsweaxu4tW7w1uVv",
+        "title": "Thomas Rabaix's Picture",
+        "url": "https://images.ctfassets.net/f5bx295b472q/2pSrRlUsweaxu4tW7w1uVv/dd3e01d59c68d8b07101ddf953a120f7/DSCF2267.jpg?fm=jpg",
+      },
+      "jobTitle": "CTO London",
+      "name": "Thomas Rabaix",
+      "slug": "thomas-rabaix",
+      "social": Object {
+        "facebook": undefined,
+        "linkedin": undefined,
+        "twitter": "th0masr",
+      },
+    },
+  ],
+  "blocks": Array [
+    Object {
+      "container": "header",
+      "order": 0,
+      "settings": Object {
+        "contents": "The article contents with the markdown format! http://images.ctfassets.net/f5bx295b472q/2pSrRlUsweaxu4tW7w1uVv/dd3e01d59c68d8b07101ddf953a120f7/DSCF2267.jpg?fm=jpg",
+        "title": "",
+      },
+      "type": "rendr_block_text",
+    },
+    Object {
+      "container": "header",
+      "order": 99,
+      "settings": Object {
+        "contents": "The second part of the journey",
+        "title": "",
+      },
+      "type": "rendr_block_text",
+    },
+  ],
+  "id": "4yrf1lgxv3VY8K1jpjkog0",
+  "images": Object {
+    "header": Object {
+      "id": "5vV7exdcps9vwi2I1XEFfP",
+      "title": "Header image",
+      "url": "https://images.ctfassets.net/f5bx295b472q/5vV7exdcps9vwi2I1XEFfP/da39b569566d118b2711f8e5ec210c76/Screenshot_2019-08-21_at_12.02.06.png",
+    },
+    "list": Object {
+      "id": "4BRlYkVTQwQBcGb2Gft8Nb",
+      "title": "Main image",
+      "url": "https://images.ctfassets.net/f5bx295b472q/4BRlYkVTQwQBcGb2Gft8Nb/700ef1992bd71efbe6ce42f6741a1ca2/Screenshot_2019-08-21_at_12.02.00.png",
+    },
+  },
+  "published_at": "2019-08-15T00:00",
+  "seo": Object {
+    "description": "The description",
+    "keywords": "The keywords",
+  },
+  "slug": "headless-cms-challenge",
+  "title": "Headless CMS challenge",
+  "type": undefined,
+  "website": Object {
+    "countryCode": "FRA",
+    "culture": "fr_FR",
+    "domains": Array [
+      "ekino.com",
+    ],
+    "enabled": true,
+    "id": "2g5lXpzZ0jPPwQViziSjtK",
+    "name": "Ekino",
+    "order": 99,
+    "path": "/",
+  },
+}
+`;
+
+exports[`test normalizer test rendr_author.json 1`] = `
+Object {
+  "biography": "CTO at Ekino. Sonata Project founder. Symfony Expert. Lately doing python, go, ansible and cloud platforms.",
+  "id": "7pOMMe1TEojuNC9gKdxR0k",
+  "image": Object {
+    "id": "-",
+    "title": "No picture",
+    "url": "//findanemptypicture.com",
+  },
+  "jobTitle": "CTO",
+  "name": "Thomas Rabaix",
+  "slug": "thomas-rabaix",
+  "social": Object {
+    "facebook": undefined,
+    "linkedin": undefined,
+    "twitter": "th0masr",
+  },
+}
+`;
+
+exports[`test normalizer test rendr_block_text.json 1`] = `
+Object {
+  "container": "header",
+  "order": 1,
+  "settings": Object {
+    "contents": "Hello, here my content, with the markdown format...",
+    "title": "The content",
+  },
+  "type": "rendr_block_text",
+}
+`;
+
+exports[`test normalizer test rendr_page.json 1`] = `
+Page {
+  "blocks": Array [
+    Object {
+      "container": "header",
+      "order": 1,
+      "settings": Object {
+        "contents": "We create digital services that transform businesses.
+
+Using lean, Agile methodologies and rapid prototyping, it’s never been easier to create, test, and refine new services based on customer data and human behaviour.
+
+Together, we’ll collaborate to accelerate your innovation and increase your differentiation.",
+        "title": "About",
+      },
+      "type": "rendr_block_text",
+    },
+  ],
+  "cache": Object {
+    "ttl": 0,
+  },
+  "head": Object {
+    "defaultTitle": "-",
+    "htmlAttributes": Object {},
+    "link": "",
+    "meta": Array [
+      Object {
+        "content": "digital, awesome",
+        "name": "keywords",
+      },
+      Object {
+        "content": "Homepage",
+        "name": "description",
+      },
+    ],
+    "title": "Ekino Homepage",
+    "titleTemplate": "%s",
+  },
+  "id": "4QrVSXjiXz6iSS9Vli7sDh",
+  "path": "/",
+  "settings": Object {
+    "foo": "bar",
+  },
+  "statusCode": 200,
+  "template": "default",
+  "type": "document",
+}
+`;
+
+exports[`test normalizer test rendr_page_missing_field.json 1`] = `
+Page {
+  "blocks": Array [
+    Object {
+      "container": "header",
+      "order": 1,
+      "settings": Object {
+        "contents": "We create digital services that transform businesses.
+
+Using lean, Agile methodologies and rapid prototyping, it’s never been easier to create, test, and refine new services based on customer data and human behaviour.
+
+Together, we’ll collaborate to accelerate your innovation and increase your differentiation.",
+        "title": "About",
+      },
+      "type": "rendr_block_text",
+    },
+  ],
+  "cache": Object {
+    "ttl": 0,
+  },
+  "head": Object {
+    "defaultTitle": "-",
+    "htmlAttributes": Object {},
+    "link": "",
+    "meta": Array [
+      Object {
+        "content": "digital, awesome",
+        "name": "keywords",
+      },
+      Object {
+        "content": "Homepage",
+        "name": "description",
+      },
+    ],
+    "title": "Ekino Homepage",
+    "titleTemplate": "%s",
+  },
+  "id": "4QrVSXjiXz6iSS9Vli7sDh",
+  "path": "/",
+  "settings": Object {},
+  "statusCode": 200,
+  "template": "default",
+  "type": "document",
+}
+`;
+
+exports[`test normalizer test rendr_website.json 1`] = `
+Object {
+  "countryCode": "FRA",
+  "culture": "en_GB",
+  "domains": Array [
+    "www.ekino.com",
+  ],
+  "enabled": true,
+  "id": "75Vqk3IpfxlzQfvhdSASZV",
+  "name": "Ekino.com",
+  "order": 1,
+  "path": "/",
+}
+`;
+
+exports[`test normalizer with default values with normalizer 1`] = `
+Object {
+  "data": 1,
+  "name": "2CV",
+  "speed": 10,
+  "wheel": Object {
+    "brand": "michelin",
+    "size": 17,
+  },
+}
+`;

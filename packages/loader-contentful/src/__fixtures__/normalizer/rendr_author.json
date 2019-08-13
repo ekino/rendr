@@ -1,0 +1,38 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "f5bx295b472q"
+            }
+        },
+        "id": "7pOMMe1TEojuNC9gKdxR0k",
+        "type": "Entry",
+        "createdAt": "2019-08-20T18:39:11.532Z",
+        "updatedAt": "2019-08-20T18:39:11.532Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "rendr_author"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "name": "Thomas Rabaix",
+        "job_title": "CTO",
+        "slug": "thomas-rabaix",
+        "social_twitter": "th0masr",
+        "biography": "CTO at Ekino. Sonata Project founder. Symfony Expert. Lately doing python, go, ansible and cloud platforms."
+    }
+}

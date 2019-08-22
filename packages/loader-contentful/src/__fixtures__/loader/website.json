@@ -1,0 +1,94 @@
+{
+    "sys": {
+        "type": "Array"
+    },
+    "total": 2,
+    "skip": 0,
+    "limit": 10,
+    "items": [
+        {
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "f5bx295b472q"
+                    }
+                },
+                "id": "632kl7enPots4PISSnD6DV",
+                "type": "Entry",
+                "createdAt": "2019-08-21T12:43:36.952Z",
+                "updatedAt": "2019-08-21T12:43:36.952Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "revision": 1,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "rendr_website"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "name": "Ekino UK",
+                "path": "/uk",
+                "domains": [
+                    "ekino.co.uk"
+                ],
+                "culture": "en_GB",
+                "country_code": "GDB",
+                "enabled": true,
+                "order": 2
+            }
+        },
+        {
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "f5bx295b472q"
+                    }
+                },
+                "id": "2g5lXpzZ0jPPwQViziSjtK",
+                "type": "Entry",
+                "createdAt": "2019-08-21T11:00:42.276Z",
+                "updatedAt": "2019-08-21T11:00:42.276Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "revision": 1,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "rendr_website"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "name": "Ekino",
+                "domains": [
+                    "ekino.com"
+                ],
+                "path": "/",
+                "culture": "fr_FR",
+                "country_code": "FRA",
+                "enabled": true,
+                "order": 1
+            }
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "f5bx295b472q"
+            }
+        },
+        "id": "8VoLF5Jla5JcMnhNV74Oj",
+        "type": "Asset",
+        "createdAt": "2019-08-09T21:30:18.823Z",
+        "updatedAt": "2019-08-09T21:30:18.823Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "locale": "en-US"
+    },
+    "fields": {
+        "title": "test",
+        "description": "test",
+        "file": {
+            "url": "//images.ctfassets.net/f5bx295b472q/8VoLF5Jla5JcMnhNV74Oj/4f3afcf599ffbcc55528e2026e40cd0d/Screenshot_2019-07-18_at_16.39.23.png",
+            "details": {
+                "size": 10072,
+                "image": {
+                    "width": 210,
+                    "height": 134
+                }
+            },
+            "fileName": "Screenshot 2019-07-18 at 16.39.23.png",
+            "contentType": "image/png"
+        }
+    }
+}

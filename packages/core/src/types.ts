@@ -44,12 +44,14 @@ export class Page {
     meta: []
   };
   public blocks: BlockDefinition[] = [];
-  public settings: Settings[] = [];
+  public settings: Settings = {};
   public id: string = "";
+  public path: string = "";
 }
 
 // -- NextJs Controller signature
 export interface RequestCtx {
+  hostname: string; // the hostname requested
   pathname: string; // the path - without the query string
   query: Map; // the query string, parsed
   params: Map; // the params from the routing, ie param from nice url
@@ -59,3 +61,11 @@ export interface RequestCtx {
   req: IncomingMessage;
   res: ServerResponse;
 }
+
+export interface Normalizer {
+  (entry: any): BlockDefinition;
+}
+
+export type NormalizerList = {
+  [index: string]: Normalizer;
+};

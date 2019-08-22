@@ -1,7 +1,7 @@
 {
     "name": "@ekino/rendr-loader-contentful",
     "license": "MIT",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "main": "dist/lib/index.js",
     "typing": "dist/lib/index.d.ts",
     "module": "dist/lib-esm/index.js",
@@ -13,8 +13,8 @@
         "access": "public"
     },
     "dependencies": {
-        "@ekino/rendr-core": "0.0.5",
-        "@ekino/rendr-loader": "0.0.5",
+        "@ekino/rendr-core": "0.0.6",
+        "@ekino/rendr-loader": "0.0.6",
         "@types/lodash": "^4.14.136",
         "contentful": "^7.9.1",
         "contentful-cli": "^0.36.0",

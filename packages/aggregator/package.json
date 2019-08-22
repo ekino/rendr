@@ -1,7 +1,7 @@
 {
     "name": "@ekino/rendr-aggregator",
     "license": "MIT",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "main": "dist/lib/index.js",
     "typing": "dist/lib/index.d.ts",
     "module": "dist/lib-esm/index.js",
@@ -13,7 +13,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@ekino/rendr-core": "0.0.5"
+        "@ekino/rendr-core": "0.0.6"
     },
     "devDependencies": {
         "@types/node": "^12.6.9"

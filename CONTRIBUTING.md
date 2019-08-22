@@ -24,8 +24,11 @@ What's do you need to know ?
 
 Start contributing!
 
-    yarn setup # install dependencies
-    yarn build # build packages
+    yarn setup # to install dependencies
+    yarn build # to build packages
+    yarn test  # to run test
+
+> Please note: if you are working on 2 modules, you need to run `yarn build` so yarn can get the build version to load the dependency.
 
 You can try to run the demo to check if everything is working fine:
 

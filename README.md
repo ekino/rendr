@@ -37,14 +37,24 @@ On a nutshell, the architecture is something like this:
 
 The project uses `lerna` to handle multiple packages in one git repository. Packages are located in the `packages` folder. Each packages try to resolve one thing:
 
-- **core** contains main definitions (Page, Context), so its the main dependency of other packages. The package contains code to normalize page definition.
-- **aggregator** is a registry for service aggregators. A block from a page might need extra informations to be used. A closure can be attached to that registry, so it will be call once the page reference one known service. This can be used either on the Rendering engine or in the aggregation layer, of course the latter is better.
-- **api** is a simple package to expose using json a Page definition coming from a loader.
-- **loader** is the package responsable to load a page from a data source and return a page object with all information loaded from the datasource. It is possible to encapsulate this loader by others loaders if you need to add more information into the page definition.
-- **template-react** is the package used to take a page definition and render the page to the client. This package works with React, contains registry to store block types with their rendering components.
+## Base module
+
+- **core**: contain main definitions (Page, Context), so its the main dependency of other packages. The package contains code to normalize page definition.
+- **aggregator**: a registry for service aggregators. A block from a page might need extra informations to be used. A closure can be attached to that registry, so it will be call once the page reference one known service. This can be used either on the Rendering engine or in the aggregation layer, of course the latter is better.
+- **api**: expose using json format a Page definition coming from a loader.
+- **loader**: load a page from a data source and return a page object with all information loaded from the datasource. It is possible to encapsulate this loader by others loaders if you need to add more information into the page definition.
+- **template-react**: take a page definition and render the page to the client. This package works with React, contains registry to store block types with their rendering components.
+
+### Integration modules
+
+- **loader-contentful**: integrate a page loader from contentful, the module provides a set of migrations to install required models.
+
+- **rendering-nextjs**: integrate NextJS as a rendering engine for a Page (coming from a loader).
+
+## Examples
 
 The folder `examples/nextjs-with-remoteapi` is an example of all those packages can work together with NextJS to create a solution for dynamic pages (structure + contents) fully managed by a remote API.
 
 ## Contributing
 
-Please see our [CONTRIBUTING.md](https://github.com/ekino/rendr/CONTRIBUTING.md).
+Please see our [CONTRIBUTING.md](https://github.com/ekino/rendr/blob/master/CONTRIBUTING.md).

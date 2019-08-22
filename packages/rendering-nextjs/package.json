@@ -6,9 +6,6 @@
     "typing": "dist/lib/index.d.ts",
     "module": "dist/lib-esm/index.js",
     "jsnext:main": "dist/lib-esm/index.js",
-    "files": [
-        "lib"
-    ],
     "publishConfig": {
         "access": "public"
     },

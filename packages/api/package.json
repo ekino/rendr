@@ -4,9 +4,6 @@
     "version": "0.0.6",
     "main": "dist/lib/index.js",
     "typing": "dist/lib/index.d.ts",
-    "files": [
-        "lib"
-    ],
     "publishConfig": {
         "access": "public"
     },

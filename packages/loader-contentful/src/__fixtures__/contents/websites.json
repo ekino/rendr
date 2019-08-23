@@ -39,6 +39,9 @@
             "fields": {
                 "name": "Ekino UK",
                 "path": "/uk",
+                "domains": [
+                    "ekino.co.uk"
+                ],
                 "culture": "en_GB",
                 "country_code": "GDB",
                 "enabled": true,

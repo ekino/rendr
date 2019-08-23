@@ -48,6 +48,9 @@ Array [
     "fields": Object {
       "country_code": "GDB",
       "culture": "en_GB",
+      "domains": Array [
+        "ekino.co.uk",
+      ],
       "enabled": true,
       "name": "Ekino UK",
       "order": 2,

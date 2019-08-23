@@ -2,7 +2,7 @@ const runMigration = require("contentful-migration/built/bin/cli").runMigration;
 
 const options = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
   environmentId: process.env.CONTENTFUL_ENV || "master",
   yes: true
 };

@@ -98,7 +98,6 @@ export interface ContentfulAuthor {
 export interface ContentfulPage {
   title: string;
   type: string;
-  abstract: string;
   seo_description: string;
   seo_keywords: string;
   extends: string;

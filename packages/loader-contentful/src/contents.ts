@@ -108,6 +108,10 @@ export async function GetArticles(
 
   const site = await GetWebsite(client, opts.domain);
 
+  if (!site) {
+    throw NotFoundError;
+  }
+
   // query['fields.type'] = 'type' in opts ? opts.type : 'post';
 
   if (!("order" in query)) {
@@ -129,13 +133,24 @@ export async function GetArticle(
   slug: string,
   options = {}
 ): Promise<Entry<ContentfulArticle>> {
-  const opts = Object.assign({}, defaultOptions, options);
+  const opts = Object.assign({ domain: "" }, defaultOptions, options);
+
+  if (opts.domain.length === 0) {
+    throw NotFoundError;
+  }
+
+  const site = await GetWebsite(client, opts.domain);
+
+  if (!site) {
+    throw NotFoundError;
+  }
 
   const query: any = {
     "fields.slug": slug,
     limit: 2,
     content_type: "rendr_article",
-    "fields.published_at[lte]": new Date()
+    "fields.published_at[lte]": new Date(),
+    "fields.sites.sys.id[in]": site.sys.id
   };
 
   // query['fields.type'] = 'type' in opts ? opts.type : 'post';

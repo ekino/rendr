@@ -134,7 +134,14 @@ export function createContext(
 ): RequestCtx {
   const isServerSide = res ? true : false;
   const asPath = req.url;
-  const url = parse(asPath, true);
+
+  let fullUrl = req.url;
+
+  if (req instanceof IncomingMessage) {
+    fullUrl = `https://${req.headers['host']}${req.url}`;
+  }
+
+  const url = parse(fullUrl, true);
 
   const ctx: RequestCtx = {
     hostname: url.hostname,

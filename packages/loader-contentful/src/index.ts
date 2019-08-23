@@ -8,7 +8,8 @@ import {
   Website
 } from "./types";
 import { GetWebsite } from "./contents";
-export { createNormalizer } from "./normalizer";
+export * from "./normalizer";
+export * from "./contents";
 
 export function createContentfulLoader(
   clientFinder: ClientFinder,

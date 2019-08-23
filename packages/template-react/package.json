@@ -14,8 +14,8 @@
         "@ekino/rendr-loader": "0.0.7"
     },
     "devDependencies": {
-        "@types/node": "^12.6.9",
-        "@types/react": "^16.8.5"
+        "@types/node": "^12.7.2",
+        "@types/react": "^16.9.2"
     },
     "peerDependencies": {
         "react": "^16.8.1",

@@ -260,12 +260,16 @@ export function normalizeArticle(
     },
     title: entry.fields.title ? entry.fields.title : "",
     authors: entry.fields.authors
-      .filter(entry => validEntry(entry))
-      .map(entry => normalizer(entry)),
+      ? entry.fields.authors
+          .filter(entry => validEntry(entry))
+          .map(entry => normalizer(entry))
+      : [],
     blocks: entry.fields.blocks
-      .filter(entry => validEntry(entry))
-      .map(entry => normalizer(entry)),
-    slug: entry.fields.slug,
+      ? entry.fields.blocks
+          .filter(entry => validEntry(entry))
+          .map(entry => normalizer(entry))
+      : [],
+    slug: entry.fields.slug ? entry.fields.slug : "",
     seo: {
       description: entry.fields.seo_description,
       keywords: entry.fields.seo_keywords

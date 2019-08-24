@@ -37,7 +37,7 @@ export function createContentfulLoader(
       limit: 1,
       content_type: "rendr_page",
       include: 10,
-      "fields.website.sys.id[in]": site.id
+      "fields.website.sys.id": site.id
     };
 
     const pages = await client.getEntries<ContentfulPage>(queryMainPage);
@@ -58,7 +58,7 @@ export function createContentfulLoader(
       limit: 1,
       content_type: "rendr_page",
       include: 10,
-      "fields.website.sys.id[in]": site.id
+      "fields.website.sys.id": site.id
     });
 
     if (parentPage.items.length !== 1) {

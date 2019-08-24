@@ -138,7 +138,7 @@ export function createContext(
   let fullUrl = req.url;
 
   if (req instanceof IncomingMessage) {
-    fullUrl = `https://${req.headers['host']}${req.url}`;
+    fullUrl = `https://${req.headers["host"]}${req.url}`;
   }
 
   const url = parse(fullUrl, true);

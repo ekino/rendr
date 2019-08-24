@@ -75,7 +75,7 @@ export async function GetPage(
     limit: 1,
     content_type: "rendr_page",
     "fields.path": path,
-    "fields.website": website.id
+    "fields.website.sys.id": website.id
   };
 
   const result = (await client.getEntries<ContentfulPage>(query)).items.filter(
@@ -99,13 +99,6 @@ export async function GetArticles(
     options
   );
 
-  const query: any = {
-    limit: opts.limit,
-    skip: (opts.page - 1) * opts.limit,
-    content_type: "rendr_page",
-    "fields.published_at[lte]": new Date()
-  };
-
   const site = await GetWebsite(client, opts.domain);
 
   if (!site) {
@@ -113,6 +106,14 @@ export async function GetArticles(
   }
 
   // query['fields.type'] = 'type' in opts ? opts.type : 'post';
+
+  const query: any = {
+    limit: opts.limit,
+    skip: (opts.page - 1) * opts.limit,
+    content_type: "rendr_article",
+    "fields.published_at[lte]": new Date(),
+    "fields.website.sys.id": site.sys.id
+  };
 
   if (!("order" in query)) {
     query.order = "-fields.published_at";
@@ -122,8 +123,6 @@ export async function GetArticles(
   if ("authors" in opts && opts.authors.length > 0) {
     query["fields.authors.sys.id[in]"] = opts["authors"].join(",");
   }
-
-  query["fields.sites.sys.id[in]"] = site.sys.id;
 
   return await client.getEntries<ContentfulArticle>(query);
 }
@@ -150,7 +149,7 @@ export async function GetArticle(
     limit: 2,
     content_type: "rendr_article",
     "fields.published_at[lte]": new Date(),
-    "fields.sites.sys.id[in]": site.sys.id
+    "fields.website.sys.id": site.sys.id
   };
 
   // query['fields.type'] = 'type' in opts ? opts.type : 'post';

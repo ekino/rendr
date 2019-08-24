@@ -67,7 +67,7 @@ describe("Contents loading from ", () => {
       getEntries: async <T>(query?: any) => {
         expect(query).toEqual({
           "fields.path": "/",
-          "fields.website": "632kl7enPots4PISSnD6DV",
+          "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
           limit: 1,
           content_type: "rendr_page"
         });
@@ -102,7 +102,7 @@ describe("Contents loading from ", () => {
       getEntries: async <T>(query?: any) => {
         expect(query).toEqual({
           "fields.path": "/",
-          "fields.website": "632kl7enPots4PISSnD6DV",
+          "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
           limit: 1,
           content_type: "rendr_page"
         });
@@ -186,7 +186,7 @@ describe("Contents loading from ", () => {
           expect(query).toEqual({
             content_type: "rendr_article",
             "fields.published_at[lte]": "fail to mock the date...",
-            "fields.sites.sys.id[in]": "632kl7enPots4PISSnD6DV",
+            "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
             "fields.slug": "headless-cms-challenge",
             limit: 2
           });

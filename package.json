@@ -25,17 +25,19 @@
   },
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "scripts": {
-    "setup": "yarn install && lerna bootstrap",
+    "setup": "yarn install && lerna bootstrap && rm -rf examples/nextjs-with-remoteapi/node_modules/@ekino && rm -rf examples/nextjs-with-contentful/node_modules/@ekino",
     "build": "lerna run build",
-    "examples/nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node server.js",
     "fmt": "prettier --color --write \"**/*.{js,jsx,ts,tsx,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "fmt:check": "prettier --color --list-different \"packages/*/**/*.{js,ts,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "lint:ts": "tslint -p . -c tslint.json \"packages/*/src/**/*.ts\"",
     "test": "jest packages",
     "test:all": "yarn fmt:check && yarn lint:ts && yarn test && yarn build",
-    "publish": "lerna publish"
+    "publish": "lerna publish",
+    "examples/nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node server.js",
+    "examples/nextjs-with-contentful": "cd examples/nextjs-with-contentful && node server.js"
   }
 }

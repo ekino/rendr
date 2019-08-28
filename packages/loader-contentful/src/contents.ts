@@ -1,5 +1,5 @@
 import { ContentfulClientApi } from "contentful";
-import { NotFoundError } from "@ekino/rendr-core";
+import { NotFoundError, InternalServerError } from "@ekino/rendr-core";
 import { validEntry } from "./normalizer";
 import { Entry, EntryCollection } from "contentful";
 
@@ -47,6 +47,12 @@ export async function GetWebsite(
   domain: string,
   options = {}
 ): Promise<Entry<ContentfulWebsite>> {
+  if (domain.length === 0) {
+    throw new InternalServerError(
+      `[Contentful] No domain specified to load a website`
+    );
+  }
+
   const sites = await GetWebsites(client, { ...options });
 
   const result = sites.find(site => {
@@ -59,7 +65,9 @@ export async function GetWebsite(
   });
 
   if (!result) {
-    throw NotFoundError;
+    throw new NotFoundError(
+      `[Contentful] Unable to load the website - domain: ${domain}`
+    );
   }
 
   return result;
@@ -83,7 +91,9 @@ export async function GetPage(
   );
 
   if (result.length === 0) {
-    throw NotFoundError;
+    throw new NotFoundError(
+      `[Contentful] Unable to load the page - path: ${path}, website.id: ${website.id}`
+    );
   }
 
   return result[0];
@@ -100,10 +110,6 @@ export async function GetArticles(
   );
 
   const site = await GetWebsite(client, opts.domain);
-
-  if (!site) {
-    throw NotFoundError;
-  }
 
   // query['fields.type'] = 'type' in opts ? opts.type : 'post';
 
@@ -134,15 +140,7 @@ export async function GetArticle(
 ): Promise<Entry<ContentfulArticle>> {
   const opts = Object.assign({ domain: "" }, defaultOptions, options);
 
-  if (opts.domain.length === 0) {
-    throw NotFoundError;
-  }
-
   const site = await GetWebsite(client, opts.domain);
-
-  if (!site) {
-    throw NotFoundError;
-  }
 
   const query: any = {
     "fields.slug": slug,
@@ -157,7 +155,9 @@ export async function GetArticle(
   const result = await client.getEntries<ContentfulArticle>(query);
 
   if (result.items.length !== 1) {
-    throw NotFoundError;
+    throw new NotFoundError(
+      `[Contentful] Unable to get the article - slug: ${slug}, website.id: ${site.sys.id}`
+    );
   }
 
   return result.items[0];
@@ -179,7 +179,9 @@ export async function GetAuthor(
   const result = await client.getEntries<ContentfulAuthor>(query);
 
   if (result.items.length !== 1) {
-    throw NotFoundError;
+    throw new NotFoundError(
+      `[Contentful] Unable to get the Author - slug: ${slug}`
+    );
   }
 
   return result.items[0];

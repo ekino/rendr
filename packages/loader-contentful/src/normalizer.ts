@@ -84,7 +84,7 @@ export function createNormalizer(
       return normalizers[key](entry, normalizer);
     } catch (err) {
       // log error
-      throw NormalizationError;
+      throw new NormalizationError(err);
     }
   };
 }

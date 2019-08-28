@@ -89,7 +89,7 @@ Array [
 ]
 `;
 
-exports[`Contents loading from  Should raise an exception as no page will be found 1`] = `[Error: Not Found Exception]`;
+exports[`Contents loading from  Should raise an exception as no page will be found 1`] = `[NotFoundError: [Contentful] Unable to load the page - path: /, website.id: 632kl7enPots4PISSnD6DV]`;
 
 exports[`Contents loading from  Should return existing page  1`] = `
 Object {
@@ -214,7 +214,7 @@ Object {
 }
 `;
 
-exports[`Contents loading from  Should return non existing website  1`] = `[Error: Not Found Exception]`;
+exports[`Contents loading from  Should return non existing website  1`] = `[NotFoundError: [Contentful] Unable to load the website - domain: foobar.com]`;
 
 exports[`Contents loading from  should return an Author 1`] = `
 Object {
@@ -610,4 +610,4 @@ Object {
 }
 `;
 
-exports[`Contents loading from  should return an error with Author (duplicate slug) 1`] = `[Error: Not Found Exception]`;
+exports[`Contents loading from  should return an error with Author (duplicate slug) 1`] = `[NotFoundError: [Contentful] Unable to get the Author - slug: thomas-rabaix]`;

@@ -106,7 +106,7 @@ export function normalizeBlockDefinition(data: any): BlockDefinition | void {
   };
 }
 
-export function createPage(data: any): Page {
+export function createPage(data: any = {}): Page {
   const page = new Page();
 
   page.statusCode = "statusCode" in data ? data.statusCode : 200;

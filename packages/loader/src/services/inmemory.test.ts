@@ -1,4 +1,4 @@
-import { RequestCtx } from "@ekino/rendr-core";
+import { RequestCtx, Page } from "@ekino/rendr-core";
 
 import { InMemorySettings } from "../types";
 import { createInMemoryLoader } from "./inmemory";
@@ -44,24 +44,31 @@ describe("test inmemory code", () => {
 
   it("test match", async () => {
     const checks = [
-      { pathname: "/", statusCode: 418 },
-      { pathname: "/blog/hello-world", statusCode: 419 },
-      { pathname: "/not-found", statusCode: 404 }
+      { pathname: "/", exception: false, statusCode: 418 },
+      { pathname: "/blog/hello-world", exception: false, statusCode: 419 },
+      { pathname: "/not-found", exception: true }
     ];
 
     const loader = createInMemoryLoader(paths);
 
     for (const k in checks) {
-      if (!checks[k]) {
-        continue;
-      }
       const check = checks[k];
-      const page = await loader(createContext({ pathname: check.pathname }));
-      expect(page).not.toBeNull();
 
-      if (page) {
-        // avoid error with TS.
-        expect(page.statusCode).toBe(check.statusCode);
+      let page: Page;
+
+      try {
+        const result = await loader(
+          createContext({ pathname: check.pathname })
+        );
+
+        expect(result).not.toBeNull();
+        expect(check.exception).toBeFalsy();
+
+        if (result instanceof Page) {
+          expect(result.statusCode).toBe(check.statusCode);
+        }
+      } catch (err) {
+        expect(check.exception).toBeTruthy();
       }
     }
   });

@@ -43,25 +43,10 @@ export function createInMemoryLoader(paths: InMemorySettings): Loader {
       return true;
     });
 
-    let page = new Page();
-
     if (!result) {
-      // page not found
-      // should generate a 404 page
-      page.statusCode = 404;
-
-      return page;
+      throw new NotFoundError();
     }
 
-    // to do, use the params value
-    try {
-      page = await result.pageCreator(new Page(), ctx);
-    } catch (err) {
-      console.log("Unable to create page", { err });
-      // should generate a 500 page
-      page.statusCode = err === NotFoundError ? 404 : 500;
-    }
-
-    return page;
+    return await result.pageCreator(new Page(), ctx);
   };
 }

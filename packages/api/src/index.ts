@@ -10,6 +10,8 @@ export function createApi(loader: Loader): Express.RequestHandler {
 
     res.set("X-Rendr-Content-Type", "rendr/octet-stream");
 
+    // a loader can also take over the on the response without
+    // returning any page object: ie: streaming data to the client
     const page = await loader(ctx);
 
     if (!page) {

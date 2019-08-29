@@ -11,7 +11,9 @@ const route = createMatcher({
   start: true
 });
 
-export function createInMemoryLoader(paths: InMemorySettings): Loader {
+export function createInMemoryLoader(
+  paths: InMemorySettings
+): Loader<Page | void> {
   const routes: RouteConfiguration[] = [];
 
   // compute the route expression

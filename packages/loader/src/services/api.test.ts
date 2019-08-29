@@ -41,8 +41,8 @@ describe("test API Loader", () => {
     const ctx = {
       pathname: "/",
       query: {},
-      req: req,
-      res: res,
+      req,
+      res,
       isServerSide: true,
       isClientSide: false
     };
@@ -93,8 +93,8 @@ describe("test API Loader", () => {
       pathname: "/",
       query: {},
       params: {},
-      req: req,
-      res: res,
+      req,
+      res,
       isServerSide: true,
       isClientSide: false
     };

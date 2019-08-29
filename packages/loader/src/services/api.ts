@@ -17,7 +17,7 @@ const headersToTransfers = [
 // This code can be called from the nodejs or the browser.
 // However the pipe for raw binary are not likely to be run by the browser
 // as the server will stream the content, and so cannot be run by the browser.
-export function createApiLoader(baseUrl: string): Loader {
+export function createApiLoader(baseUrl: string): Loader<Page | void | string> {
   return async (ctx: RequestCtx) => {
     const url = `${baseUrl}${ctx.asPath}`;
 
@@ -86,14 +86,24 @@ export function createApiLoader(baseUrl: string): Loader {
  * @param source
  * @param dest
  */
-function pipe(source: Readable, dest: Writable): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    source.pipe(dest);
+function pipe(source: Readable, dest?: Writable): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
+    let data: string;
+
+    if (dest) {
+      source.pipe(dest);
+    } else {
+      data = "";
+      source.on("data", (chunk: any) => {
+        data += chunk;
+      });
+    }
+
     source.on("end", (err: Error) => {
       if (err) {
         reject(err);
       } else {
-        resolve();
+        resolve(data);
       }
     });
   });
@@ -106,17 +116,7 @@ function pipe(source: Readable, dest: Writable): Promise<void> {
  * @param source
  */
 function pipePageToClient(source: Readable): Promise<Page> {
-  let data = "";
-  const dest = new Writable({
-    write(chunk) {
-      data += chunk;
-    }
-  });
-
-  return pipe(
-    source,
-    dest
-  ).then(() => {
+  return pipe(source).then(data => {
     return createPage(JSON.parse(data));
   });
 }

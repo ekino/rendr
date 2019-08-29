@@ -1,6 +1,6 @@
 import { Page, RequestCtx } from "@ekino/rendr-core";
 
-export type Loader = (ctx: RequestCtx) => Promise<Page | void> | void;
+export type Loader<T> = (ctx: RequestCtx) => Promise<T> | void;
 
 export type PageCreator = (basePage: Page, ctx: RequestCtx) => Promise<Page>;
 

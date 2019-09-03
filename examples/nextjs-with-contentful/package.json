@@ -1,6 +1,6 @@
 {
     "name": "@ekino/rendr-demo-nextjs-with-contentful",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "dependencies": {
         "@ekino/rendr-api": "latest",
         "@ekino/rendr-loader-contentful": "latest",

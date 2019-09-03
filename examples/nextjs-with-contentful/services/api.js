@@ -65,11 +65,13 @@ module.exports.loader = basePageLoader(
         }
       );
 
+      const articlesPage = await getPage(page, ctx);
+
       if (articles.length === 0) {
         // no article
-        page.title = "Sorry, no article for now...";
+        articlesPage.title = "Sorry, no article for now...";
 
-        page.blocks.push({
+        articlesPage.blocks.push({
           container: "article",
           settings: {
             title: "Sorry :(",
@@ -77,11 +79,10 @@ module.exports.loader = basePageLoader(
           }
         });
 
-        return page;
+        return articlesPage;
       }
 
-      page.title = "Articles list";
-      page.blocks.push({
+      articlesPage.blocks.push({
         container: "article",
         settings: {
           title: "Articles list",
@@ -93,7 +94,7 @@ module.exports.loader = basePageLoader(
       articles.items.forEach(entry => {
         const article = normalizer(entry);
 
-        page.blocks.push({
+        articlesPage.blocks.push({
           container: "article",
           settings: {
             title: article.title,
@@ -108,7 +109,7 @@ module.exports.loader = basePageLoader(
         });
       });
 
-      return page;
+      return articlesPage;
     },
     "/articles/:slug": async (page, ctx) => {
       // We first load the Article object from contentful
@@ -129,17 +130,18 @@ module.exports.loader = basePageLoader(
         );
       }
 
-      // we need first to get the page `/post/:slug` from contentful, as it will hold
+      // we need first to get the page `/articles/:slug` from contentful, as it will hold
       // the current page structure for the whole page.
-      const postPage = await getPage(page, {
+      const articlePage = await getPage(page, {
         ...ctx,
         // we need to load the correct page and it cannot be the original path
-        // as it will change on all requests: "/post/slug-1", "/post/slug-2", etc ...
+        // as it will change on all requests: "/articles/slug-1", "/articles/slug-2", etc ...
         pathname: "/articles/:slug"
       });
+      articlePage.path = ctx.pathname;
 
       // the related layout page does not exist on contentful, so we cannot create the structure
-      if (!postPage) {
+      if (!articlePage) {
         // there is a serious issue here ...
         throw new rendrCore.InternalServerError(
           `[Demo API] Unable to find the article page on contentful - path: /articles/:slug, domain: ${ctx.hostname}`
@@ -150,17 +152,17 @@ module.exports.loader = basePageLoader(
 
       // at this point we have the Page and the Article, we need now the "merge" the article into the Page,
       // please remember, the current function must return a Page object corresponding to the final page.
-      postPage.title = article.title;
+      articlePage.title = article.title;
 
-      postPage.head.meta.push({
+      articlePage.head.meta.push({
         keywords: article.seo.keywords
       });
-      postPage.head.meta.push({
+      articlePage.head.meta.push({
         description: article.seo.description
       });
 
       // add related blocks for the page
-      postPage.blocks.push({
+      articlePage.blocks.push({
         container: "article",
         // for simplicity, the rendr.text block is used, however you can create
         // new type to match the layout block available (that you have to create depends on
@@ -178,7 +180,7 @@ module.exports.loader = basePageLoader(
       // the article is also composed from a set of block we can just reuse them
       article.blocks.forEach(block => {
         block.order = 100 + block.order;
-        postPage.blocks.push(block);
+        articlePage.blocks.push(block);
       });
 
       // for now, authors and images are not in used.
@@ -188,7 +190,7 @@ module.exports.loader = basePageLoader(
       //   header: Asset;
       // };
 
-      return postPage;
+      return articlePage;
     },
     "/*": async (page, ctx) => {
       // catch all

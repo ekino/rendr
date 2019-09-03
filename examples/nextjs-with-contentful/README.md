@@ -1,5 +1,7 @@
 # NextJS with Contentful
 
+> Please note: this is a work a progress, there are no visual representations of the content.
+
 This repository is a demo site running NextJS with a Headless CMS (Contentful). The Headless CMS is in charge of the page structure and the contents (articles).
 
 The rendr project provide an advanced integration with Contentful witht the `@ekino/rendr-loader-contentful` module. Current features:

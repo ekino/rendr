@@ -1,4 +1,4 @@
-import { Page, RequestCtx } from "@ekino/rendr-core";
+import { Page, RequestCtx, NotFoundError } from "@ekino/rendr-core";
 import { Loader, InMemorySettings, RouteConfiguration } from "../types";
 // @ts-ignore - definition does not exist...
 import createMatcher from "path-match";
@@ -43,24 +43,10 @@ export function createInMemoryLoader(paths: InMemorySettings): Loader {
       return true;
     });
 
-    let page = new Page();
-
     if (!result) {
-      // page not found
-      // should generate a 404 page
-      page.statusCode = 404;
-
-      return page;
+      throw new NotFoundError();
     }
 
-    // to do, use the params value
-    try {
-      page = await result.pageCreator(new Page(), ctx);
-    } catch (e) {
-      // should generate a 500 page
-      page.statusCode = 500;
-    }
-
-    return page;
+    return await result.pageCreator(new Page(), ctx);
   };
 }

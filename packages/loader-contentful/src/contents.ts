@@ -1,5 +1,5 @@
 import { ContentfulClientApi } from "contentful";
-import { NotFoundError } from "@ekino/rendr-core";
+import { NotFoundError, InternalServerError } from "@ekino/rendr-core";
 import { validEntry } from "./normalizer";
 import { Entry, EntryCollection } from "contentful";
 
@@ -47,6 +47,12 @@ export async function GetWebsite(
   domain: string,
   options = {}
 ): Promise<Entry<ContentfulWebsite>> {
+  if (domain.length === 0) {
+    throw new InternalServerError(
+      `[Contentful] No domain specified to load a website`
+    );
+  }
+
   const sites = await GetWebsites(client, { ...options });
 
   const result = sites.find(site => {
@@ -59,7 +65,9 @@ export async function GetWebsite(
   });
 
   if (!result) {
-    throw NotFoundError;
+    throw new NotFoundError(
+      `[Contentful] Unable to load the website - domain: ${domain}`
+    );
   }
 
   return result;
@@ -75,7 +83,7 @@ export async function GetPage(
     limit: 1,
     content_type: "rendr_page",
     "fields.path": path,
-    "fields.website": website.id
+    "fields.website.sys.id": website.id
   };
 
   const result = (await client.getEntries<ContentfulPage>(query)).items.filter(
@@ -83,7 +91,9 @@ export async function GetPage(
   );
 
   if (result.length === 0) {
-    throw NotFoundError;
+    throw new NotFoundError(
+      `[Contentful] Unable to load the page - path: ${path}, website.id: ${website.id}`
+    );
   }
 
   return result[0];
@@ -99,16 +109,17 @@ export async function GetArticles(
     options
   );
 
-  const query: any = {
-    limit: opts.limit,
-    skip: (opts.page - 1) * opts.limit,
-    content_type: "rendr_page",
-    "fields.published_at[lte]": new Date()
-  };
-
   const site = await GetWebsite(client, opts.domain);
 
   // query['fields.type'] = 'type' in opts ? opts.type : 'post';
+
+  const query: any = {
+    limit: opts.limit,
+    skip: (opts.page - 1) * opts.limit,
+    content_type: "rendr_article",
+    "fields.published_at[lte]": new Date(),
+    "fields.website.sys.id": site.sys.id
+  };
 
   if (!("order" in query)) {
     query.order = "-fields.published_at";
@@ -119,8 +130,6 @@ export async function GetArticles(
     query["fields.authors.sys.id[in]"] = opts["authors"].join(",");
   }
 
-  query["fields.sites.sys.id[in]"] = site.sys.id;
-
   return await client.getEntries<ContentfulArticle>(query);
 }
 
@@ -129,13 +138,16 @@ export async function GetArticle(
   slug: string,
   options = {}
 ): Promise<Entry<ContentfulArticle>> {
-  const opts = Object.assign({}, defaultOptions, options);
+  const opts = Object.assign({ domain: "" }, defaultOptions, options);
+
+  const site = await GetWebsite(client, opts.domain);
 
   const query: any = {
     "fields.slug": slug,
     limit: 2,
     content_type: "rendr_article",
-    "fields.published_at[lte]": new Date()
+    "fields.published_at[lte]": new Date(),
+    "fields.website.sys.id": site.sys.id
   };
 
   // query['fields.type'] = 'type' in opts ? opts.type : 'post';
@@ -143,7 +155,9 @@ export async function GetArticle(
   const result = await client.getEntries<ContentfulArticle>(query);
 
   if (result.items.length !== 1) {
-    throw NotFoundError;
+    throw new NotFoundError(
+      `[Contentful] Unable to get the article - slug: ${slug}, website.id: ${site.sys.id}`
+    );
   }
 
   return result.items[0];
@@ -165,7 +179,9 @@ export async function GetAuthor(
   const result = await client.getEntries<ContentfulAuthor>(query);
 
   if (result.items.length !== 1) {
-    throw NotFoundError;
+    throw new NotFoundError(
+      `[Contentful] Unable to get the Author - slug: ${slug}`
+    );
   }
 
   return result.items[0];

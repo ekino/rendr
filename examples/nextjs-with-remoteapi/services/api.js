@@ -1,4 +1,5 @@
 const rendrLoader = require("@ekino/rendr-loader");
+const rendrCore = require("@ekino/rendr-core");
 
 /**
  * Configure the default page, which can be used to define the base information for all pages.
@@ -32,13 +33,25 @@ function basePage(page, ctx) {
 // are always there (header and footer).
 const basePageLoader = loader => {
   return ctx => {
-    return loader(ctx).then(page => {
-      if (!page) {
-        return;
-      }
+    return loader(ctx)
+      .then(page => {
+        if (!page) {
+          return;
+        }
 
-      return basePage(page);
-    });
+        return basePage(page);
+      })
+      .catch(err => {
+        // something wrong happen
+        const page = rendrCore.createPage();
+        page.statusCode = err instanceof rendrCore.NotFoundError ? 404 : 500;
+
+        console.log("An error occurs while loading page", {
+          message: err.message
+        });
+
+        return page;
+      });
   };
 };
 

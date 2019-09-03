@@ -1,13 +1,13 @@
 {
   "dependencies": {
-    "@types/jest": "^24.0.16",
-    "jest": "24.8.0",
+    "@types/jest": "^24.0.18",
+    "jest": "24.9.0",
     "lerna": "^3.13.0",
     "license-checker": "^25.0.1",
     "prettier": "^1.16.4",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.0.2",
-    "tslint": "^5.12.1",
+    "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3"
   },
@@ -17,25 +17,27 @@
     "@zeit/next-sass": "^1.0.1",
     "bootstrap": "^4.3.1",
     "express": "^4.16.4",
-    "next": "^9.0.3",
+    "next": "^9.0.4",
     "node-sass": "^4.11.0",
-    "react": "^16.8.1",
-    "react-bootstrap": "^1.0.0-beta.5",
-    "react-dom": "^16.8.1"
+    "react": "^16.9.0",
+    "react-bootstrap": "^1.0.0-beta.11",
+    "react-dom": "^16.9.0"
   },
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "scripts": {
-    "setup": "yarn install && lerna bootstrap",
+    "setup": "yarn install && lerna bootstrap && rm -rf examples/nextjs-with-remoteapi/node_modules/@ekino && rm -rf examples/nextjs-with-contentful/node_modules/@ekino",
     "build": "lerna run build",
-    "examples/nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node server.js",
     "fmt": "prettier --color --write \"**/*.{js,jsx,ts,tsx,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "fmt:check": "prettier --color --list-different \"packages/*/**/*.{js,ts,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "lint:ts": "tslint -p . -c tslint.json \"packages/*/src/**/*.ts\"",
     "test": "jest packages",
     "test:all": "yarn fmt:check && yarn lint:ts && yarn test && yarn build",
-    "publish": "lerna publish"
+    "publish": "lerna publish",
+    "examples/nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node server.js",
+    "examples/nextjs-with-contentful": "cd examples/nextjs-with-contentful && node server.js"
   }
 }

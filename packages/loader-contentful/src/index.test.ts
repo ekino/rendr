@@ -46,7 +46,7 @@ describe("test loader", () => {
           expect(query).toEqual({
             content_type: "rendr_page",
             "fields.path": "/",
-            "fields.website.sys.id[in]": "632kl7enPots4PISSnD6DV",
+            "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
             include: 10,
             limit: 1
           });
@@ -58,7 +58,7 @@ describe("test loader", () => {
           expect(query).toEqual({
             content_type: "rendr_page",
             "fields.code": "root",
-            "fields.website.sys.id[in]": "632kl7enPots4PISSnD6DV",
+            "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
             include: 10,
             limit: 1
           });

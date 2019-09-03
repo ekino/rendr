@@ -37,7 +37,7 @@ On a nutshell, the architecture is something like this:
 
 The project uses `lerna` to handle multiple packages in one git repository. Packages are located in the `packages` folder. Each packages try to resolve one thing:
 
-### Base module
+### Base modules
 
 - **core**: contain main definitions (Page, Context), so its the main dependency of other packages. The package contains code to normalize page definition.
 - **aggregator**: a registry for service aggregators. A block from a page might need extra informations to be used. A closure can be attached to that registry, so it will be call once the page reference one known service. This can be used either on the Rendering engine or in the aggregation layer, of course the latter is better.

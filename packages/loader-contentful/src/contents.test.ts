@@ -67,7 +67,7 @@ describe("Contents loading from ", () => {
       getEntries: async <T>(query?: any) => {
         expect(query).toEqual({
           "fields.path": "/",
-          "fields.website": "632kl7enPots4PISSnD6DV",
+          "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
           limit: 1,
           content_type: "rendr_page"
         });
@@ -102,7 +102,7 @@ describe("Contents loading from ", () => {
       getEntries: async <T>(query?: any) => {
         expect(query).toEqual({
           "fields.path": "/",
-          "fields.website": "632kl7enPots4PISSnD6DV",
+          "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
           limit: 1,
           content_type: "rendr_page"
         });
@@ -165,23 +165,41 @@ describe("Contents loading from ", () => {
   });
 
   it("should return an article", async () => {
+    let call = 0;
     const client = getMockClient({
       getEntries: async <T>(query?: any) => {
-        query["fields.published_at[lte]"] = "fail to mock the date...";
+        call++;
 
-        expect(query).toEqual({
-          content_type: "rendr_article",
-          "fields.published_at[lte]": "fail to mock the date...",
-          "fields.slug": "headless-cms-challenge",
-          limit: 2
-        });
+        if (call === 1) {
+          expect(query).toEqual({
+            content_type: "rendr_website",
+            limit: 100,
+            skip: 0
+          });
 
-        return loadJson(`${__dirname}/__fixtures__/contents/article.json`);
+          return loadJson(`${__dirname}/__fixtures__/contents/websites.json`);
+        }
+
+        if (call === 2) {
+          query["fields.published_at[lte]"] = "fail to mock the date...";
+
+          expect(query).toEqual({
+            content_type: "rendr_article",
+            "fields.published_at[lte]": "fail to mock the date...",
+            "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
+            "fields.slug": "headless-cms-challenge",
+            limit: 2
+          });
+
+          return loadJson(`${__dirname}/__fixtures__/contents/article.json`);
+        }
       }
     });
 
     expect(
-      await GetArticle(client, "headless-cms-challenge")
+      await GetArticle(client, "headless-cms-challenge", {
+        domain: "ekino.co.uk"
+      })
     ).toMatchSnapshot();
   });
 });

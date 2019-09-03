@@ -114,9 +114,13 @@ function createAuthor(migration) {
     displayField: "name"
   });
 
-  createSymbol(author, "name", "Name");
+  createSymbol(author, "name", "Name", {
+    required: true
+  });
   createSymbol(author, "job_title", "Job Title");
-  createSymbol(author, "slug", "Slug");
+  createSymbol(author, "slug", "Slug", {
+    required: true
+  });
   createSymbol(author, "social_twitter", "Twitter Account");
   createSymbol(author, "social_facebook", "Facebook Account");
   createSymbol(author, "social_linkedin", "Linkedin Account");
@@ -131,8 +135,11 @@ function createWebsite(migration) {
     displayField: "name"
   });
 
-  createSymbol(website, "name", "Name");
+  createSymbol(website, "name", "Name", {
+    required: true
+  });
   createField(website, "domains", "Domains", {
+    required: true,
     type: "Array",
     items: {
       type: "Symbol",
@@ -140,12 +147,16 @@ function createWebsite(migration) {
     }
   });
 
-  createSymbol(website, "path", "Path");
+  createSymbol(website, "path", "Path", {
+    required: true
+  });
 
   createSymbol(website, "culture", "Culture");
   createSymbol(website, "country_code", "Country Code");
   createInteger(website, "order", "Order");
-  createBoolean(website, "enabled", "Enabled");
+  createBoolean(website, "enabled", "Enabled", {
+    required: true
+  });
 }
 
 function createDefault(migration, code, opts) {
@@ -154,8 +165,11 @@ function createDefault(migration, code, opts) {
     displayField: "internal_title"
   });
 
-  createSymbol(block, "internal_title", "Internal Title");
+  createSymbol(block, "internal_title", "Internal Title", {
+    required: true
+  });
   createSymbol(block, "container", "Container", {
+    required: true,
     validations: [
       {
         in: getDefaultContainerNames()
@@ -202,13 +216,17 @@ function createArticle(migration) {
     displayField: "title"
   });
 
-  createSymbol(article, "title", "Page title");
+  createSymbol(article, "title", "Page title", {
+    required: true
+  });
   createSymbol(article, "type", "Type");
   createText(article, "abstract", "Abstract");
   createSymbol(article, "seo_description", "Seo Description");
   createSymbol(article, "seo_keywords", "Seo Keywords");
 
-  createSymbol(article, "slug", "Slug");
+  createSymbol(article, "slug", "Slug", {
+    required: true
+  });
 
   createField(article, "blocks", "Blocks", {
     type: "Array",
@@ -224,7 +242,8 @@ function createArticle(migration) {
   });
 
   createField(article, "published_at", "Publication Date", {
-    type: "Date"
+    type: "Date",
+    required: true
   });
 
   createField(article, "authors", "Authors", {
@@ -263,7 +282,9 @@ function createPage(migration) {
     displayField: "title"
   });
 
-  createSymbol(page, "title", "Page title");
+  createSymbol(page, "title", "Page title", {
+    required: true
+  });
   createSymbol(page, "seo_description", "Seo Description");
   createSymbol(page, "seo_keywords", "Seo Keywords");
   createSymbol(page, "extends", "Extends", {
@@ -299,6 +320,7 @@ function createPage(migration) {
   });
 
   createSymbol(page, "layout", "Layout", {
+    required: true,
     validations: [
       {
         in: ["default", "error"]
@@ -309,7 +331,8 @@ function createPage(migration) {
   createInteger(page, "ttl", "Time-To-Live");
 
   createField(page, "published_at", "Publication Date", {
-    type: "Date"
+    type: "Date",
+    required: true
   });
 
   createField(page, "settings", "Settings", {

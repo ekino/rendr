@@ -18,6 +18,7 @@ const migrations = async () => {
   await run("01-setup");
   await run("02-update-published-at");
   await run("03-update-slug");
+  await run("04-update-bulk");
 };
 
 migrations();

@@ -130,14 +130,16 @@ export function createPage(data: any = {}): Page {
  */
 export function createContext(
   req: IncomingMessage | { url: string },
-  res: ServerResponse
+  res?: ServerResponse
 ): RequestCtx {
-  const isServerSide = res ? true : false;
-  const asPath = req.url;
-
+  // default to client, why not!
+  let isServerSide = false;
   let fullUrl = req.url;
 
+  const asPath = req.url;
+
   if (req instanceof IncomingMessage) {
+    isServerSide = true;
     fullUrl = `https://${req.headers["host"]}${req.url}`;
   }
 
@@ -157,7 +159,8 @@ export function createContext(
     // @ts-ignore
     req: isServerSide ? req : null,
     // @ts-ignore
-    res: isServerSide ? res : null
+    res: isServerSide ? res : null,
+    settings: {}
   };
 
   return ctx;

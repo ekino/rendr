@@ -59,7 +59,10 @@ export interface RequestCtx {
   isServerSide: boolean;
   isClientSide: boolean;
   req: IncomingMessage;
-  res: ServerResponse;
+  res?: ServerResponse;
+  // anything that need to be set during the life time of the request,
+  // this data will no be exposed on the end user.
+  settings: Settings;
 }
 
 export interface Normalizer {

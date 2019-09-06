@@ -26,7 +26,7 @@ export function createDynamicPage(
         // server side
         ctx = createContext(originalCtx.req, originalCtx.res);
       } else {
-        ctx = createContext({ url: originalCtx.asPath }, null);
+        ctx = createContext({ url: originalCtx.asPath });
       }
 
       const page = await loader(ctx);

@@ -18,17 +18,24 @@ describe("test API Loader", () => {
       "accept-encoding": "gzip"
     };
 
-    const strPage = JSON.stringify(createPage({}));
+    const rawData = JSON.stringify(createPage({}));
+    let largeData = "[";
+    for (let i = 0; i < 128; i++) {
+      largeData += rawData + ",";
+    }
+    largeData += "{}]";
+
     let pos = 0;
+    let cptCall = 0;
     const resp = {
       headers: {
         "x-rendr-content-type": "rendr/document"
       },
       data: new Readable({
         read(size) {
-          const content = strPage.substr(pos, size);
+          const content = largeData.substr(pos, size);
           pos = pos + size;
-
+          cptCall++;
           this.push(content.length ? content : null);
         }
       })
@@ -51,6 +58,7 @@ describe("test API Loader", () => {
     const result = await loader(ctx);
 
     expect(result).toMatchSnapshot();
+    expect(cptCall).toBe(3);
   });
 
   it("test non rendr/document mode, ie a Binary File", async () => {
@@ -63,7 +71,7 @@ describe("test API Loader", () => {
       "accept-encoding": "gzip"
     };
 
-    const strPage = "the content to be streamed...";
+    let strPage = "the content to be streamed...";
     let pos = 0;
     const resp = {
       headers: {

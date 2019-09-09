@@ -11,7 +11,6 @@
     },
     "dependencies": {
         "@ekino/rendr-core": "0.0.8",
-        "@types/axios": "^0.14.0",
         "axios": "^0.19.0",
         "path-match": "^1.2.4",
         "url-parse": "^1.4.4"

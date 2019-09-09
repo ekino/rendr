@@ -90,6 +90,7 @@ export function createApiLoader(baseUrl: string): Loader {
 function pipe(source: Readable, dest: Writable): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     source.pipe(dest);
+
     source.on("end", (err: Error) => {
       if (err) {
         reject(err);
@@ -109,8 +110,10 @@ function pipe(source: Readable, dest: Writable): Promise<void> {
 function pipePageToClient(source: Readable): Promise<Page> {
   let data = "";
   const dest = new Writable({
-    write(chunk) {
+    write(chunk, _, callback) {
       data += chunk;
+
+      callback();
     }
   });
 

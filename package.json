@@ -37,7 +37,7 @@
     "test": "jest packages",
     "test:all": "yarn fmt:check && yarn lint:ts && yarn test && yarn build",
     "publish": "lerna publish",
-    "examples/nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node server.js",
+    "examples/nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node dev.js",
     "examples/nextjs-with-contentful": "cd examples/nextjs-with-contentful && node server.js"
   }
 }

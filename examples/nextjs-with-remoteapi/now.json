@@ -1,0 +1,19 @@
+{
+  "name": "nextjs-with-remoteapi",
+  "version": 2,
+  "regions": ["cdg1"],
+  "public": true,
+  "builds": [
+    { "src": "next.config.js", "use": "@now/next"},
+    {"src": "server.js", "use": "@now/node" , "config": { "helpers": "false" }}
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "RENDR_API_URL": "https://nextjs-with-remoteapi.rande.now.sh"
+  },
+  "routes": [
+    { "src": "/ping", "dest": "ping"},
+    { "src": "/api/.*", "dest": "/server.js"},
+    { "src": "^/(([^_]{1}.*)|$)", "dest": "rendr"}
+  ]
+}

@@ -892,6 +892,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@ekino/rendr-aggregator@next":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@ekino/rendr-aggregator/-/rendr-aggregator-0.0.8.tgz#bccba8bc68f134b070fbc33cc9b67b2acad95d07"
+  integrity sha512-fMwk4vai1o1I6bk6mXBNNEp+hcPZ7yWLFZWEAlweyz0rJC/Kv8j420fZBG4TBKcPIFrs9rfTNg+m/z9sqm3C9g==
+  dependencies:
+    "@ekino/rendr-core" "0.0.8"
+
 "@ekino/rendr-api@latest":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@ekino/rendr-api/-/rendr-api-0.0.3.tgz#86fdb11441193ee9bbae84eed02483dfdce2e9d0"
@@ -899,6 +906,15 @@
   dependencies:
     "@ekino/rendr-core" "0.0.3"
     "@ekino/rendr-loader" "0.0.3"
+    express "^4.16.4"
+
+"@ekino/rendr-api@next":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@ekino/rendr-api/-/rendr-api-0.0.8.tgz#7fc7995e240e27696e89257801a08388e99b9020"
+  integrity sha512-LrNm8epjNAiVdtNsFQYLhPrMKfjiEvsbVuUFNNSVi2RrwIaTKaw2QEB5JWJYlY/QF/1Y2d8Bmweetba3GQlwrw==
+  dependencies:
+    "@ekino/rendr-core" "0.0.8"
+    "@ekino/rendr-loader" "0.0.8"
     express "^4.16.4"
 
 "@ekino/rendr-core@0.0.3":
@@ -948,6 +964,17 @@
     path-match "^1.2.4"
     url-parse "^1.4.4"
 
+"@ekino/rendr-loader@next":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@ekino/rendr-loader/-/rendr-loader-0.0.8.tgz#6b256c00f1e116cc8d9e78bfe3cde209dc8a0adf"
+  integrity sha512-r14GRiai+ncwFi+txsxlpOveid9DjBD9Ysi9cH3CxfRPdEidqKOE0Dr0R/rybHj/aNEgYaxrrXCjkDw4sHLlTw==
+  dependencies:
+    "@ekino/rendr-core" "0.0.8"
+    "@types/axios" "^0.14.0"
+    axios "^0.19.0"
+    path-match "^1.2.4"
+    url-parse "^1.4.4"
+
 "@ekino/rendr-rendering-nextjs@latest":
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/@ekino/rendr-rendering-nextjs/-/rendr-rendering-nextjs-0.0.6.tgz#b06b9ec1522ae5dafa065e59d3858765fae52ad0"
@@ -956,6 +983,15 @@
     "@ekino/rendr-core" "0.0.6"
     "@ekino/rendr-loader" "0.0.6"
     "@ekino/rendr-template-react" "0.0.6"
+
+"@ekino/rendr-rendering-nextjs@next":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@ekino/rendr-rendering-nextjs/-/rendr-rendering-nextjs-0.0.8.tgz#38ff0384a413bccc665540889a806ad0149499de"
+  integrity sha512-POfOEqvPS6/SBg5j0/tYHKHu6r3a2TM6BVa/9xu4wgQsdUgbutC8EnrYU10Va8xFx6a6uWALIOTqAsfzZbxaiA==
+  dependencies:
+    "@ekino/rendr-core" "0.0.8"
+    "@ekino/rendr-loader" "0.0.8"
+    "@ekino/rendr-template-react" "0.0.8"
 
 "@ekino/rendr-template-react@0.0.6":
   version "0.0.6"

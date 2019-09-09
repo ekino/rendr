@@ -10,6 +10,7 @@ const rendrCore = require("@ekino/rendr-core");
  */
 function basePage(page, ctx) {
   page.template = "rendr";
+  page.path = ctx.pathname;
   page.head.titleTemplate = "Ekino - %s";
 
   page.blocks.push({
@@ -39,7 +40,7 @@ const basePageLoader = loader => {
           return;
         }
 
-        return basePage(page);
+        return basePage(page, ctx);
       })
       .catch(err => {
         // something wrong happen
@@ -120,6 +121,21 @@ module.exports.loader = basePageLoader(
         },
         order: 0
       });
+
+      return page;
+    },
+    "/error/:statusCode": (page, ctx) => {
+      // add related blocks for the page
+      page.blocks.push({
+        container: "body",
+        type: "rendr.text",
+        settings: {
+          message: `Error ${ctx.params.statusCode}`
+        },
+        order: 0
+      });
+
+      page.statusCode = ctx.params.statusCode;
 
       return page;
     },

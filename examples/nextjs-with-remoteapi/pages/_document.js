@@ -1,13 +1,12 @@
-import Document, { Head, Main, NextScript } from "next/document";
+import { updateNextData } from "@ekino/rendr-rendering-nextjs";
+import Document from "next/document";
 
-class MyDocument extends Document {
+export default class MyDocument extends Document {
   constructor(props) {
-    if (!props.__NEXT_DATA__.err) {
-      props.__NEXT_DATA__.page = "/_rendr";
-    }
+    // add this call, so all rendr page can be rendered
+    // on the client side
+    updateNextData(props);
 
     super(props);
   }
 }
-
-export default MyDocument;

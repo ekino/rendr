@@ -31,21 +31,41 @@ const handlers = {
 };
 
 // initialize related code required to make the page works.
-const apiLoader = createApiLoader("http://localhost:3000/api");
 const pageAggregator = createAggregator(handlers);
 
 const loader = async ctx => {
   // load the page from the memory
-  let page = await apiLoader(ctx);
+  const apiLoader = createApiLoader(getApiUrl(ctx));
+
+  const page = await apiLoader(ctx);
 
   if (!page) {
     return;
   }
 
   // once page has been loaded, we aggregate data if handler exist
-  page = await pageAggregator(page, ctx);
-
-  return page;
+  return await pageAggregator(page, ctx);
 };
+
+/**
+ * Find the API URL to use with the current application
+ *
+ * @param {*} ctx
+ *
+ * @returns string
+ */
+function getApiUrl(ctx) {
+  if (ctx.isClientSide) {
+    return `${location.origin}/api`;
+  }
+
+  // are we on now.sh ?
+  if (ctx.req.headers["x-now-deployment-url"]) {
+    return `https://${ctx.req.headers["x-now-deployment-url"]}/api`;
+  }
+
+  // dev default value ?
+  return "http://localhost:3000/api";
+}
 
 export default createPage(components, templates, loader);

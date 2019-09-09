@@ -33,7 +33,8 @@ export function createApiLoader(baseUrl: string): Loader {
       }
 
       headers["accept"] = ctx.req.headers["accept"];
-      headers["accept-encoding"] = ctx.req.headers["accept-encoding"];
+      // please note: axios does not support br (brotli)
+      headers["accept-encoding"] = "gzip, deflate";
 
       responseType = "stream";
     }

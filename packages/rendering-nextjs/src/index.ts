@@ -1,5 +1,4 @@
-import React from "react";
-import { Container, AppContext } from "next/app";
+import { AppContext } from "next/app";
 import { NextComponentType, NextPageContext } from "next";
 
 import { Loader } from "@ekino/rendr-loader";
@@ -32,6 +31,11 @@ export async function getInitialProps(
 
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
+  }
+
+  if (!pageProps) {
+    // component does not return anything ...
+    pageProps = {};
   }
 
   // if it does not match a 404 code, return the component.

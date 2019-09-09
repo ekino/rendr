@@ -8,12 +8,11 @@
     {"src": "server.js", "use": "@now/node" , "config": { "helpers": "false" }}
   ],
   "env": {
-    "NODE_ENV": "production",
-    "RENDR_API_URL": "https://nextjs-with-remoteapi.rande.now.sh"
+    "NODE_ENV": "production"
   },
   "routes": [
     { "src": "/ping", "dest": "ping"},
     { "src": "/api/.*", "dest": "/server.js"},
-    { "src": "^/(([^_]{1}.*)|$)", "dest": "rendr"}
+    { "src": "^/(([^_]{1}.*)|$)", "dest": "_rendr"}
   ]
 }

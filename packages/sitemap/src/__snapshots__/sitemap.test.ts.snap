@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test sitemaps code test sitemap with index file 1`] = `
+Array [
+  "sitemap_1.xml",
+  "sitemap.xml",
+  "sitemap_2.xml",
+]
+`;
+
+exports[`Test sitemaps code test sitemap with no index file 1`] = `
+Array [
+  "sitemap_1.xml",
+]
+`;
+
+exports[`Test sitemaps code test sitemap with no index file 2`] = `"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><urlset xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\"><url><loc>https://localhost/0/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/1/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/2/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/3/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/4/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/5/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/6/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/7/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/8/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/9/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/0/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/1/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/2/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/3/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url><url><loc>https://localhost/4/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</loc><lastmod>2005-01-01</lastmod><priority>0.8</priority></url></urlset>"`;
+
+exports[`Test sitemaps code test toSitemapEntry with date 1`] = `"<url><loc>https://myurl.com/</loc><lastmod>2019-10-24T14:16:29.329Z</lastmod><priority>0.8</priority></url>"`;

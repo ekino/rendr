@@ -25,11 +25,10 @@
   },
   "private": true,
   "workspaces": [
-    "packages/*",
-    "examples/*"
+    "packages/*"
   ],
   "scripts": {
-    "setup": "yarn install && lerna bootstrap && rm -rf examples/nextjs-with-remoteapi/node_modules/@ekino && rm -rf examples/nextjs-with-contentful/node_modules/@ekino",
+    "setup": "rm -rf node_modules packages/*/node_modules examples/*/node_modules && yarn install && lerna bootstrap && rm -rf examples/nextjs-with-remoteapi/node_modules/@ekino && rm -rf examples/nextjs-with-contentful/node_modules/@ekino",
     "build": "lerna run build",
     "fmt": "prettier --color --write \"**/*.{js,jsx,ts,tsx,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "fmt:check": "prettier --color --list-different \"packages/*/**/*.{js,ts,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",

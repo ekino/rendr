@@ -1,9 +1,11 @@
-import { Page, Cache, Head, BlockDefinition, RequestCtx } from "./types";
 import { IncomingMessage, ServerResponse } from "http";
 import parse from "url-parse";
 
+import { Page, Cache, Head, BlockDefinition, RequestCtx } from "./types";
+
 export * from "./types";
 export * from "./errors";
+export * from "./generator";
 
 export function isObject(data: any): boolean {
   return data !== null && typeof data === "object";
@@ -153,8 +155,8 @@ export function createContext(
     // routing to analyse the pathname, this will be done later on
     // in the query process
     params: {},
-    asPath: asPath,
-    isServerSide: isServerSide,
+    asPath,
+    isServerSide,
     isClientSide: !isServerSide,
     // @ts-ignore
     req: isServerSide ? req : null,

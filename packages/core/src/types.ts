@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
+import { Writable } from "stream";
 
 export interface BlockDefinition {
   type: string;
@@ -65,10 +66,30 @@ export interface RequestCtx {
   settings: Settings;
 }
 
-export interface Normalizer {
-  (entry: any): BlockDefinition;
-}
+export type Normalizer = (entry: any) => BlockDefinition;
 
 export type NormalizerList = {
   [index: string]: Normalizer;
 };
+
+export interface PageReference {
+  url: string;
+  group: string;
+  settings: Settings;
+}
+
+export type AsyncPageReferenceGenerator = AsyncGenerator<
+  PageReference,
+  void,
+  void | unknown
+>;
+export type PageReferenceGenerator = () => AsyncPageReferenceGenerator;
+
+export interface PageReferenceGenerators {
+  [index: string]: PageReferenceGenerator;
+}
+
+export type TransformGenerator = (
+  data: any
+) => Promise<string | Buffer> | string | Buffer;
+export type StreamCreator = (name: string) => Writable;

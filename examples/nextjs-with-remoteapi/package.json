@@ -7,6 +7,7 @@
         "@ekino/rendr-api": "next",
         "@ekino/rendr-loader": "next",
         "@ekino/rendr-rendering-nextjs": "next",
+        "@ekino/rendr-sitemap": "next",
         "@zeit/next-bundle-analyzer": "^0.1.2",
         "@zeit/next-css": "^1.0.1",
         "@zeit/next-sass": "^1.0.1",
@@ -15,7 +16,7 @@
         "jest": "24.9.0",
         "lerna": "^3.13.0",
         "license-checker": "^25.0.1",
-        "next": "^8.0.1",
+        "next": "latest",
         "node-sass": "^4.11.0",
         "prettier": "^1.16.4",
         "react": "^16.8.1",
@@ -25,6 +26,6 @@
     "scripts": {
         "setup": "yarn install",
         "build": "next build",
-        "start": "NODE_ENV=production node dev.js"
+        "start": "NODE_ENV=development node dev.js"
     }
 }

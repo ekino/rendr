@@ -13,6 +13,7 @@
   "routes": [
     { "src": "/ping", "dest": "ping"},
     { "src": "/api/.*", "dest": "/server.js"},
+    { "src": "/sitemap.xml", "dest": "/server.js"},
     { "src": "^/(([^_]{1}.*)|$)", "dest": "_rendr"}
   ]
 }

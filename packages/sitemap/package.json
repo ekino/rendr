@@ -1,7 +1,7 @@
 {
     "name": "@ekino/rendr-sitemap",
     "license": "MIT",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "main": "dist/lib/index.js",
     "typing": "dist/lib/index.d.ts",
     "module": "dist/lib-esm/index.js",
@@ -16,8 +16,8 @@
         "build": "tsc && tsc -m es6 --outDir dist/lib-esm && tsc -m amd --outFile dist/_bundles/rendr-core.js"
     },
     "dependencies": {
-        "@ekino/rendr-core": "0.0.9",
-        "@ekino/rendr-loader": "0.0.9",
+        "@ekino/rendr-core": "0.0.10",
+        "@ekino/rendr-loader": "0.0.10",
         "express": "^4.16.4"
     }
 }

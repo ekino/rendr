@@ -3,15 +3,13 @@ import {
   createPageReference,
   transformGenerator,
   AsyncPageReferenceGenerator,
-  StreamCreator
+  StreamCreator,
+  pipeIteratorToWritable
 } from "@ekino/rendr-core";
 
 import { toSitemapEntry, createSitemapWritable } from "./sitemap";
 
-import { pipeline as StreamPipeline, Readable, Writable } from "stream";
-import util from "util";
-
-const pipeline = util.promisify(StreamPipeline);
+import { Writable } from "stream";
 
 async function* generatorLoop(i: number): AsyncPageReferenceGenerator {
   for (let x = 0; x < i; x++) {
@@ -59,9 +57,8 @@ describe("Test sitemaps code", () => {
     const sitemapWritable = createSitemapWritable(streamCreator, {
       basePathIndex: "https://localhost"
     });
-    const pageInputStream = Readable.from(iter);
 
-    await pipeline(pageInputStream, sitemapWritable);
+    await pipeIteratorToWritable(iter, sitemapWritable);
 
     expect(files).toMatchSnapshot();
     // 4 is coming from open and close of the sitemap file
@@ -96,9 +93,8 @@ describe("Test sitemaps code", () => {
     const sitemapWritable = createSitemapWritable(streamCreator, {
       basePathIndex: ""
     });
-    const pageInputStream = Readable.from(iter);
 
-    await pipeline(pageInputStream, sitemapWritable);
+    await pipeIteratorToWritable(iter, sitemapWritable);
 
     expect(files).toMatchSnapshot();
     expect(buffer).toMatchSnapshot();

@@ -2,6 +2,9 @@
     "name": "@ekino/rendr-demo-nextjs-with-remoteapi",
     "version": "0.0.9",
     "private": true,
+    "engines": {
+        "node": "10.x"
+    },
     "dependencies": {
         "@ekino/rendr-aggregator": "next",
         "@ekino/rendr-api": "next",

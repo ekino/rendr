@@ -38,7 +38,7 @@ export async function GetWebsites(
   return (await client.getEntries<ContentfulWebsite>(query)).items
     .filter(item => validEntry(item))
     .sort((a, b) => {
-      return a.fields.order < b.fields.order ? 0 : 1;
+      return a.fields.order === b.fields.order ? 0 : (a.fields.order > b.fields.order ? 1 : -1);
     });
 }
 

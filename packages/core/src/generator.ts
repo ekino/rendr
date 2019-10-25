@@ -5,6 +5,11 @@ import {
   TransformGenerator
 } from "./types";
 
+import { finished as StreamFinished, Writable } from "stream";
+import util from "util";
+
+const finished = util.promisify(StreamFinished);
+
 export function createPageReference(
   url: string,
   settings?: Settings
@@ -40,4 +45,17 @@ export async function* transformGenerator(
   for await (const curr of generator) {
     yield await transform(curr);
   }
+}
+
+export async function pipeIteratorToWritable(
+  iterator: AsyncGenerator<string | Buffer, void, unknown>,
+  writable: Writable
+) {
+  for await (const current of iterator) {
+    writable.write(current);
+  }
+
+  writable.end();
+
+  await finished(writable);
 }

@@ -2,7 +2,8 @@ import {
   PageReference,
   StreamCreator,
   PageReferenceGenerator,
-  transformGenerator
+  transformGenerator,
+  pipeIteratorToWritable
 } from "@ekino/rendr-core";
 import { pipeline as StreamPipeline, Writable, Readable } from "stream";
 import Express from "express";
@@ -32,9 +33,8 @@ export function createSitemapRequestHandler(
     const sitemapWritable = createSitemapWritable((name: string) => res, {
       basePathIndex: ""
     });
-    const pageInputStream = Readable.from(iter);
 
-    await pipeline(pageInputStream, sitemapWritable);
+    await pipeIteratorToWritable(iter, sitemapWritable);
   };
 }
 

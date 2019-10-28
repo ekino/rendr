@@ -19,7 +19,7 @@ export type EntryNormalizerList = {
   [index: string]: EntryNormalizer;
 };
 
-export interface ClientFinder {
+export interface ClientFactory {
   (ctx: RequestCtx): ContentfulClientApi;
 }
 

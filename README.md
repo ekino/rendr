@@ -10,7 +10,7 @@ When do you need this kind of solution?
 
 - You have internal data sources (microservices or legacy system)
 - You have a CMS but don't want to add custom codes or don't want to expose it to the world
-- You CMS cannot do the aggregation from different data sources
+- Your CMS cannot do the aggregation from different data sources
 - You need to add some cache mechanisms to protect your internals systems
 
 Understanding the different layers
@@ -40,7 +40,7 @@ The project uses `lerna` to handle multiple packages in one git repository. Pack
 ### Base modules
 
 - **core**: contain main definitions (Page, Context), so its the main dependency of other packages. The package contains code to normalize page definition.
-- **aggregator**: a registry for service aggregators. A block from a page might need extra informations to be used. A closure can be attached to that registry, so it will be call once the page reference one known service. This can be used either on the Rendering engine or in the aggregation layer, of course the latter is better.
+- **aggregator**: a registry for service aggregators. A block from a page might need extra informations to be used. A closure can be attached to that registry, so it will be call once the page reference knows about the service. This can be used either on the Rendering engine or in the aggregation layer, of course the latter is better.
 - **api**: expose using json format a Page definition coming from a loader.
 - **loader**: load a page from a data source and return a page object with all information loaded from the datasource. It is possible to encapsulate this loader by others loaders if you need to add more information into the page definition.
 - **template-react**: take a page definition and render the page to the client. This package works with React, contains registry to store block types with their rendering components.

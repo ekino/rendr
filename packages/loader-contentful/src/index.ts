@@ -8,7 +8,7 @@ import {
 
 import {
   EntryNormalizer,
-  ClientFinder,
+  ClientFactory,
   ContentfulPage,
   Website
 } from "./types";
@@ -17,12 +17,12 @@ export * from "./normalizer";
 export * from "./contents";
 
 export function createContentfulLoader(
-  clientFinder: ClientFinder,
+  clientFactory: ClientFactory,
   normalizer: EntryNormalizer
 ): Loader {
   return async function(ctx: RequestCtx) {
     // create the query
-    const client = clientFinder(ctx);
+    const client = clientFactory(ctx);
 
     // find the related site
     let site: Website;

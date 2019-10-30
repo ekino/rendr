@@ -23,10 +23,11 @@ describe("test inmemory code", () => {
   it("test createAggregator - empty init", async () => {
     const ctx = createContext();
     const aggregator = createAggregator({});
-
-    const page = await aggregator(new Page(), ctx);
+    const page = new Page();
+    await aggregator(ctx, page, () => {});
 
     expect(page).not.toBeNull();
+    // @ts-ignore
     expect(page.statusCode).toBe(200);
   });
 
@@ -49,7 +50,7 @@ describe("test inmemory code", () => {
       settings: {}
     });
 
-    page = await aggregator(page, ctx);
+    await aggregator(ctx, page, () => {});
 
     expect(page).toMatchSnapshot();
   });

@@ -1,6 +1,7 @@
 const express = require("express");
-const next = require("next");
 const rendrApi = require("@ekino/rendr-api");
+const next = require("next");
+const services = require("./dist").default;
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({
@@ -8,8 +9,6 @@ const app = next({
   quiet: false
 });
 const handle = app.getRequestHandler();
-
-const services = require("./services/api");
 
 app.prepare().then(() => {
   const server = express();

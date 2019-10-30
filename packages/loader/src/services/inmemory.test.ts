@@ -21,7 +21,7 @@ function createContext(data: {}): RequestCtx {
 }
 
 const paths: InMemorySettings = {
-  "/blog/:id": (basePage, ctx) => {
+  "/blog/:id": (ctx: RequestCtx, basePage: Page) => {
     basePage.statusCode = 419;
 
     // @ts-ignore
@@ -29,7 +29,7 @@ const paths: InMemorySettings = {
 
     return Promise.resolve(basePage);
   },
-  "/": basePage => {
+  "/": (_ctx: RequestCtx, basePage: Page) => {
     basePage.statusCode = 418;
     return Promise.resolve(basePage);
   }
@@ -58,7 +58,9 @@ describe("test inmemory code", () => {
 
       try {
         const result = await loader(
-          createContext({ pathname: check.pathname })
+          createContext({ pathname: check.pathname }),
+          new Page(),
+          () => {}
         );
 
         expect(result).not.toBeNull();

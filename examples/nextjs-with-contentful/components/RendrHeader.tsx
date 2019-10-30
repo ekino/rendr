@@ -1,7 +1,6 @@
-import Link from "next/link";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 
-export default function RendrHeader({ tracking, items, cities }) {
+export default function RendrHeader() {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">Rendr</Navbar.Brand>

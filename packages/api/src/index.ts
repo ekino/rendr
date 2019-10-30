@@ -1,7 +1,7 @@
 import Express from "express";
 
 import { Loader } from "@ekino/rendr-loader";
-import { createContext } from "@ekino/rendr-core";
+import { createContext, Page } from "@ekino/rendr-core";
 
 // should return a middleware api to return page definition through http
 export function createApi(loader: Loader): Express.RequestHandler {
@@ -12,7 +12,7 @@ export function createApi(loader: Loader): Express.RequestHandler {
 
     // a loader can also take over the on the response without
     // returning any page object: ie: streaming data to the client
-    const page = await loader(ctx);
+    const page = await loader(ctx, new Page(), () => null);
 
     if (!page) {
       return;

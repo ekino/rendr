@@ -1,6 +1,14 @@
 import Link from "next/link";
 
-export default function RendrText({ message, rawHtml, link }) {
+export default function RendrText({
+  message,
+  rawHtml,
+  link
+}: {
+  message: string;
+  rawHtml: string;
+  link: { href: string };
+}) {
   const components = [];
   if (rawHtml) {
     components.push(
@@ -18,5 +26,5 @@ export default function RendrText({ message, rawHtml, link }) {
     );
   }
 
-  return components;
+  return <>{components}</>;
 }

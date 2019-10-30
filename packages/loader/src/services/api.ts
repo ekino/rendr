@@ -1,4 +1,4 @@
-import { RequestCtx, createPage, Page } from "@ekino/rendr-core";
+import { createPage, Page } from "@ekino/rendr-core";
 import { Readable, Writable } from "stream";
 import Axios, { ResponseType } from "axios";
 
@@ -18,7 +18,7 @@ const headersToTransfers = [
 // However the pipe for raw binary are not likely to be run by the browser
 // as the server will stream the content, and so cannot be run by the browser.
 export function createApiLoader(baseUrl: string): Loader {
-  return async (ctx: RequestCtx) => {
+  return async (ctx, page, next) => {
     const url = `${baseUrl}${ctx.asPath}`;
 
     const headers: any = {
@@ -46,13 +46,14 @@ export function createApiLoader(baseUrl: string): Loader {
 
     if (!("x-rendr-content-type" in response.headers)) {
       // @todo: check how we can add a logger here
-      return;
+      return next();
     }
 
     // We are on the client side, so no need to pipe data to the client.
     // => already done by the server
     if (ctx.isClientSide) {
-      return createPage(response.data);
+      page = createPage(response.data);
+      return next(page);
     }
 
     // we need to pipe data to the client as we are running this code from the server

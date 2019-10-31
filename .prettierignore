@@ -1,5 +1,7 @@
 packages/*/dist
 examples/*/node_modules
+examples/*/.cache
 examples/*/.next
+examples/gatsby-with-remoteapi/public
 packages/cms-drupal
 .travis.yml

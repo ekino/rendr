@@ -2,7 +2,7 @@
 
 import { createPage } from "@ekino/rendr-rendering-nextjs";
 import { createAggregator } from "@ekino/rendr-aggregator";
-import { createApiLoader } from "@ekino/rendr-loader";
+import { createApiLoader, createChainedLoader } from "@ekino/rendr-loader";
 
 import dynamic from "next/dynamic";
 
@@ -33,19 +33,14 @@ const handlers = {
 // initialize related code required to make the page works.
 const pageAggregator = createAggregator(handlers);
 
-const loader = async ctx => {
-  // load the page from the memory
-  const apiLoader = createApiLoader(getApiUrl(ctx));
-
-  const page = await apiLoader(ctx);
-
-  if (!page) {
-    return;
-  }
-
-  // once page has been loaded, we aggregate data if handler exist
-  return await pageAggregator(page, ctx);
+// we wrap the createApiLoader in a loader so we have access
+// to the context to create the api loader dynamically
+const apiLoader = async (ctx, page, next) => {
+  const dynamicApiLoader = createApiLoader(getApiUrl(ctx));
+  return await dynamicApiLoader(ctx, page, next);
 };
+
+const loader = createChainedLoader([apiLoader, pageAggregator]);
 
 /**
  * Find the API URL to use with the current application

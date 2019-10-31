@@ -4,6 +4,11 @@ There are many challenges when doing Server Side Rendering with React (or any ot
 
 This project try to resolve these two challenges.
 
+## Getting started
+
+Once you are familliar with the architecture described in this document, use following [guide](./getting-started.md) to create your first Rendr API.
+Then we will create a simple Rendr Engine following this second [guide](./getting-started-2.md)
+
 ## Architecture
 
 When do you need this kind of solution?

@@ -1,6 +1,8 @@
+// @ts-ignore
 import css from "./RendrTemplate.scss";
 
 import { Container } from "react-bootstrap";
+import { TemplateProps } from "@ekino/rendr-template-react";
 
 {
   /* <Container>
@@ -16,7 +18,11 @@ import { Container } from "react-bootstrap";
 </Container>; */
 }
 
-export default function RendrTemplate({ containerRenderer, page, blocks }) {
+export default function RendrTemplate({
+  containerRenderer,
+  page,
+  blocks
+}: TemplateProps) {
   return (
     <Container>
       <header role="banner">{containerRenderer("header", blocks)}</header>

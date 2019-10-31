@@ -26,7 +26,7 @@ export function createDynamicPage(
 
       // should throw an exception if the loader cannot
       // find the page ...
-      const page = await loader(ctx);
+      const page = await loader(ctx, new Page(), () => null);
 
       if (ctx.isServerSide && page instanceof Page) {
         ctx.res.statusCode = page.statusCode;

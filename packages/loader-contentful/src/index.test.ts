@@ -1,5 +1,5 @@
 import { createClient } from "contentful";
-import { RequestCtx } from "@ekino/rendr-core";
+import { RequestCtx, Page } from "@ekino/rendr-core";
 
 import { createContentfulLoader } from "./index";
 import { createNormalizer } from "./normalizer";
@@ -78,7 +78,7 @@ describe("test loader", () => {
 
     const ctx = createContext({});
 
-    const page = await loader(ctx);
+    const page = await loader(ctx, new Page(), () => {});
 
     expect(page).toMatchSnapshot();
   });

@@ -11,7 +11,7 @@ As you are going to enter to a new home, please make sure you respect those 3 ba
 ## Contributions
 
 Everything is there for you to contribute on the project:
-    
+
 - a set of packages with small dependencies and limited scope.
 - a full set example with nextjs using the code from packages (build)
 - unit tests to ensure you don't introduce any regression.
@@ -36,3 +36,13 @@ You can try to run the demo to check if everything is working fine:
 
 The demo is a sandbox with some testing use cases to make sure we leverage all features from the NextJS framework. Please note, even if the example work with NextJS, most of the code can work with any others solutions as long you write the proper bridge.
 
+## Contentful example
+
+In order to contribute to the contentful example you will have to build it first.
+Since it doesn't have typescript in its dependencies you will have to install [typescript](https://www.typescriptlang.org/#download-links) globally first.
+
+    cd examples/nextjs-with-contentful   # navigate to the child directory
+    yarn setup                           # to install dependencies
+    yarn build                           # to build the services and the next project
+    cd ../..                             # navigate back to the main directory
+    yarn examples/nextjs-with-contentful # run the exapmle as normal

@@ -15,12 +15,13 @@ import {
 import { GetWebsite } from "./contents";
 export * from "./normalizer";
 export * from "./contents";
+export * from "./types";
 
 export function createContentfulLoader(
   clientFactory: ClientFactory,
   normalizer: EntryNormalizer
 ): Loader {
-  return async function(ctx: RequestCtx) {
+  return async function(ctx, page, next) {
     // create the query
     const client = clientFactory(ctx);
 

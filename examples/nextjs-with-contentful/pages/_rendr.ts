@@ -1,6 +1,7 @@
 import { createPage } from "@ekino/rendr-rendering-nextjs";
 import { createAggregator } from "@ekino/rendr-aggregator";
-import { createApiLoader } from "@ekino/rendr-loader";
+import { createApiLoader, createChainedLoader } from "@ekino/rendr-loader";
+import { RequestCtx, BlockDefinition } from "@ekino/rendr-core";
 
 import dynamic from "next/dynamic";
 
@@ -25,25 +26,14 @@ const templates = {
 // ie: handlers aggregate values and set them into a block.
 //  => Aggregation at the view level is not that good but can be useful in some cases.
 const handlers = {
-  "rendr.agencies": (block, ctx) => Promise.resolve(block)
+  "rendr.agencies": (block: BlockDefinition, ctx: RequestCtx) =>
+    Promise.resolve(block)
 };
 
 // initialize related code required to make the page works.
 const apiLoader = createApiLoader("http://localhost:3000/api");
 const pageAggregator = createAggregator(handlers);
 
-const loader = async ctx => {
-  // load the page from the memory
-  let page = await apiLoader(ctx);
-
-  if (!page) {
-    return;
-  }
-
-  // once page has been loaded, we aggregate data if handler exist
-  page = await pageAggregator(page, ctx);
-
-  return page;
-};
+const loader = createChainedLoader([apiLoader, pageAggregator]);
 
 export default createPage(components, templates, loader);

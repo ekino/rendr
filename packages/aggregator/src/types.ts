@@ -10,5 +10,3 @@ export type Handler = (
 ) => Promise<BlockDefinition>;
 
 export type HandlerRegistry = (code: string) => Handler;
-
-export type PageAggregator = (page: Page, ctx: RequestCtx) => Promise<Page>;

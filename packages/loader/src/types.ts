@@ -1,15 +1,21 @@
 import { Page, RequestCtx } from "@ekino/rendr-core";
 
-export type Loader = (ctx: RequestCtx) => Promise<Page | void> | void;
+export type MaybePage = Promise<Page | void> | Page | void;
 
-export type PageCreator = (basePage: Page, ctx: RequestCtx) => Promise<Page>;
+export type Loader = (
+  ctx: RequestCtx,
+  page: Page,
+  next: (page?: MaybePage) => MaybePage
+) => MaybePage;
+
+export type PageBuilder = (ctx: RequestCtx, page: Page) => MaybePage;
 
 export type RouteConfiguration = {
   path: string;
   matcher: (path: string) => {} | undefined;
-  pageCreator: PageCreator;
+  pageBuilder: PageBuilder | Loader;
 };
 
 export interface InMemorySettings {
-  [index: string]: PageCreator;
+  [index: string]: PageBuilder | Loader;
 }

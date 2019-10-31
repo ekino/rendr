@@ -1,11 +1,12 @@
-import { PageAggregator, HandlerList, HandlerRegistry } from "./types";
+import { HandlerList } from "./types";
 import { Page, RequestCtx } from "@ekino/rendr-core";
+import { Loader } from "@ekino/rendr-loader";
 import { createHandlerRegistry } from "./services/registries";
 
-export function createAggregator(handlers: HandlerList): PageAggregator {
+export function createAggregator(handlers: HandlerList): Loader {
   const handlerRegistry = createHandlerRegistry(handlers);
 
-  return async (page: Page, ctx: RequestCtx) => {
+  return async (ctx, page, next) => {
     page.blocks = await Promise.all(
       page.blocks.map(async block => {
         const handler = handlerRegistry(block.type);
@@ -16,6 +17,6 @@ export function createAggregator(handlers: HandlerList): PageAggregator {
       })
     );
 
-    return page;
+    return next();
   };
 }

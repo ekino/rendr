@@ -52,8 +52,20 @@ export function createApiLoader(baseUrl: string): Loader {
     // We are on the client side, so no need to pipe data to the client.
     // => already done by the server
     if (ctx.isClientSide) {
-      page = createPage(response.data);
-      return next(page);
+      if (response.headers["x-rendr-content-type"] !== "rendr/document") {
+        next();
+      }
+
+      // express can send this content type: application/json; charset=utf-8
+      if (
+        response.headers["content-type"].substr(0, 16) === "application/json"
+      ) {
+        return next(createPage(response.data));
+      }
+
+      // not a JSON, probably a stream !
+      //  => don't know how to deal with this use case...
+      return next();
     }
 
     // we need to pipe data to the client as we are running this code from the server

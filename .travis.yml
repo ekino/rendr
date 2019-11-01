@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "10"
+  - '10'
 
 before_script:
   - yarn setup
@@ -11,3 +11,7 @@ script:
 
 cache:
   yarn: true
+
+notifications:
+  slack:
+    secure: awrEW9X0E1JzI5mhgSmti4VsMJu9LIDMi13vzD0Mw/GvF+eVUn8EDCGp7Ukr/hMnr2578UfLwskU0J3A6BmlHxB2wTxbxbs4vSK7hA/sg0L7mVF+YLBmE2zjn26Sh/d7IG8HNnJqCjeJiUSAEjGFNztC0PWAxxSSxST7RpFR1qqQ26EH1knQWvW6KLxz5tijrDAbENhLXW3ebMCO26TL0OOUAe/m2/z90pZcbeVQFTj7k1E70MDYhn5yGSfa7Y2u2KSNWbqBdAVM0ZoksrRtstO5bWUOnEsKZiq6bZGVdST/DX2cY6285cprpyDcgLHNFMM1oaFnhRjGhIZk8WrOJ5udeBR8a8UUVEttElX7OT2FOOuyp4JrkFPbw3pn9T3ERfOzZXNlaX893m2yHyX/WTUobbeSDthQebAYX6jfYxdown1NNcCtLB7oClAo4hIiDg4Rt9MOafvaeVCwFEx1tG8wBptGTlWltcSuwUq8PUJTRukvkVbzqa/qxPs865uZOfITd0r0zt6LmAlYrfMrAFtsoius5RNZV4lO1v0GUOuZAuFtiApxEEC+8rNp91IaeuYs76kQHGZowwipHDawOWOc7+in+GXJXEVaY5DHpL9c1jCIE5yudQ1zNjWAEfENajlZURWB4yMDziQKk7+VtC0AMJsBXt7GzuzCXqWcPPA=

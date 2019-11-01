@@ -50,7 +50,7 @@ const routes = {
         message: `
           Rendr provides a solution to build configurable pages by using optional chainable services: 
           <ul>
-            <li>page loader</ki>
+            <li>page loader</li>
             <li>aggregator to enrich component with external data</li>
             <li>the template rendering engine</li>
           </ul>

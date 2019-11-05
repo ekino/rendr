@@ -1,0 +1,11 @@
+{
+  "name": "drupal/ekino_rendr",
+  "type": "drupal-module",
+  "description": "The Drupal integration for ekino rendr.",
+  "require": {
+    "drupal/core": "^8.7"
+  },
+  "conflict": {
+    "drupal/drupal": "*"
+  }
+}

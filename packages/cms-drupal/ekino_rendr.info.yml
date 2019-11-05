@@ -1,0 +1,5 @@
+name: "ekino rendr"
+type: "module"
+core: "8.x"
+dependencies:
+    - "node"

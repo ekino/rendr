@@ -5,14 +5,38 @@ import {
   transformGenerator,
   pipeIteratorToWritable
 } from "@ekino/rendr-core";
-import { pipeline as StreamPipeline, Writable, Readable } from "stream";
+import { PageBuilder } from "@ekino/rendr-loader";
+
+import { Writable } from "stream";
 import Express from "express";
 
-import util from "util";
-
 import { Options } from "./types";
+import { ServerResponse } from "http";
 
-const pipeline = util.promisify(StreamPipeline);
+export async function sendSitemap(
+  res: ServerResponse,
+  generator: PageReferenceGenerator
+) {
+  res.setHeader("Content-Type", "application/xml");
+  res.setHeader("X-Rendr-Content-Type", "render/sitemap");
+
+  const iter = transformGenerator(generator(), toSitemapEntry);
+
+  const sitemapWritable = createSitemapWritable((name: string) => res, {
+    basePathIndex: ""
+  });
+
+  await pipeIteratorToWritable(iter, sitemapWritable);
+}
+
+export function createSitemapPageBuilder(
+  generator: PageReferenceGenerator
+): PageBuilder {
+  return async (ctx, page) => {
+    // we don't care about the page, we just return binary to the output content
+    await sendSitemap(ctx.res, generator);
+  };
+}
 
 /**
  * This function can be used to expose on sitemap with less than 50K items.
@@ -25,20 +49,8 @@ const pipeline = util.promisify(StreamPipeline);
 export function createSitemapRequestHandler(
   generator: PageReferenceGenerator
 ): Express.RequestHandler {
-  return async (
-    req: Express.Request,
-    res: Express.Response,
-    next: Express.NextFunction
-  ) => {
-    res.set("X-Rendr-Content-Type", "application/xml");
-
-    const iter = transformGenerator(generator(), toSitemapEntry);
-
-    const sitemapWritable = createSitemapWritable((name: string) => res, {
-      basePathIndex: ""
-    });
-
-    await pipeIteratorToWritable(iter, sitemapWritable);
+  return async (req, res, next) => {
+    await sendSitemap(res, generator);
   };
 }
 

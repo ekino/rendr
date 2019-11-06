@@ -1,4 +1,7 @@
 const rendrLoader = require("@ekino/rendr-loader");
+const rendrSitemap = require("@ekino/rendr-sitemap");
+
+const sitemap = require("./sitemap");
 
 /**
  * Configure the default page, which can be used to define the base information for all pages.
@@ -128,7 +131,8 @@ const routes = {
     ctx.res.end();
 
     return;
-  }
+  },
+  "/sitemap.xml": rendrSitemap.createSitemapPageBuilder(sitemap.generator)
 };
 
 // Configure a page for each matching url.

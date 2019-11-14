@@ -1,0 +1,31 @@
+name: Drupal
+
+on: [push]
+
+jobs:
+  run:    
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      max-parallel: 15
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['7.2', '7.3']
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extension-csv: mbstring, xdebug #optional, setup extensions
+        ini-values-csv: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
+        coverage: xdebug #optional, setup coverage driver
+        pecl: true #optional, setup PECL
+
+    - name: Check Composer Version
+      run: | 
+        cd packages/cms-drupal
+        composer install

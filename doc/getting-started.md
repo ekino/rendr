@@ -77,7 +77,7 @@ const services = require("./services/api");
 // we attach our services under the endpoint /api
 // This means any url in the format /api/something will be handled by our Loaders.
 // Loaders behave in a similar way to express middleware
-app.use('/api', (req, res) => rendrApi.createApi(services.loader));
+app.use('/api', rendrApi.createApi(services.loader));
 
 app.get('/', (req, res) => res.send('Hello World!'));
 ...

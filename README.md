@@ -6,8 +6,8 @@ This project try to resolve these two challenges.
 
 ## Getting started
 
-Once you are familliar with the architecture described in this document, use following [guide](./getting-started.md) to create your first Rendr API.
-Then we will create a simple Rendr Engine following this second [guide](./getting-started-2.md)
+Once you are familliar with the architecture described in this document, use following [guide](./doc/getting-started.md) to create your first Rendr API.
+Then we will create a simple Rendr Engine following this second [guide](./doc/getting-started-2.md)
 
 ## Architecture
 

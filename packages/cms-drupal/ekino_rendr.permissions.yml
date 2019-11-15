@@ -1,0 +1,5 @@
+administer ekino_rendr channel types:
+    title: "Administer ekino_rendr channel types"
+
+administer ekino_rendr channels:
+    title: "Administer ekino_rendr channels"

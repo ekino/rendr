@@ -1,0 +1,5 @@
+ekino_rendr.link.menu:
+  title: "ekino rendr"
+  parent: "system.admin"
+  route_name: "ekino_rendr"
+  weight: "999"

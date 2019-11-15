@@ -1,0 +1,9 @@
+ekino_rendr:
+    path: "/admin/config/ekino_rendr"
+    defaults:
+        _controller: 'Drupal\ekino_rendr\Controller\ViewIndexController'
+        _title: "ekino rendr"
+    requirements:
+        _permission: "administer site configuration"
+    options:
+        _admin_route: true

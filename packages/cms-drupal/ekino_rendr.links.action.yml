@@ -1,0 +1,11 @@
+ekino_rendr.link.action.channel_type.add:
+    route_name: "entity.ekino_rendr_channel_type.add_form"
+    title: "Add a channel type"
+    appears_on:
+        - "entity.ekino_rendr_channel_type.collection"
+
+ekino_rendr.link.action.channel.add:
+    route_name: "entity.ekino_rendr_channel.add_page"
+    title: "Add a channel"
+    appears_on:
+        - "entity.ekino_rendr_channel.collection"

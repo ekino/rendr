@@ -1,0 +1,28 @@
+<?php
+
+use PhpCsFixer\Config;
+
+return Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'declare_strict_types' => true,
+        'native_function_invocation' => array(
+            'include' => array('@all'),
+        ),
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => true,
+        'phpdoc_types_order' => array(
+            'null_adjustment' => 'always_last',
+            'sort_algorithm' => 'none'
+        ),
+    ])
+    ->setRiskyAllowed(true)
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->in([
+                __DIR__.'/src',
+                __DIR__.'/tests',
+            ])
+    );

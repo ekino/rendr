@@ -19,13 +19,13 @@ export function createContainerRenderer(
 ): ContainerRenderer {
   return (name, blocks) => {
     return (
-      <div>
+      <>
         {blocks
           .filter(block => name === block.container)
           .map((block, i) => {
             return renderBlock(block, `k_${i}`);
           })}
-      </div>
+      </>
     );
   };
 }

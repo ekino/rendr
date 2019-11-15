@@ -2,11 +2,16 @@ import Express from "express";
 
 import { Loader } from "@ekino/rendr-loader";
 import { createContext, Page } from "@ekino/rendr-core";
+import { IncomingMessage } from "http";
 
 // should return a middleware api to return page definition through http
 export function createApi(loader: Loader): Express.RequestHandler {
-  return async (req, res, next) => {
-    const ctx = createContext(req, res);
+  return async (
+    req: Express.Request,
+    res: Express.Response,
+    next: Express.NextFunction
+  ) => {
+    const ctx = createContext(req as IncomingMessage, res);
 
     res.set("X-Rendr-Content-Type", "rendr/octet-stream");
 

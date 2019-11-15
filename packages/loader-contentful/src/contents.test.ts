@@ -9,15 +9,15 @@ import {
 } from "./contents";
 
 describe("Contents loading from ", () => {
-  it('test order function', () => {
+  it("test order function", () => {
     const values = [2, 2, 3, 1];
 
     const sorted = values.sort((a, b) => {
-      return a === b ? 0 : (a > b ? 1 : -1)
-    })
-  
-    expect(sorted).toEqual([1,2,2,3]);
-  })
+      return a === b ? 0 : a > b ? 1 : -1;
+    });
+
+    expect(sorted).toEqual([1, 2, 2, 3]);
+  });
 
   it("Should load Websites", async () => {
     const client = getMockClient({

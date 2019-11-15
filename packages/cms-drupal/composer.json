@@ -1,20 +1,27 @@
 {
-  "name": "drupal/ekino_rendr",
-  "type": "drupal-module",
-  "description": "The Drupal integration for ekino rendr.",
-  "autoload": {
-    "psr-4": {
-      "Drupal\\ekino_rendr\\": "src/"
+    "name": "drupal/ekino_rendr",
+    "type": "drupal-module",
+    "description": "The Drupal integration for ekino rendr.",
+    "autoload": {
+        "psr-4": {
+            "Drupal\\ekino_rendr\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.8",
+        "drupal/core": "^8.7",
+        "drupal/paragraphs": "^1.10"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16"
     }
-  },
-  "require": {
-    "php": ">=7.0.8",
-    "drupal/core": "^8.7"
-  },
-  "conflict": {
-    "drupal/drupal": "*"
-  },
-  "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.16"
-  }
 }

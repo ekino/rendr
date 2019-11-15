@@ -25,7 +25,11 @@ const pipeline = util.promisify(StreamPipeline);
 export function createSitemapRequestHandler(
   generator: PageReferenceGenerator
 ): Express.RequestHandler {
-  return async (req, res, next) => {
+  return async (
+    req: Express.Request,
+    res: Express.Response,
+    next: Express.NextFunction
+  ) => {
     res.set("X-Rendr-Content-Type", "application/xml");
 
     const iter = transformGenerator(generator(), toSitemapEntry);

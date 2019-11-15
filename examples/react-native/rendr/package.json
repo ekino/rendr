@@ -8,6 +8,7 @@
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug"
   },
   "dependencies": {
+    "@ekino/rendr-loader": "^0.0.15",
     "lodash": "^4.17.15",
     "react": "16.8.6",
     "react-native": "0.60.5",
@@ -15,7 +16,7 @@
     "react-native-navigation": "^3.3.0",
     "react-native-render-html": "^4.1.2",
     "react-native-webview": "^7.4.3",
-    "react-redux": "^7.1.1",
+    "react-redux": "^7.1.3",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",

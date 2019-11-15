@@ -12,6 +12,10 @@
     "devDependencies": {
         "@types/node": "^12.7.4"
     },
+    "react-native": {
+        "http": false,
+        "stream": false
+    },
     "scripts": {
         "build": "tsc && tsc -m es6 --outDir dist/lib-esm && tsc -m amd --outFile dist/_bundles/rendr-core.js"
     },

@@ -15,7 +15,7 @@ import PageAccessor from "../../utilities/PageAccessor";
 // Components
 import { Page } from '../../components';
 
-// Styles../../components/Page/Page
+// Styles
 import styles from './styles';
 
 interface Props {

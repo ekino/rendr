@@ -15,6 +15,9 @@
         "path-match": "^1.2.4",
         "url-parse": "^1.4.4"
     },
+    "react-native": {
+        "stream": false
+    },
     "devDependencies": {
         "@types/node": "^12.7.4",
         "@types/url-parse": "^1.4.3"

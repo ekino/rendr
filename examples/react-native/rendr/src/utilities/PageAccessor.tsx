@@ -2,6 +2,7 @@ import { isObject } from "lodash";
 import {
     PageData,
 } from "../interfaces/Page";
+import {createApiLoader, createChainedLoader} from '@ekino/rendr-loader';
 
 export interface PageAccessorPropsInterface {
     PageAccessor: PageAccessorInterface;
@@ -15,26 +16,34 @@ export interface PageAccessorInterface {
 
 const PageAccessor: PageAccessorInterface = {
     fetchPage(uri: string) {
-        return fetch(`https://nextjs-with-remoteapi.rande.now.sh/api/${uri}`)
-            .then(res => {
-                if (res.status === 404) {
-                    alert(`${uri}: Page not found`);
-                }
+        // initialize related code required to make the page works.
+const apiLoader = createApiLoader("http://localhost:3000/api");
 
-                return res.json();
-            })
-            .then(json => {
-                if (!isObject(json)) {
-                    alert(`Page not found`);
-                }
-                const data: any = json;
-
-                return data;
-            })
-            .catch(err => {
-                alert(err)
-            });
+const loader = createChainedLoader([apiLoader]);
+console.log("loader", loader);
+        return apiLoader;
     }
+    // fetchPage(uri: string) {
+    //     return fetch(`https://static-api.rande.now.sh/api/${uri}`)
+    //         .then(res => {
+    //             if (res.status === 404) {
+    //                 alert(`${uri}: Page not found`);
+    //             }
+
+    //             return res.json();
+    //         })
+    //         .then(json => {
+    //             if (!isObject(json)) {
+    //                 alert(`Page not found`);
+    //             }
+    //             const data: any = json;
+
+    //             return data;
+    //         })
+    //         .catch(err => {
+    //             alert(err)
+    //         });
+    // }
 };
 
 export default PageAccessor;

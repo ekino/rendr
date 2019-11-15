@@ -1,0 +1,16 @@
+ekino_rendr.ekino_rendr_template.*:
+    type: "config_entity"
+    label: 'Template config'
+    mapping:
+        id:
+            type: "string"
+            label: "ID"
+        label:
+            type: "label"
+            label: "Label"
+        containers:
+            type: "config_object"
+            mapping:
+                label:
+                    type: "string"
+                    label: "Label"

@@ -47,7 +47,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *   }
  * )
  */
-final class ChannelType extends ConfigEntityBundleBase
+final class ChannelType extends ConfigEntityBundleBase implements ChannelTypeInterface
 {
     const ID = 'ekino_rendr_channel_type';
 }

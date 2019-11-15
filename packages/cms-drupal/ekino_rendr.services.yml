@@ -1,0 +1,4 @@
+services:
+    Drupal\ekino_rendr\Controller\ViewIndexController:
+        arguments:
+            - "@string_translation"

@@ -5,3 +5,6 @@ packages/*/node_modules
 yarn-error.log
 coverage
 **/dist
+packages/*/composer.lock
+packages/*/vendor
+packages/*/.php_cs.cache

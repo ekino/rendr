@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\ekino_rendr\Entity;
 
-use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class ChannelTypeListBuilder extends ConfigEntityListBuilder
+final class DocumentListBuilder extends EntityListBuilder
 {
     protected $stringTranslation;
 
@@ -44,18 +44,22 @@ final class ChannelTypeListBuilder extends ConfigEntityListBuilder
     {
         return [
             'id' => $this->stringTranslation->translate('Machine name'),
-            'label' => $this->stringTranslation->translate('Label'),
+            'title' => $this->stringTranslation->translate('Title'),
+            'path' => $this->stringTranslation->translate('Path'),
         ] + parent::buildHeader();
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param Document
      */
     public function buildRow(EntityInterface $entity): array
     {
         return [
             'id' => $entity->id(),
-            'label' => $entity->label(),
+            'title' => $entity->label(),
+            'path' => $entity->getPath(),
         ] + parent::buildRow($entity);
     }
 }

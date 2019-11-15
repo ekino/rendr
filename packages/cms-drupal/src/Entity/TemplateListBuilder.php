@@ -29,11 +29,11 @@ final class TemplateListBuilder extends ConfigEntityListBuilder
     /**
      * {@inheritdoc}
      */
-    public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type): self
+    public static function createInstance(ContainerInterface $container, EntityTypeInterface $entityType): self
     {
         return new self(
-            $entity_type,
-            $container->get('entity_type.manager')->getStorage($entity_type->id()),
+            $entityType,
+            $container->get('entity_type.manager')->getStorage($entityType->id()),
             $container->get('string_translation')
         );
     }

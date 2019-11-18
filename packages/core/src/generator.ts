@@ -8,7 +8,18 @@ import {
 import { finished as StreamFinished, Writable } from "stream";
 import util from "util";
 
-const finished = util.promisify(StreamFinished);
+// we cannot call the code util.promisify to avoid issue with
+// frontend build: The "original" argument must be of type Function
+// if a js guru is around, feel free to help.
+let finished: {
+  (
+    stream:
+      | NodeJS.ReadableStream
+      | NodeJS.WritableStream
+      | NodeJS.ReadWriteStream
+  ): Promise<void>;
+  (arg0: Writable): void;
+};
 
 export function createPageReference(
   url: string,
@@ -51,6 +62,10 @@ export async function pipeIteratorToWritable(
   iterator: AsyncGenerator<string | Buffer, void, unknown>,
   writable: Writable
 ) {
+  if (!finished) {
+    finished = util.promisify(StreamFinished);
+  }
+
   for await (const current of iterator) {
     writable.write(current);
   }

@@ -9,28 +9,28 @@ jobs:
       max-parallel: 15
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: ['7.0', '7.1', '7.2', '7.3']
+        php-versions: ["7.0", "7.1", "7.2", "7.3"]
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@master
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@master
-      with:
-        php-version: ${{ matrix.php-versions }}
-        extension-csv: mbstring, xdebug, gd #optional, setup extensions
-        ini-values-csv: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
-        coverage: xdebug #optional, setup coverage driver
-        pecl: true #optional, setup PECL
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extension-csv: mbstring, xdebug, gd #optional, setup extensions
+          ini-values-csv: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
+          coverage: xdebug #optional, setup coverage driver
+          pecl: true #optional, setup PECL
 
-    - name: Check Composer version
-      run: |
-        cd packages/cms-drupal
-        composer install
+      - name: Check Composer version
+        run: |
+          cd packages/cms-drupal
+          composer install
 
-    - name: Check coding style
-      run: |
-        cd packages/cms-drupal
-        vendor/bin/php-cs-fixer fix --dry-run
+      - name: Check coding style
+        run: |
+          cd packages/cms-drupal
+          vendor/bin/php-cs-fixer fix --dry-run

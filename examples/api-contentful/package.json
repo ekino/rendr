@@ -1,0 +1,22 @@
+{
+  "name": "@ekino/rendr-demo-contentful-api",
+  "version": "0.0.9",
+  "dependencies": {
+    "@ekino/rendr-api": "latest",
+    "@ekino/rendr-loader-contentful": "latest",
+    "@ekino/rendr-rendering-nextjs": "latest",
+    "@ekino/rendr-sitemap": "latest",
+    "@types/cors": "^2.8.6",
+    "contentful": "^7.9.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.2",
+    "typescript": "^3.7.2"
+  },
+  "scripts": {
+    "setup": "yarn install",
+    "start": "ts-node server.ts"
+  },
+  "private": true
+}

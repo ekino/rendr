@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+
+.btn {
+    @apply bg-black;
+}
+
+div.remote-markup > ul {
+    @apply list-disc list-inside ml-2 mt-2 mb-2;
+}
+
+footer {
+    @apply  mt-4;
+}

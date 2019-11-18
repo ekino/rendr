@@ -36,21 +36,21 @@ const loader2: Loader = (ctx, page, next) => {
 
 const blockingLoader: Loader = (ctx, page, next) => {
   page.head.title = "block execution of the next loaders";
-  console.log("No call to the next function");
+  // console.log("No call to the next function");
 };
 
 const exitingLoader: Loader = (ctx, page, next) => {
-  console.log("Return a page object");
+  // console.log("Return a page object");
   return witnessPage;
 };
 
 const referenceChangeLoader: Loader = (ctx, page, next) => {
-  console.log("Pass a new page to the next loader");
+  // console.log("Pass a new page to the next loader");
   return next(witnessPage);
 };
 
 const resultPageNullifierLoader: Loader = (ctx, page, next) => {
-  console.log("Call next but do not return it");
+  // console.log("Call next but do not return it");
   next();
 };
 

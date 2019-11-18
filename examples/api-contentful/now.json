@@ -1,0 +1,18 @@
+{
+  "name": "contentful-api",
+  "version": 2,
+  "regions": ["cdg1"],
+  "public": true,
+  "builds": [
+    {"src": "server.ts", "use": "@now/node" , "config": { "helpers": "false" }}
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "CONTENTFUL_SPACE_ID": "@contentful_space_id",
+    "CONTENTFUL_ACCESS_TOKEN": "@contentful_access_token"
+  },
+  "routes": [
+    { "src": "/api/.*", "methods": ["GET", "OPTIONS"], "dest": "/server.ts"},
+    { "src": "/.*", "status": 302, "headers": { "Location": "/api/" }}
+  ]
+}

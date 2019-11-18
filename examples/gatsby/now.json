@@ -1,0 +1,10 @@
+{
+    "name": "gatsby",
+    "version": 2,
+    "regions": ["cdg1"],
+    "public": true,
+    "env": {
+      "NODE_ENV": "production",
+      "REMOTE_API": "https://static-api.rande.now.sh/api"
+    }
+  }

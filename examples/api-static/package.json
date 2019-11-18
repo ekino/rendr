@@ -1,0 +1,19 @@
+{
+    "name": "@ekino/rendr-demo-static-api",
+    "version": "0.0.9",
+    "engines": {
+        "node": "10.x"
+    },
+    "private": true,
+    "dependencies": {
+        "@ekino/rendr-api": "latest",
+        "@ekino/rendr-loader": "latest",
+        "@ekino/rendr-sitemap": "latest",
+        "cors": "^2.8.5",
+        "express": "^4.16.4"
+    },
+    "scripts": {
+        "setup": "yarn install",
+        "start": "NODE_ENV=development node server.js"
+    }
+}

@@ -52,9 +52,17 @@ The project uses `lerna` to handle multiple packages in one git repository. Pack
 
 ### Integration modules
 
+#### CMS integration
+
 - **loader-contentful**: integrate a page loader from contentful, the module provides a set of migrations to install required models.
 
-- **rendering-nextjs**: integrate NextJS as a rendering engine for a Page (coming from a loader).
+- **cms-drupal**: WIP
+
+#### Rendering engines
+
+- **rendering-nextjs**: integrate NextJS as a rendering engine.
+
+- **rendering-gatsby**: integrate Gatsby as a rendering engine.
 
 ### Main data types
 
@@ -63,7 +71,7 @@ The project uses `lerna` to handle multiple packages in one git repository. Pack
 
 ## Examples
 
-The folder `examples/nextjs-with-remoteapi` is an example of all those packages can work together with NextJS to create a solution for dynamic pages (structure + contents) fully managed by a remote API.
+Add information => need to explain the `examples` folder
 
 ## Contributing
 

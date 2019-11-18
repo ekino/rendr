@@ -49,7 +49,7 @@ const loadFixtures = async () => {
         "en-US": "Entry title"
       },
       domains: {
-        "en-US": ["localhost"]
+        "en-US": ["localhost", "127.0.0.1", "contentful-api.rande.now.sh"]
       },
       path: {
         "en-US": "/"
@@ -167,7 +167,7 @@ const loadFixtures = async () => {
         "en-US": "Homepage"
       },
       container: {
-        "en-US": "article"
+        "en-US": "body"
       },
       internal_title: {
         "en-US": "The welcoming message"
@@ -223,7 +223,21 @@ const loadFixtures = async () => {
     }
   });
 
-  const footerBlock = await create(env, "rendr_block_text", {
+  const headerBlock = await create(env, "rendr_block_header", {
+    fields: {
+      container: {
+        "en-US": "header"
+      },
+      internal_title: {
+        "en-US": "The header message"
+      },
+      order: {
+        "en-US": 0
+      }
+    }
+  });
+
+  const footerBlock = await create(env, "rendr_block_footer", {
     fields: {
       container: {
         "en-US": "footer"
@@ -231,8 +245,8 @@ const loadFixtures = async () => {
       internal_title: {
         "en-US": "The footer message"
       },
-      contents: {
-        "en-US": "The footer defined on the website"
+      order: {
+        "en-US": 1000
       }
     }
   });
@@ -261,6 +275,7 @@ const loadFixtures = async () => {
       },
       blocks: {
         "en-US": [
+          { sys: { type: "Link", linkType: "Entry", id: headerBlock.sys.id } },
           { sys: { type: "Link", linkType: "Entry", id: footerBlock.sys.id } }
         ]
       },
@@ -283,7 +298,7 @@ const loadFixtures = async () => {
     const block = await create(env, "rendr_block_text", {
       fields: {
         container: {
-          "en-US": "article"
+          "en-US": "body"
         },
         internal_title: {
           "en-US": "The main content of this article"

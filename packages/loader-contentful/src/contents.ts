@@ -65,7 +65,9 @@ export async function GetWebsite(
     }
 
     // domains is also an array of domain.
-    return site.fields.domains.find((name: string) => name === domain);
+    return site.fields.domains.find((name: string) => {
+      return name === domain;
+    });
   });
 
   if (!result) {
@@ -75,6 +77,24 @@ export async function GetWebsite(
   }
 
   return result;
+}
+
+export async function GetPages(
+  client: ContentfulClientApi,
+  options = {}
+): Promise<EntryCollection<ContentfulPage>> {
+  const opts = Object.assign({ domain: "" }, defaultArchiveOptions, options);
+
+  const site = await GetWebsite(client, opts.domain);
+
+  const query: any = {
+    limit: opts.limit,
+    skip: (opts.page - 1) * opts.limit,
+    content_type: "rendr_page",
+    "fields.website.sys.id": site.sys.id
+  };
+
+  return await client.getEntries<ContentfulPage>(query);
 }
 
 export async function GetPage(

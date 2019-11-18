@@ -119,7 +119,11 @@ export interface BaseContentfulBlock {
 
 export interface ContentfulBlockText extends BaseContentfulBlock {
   title: string;
+  subtitle: string;
   contents: string;
+  mode: string;
+  image: ContentfulAsset;
+  image_position: string;
 }
 
 export interface ContentfulArticle {

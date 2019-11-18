@@ -3,6 +3,8 @@ async function cleanSpace(makeRequest, migration) {
     "rendr_author",
     "rendr_block_text",
     "rendr_block_gallery",
+    "rendr_block_header",
+    "rendr_block_footer",
     "rendr_website",
     "rendr_page",
     "rendr_article"
@@ -104,7 +106,7 @@ function createAsset(entity, id, name, opts = {}) {
 }
 
 function getDefaultContainerNames() {
-  return ["header", "nav", "article", "aside", "footer"];
+  return ["header", "nav", "body", "aside", "footer"];
 }
 
 function createAuthor(migration) {
@@ -186,8 +188,26 @@ function createBasicBlocks(migration) {
     name: "Rendr > Block > Text"
   });
   createSymbol(blockText, "title", "Title");
+  createSymbol(blockText, "subtitle", "Sub-Title");
   createField(blockText, "contents", "Contents", {
     type: "Text"
+  });
+  createSymbol(blockText, "mode", "Mode", {
+    required: false,
+    validations: [
+      {
+        in: ["jumbotron", "standard", "image", "quote"]
+      }
+    ]
+  });
+  createAsset(blockText, "image", "Image");
+  createSymbol(blockText, "image_position", "Image Position", {
+    required: false,
+    validations: [
+      {
+        in: ["left", "right"]
+      }
+    ]
   });
 
   const blockGallery = createDefault(migration, "rendr_block_gallery", {
@@ -206,6 +226,14 @@ function createBasicBlocks(migration) {
       ],
       linkType: "Entry"
     }
+  });
+
+  const blockHeader = createDefault(migration, "rendr_block_header", {
+    name: "Rendr > Block > Header"
+  });
+
+  const blockFooter = createDefault(migration, "rendr_block_footer", {
+    name: "Rendr > Block > Footer"
   });
 }
 
@@ -312,7 +340,12 @@ function createPage(migration) {
       type: "Link",
       validations: [
         {
-          linkContentType: ["rendr_block_text", "rendr_block_gallery"]
+          linkContentType: [
+            "rendr_block_text",
+            "rendr_block_gallery",
+            "rendr_block_header",
+            "rendr_block_footer"
+          ]
         }
       ],
       linkType: "Entry"

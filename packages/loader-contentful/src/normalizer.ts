@@ -32,23 +32,22 @@ const ASSET_FORMATS: Map = {
 };
 
 const emptyProfile = {
+  enabled: false,
   id: "-",
   title: "No picture",
-  url: "//findanemptypicture.com"
+  url: ""
 };
 
 const emptyPicture = {
+  enabled: false,
   id: "-",
   title: "No picture",
-  url: "//findanemptypicture.com"
+  url: ""
 };
 
 export const defaultNormalizers: EntryNormalizerList = {
   rendr_page: normalizePage,
   rendr_website: normalizeWebsite,
-  rendr_author: normalizeAuthor,
-  rendr_block_text: normalizeBlockText,
-  rendr_article: normalizeArticle,
   asset: normalizePicture // Asset is the default from contentul
 };
 
@@ -222,13 +221,14 @@ export function normalizeWebsite(
 
 export function createBlockDefinition(
   entry: Entry<BaseContentfulBlock>,
+  type: string,
   settings: Settings
 ): BlockDefinition {
   return {
     container: entry.fields.container,
     order: entry.fields.order >= 0 ? entry.fields.order : 99,
     settings: settings,
-    type: entry.sys.contentType.sys.id
+    type: type
   };
 }
 
@@ -236,10 +236,30 @@ export function normalizeBlockText(
   entry: Entry<ContentfulBlockText>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
-  return createBlockDefinition(entry, {
+  return createBlockDefinition(entry, "rendr.text", {
     title: entry.fields.title ? entry.fields.title : "",
-    contents: entry.fields.contents ? fixImageUrl(entry.fields.contents) : ""
+    subtitle: entry.fields.subtitle ? entry.fields.subtitle : "",
+    contents: entry.fields.contents ? fixImageUrl(entry.fields.contents) : "",
+    mode: entry.fields.mode ? entry.fields.mode : "standard",
+    image: entry.fields.image ? normalizers(entry.fields.image) : emptyPicture,
+    image_position: entry.fields.image_position
+      ? entry.fields.image_position
+      : "left"
   });
+}
+
+export function normalizeBlockHeader(
+  entry: Entry<ContentfulBlockText>,
+  normalizers: EntryNormalizer
+): BlockDefinition {
+  return createBlockDefinition(entry, "rendr.header", {});
+}
+
+export function normalizeBlockFooter(
+  entry: Entry<ContentfulBlockText>,
+  normalizers: EntryNormalizer
+): BlockDefinition {
+  return createBlockDefinition(entry, "rendr.footer", {});
 }
 
 export function normalizeArticle(

@@ -1,4 +1,3 @@
-export { default as InitialisingScreen } from './InitialisingScreen/InitialisingScreen';
-export { default as BlogScreen } from './BlogScreen/BlogScreen';
-export { default as DefaultScreen } from './DefaultScreen/DefaultScreen';
-export { default as PageScreen } from './PageScreen/PageScreen';
+export {default as InitialisingScreen} from './InitialisingScreen';
+export {default as DefaultScreen} from './DefaultScreen';
+export {default as RendrScreen} from './WrapperScreen';

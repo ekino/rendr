@@ -85,6 +85,8 @@ PODS:
     - React-Core (= 0.60.5)
   - ReactNativeNavigation (3.3.0):
     - React
+  - RNCAsyncStorage (1.6.3):
+    - React
   - yoga (0.60.5.React)
 
 DEPENDENCIES:
@@ -111,6 +113,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -164,6 +167,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/WebSocket"
   ReactNativeNavigation:
     :path: "../node_modules/react-native-navigation"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-community/async-storage"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -192,6 +197,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 2105b2e0e2b66a6408fc69a46c8a7fb5b2fdade0
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
   ReactNativeNavigation: 05727adb34871fdc9293858dd26b4caa8995aa35
+  RNCAsyncStorage: 3c304d1adfaea02ec732ac218801cb13897aa8c0
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
 PODFILE CHECKSUM: a4e65ea9074d3cb4fada26d993f249293a876876

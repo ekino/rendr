@@ -1,29 +1,24 @@
+// Core modules.
 import React from 'react';
-import { View, Text } from 'react-native';
+import {View, Text} from 'react-native';
 
+// Styles.
 import styles from "./styles";
 
 interface Props {
-    settings?: {
-        title?: String;
-        message?: String;
-    };
+    title?: String;
+    contents?: String;
 }
 
 export default class Jumbotron extends React.Component<Props> {
     render() {
-        const {
-            settings: {
-                title,
-                message
-            }
-        } = this.props;
+        const {title, contents} = this.props;
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.header}>{title}</Text>
-                <Text style={styles.content}>{message}</Text>
-            </View>
+          <View style={styles.container}>
+            <Text style={styles.header}>{title}</Text>
+            <Text style={styles.content}>{contents}</Text>
+          </View>
         );
     }
 }

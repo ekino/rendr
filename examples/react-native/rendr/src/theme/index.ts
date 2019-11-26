@@ -1,2 +1,3 @@
-export * from './Colors/Colors';
-export * from './Screen/Screen';
+export * from './Color';
+export * from './Grid';
+export * from './Screen';

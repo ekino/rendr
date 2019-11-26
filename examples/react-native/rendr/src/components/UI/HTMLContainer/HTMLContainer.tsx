@@ -1,9 +1,9 @@
-// Core modules
+// Core modules.
 import React from 'react';
 import { Dimensions, Linking } from 'react-native';
 import HTML from 'react-native-render-html';
 
-// Styles
+// Styles.
 import tags from './styles';
 
 
@@ -13,7 +13,7 @@ interface Props {
 
 export default class HTMLContainer extends React.Component<Props> {
     render() {
-        const { html } = this.props;
+        const {html} = this.props;
 
         return (
             <HTML

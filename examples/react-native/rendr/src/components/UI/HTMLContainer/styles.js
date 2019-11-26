@@ -1,32 +1,32 @@
 // Styles.
-import { colors } from "../../../theme";
+import { color } from "../../../theme";
 
-// Utils.
+// Functions.
 import { vw } from "../../../functions";
 
 const html = {
     h1: {
-        color: colors.black,
+        color: color.black,
         margin: 0,
         padding: 0,
     },
     h2: {
-        color: colors.black,
+        color: color.black,
         margin: 0,
         padding: 0,
     },
     h3: {
-        color: colors.black,
+        color: color.black,
         margin: 0,
         padding: 0,
     },
     p: {
-        color: colors.black,
+        color: color.black,
         margin: 0,
         padding: 0,
     },
     a: {
-        color: colors.black,
+        color: color.black,
         textDecorationLine: "none",
     },
     i: {

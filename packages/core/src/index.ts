@@ -140,7 +140,7 @@ export function createContext(
 
   const asPath = req.url;
 
-  if (req instanceof IncomingMessage) {
+  if (typeof IncomingMessage === "function" && req instanceof IncomingMessage) {
     isServerSide = true;
     fullUrl = `https://${req.headers["host"]}${req.url}`;
   }

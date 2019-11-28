@@ -3,17 +3,18 @@ import React, {Fragment} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {TemplateProps} from '@ekino/rendr-template-react';
 
+// Components.
+
 // Styles.
 import {grid} from '../../theme';
 
 class Default extends React.Component<TemplateProps> {
   render() {
-    const {containerRenderer, blocks} = this.props;
-
+    const {blocks, containerRenderer} = this.props;
     return (
       <Fragment>
         <SafeAreaView style={grid.flex}>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <ScrollView contentInsetAdjustmentBehavior='automatic'>
             <View>{containerRenderer('header', blocks)}</View>
             <View>{containerRenderer('article', blocks)}</View>
             <View>{containerRenderer('body', blocks)}</View>

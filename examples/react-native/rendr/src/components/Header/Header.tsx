@@ -1,28 +1,25 @@
 // Core modules.
 import React from 'react';
-import {Button, View} from 'react-native';
+import {View} from 'react-native';
 
-// Navigation.
+// Rendr.
 import {navigate} from '../../_rendr';
 
+// Components.
+import {Link} from '../index';
+
 // Styles.
-import {color} from '../../theme';
 import styles from './styles';
 
-export default class Header extends React.Component {
+
+interface Props {}
+
+export default class Header extends React.Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          onPress={() => navigate('/')}
-          title='Home'
-          color={color.black}
-        />
-        <Button
-          onPress={() => navigate('/about')}
-          title='About'
-          color={color.black}
-        />
+        <Link title="Home" onPress={() => navigate('/')} />
+        <Link title="About" onPress={() => navigate('/about')} />
       </View>
     );
   }

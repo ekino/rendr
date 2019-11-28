@@ -7,7 +7,7 @@ import {Page} from '@ekino/rendr-core';
 import {grid} from '../../theme';
 
 // Utilites
-import {blocks, createPage, templates} from '../../_rendr';
+import { blocks, createPage, templates } from '../../_rendr';
 
 const {templateRegistry, containerRenderer} = createPage(blocks, templates);
 

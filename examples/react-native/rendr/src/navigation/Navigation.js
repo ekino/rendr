@@ -1,4 +1,5 @@
-import { Navigation } from 'react-native-navigation';
+ // Core modules
+ import {Navigation} from 'react-native-navigation';
 
 import {INITIALISING_SCREEN, RENDR_SCREEN} from './Screens';
 import registerScreens from './registerScreens';

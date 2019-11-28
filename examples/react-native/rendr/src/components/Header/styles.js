@@ -5,6 +5,7 @@ export default styles = StyleSheet.create({
   container: {
     backgroundColor: '#f7f7f7',
     padding: 20,
+    flexDirection: "row"
   },
   header: {
     fontSize: 20,

@@ -1,6 +1,6 @@
 // Core modules.
 import React from 'react';
-import {View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 
 // Styles.
 import styles from "./styles";
@@ -16,8 +16,8 @@ export default class Jumbotron extends React.Component<Props> {
 
         return (
           <View style={styles.container}>
-            <Text style={styles.header}>{title}</Text>
-            <Text style={styles.content}>{contents}</Text>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.contents}>{contents}</Text>
           </View>
         );
     }

@@ -6,11 +6,15 @@ import { Navigation } from 'react-native-navigation';
 import {
   InitialisingScreen,
   RendrScreen,
+  SideMenu,
+  TopBar,
 } from '../screens';
 
 import {
   INITIALISING_SCREEN,
-  RENDR_SCREEN
+  RENDR_SCREEN,
+  SIDE_MENU,
+  TOP_BAR
 } from './Screens';
 
 function WrappedComponent(Component) {
@@ -26,6 +30,12 @@ export default function () {
   );
   Navigation.registerComponent(RENDR_SCREEN, () =>
     WrappedComponent(RendrScreen),
+  );
+  Navigation.registerComponent(SIDE_MENU, () =>
+    WrappedComponent(SideMenu),
+  );
+  Navigation.registerComponent(TOP_BAR, () =>
+    WrappedComponent(TopBar),
   );
   console.info('All screens have been registered...');
 }

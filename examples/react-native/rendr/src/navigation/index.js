@@ -1,2 +1,7 @@
 export * from './Screens';
-export { pushInitialisingScreen, pushWrapperScreen } from './Navigation';
+export {
+  pushInitialisingScreen,
+  pushWrapperScreen,
+  onClick,
+  toggleLeftDrawer,
+} from './Navigation';

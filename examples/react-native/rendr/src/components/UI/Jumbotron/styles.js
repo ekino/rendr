@@ -1,17 +1,20 @@
 // Core modules.
 import { StyleSheet } from 'react-native';
 
+// Styles.
+import { spacing, color } from '../../../theme';
+
 export default styles = StyleSheet.create({
     container: {
-        backgroundColor: "#f7f7f7",
-        padding: 20
+        backgroundColor: color.lightGrey,
+        padding: spacing.default,
     },
-    header: {
+    title: {
         fontSize: 20,
         fontWeight: "bold",
-        marginBottom: 10
+        marginBottom: spacing.default / 2
     },
-    content: {
+    contents: {
         fontSize: 14,
     }
 });

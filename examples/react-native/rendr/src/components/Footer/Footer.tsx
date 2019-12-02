@@ -1,18 +1,21 @@
+// Core modules.
 import React from 'react';
-import { View, Text } from 'react-native';
+import {View} from 'react-native';
 
+// Components.
+import {MainText} from '../index';
+
+// Styles.
 import styles from './styles';
 
 interface Props {
-
+  text?: string;
 }
 
-export default class Footer extends React.Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Footer</Text>
-      </View>
-    );
-  }
-}
+const Footer = ({text}: Props) => (
+  <View style={styles.container}>
+    <MainText style={styles.header}>{text || 'Footer'}</MainText>
+  </View>
+);
+
+export default Footer;

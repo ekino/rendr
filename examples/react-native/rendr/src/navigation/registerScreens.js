@@ -1,21 +1,10 @@
 // Core modules.
 import React from 'react';
-import { Navigation } from 'react-native-navigation';
+import {Navigation} from 'react-native-navigation';
 
 // Screens.
-import {
-  InitialisingScreen,
-  RendrScreen,
-  SideMenu,
-  TopBar,
-} from '../screens';
-
-import {
-  INITIALISING_SCREEN,
-  RENDR_SCREEN,
-  SIDE_MENU,
-  TOP_BAR
-} from './Screens';
+import {InitialisingScreen, RendrScreen, SideMenu, TopBar} from '../screens';
+import {INITIALISING_SCREEN, RENDR_SCREEN, SIDE_MENU, TOP_BAR} from './Screens';
 
 function WrappedComponent(Component) {
   return function inject(props) {
@@ -24,18 +13,13 @@ function WrappedComponent(Component) {
   };
 }
 
-export default function () {
+export default function() {
   Navigation.registerComponent(INITIALISING_SCREEN, () =>
     WrappedComponent(InitialisingScreen),
   );
   Navigation.registerComponent(RENDR_SCREEN, () =>
     WrappedComponent(RendrScreen),
   );
-  Navigation.registerComponent(SIDE_MENU, () =>
-    WrappedComponent(SideMenu),
-  );
-  Navigation.registerComponent(TOP_BAR, () =>
-    WrappedComponent(TopBar),
-  );
-  console.info('All screens have been registered...');
+  Navigation.registerComponent(SIDE_MENU, () => WrappedComponent(SideMenu));
+  Navigation.registerComponent(TOP_BAR, () => WrappedComponent(TopBar));
 }

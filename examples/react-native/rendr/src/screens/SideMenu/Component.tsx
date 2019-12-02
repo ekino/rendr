@@ -1,8 +1,9 @@
 // Core modules.
-import React, {Fragment} from 'react';
+import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {Page} from '@ekino/rendr-core';
 
+// Components.
 import {Menu} from '../../components';
 
 // Styles.
@@ -10,28 +11,29 @@ import {grid} from '../../theme';
 import styles from './styles';
 
 interface Props {
-  page: Page
+  pageContext: {
+    page: Page;
+  };
 }
 
 class SideMenu extends React.Component<Props> {
   render() {
-    const { 
-      page: {
-        path
-      }
+    const {
+      pageContext: {
+        page: {path},
+      },
     } = this.props;
 
     return (
-      <Fragment>
+      <>
         <SafeAreaView style={[grid.flex, styles.safeAreaView]}>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
-            style={[grid.scrollView, styles.scrollView]}
-          >
+            style={[grid.scrollView, styles.scrollView]}>
             <Menu current={path} />
           </ScrollView>
         </SafeAreaView>
-      </Fragment>
+      </>
     );
   }
 }

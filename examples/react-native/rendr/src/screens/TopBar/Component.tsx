@@ -1,18 +1,14 @@
 // Core modules.
 import React from 'react';
-import { View } from 'react-native';
-import { Page } from '@ekino/rendr-core';
+import {View} from 'react-native';
 
-import { Burger } from '../../components';
+// Components.
+import {Burger} from '../../components';
 
 // Styles.
 import styles from './styles';
 
-interface Props {
-  page: Page
-}
-
-class SideMenu extends React.Component<Props> {
+class TopBar extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -22,4 +18,4 @@ class SideMenu extends React.Component<Props> {
   }
 }
 
-export default SideMenu;
+export default TopBar;

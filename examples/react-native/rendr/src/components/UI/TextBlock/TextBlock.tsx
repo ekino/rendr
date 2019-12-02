@@ -1,30 +1,27 @@
 // Core modules.
 import React from 'react';
-import { View, Button, Text } from 'react-native';
+import {View} from 'react-native';
 
 // Components.
-import {HTMLContainer} from '../../index';
+import HTMLContainer from '../HTMLContainer/HTMLContainer';
+import MainText from '../MainText/MainText';
 
 // Styles.
-import styles from "./styles";
+import styles from './styles';
 
 interface Props {
-    rawHtml?: Boolean;
-    contents?: string;
+  rawHtml?: boolean;
+  contents?: string;
 }
 
-export default class TextBlock extends React.Component<Props> {
-    render() {
-        const {rawHtml, contents} = this.props;
+const TextBlock = ({rawHtml, contents}: Props) => (
+  <View style={styles.container}>
+    {rawHtml ? (
+      <HTMLContainer html={contents} />
+    ) : (
+      <MainText>{contents}</MainText>
+    )}
+  </View>
+);
 
-        return (
-          <View style={styles.container}>
-            {rawHtml ? (
-              <HTMLContainer html={contents} />
-            ) : (
-              <Text>{contents}</Text>
-            )}
-          </View>
-        );
-    }
-}
+export default TextBlock;

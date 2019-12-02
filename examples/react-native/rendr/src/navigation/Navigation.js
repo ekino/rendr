@@ -1,12 +1,12 @@
 // Core modules
-import { Linking } from 'react-native';
+import {Linking} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
 import {INITIALISING_SCREEN, RENDR_SCREEN, SIDE_MENU, TOP_BAR} from './Screens';
 import registerScreens from './registerScreens';
 
-import { navigate } from '../_rendr';
-import { color } from '../theme';
+import {navigate} from '../_rendr';
+import {color} from '../theme';
 
 // Register all screens on launch
 registerScreens();
@@ -15,7 +15,7 @@ export function pushInitialisingScreen() {
   Navigation.setDefaultOptions({
     topBar: {
       background: {
-        color: color.secondary,
+        color: color.primary,
       },
       title: {
         color: color.white,
@@ -97,7 +97,9 @@ export function pushWrapperScreen(page) {
             name: SIDE_MENU,
             id: 'leftDrawer',
             passProps: {
-              page,
+              pageContext: {
+                page,
+              },
             },
           },
         },
@@ -109,16 +111,19 @@ export function pushWrapperScreen(page) {
                 component: {
                   name: RENDR_SCREEN,
                   passProps: {
-                    page,
+                    pageContext: {
+                      page,
+                    },
                   },
                   options: {
                     topBar: {
-
                       component: {
                         name: TOP_BAR,
                         alignment: 'center',
                         passProps: {
-                          page,
+                          pageContext: {
+                            page,
+                          },
                         },
                       },
                     },
@@ -158,8 +163,8 @@ export const onClick = {
         // analytics event to fire on success
         Linking.openURL(url);
       } else {
-        alert(`Don't know how to open URL: ${url}`);
+        alert(`Don't know how to open URL: ${url}`); // eslint-disable-line no-alert
       }
     });
-  }
+  },
 };

@@ -1,48 +1,55 @@
 // Core modules.
-import React, {Fragment} from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import React from 'react';
+import {SafeAreaView} from 'react-native';
 import {Page} from '@ekino/rendr-core';
+import {createPage} from '@ekino/rendr-rendering-reactnative';
+
+// Components.
+import {MainText} from '../../components';
 
 // Styles.
 import {grid} from '../../theme';
 
-// Utilites
-import { blocks, createPage, templates } from '../../_rendr';
-
-const {templateRegistry, containerRenderer} = createPage(blocks, templates);
+// Utilites.
+import {blocks, templates} from '../../_rendr';
 
 const ErrorScreen = text => (
-  <Fragment>
-    <SafeAreaView style={grid.flex}>
-      <Text>{text}</Text>
-    </SafeAreaView>
-  </Fragment>
+  <SafeAreaView style={grid.flex}>
+    <MainText>{text}</MainText>
+  </SafeAreaView>
 );
 
 interface Props {
-  page: Page;
+  pageContext: {
+    page: Page;
+  };
 }
+
+const Template = createPage(blocks, templates);
 
 class Wrapper extends React.Component<Props> {
   render() {
-    if (!('page' in this.props)) {
+    if (!(this.props.pageContext instanceof Object)) {
+      return ErrorScreen(
+        '"pageContext" attribute is missing or not an Object from the Props',
+      );
+    }
+
+    const {pageContext} = this.props;
+
+    if (!('page' in pageContext)) {
       return ErrorScreen('No `page` props defined in the `pageContext`');
     }
 
-    const {page} = this.props;
-    const Template = templateRegistry(page.template);
+    const {
+      page: {template},
+    } = pageContext;
 
-    if (!Template) {
-      return ErrorScreen('No Template defined.');
+    if (templates[template]) {
+      return <Template pageContext={pageContext} />;
     }
 
-    return (
-      <Template
-        page={page}
-        blocks={page.blocks}
-        containerRenderer={containerRenderer}
-      />
-    );
+    return ErrorScreen('Template is not yet defined');
   }
 }
 

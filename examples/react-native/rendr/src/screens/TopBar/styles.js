@@ -1,12 +1,17 @@
-import { StyleSheet } from 'react-native';
-import { spacing } from '../../theme';
+// Core modules.
+import {StyleSheet} from 'react-native';
 
-export default styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginHorizontal: spacing.default
-    },
+// Styles.
+import {spacing} from '../../theme';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: spacing.default,
+  },
 });
+
+export default styles;

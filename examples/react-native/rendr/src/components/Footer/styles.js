@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
 
-import { color } from '../../theme';
+import {color} from '../../theme';
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: color.lightGrey,
     padding: 20,
@@ -10,9 +10,11 @@ export default styles = StyleSheet.create({
   header: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    textAlign: 'center',
   },
   content: {
     fontSize: 14,
   },
 });
+
+export default styles;

@@ -5,14 +5,25 @@
   "scripts": {
     "start": "react-native start",
     "test": "jest",
-    "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug"
+    "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
     "@ekino/rendr-core": "^0.0.15",
     "@ekino/rendr-loader": "^0.0.15",
     "@react-native-community/async-storage": "^1.6.3",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
     "lodash": "^4.17.15",
-    "react": "16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-native": "0.60.5",
     "react-native-config": "https://github.com/luggit/react-native-config.git",
     "react-native-navigation": "^3.3.0",
@@ -30,7 +41,7 @@
     "babel-jest": "^24.1.0",
     "jest": "^24.1.0",
     "metro-react-native-babel-preset": "0.54.1",
-    "react-test-renderer": "16.8.6",
+    "react-test-renderer": "^16.9.0",
     "typescript": "^3.6.3"
   },
   "jest": {
@@ -42,6 +53,12 @@
       "jsx",
       "json",
       "node"
+    ],
+    "setupFilesAfterEnv": [
+      "./setup-tests.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
     ]
   }
 }

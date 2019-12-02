@@ -1,13 +1,6 @@
 // Core modules
-import { createContext, Page } from '@ekino/rendr-core';
-import { createApiLoader, createChainedLoader } from '@ekino/rendr-loader';
-import {
-  createBlockRegistry,
-  createTemplateRegistry,
-  ComponentList,
-  createBlockRenderer,
-  createContainerRenderer,
-} from '@ekino/rendr-template-react';
+import {createContext, Page} from '@ekino/rendr-core';
+import {createApiLoader, createChainedLoader} from '@ekino/rendr-loader';
 
 import config from './config';
 import LocalStorage from './utils/LocalStorage';
@@ -15,15 +8,13 @@ import LocalStorage from './utils/LocalStorage';
 // Components.
 import {Footer, Header, Jumbotron, TextBlock} from './components';
 
-// Navigation
+// Navigation.
 import {pushWrapperScreen} from './navigation';
 
 // Screens.
 import {DefaultScreen} from './screens';
 
-const loader = createChainedLoader([
-  createApiLoader(config.base),
-]);
+const loader = createChainedLoader([createApiLoader(config.base)]);
 
 export const blocks = {
   'rendr.header': Header,
@@ -37,17 +28,8 @@ export const templates = {
   rendr: DefaultScreen,
 };
 
-export const createPage = (blocks: ComponentList, templates: ComponentList) => {
-  const blockRegistry = createBlockRegistry(blocks);
-  const templateRegistry = createTemplateRegistry(templates);
-  const blockRenderer = createBlockRenderer(blockRegistry);
-  const containerRenderer = createContainerRenderer(blockRenderer);
-
-  return { templateRegistry, containerRenderer };
-}
-
 export const navigate = async url => {
-  const cached = await LocalStorage.getItem('pages') || {};
+  const cached = (await LocalStorage.getItem('pages')) || {};
   let page;
 
   if (!cached[url]) {

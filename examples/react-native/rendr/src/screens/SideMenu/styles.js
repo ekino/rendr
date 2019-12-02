@@ -1,11 +1,16 @@
-import { StyleSheet } from 'react-native';
-import { color } from '../../theme';
+// Core modules.
+import {StyleSheet} from 'react-native';
 
-export default styles = StyleSheet.create({
-    safeAreaView: {
-        backgroundColor: color.tiertiary
-    },
-    scrollView: {
-        backgroundColor: color.tiertiary
-    },
+// Styles.
+import {color} from '../../theme';
+
+const styles = StyleSheet.create({
+  safeAreaView: {
+    backgroundColor: color.primary_light,
+  },
+  scrollView: {
+    backgroundColor: color.primary_light,
+  },
 });
+
+export default styles;

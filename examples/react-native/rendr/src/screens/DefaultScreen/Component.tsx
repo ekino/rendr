@@ -1,26 +1,34 @@
 // Core modules.
-import React, {Fragment} from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
-import { TemplateProps } from '@ekino/rendr-template-react';
+import React from 'react';
+import {SafeAreaView, ScrollView, View} from 'react-native';
+import {TemplateProps} from '@ekino/rendr-template-react';
 
 // Styles.
-import { grid } from '../../theme';
+import {grid} from '../../theme';
 
-const types = ['header','article','body','footer'];
+const types = ['header', 'article', 'body', 'footer'];
 
 class Default extends React.Component<TemplateProps> {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const {blocks, containerRenderer} = this.props;
+    console.log('blocks', blocks);
+    console.log('containerRenderer', containerRenderer);
     return (
-      <Fragment>
+      <>
         <SafeAreaView style={grid.flex}>
-          <ScrollView contentInsetAdjustmentBehavior="automatic" style={grid.scrollView}>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={grid.scrollView}>
             {types.map(type => (
-              <View>{containerRenderer(type, blocks)}</View>
+              <View key={type}>{containerRenderer(type, blocks)}</View>
             ))}
           </ScrollView>
         </SafeAreaView>
-      </Fragment>
+      </>
     );
   }
 }

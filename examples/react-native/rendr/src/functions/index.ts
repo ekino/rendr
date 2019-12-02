@@ -1,1 +1,1 @@
-export { default as vw } from "./VariableWidth/VariableWidth";
+export {default as vw} from './VariableWidth/VariableWidth';

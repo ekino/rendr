@@ -39,5 +39,12 @@
     "publish": "lerna publish",
     "examples/nextjs-with-remoteapi": "cd examples/nextjs-with-remoteapi && node dev.js",
     "examples/nextjs-with-contentful": "yarn build-contentful-example && cd examples/nextjs-with-contentful && node server.js"
+  },
+  "resolutions": {
+    "**/**/handlebars": "^4.5.3",
+    "**/**/https-proxy-agent": "^2.2.3",
+    "**/**/marked": "^0.7.0",
+    "**/**/mem": "^4.0.0",
+    "**/**/webpack-bundle-analyzer": "^3.3.2"
   }
 }

@@ -1,6 +1,9 @@
-import { createChainedLoader } from "./index";
+import { createChainedLoader, createErrorBoundaryLoader } from "./index";
 import { Page, RequestCtx } from "@ekino/rendr-core";
 import { Loader } from "./types";
+
+const logger = { log: jest.fn() };
+const errorBoundaryLoader = createErrorBoundaryLoader(logger);
 
 let mainPage: Page;
 let witnessPage: Page;
@@ -8,10 +11,16 @@ const ctx: RequestCtx = {
   // @ts-ignore
   req: jest.fn(),
   // @ts-ignore
-  res: jest.fn(),
+  res: {
+    statusCode: 200,
+    end: jest.fn()
+  },
+  isServerSide: true,
+  isClientSide: false,
   pathname: "/",
   query: {},
-  asPath: "/"
+  asPath: "/",
+  settings: {}
 };
 
 const loader1: Loader = (ctx, page, next) => {
@@ -59,6 +68,8 @@ beforeEach(() => {
   witnessPage = new Page();
   mainPage.head.title = "main";
   witnessPage.head.title = "witness";
+  ctx.isServerSide = true;
+  ctx.isClientSide = false;
 });
 
 describe("test Chained Loader", () => {
@@ -122,5 +133,85 @@ describe("test Chained Loader", () => {
     expect(mainPage.blocks[0].type).toEqual("block1");
     expect(mainPage.blocks[1].type).toEqual("block2");
     expect(resultPage).toBeUndefined();
+  });
+});
+
+describe("test errorBoundaryLoader", () => {
+  it("should return the page reference given to it if no error", async () => {
+    const loader = createChainedLoader([errorBoundaryLoader, loader1]);
+    const resultPage = await loader(ctx, mainPage, () => {});
+
+    expect(mainPage.head.title).toEqual("main");
+    expect(mainPage.blocks.length).toEqual(1);
+    expect(mainPage.blocks[0].type).toEqual("block1");
+    expect(resultPage).toEqual(mainPage);
+  });
+
+  it("should catch errors and return a new page instance", async () => {
+    const loader = createChainedLoader([
+      errorBoundaryLoader,
+      (context, page, next) => {
+        throw new Error("An error");
+      }
+    ]);
+    const resultPage = await loader(ctx, mainPage, () => {});
+    // @ts-ignore
+    expect(resultPage.statusCode).toEqual(500);
+    // @ts-ignore
+    expect(resultPage.settings.message).toEqual("An error");
+    expect(resultPage).not.toEqual(mainPage);
+  });
+
+  it("should still throw the exception when client side", async () => {
+    const loader = createChainedLoader([
+      errorBoundaryLoader,
+      (context, page, next) => {
+        throw new Error("An error");
+      }
+    ]);
+    ctx.isServerSide = false;
+    ctx.isClientSide = true;
+
+    let witnessError;
+    try {
+      const resultPage = await loader(ctx, mainPage, () => {});
+    } catch (err) {
+      witnessError = err;
+    }
+    // @ts-ignore
+    expect(witnessError).toBeInstanceOf(Error);
+  });
+
+  it("should not return the stack trace in the page when in production mode", async () => {
+    const loader = createChainedLoader([
+      errorBoundaryLoader,
+      (context, page, next) => {
+        throw new Error("An error");
+      }
+    ]);
+    const oldEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "production";
+    const resultPage = await loader(ctx, mainPage, () => {});
+    // @ts-ignore
+    expect(resultPage.settings.message).toEqual("An error");
+    // @ts-ignore
+    expect(resultPage.settings.stackTrace).toBeUndefined();
+    process.env.NODE_ENV = oldEnv;
+  });
+
+  it("should call response end if headers have been sent", async () => {
+    const loader = createChainedLoader([
+      errorBoundaryLoader,
+      (context, page, next) => {
+        context.res.headersSent = true;
+        throw new Error("An error");
+      }
+    ]);
+
+    const resultPage = await loader(ctx, mainPage, () => {});
+    // @ts-ignore
+    expect(resultPage).toBeUndefined();
+    // @ts-ignore
+    expect(ctx.res.end).toHaveBeenCalled();
   });
 });

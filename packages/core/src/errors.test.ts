@@ -8,7 +8,7 @@ import {
 const errors = [
   {
     class: NotFoundError,
-    message: "Not Found Exception",
+    message: "Not Found Error",
     name: "NotFoundError"
   },
   {
@@ -30,6 +30,10 @@ describe("test errors", () => {
 
       expect(err instanceof RendrError).toBeTruthy();
       expect(err instanceof error.class).toBeTruthy();
+      expect(err instanceof Error).toBeTruthy();
+
+      expect(err.stack).toBeDefined();
+
       expect(err.toString()).toEqual(`${error.name}: ${error.message}`);
     });
 

@@ -4,4 +4,6 @@ exports[`test errors Internal Server Error > should return custom message 1`] = 
 
 exports[`test errors Normalization Error > should return custom message 1`] = `[NormalizationError: custom message]`;
 
+exports[`test errors Not Found Error > should return custom message 1`] = `[NotFoundError: custom message]`;
+
 exports[`test errors Not Found Exception > should return custom message 1`] = `[NotFoundError: custom message]`;

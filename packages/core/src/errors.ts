@@ -42,7 +42,11 @@ export class RendrError /* extends Error */ {
   constructor(previousError?: any);
   constructor(message?: string, previousError?: any);
   constructor(...args: any[]) {
-    Object.assign(this, getErrorParameters("Error", args));
+    Object.assign(this, {
+      ...getErrorParameters("Rendr Error", args),
+      stack: new Error().stack,
+      name: "RendrError"
+    });
   }
 }
 
@@ -53,7 +57,7 @@ export class NotFoundError extends RendrError {
   constructor(...args: any[]) {
     super();
     Object.assign(this, {
-      ...getErrorParameters("Not Found Exception", args),
+      ...getErrorParameters("Not Found Error", args),
       stack: new Error().stack,
       name: "NotFoundError"
     });

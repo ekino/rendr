@@ -33,6 +33,10 @@ export type BlockRenderer = (
   key: string
 ) => JSX.Element;
 
+export interface BlockRendererProps {
+  blockRenderer: BlockRenderer;
+}
+
 export interface ComponentList {
   [index: string]: ReactElement<any>;
 }

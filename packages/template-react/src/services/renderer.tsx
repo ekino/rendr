@@ -4,13 +4,13 @@ import { BlockRegistry, BlockRenderer, ContainerRenderer } from "../types";
 export function createBlockRenderer(
   blockRegistry: BlockRegistry
 ): BlockRenderer {
-  return (block, key) => {
+  return function blockRenderer(block, key) {
     const { component: Component, settings: props } = blockRegistry(
       block.type,
       block.settings
     );
 
-    return <Component key={key} {...props} />;
+    return <Component key={key} {...props} blockRenderer={blockRenderer} />;
   };
 }
 

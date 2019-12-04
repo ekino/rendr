@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test renderer test nested components 1`] = `
+<div>
+  Two
+  <div>
+    One
+  </div>
+  <div>
+    One
+  </div>
+</div>
+`;
+
+exports[`Test renderer test simple component 1`] = `
+<div>
+  One
+</div>
+`;

@@ -188,7 +188,7 @@ const routes = {
       order: 0
     });
 
-    page.statusCode = ctx.params.statusCode;
+    page.statusCode = +ctx.params.statusCode;
 
     return page;
   },

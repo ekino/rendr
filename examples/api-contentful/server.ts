@@ -53,6 +53,9 @@ app.use((req: IncomingMessage, res: ServerResponse, next) => {
 
 // will return the api
 app.use("/api", createApi(loader));
+app.use("/", (req, res) => {
+  res.redirect("/api/", 301);
+});
 
 // if the file is call directly, then the server is started,
 // if the file is imported, the server is not started

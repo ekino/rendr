@@ -20,6 +20,9 @@ app.use((req, res, next) => {
 
 app.use(cors());
 app.use("/api", rendrApi.createApi(api.loader));
+app.use("/", (req, res) => {
+  res.redirect("/api/", 301);
+});
 
 // if the file is call directly, then the server is started,
 // if the file is imported, the server is not started

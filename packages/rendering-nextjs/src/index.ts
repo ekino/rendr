@@ -1,3 +1,4 @@
+import React from "react";
 import { AppContext } from "next/app";
 import { NextComponentType, NextPageContext } from "next";
 

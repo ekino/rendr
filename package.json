@@ -36,6 +36,7 @@
     "**/**/https-proxy-agent": "^2.2.3",
     "**/**/marked": "^0.7.0",
     "**/**/mem": "^4.0.0",
-    "**/**/webpack-bundle-analyzer": "^3.3.2"
+    "**/**/webpack-bundle-analyzer": "^3.3.2",
+    "**/**/serialize-javascript": "^2.1.1"
   }
 }

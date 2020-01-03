@@ -1,10 +1,5 @@
-import {
-  createPage,
-  mergePages,
-  RequestCtx,
-  Page,
-  NotFoundError
-} from "@ekino/rendr-core";
+import { mergePages, RequestCtx, Page } from "@ekino/rendr-core";
+
 import { contentfulLoader } from "./contentful";
 
 /**

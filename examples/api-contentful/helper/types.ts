@@ -19,6 +19,10 @@ export interface ContentfulAuthor {
   image: ContentfulAsset;
 }
 
+export interface ContentfulBlockRawConfiguration extends BaseContentfulBlock {
+  configuration: object;
+}
+
 export interface ContentfulBlockText extends BaseContentfulBlock {
   title: string;
   subtitle: string;

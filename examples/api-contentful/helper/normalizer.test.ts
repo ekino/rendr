@@ -4,10 +4,16 @@ import {
   normalizeArticle,
   normalizeAuthor,
   normalizeBlockFooter,
-  normalizeBlockHeader
+  normalizeBlockHeader,
+  normalizeBlockRawConfiguration
 } from "./normalizer";
 
-const files = ["rendr_article", "rendr_author", "rendr_block_text"];
+const files = [
+  "rendr_article",
+  "rendr_author",
+  "rendr_block_text",
+  "rendr_block_raw_configuration"
+];
 
 describe("test normalization", () => {
   files.forEach(file => {
@@ -17,7 +23,8 @@ describe("test normalization", () => {
         rendr_article: normalizeArticle,
         rendr_block_text: normalizeBlockText,
         rendr_block_footer: normalizeBlockFooter,
-        rendr_block_header: normalizeBlockHeader
+        rendr_block_header: normalizeBlockHeader,
+        rendr_block_raw_configuration: normalizeBlockRawConfiguration
       });
 
       const entry = loadJson(

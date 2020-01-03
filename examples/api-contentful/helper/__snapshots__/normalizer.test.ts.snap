@@ -117,6 +117,15 @@ Object {
 }
 `;
 
+exports[`test normalization test rendr_block_raw_configuration.json 1`] = `
+Object {
+  "container": "body",
+  "order": 1,
+  "settings": Object {},
+  "type": "article.view",
+}
+`;
+
 exports[`test normalization test rendr_block_text.json 1`] = `
 Object {
   "container": "header",

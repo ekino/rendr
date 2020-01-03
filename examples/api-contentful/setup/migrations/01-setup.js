@@ -2,7 +2,7 @@ async function cleanSpace(makeRequest, migration) {
   const rendrTypes = [
     "rendr_author",
     "rendr_block_text",
-    "rendr_block_gallery",
+    "rendr_block_raw_configuration",
     "rendr_block_header",
     "rendr_block_footer",
     "rendr_website",
@@ -210,22 +210,16 @@ function createBasicBlocks(migration) {
     ]
   });
 
-  const blockGallery = createDefault(migration, "rendr_block_gallery", {
-    name: "Rendr > Block > Assets Gallery"
-  });
-
-  createSymbol(blockGallery, "title", "Title for the Gallery Block");
-  createField(blockGallery, "gallery", "Gallery", {
-    type: "Array",
-    items: {
-      type: "Link",
-      validations: [
-        {
-          linkContentType: ["Asset"]
-        }
-      ],
-      linkType: "Entry"
+  const blockRawConfiguration = createDefault(
+    migration,
+    "rendr_block_raw_configuration",
+    {
+      name: "Rendr > Block > Raw Configuration"
     }
+  );
+
+  createField(blockRawConfiguration, "configuration", "Configuration", {
+    type: "Object"
   });
 
   const blockHeader = createDefault(migration, "rendr_block_header", {
@@ -262,7 +256,7 @@ function createArticle(migration) {
       type: "Link",
       validations: [
         {
-          linkContentType: ["rendr_block_text", "rendr_block_gallery"]
+          linkContentType: ["rendr_block_text"]
         }
       ],
       linkType: "Entry"
@@ -342,7 +336,7 @@ function createPage(migration) {
         {
           linkContentType: [
             "rendr_block_text",
-            "rendr_block_gallery",
+            "rendr_block_raw_configuration",
             "rendr_block_header",
             "rendr_block_footer"
           ]

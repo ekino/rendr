@@ -7,14 +7,15 @@ const emptyProfile = {
   url: ""
 };
 
-import { BlockDefinition } from "@ekino/rendr-core";
+import { BlockDefinition, normalizeBlockDefinition } from "@ekino/rendr-core";
 
 import {
   Author,
   ContentfulAuthor,
   ContentfulArticle,
   Article,
-  ContentfulBlockText
+  ContentfulBlockText,
+  ContentfulBlockRawConfiguration
 } from "./types";
 
 import {
@@ -40,6 +41,20 @@ export function normalizeBlockText(
       ? entry.fields.image_position
       : "left"
   });
+}
+
+export function normalizeBlockRawConfiguration(
+  entry: Entry<ContentfulBlockRawConfiguration>,
+  normalizers: EntryNormalizer
+): BlockDefinition {
+  const block = normalizeBlockDefinition(entry.fields.configuration);
+
+  if (!block) {
+    // ?
+    return;
+  }
+
+  return block;
 }
 
 export function normalizeBlockHeader(

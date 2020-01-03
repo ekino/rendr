@@ -87,80 +87,72 @@ const loadFixtures = async () => {
     }
   });
 
-  await create(env, "rendr_page", {
-    fields: {
-      title: {
-        "en-US": "Articles List"
-      },
-      seo_description: {
-        "en-US": "The description"
-      },
-      seo_keywords: {
-        "en-US": "The description"
-      },
-      extends: {
-        "en-US": "root"
-      },
-      path: {
-        "en-US": "/articles"
-      },
-      website: {
-        "en-US": {
-          sys: { type: "Link", linkType: "Entry", id: website.sys.id }
+  for (let i = 0; i < 40; i++) {
+    const block = await create(env, "rendr_block_text", {
+      fields: {
+        container: {
+          "en-US": "body"
+        },
+        internal_title: {
+          "en-US": "The main content of this article"
+        },
+        title: {
+          "en-US": `The title of block rendr_block_text ${i}`
+        },
+        contents: {
+          "en-US":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         }
-      },
-      layout: {
-        "en-US": "default"
-      },
-      ttl: {
-        "en-US": 3600
-      },
-      settings: {
-        "en-US": {}
-      },
-      published_at: {
-        "en-US": "2019-08-20T18:28:43.549Z"
       }
-    }
-  });
+    });
 
-  await create(env, "rendr_page", {
-    fields: {
-      title: {
-        "en-US": "Article View"
-      },
-      seo_description: {
-        "en-US": "The description"
-      },
-      seo_keywords: {
-        "en-US": "The description"
-      },
-      extends: {
-        "en-US": "root"
-      },
-      path: {
-        "en-US": "/articles/:slug"
-      },
-      website: {
-        "en-US": {
-          sys: { type: "Link", linkType: "Entry", id: website.sys.id }
+    await create(env, "rendr_article", {
+      fields: {
+        title: {
+          "en-US": `Article #${i}`
+        },
+        abstract: {
+          "en-US": `The super awesome abstract #${i}`
+        },
+        seo_description: {
+          "en-US": "The description"
+        },
+        seo_keywords: {
+          "en-US": "The description"
+        },
+        slug: {
+          "en-US": `slug-${i}`
+        },
+        website: {
+          "en-US": {
+            sys: { type: "Link", linkType: "Entry", id: website.sys.id }
+          }
+        },
+        blocks: {
+          "en-US": [
+            { sys: { type: "Link", linkType: "Entry", id: block.sys.id } }
+          ]
+        },
+        authors: {
+          "en-US": [
+            { sys: { type: "Link", linkType: "Entry", id: author.sys.id } }
+          ]
+        },
+        published_at: {
+          "en-US": "2019-08-20T18:28:43.549Z"
         }
-      },
-      layout: {
-        "en-US": "default"
-      },
-      ttl: {
-        "en-US": 3600
-      },
-      settings: {
-        "en-US": {}
-      },
-      published_at: {
-        "en-US": "2019-08-20T18:28:43.549Z"
       }
-    }
-  });
+    });
+  }
 
+  await createHomePage(env, website);
+  await createAboutPage(env, website);
+  await createBasePage(env, website);
+  await createArticlePage(env, website);
+  await createArticleListPage(env, website);
+};
+
+async function createHomePage(env, website) {
   const welcomeBlock = await create(env, "rendr_block_text", {
     fields: {
       title: {
@@ -222,7 +214,71 @@ const loadFixtures = async () => {
       }
     }
   });
+}
 
+async function createAboutPage(env, website) {
+  const aboutText = await create(env, "rendr_block_text", {
+    fields: {
+      container: {
+        "en-US": "body"
+      },
+      internal_title: {
+        "en-US": "The about message"
+      },
+      title: {
+        "en-US": "About"
+      },
+      contents: {
+        "en-US":
+          "This is a demo website of the CMD integration with a rendering engine. If you want more information please go to ..."
+      }
+    }
+  });
+
+  await create(env, "rendr_page", {
+    fields: {
+      title: {
+        "en-US": "Homepage"
+      },
+      seo_description: {
+        "en-US": "About page"
+      },
+      seo_keywords: {
+        "en-US": "about"
+      },
+      extends: {
+        "en-US": "root"
+      },
+      path: {
+        "en-US": "/about"
+      },
+      website: {
+        "en-US": {
+          sys: { type: "Link", linkType: "Entry", id: website.sys.id }
+        }
+      },
+      blocks: {
+        "en-US": [
+          { sys: { type: "Link", linkType: "Entry", id: aboutText.sys.id } }
+        ]
+      },
+      layout: {
+        "en-US": "default"
+      },
+      ttl: {
+        "en-US": 3600
+      },
+      settings: {
+        "en-US": {}
+      },
+      published_at: {
+        "en-US": "2019-08-20T18:28:43.549Z"
+      }
+    }
+  });
+}
+
+async function createBasePage(env, website) {
   const headerBlock = await create(env, "rendr_block_header", {
     fields: {
       container: {
@@ -293,64 +349,144 @@ const loadFixtures = async () => {
       }
     }
   });
+}
 
-  for (let i = 0; i < 40; i++) {
-    const block = await create(env, "rendr_block_text", {
-      fields: {
-        container: {
-          "en-US": "body"
-        },
-        internal_title: {
-          "en-US": "The main content of this article"
-        },
-        title: {
-          "en-US": `The title of block rendr_block_text ${i}`
-        },
-        contents: {
-          "en-US":
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+async function createArticlePage(env, website) {
+  const articleViewBlock = await create(env, "rendr_block_raw_configuration", {
+    fields: {
+      container: {
+        "en-US": "body"
+      },
+      internal_title: {
+        "en-US": "The article view"
+      },
+      configuration: {
+        "en-US": {
+          container: "body",
+          order: 1,
+          "settings:": {},
+          type: "article.view"
         }
       }
-    });
+    }
+  });
 
-    await create(env, "rendr_article", {
-      fields: {
-        title: {
-          "en-US": `Article #${i}`
-        },
-        abstract: {
-          "en-US": `The super awesome abstract #${i}`
-        },
-        seo_description: {
-          "en-US": "The description"
-        },
-        seo_keywords: {
-          "en-US": "The description"
-        },
-        slug: {
-          "en-US": `slug-${i}`
-        },
-        website: {
-          "en-US": {
-            sys: { type: "Link", linkType: "Entry", id: website.sys.id }
+  await create(env, "rendr_page", {
+    fields: {
+      title: {
+        "en-US": "Article View"
+      },
+      seo_description: {
+        "en-US": "The description"
+      },
+      seo_keywords: {
+        "en-US": "The description"
+      },
+      extends: {
+        "en-US": "root"
+      },
+      path: {
+        "en-US": "/articles/:slug"
+      },
+      website: {
+        "en-US": {
+          sys: { type: "Link", linkType: "Entry", id: website.sys.id }
+        }
+      },
+      blocks: {
+        "en-US": [
+          {
+            sys: {
+              type: "Link",
+              linkType: "Entry",
+              id: articleViewBlock.sys.id
+            }
           }
-        },
-        blocks: {
-          "en-US": [
-            { sys: { type: "Link", linkType: "Entry", id: block.sys.id } }
-          ]
-        },
-        authors: {
-          "en-US": [
-            { sys: { type: "Link", linkType: "Entry", id: author.sys.id } }
-          ]
-        },
-        published_at: {
-          "en-US": "2019-08-20T18:28:43.549Z"
+        ]
+      },
+      layout: {
+        "en-US": "default"
+      },
+      ttl: {
+        "en-US": 3600
+      },
+      settings: {
+        "en-US": {}
+      },
+      published_at: {
+        "en-US": "2019-08-20T18:28:43.549Z"
+      }
+    }
+  });
+}
+
+async function createArticleListPage(env, website) {
+  const articleListBlock = await create(env, "rendr_block_raw_configuration", {
+    fields: {
+      container: {
+        "en-US": "body"
+      },
+      internal_title: {
+        "en-US": "The article view"
+      },
+      configuration: {
+        "en-US": {
+          container: "body",
+          order: 1,
+          "settings:": {},
+          type: "article.list"
         }
       }
-    });
-  }
-};
+    }
+  });
+
+  await create(env, "rendr_page", {
+    fields: {
+      title: {
+        "en-US": "Articles List"
+      },
+      seo_description: {
+        "en-US": "The description"
+      },
+      seo_keywords: {
+        "en-US": "The description"
+      },
+      extends: {
+        "en-US": "root"
+      },
+      path: {
+        "en-US": "/articles"
+      },
+      website: {
+        "en-US": {
+          sys: { type: "Link", linkType: "Entry", id: website.sys.id }
+        }
+      },
+      blocks: {
+        "en-US": [
+          {
+            sys: {
+              type: "Link",
+              linkType: "Entry",
+              id: articleListBlock.sys.id
+            }
+          }
+        ]
+      },
+      layout: {
+        "en-US": "default"
+      },
+      ttl: {
+        "en-US": 3600
+      },
+      settings: {
+        "en-US": {}
+      },
+      published_at: {
+        "en-US": "2019-08-20T18:28:43.549Z"
+      }
+    }
+  });
+}
 
 loadFixtures();

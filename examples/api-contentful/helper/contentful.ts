@@ -9,7 +9,8 @@ import {
   normalizeBlockText,
   normalizeBlockFooter,
   normalizeBlockHeader,
-  normalizeArticle
+  normalizeArticle,
+  normalizeBlockRawConfiguration
 } from "./normalizer";
 
 import { RequestCtx } from "@ekino/rendr-core";
@@ -35,7 +36,8 @@ export const contentfulNormalizer = createNormalizer({
   rendr_article: normalizeArticle,
   rendr_block_text: normalizeBlockText,
   rendr_block_footer: normalizeBlockFooter,
-  rendr_block_header: normalizeBlockHeader
+  rendr_block_header: normalizeBlockHeader,
+  rendr_block_raw_configuration: normalizeBlockRawConfiguration
 });
 
 // create the loader, that will retrieve the Page object from contentful.

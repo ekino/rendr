@@ -1,0 +1,42 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "f5bx295b472q"
+            }
+        },
+        "id": "6NS6bLDrWzCC5I2n9NI3nj",
+        "type": "Entry",
+        "createdAt": "2019-08-20T18:00:43.415Z",
+        "updatedAt": "2019-08-20T18:00:43.415Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "rendr_block_raw_configuration"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "internal_title": "internal content",
+        "container": "nody",
+        "order": 1,
+        "configuration": {
+            "container": "body",
+            "order": 1,
+            "settings:": {},
+            "type": "article.view"
+        }
+    }
+}

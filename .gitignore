@@ -1,5 +1,7 @@
 node_modules
-.next
+examples/*/.next
+examples/*/.cache
+examples/*/yarn.lock
 packages/*/dist
 packages/*/node_modules
 yarn-error.log

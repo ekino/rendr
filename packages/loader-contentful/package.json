@@ -14,7 +14,6 @@
         "@ekino/rendr-loader": "0.0.15",
         "@types/lodash": "^4.14.138",
         "contentful": "^7.9.1",
-        "contentful-cli": "^0.36.2",
         "lodash": "^4.17.15"
     },
     "devDependencies": {

@@ -18,11 +18,11 @@ The rendr project provide an advanced integration with Contentful witht the `@ek
 
 > **Please note**: you need an account on Contentful and the `Management API Token` which allows to update the models schema on Contentful.
 
-    CONTENTFUL_SPACE_ID=XXXX CONTENTFUL_MANAGEMENT_TOKEN=XXXX node node_modules/@ekino/rend-loader-contentful/src/migrations.js 
+    CONTENTFUL_SPACE_ID=XXXX CONTENTFUL_MANAGEMENT_TOKEN=XXXX node setup/migrations.js 
 
 ### Setup simple fixtures
 
-    CONTENTFUL_SPACE_ID=XXXX CONTENTFUL_MANAGEMENT_TOKEN=XXXX node node_modules/@ekino/rend-loader-contentful/src/fixtures.js 
+    CONTENTFUL_SPACE_ID=XXXX CONTENTFUL_MANAGEMENT_TOKEN=XXXX node setup/fixtures.js 
 
 ### run the demo
 

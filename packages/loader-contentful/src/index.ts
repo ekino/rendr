@@ -1,6 +1,5 @@
 import { Loader } from "@ekino/rendr-loader";
 import {
-  RequestCtx,
   mergePages,
   NotFoundError,
   InternalServerError
@@ -16,6 +15,7 @@ import { GetWebsite } from "./contents";
 export * from "./normalizer";
 export * from "./contents";
 export * from "./types";
+export * from "./test";
 
 export function createContentfulLoader(
   clientFactory: ClientFactory,

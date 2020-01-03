@@ -1,13 +1,4 @@
-import {
-  fixImageUrl,
-  validEntry,
-  normalizeAuthor,
-  normalizeArticle,
-  normalizeBlockText,
-  normalizeBlockFooter,
-  normalizeBlockHeader,
-  createBlockDefinition
-} from "./normalizer";
+import { fixImageUrl, validEntry } from "./normalizer";
 import { createDummyEntry } from "./test";
 import { createNormalizer } from "./index";
 import { EntryNormalizerList } from "./types";
@@ -96,13 +87,7 @@ describe("test validEntry", () => {
 
 describe("test normalizer", () => {
   it("with default values (no normalizer)", () => {
-    const normalizer = createNormalizer({
-      rendr_author: normalizeAuthor,
-      rendr_article: normalizeArticle,
-      rendr_block_text: normalizeBlockText,
-      rendr_block_footer: normalizeBlockFooter,
-      rendr_block_header: normalizeBlockHeader
-    });
+    const normalizer = createNormalizer();
 
     const entry = createDummyEntry<ContentfulCar>({
       speed: 10,
@@ -156,24 +141,15 @@ describe("test normalizer", () => {
   });
 
   const files = [
-    "rendr_block_text",
     "rendr_page",
     "rendr_page_missing_field",
-    "rendr_author",
     "rendr_website",
-    "rendr_article",
     "asset"
   ];
 
   files.forEach(file => {
     it(`test ${file}.json`, () => {
-      const normalizer = createNormalizer({
-        rendr_author: normalizeAuthor,
-        rendr_article: normalizeArticle,
-        rendr_block_text: normalizeBlockText,
-        rendr_block_footer: normalizeBlockFooter,
-        rendr_block_header: normalizeBlockHeader
-      });
+      const normalizer = createNormalizer({});
       const entry = loadJson(
         `${__dirname}/__fixtures__/normalizer/${file}.json`
       );

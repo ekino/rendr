@@ -1,16 +1,17 @@
 import { createClient } from "contentful";
 import {
   createNormalizer,
-  createContentfulLoader
+  createContentfulLoader,
+  ClientFactory
 } from "@ekino/rendr-loader-contentful";
 import {
-  ClientFactory,
   normalizeAuthor,
   normalizeBlockText,
   normalizeBlockFooter,
   normalizeBlockHeader,
   normalizeArticle
-} from "@ekino/rendr-loader-contentful";
+} from "./normalizer";
+
 import { RequestCtx } from "@ekino/rendr-core";
 
 export const defaultContentfulClient: ClientFactory = (ctx: RequestCtx) => {
@@ -29,7 +30,7 @@ export const defaultContentfulClient: ClientFactory = (ctx: RequestCtx) => {
 export const contentfulNormalizer = createNormalizer({
   // those normalizers are used for the demo,
   // so you can remove them and add your own normlizer
-  // if you need too.
+  // if you need to.
   rendr_author: normalizeAuthor,
   rendr_article: normalizeArticle,
   rendr_block_text: normalizeBlockText,

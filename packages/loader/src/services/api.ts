@@ -83,10 +83,7 @@ export function createApiLoader(baseUrl: string): Loader {
           }
         });
 
-        return pipe(
-          response.data,
-          ctx.res
-        );
+        return pipe(response.data, ctx.res);
       }
     }
   };
@@ -130,10 +127,7 @@ function pipePageToClient(source: Readable): Promise<Page> {
     }
   });
 
-  return pipe(
-    source,
-    dest
-  ).then(() => {
+  return pipe(source, dest).then(() => {
     return createPage(JSON.parse(data));
   });
 }

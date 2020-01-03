@@ -41,10 +41,9 @@ const app = express();
 app.use(cors());
 
 app.use((req: IncomingMessage, res: ServerResponse, next) => {
-  const message = `[${new Date().toISOString()}}] api-contentful - ${
+  const message = `[${new Date().toISOString()}] api-contentful - ${
     req.method
   } ${req.url}`;
-  console.log(message);
 
   next();
 
@@ -54,7 +53,7 @@ app.use((req: IncomingMessage, res: ServerResponse, next) => {
 // will return the api
 app.use("/api", createApi(loader));
 app.use("/", (req, res) => {
-  res.redirect("/api/", 301);
+  res.redirect(301, "/api/");
 });
 
 // if the file is call directly, then the server is started,

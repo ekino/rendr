@@ -1,14 +1,7 @@
 import { RequestCtx, Page } from "@ekino/rendr-core";
 
 import { createContentfulLoader } from "./index";
-import {
-  createNormalizer,
-  normalizeAuthor,
-  normalizeArticle,
-  normalizeBlockText,
-  normalizeBlockFooter,
-  normalizeBlockHeader
-} from "./normalizer";
+import { createNormalizer } from "./normalizer";
 import { getMockClient, loadJson } from "./test";
 
 function createContext(data: {}): RequestCtx {
@@ -74,13 +67,7 @@ describe("test loader", () => {
       }
     });
 
-    const normalizer = createNormalizer({
-      rendr_author: normalizeAuthor,
-      rendr_article: normalizeArticle,
-      rendr_block_text: normalizeBlockText,
-      rendr_block_footer: normalizeBlockFooter,
-      rendr_block_header: normalizeBlockHeader
-    });
+    const normalizer = createNormalizer();
 
     const clientFinder = (ctx: RequestCtx) => {
       return client;

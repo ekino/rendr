@@ -17,12 +17,17 @@
     "packages/*"
   ],
   "scripts": {
-    "setup": "rm -rf node_modules packages/*/node_modules examples/*/node_modules && yarn install && lerna bootstrap && rm -rf examples/nextjs-with-remoteapi/node_modules/@ekino && rm -rf examples/nextjs-with-contentful/node_modules/@ekino",
+    "clean-examples": "rm -rf examples/*/node_modules examples/*/.next examples/*/.cache",
+    "clean-lib": "rm -rf node_modules packages/*/node_modules",
+    "clean": "yarn clean-lib && yarn clean-examples",
+    "setup-lib": "yarn install && lerna bootstrap && yarn build",
+    "setup-examples": "for i in ./examples/*; do (cd $i && yarn && rm -rf node_modules/@ekino); done",
+    "setup": "yarn setup-lib && yarn setup-examples",
     "build": "lerna run build",
     "fmt": "prettier --color --write \"**/*.{js,jsx,ts,tsx,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "fmt:check": "prettier --color --list-different \"packages/*/**/*.{js,ts,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "lint:ts": "tslint -p . -c tslint.json \"packages/*/src/**/*.ts\"",
-    "test": "jest packages",
+    "test": "jest packages examples/api-contentful",
     "test:all": "yarn fmt:check && yarn lint:ts && yarn test && yarn build",
     "publish": "lerna publish"
   },

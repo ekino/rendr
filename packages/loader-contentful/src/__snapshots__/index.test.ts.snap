@@ -2,62 +2,7 @@
 
 exports[`test loader page with no extend page 1`] = `
 Page {
-  "blocks": Array [
-    Object {
-      "container": "header",
-      "order": 1,
-      "settings": Object {
-        "contents": "The header contents",
-        "image": Object {
-          "enabled": false,
-          "id": "-",
-          "title": "No picture",
-          "url": "",
-        },
-        "image_position": "left",
-        "mode": "standard",
-        "subtitle": "",
-        "title": "The header",
-      },
-      "type": "rendr.text",
-    },
-    Object {
-      "container": "footer",
-      "order": 1,
-      "settings": Object {
-        "contents": "The base footer",
-        "image": Object {
-          "enabled": false,
-          "id": "-",
-          "title": "No picture",
-          "url": "",
-        },
-        "image_position": "left",
-        "mode": "standard",
-        "subtitle": "",
-        "title": "The Footer",
-      },
-      "type": "rendr.text",
-    },
-    Object {
-      "container": "article",
-      "order": 1,
-      "settings": Object {
-        "contents": "All in!",
-        "image": Object {
-          "enabled": false,
-          "id": "-",
-          "title": "No picture",
-          "url": "",
-        },
-        "image_position": "left",
-        "mode": "standard",
-        "subtitle": "",
-        "title": "The page",
-      },
-      "type": "rendr.text",
-    },
-  ],
+  "blocks": Array [],
   "cache": Object {
     "ttl": 0,
   },

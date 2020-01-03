@@ -5,7 +5,9 @@ import {
   Page
 } from "@ekino/rendr-core";
 import { createSitemapPageBuilder } from "@ekino/rendr-sitemap";
-import { GetArticles, GetPages } from "@ekino/rendr-loader-contentful";
+import { GetPages } from "@ekino/rendr-loader-contentful";
+
+import { GetArticles } from "../helper/contents";
 
 import { defaultContentfulClient } from "../helper/contentful";
 

@@ -1,5 +1,6 @@
 import { PageBuilder } from "@ekino/rendr-loader";
-import { GetArticle } from "@ekino/rendr-loader-contentful";
+import { GetArticle } from "../helper/contents";
+
 import {
   defaultContentfulClient,
   contentfulNormalizer

@@ -20,7 +20,7 @@ export function updateNextData(props: any, defaultPage = "/_rendr") {
     props.__NEXT_DATA__.props.pageProps &&
     props.__NEXT_DATA__.props.pageProps.page
   ) {
-    props.__NEXT_DATA__.page = "/_rendr";
+    props.__NEXT_DATA__.page = defaultPage;
   }
 }
 

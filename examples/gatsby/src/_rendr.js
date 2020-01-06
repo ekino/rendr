@@ -5,9 +5,12 @@ import DefaultTemplate from "./templates/default"
 import RendrText from "./components/RendrText"
 import RendrFooter from "./components/RendrFooter"
 import RendrHeader from "./components/RendrHeader"
+import NestedBlocks from "./components/NestedBlocks"
 
 // Configure components used on pages. A component is a standard React component.
 const components = {
+  "article.list": NestedBlocks,
+  "article.view": NestedBlocks,
   "rendr.text": RendrText,
   "rendr.footer": RendrFooter,
   "rendr.header": RendrHeader,

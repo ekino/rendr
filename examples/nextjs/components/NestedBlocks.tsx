@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BlockDefinition } from "@ekino/rendr-core";
 import { BlockRenderer } from "@ekino/rendr-template-react";
 
-export default function ArticleList({
+export default function NestedBlocks({
   blocks,
   blockRenderer
 }: {

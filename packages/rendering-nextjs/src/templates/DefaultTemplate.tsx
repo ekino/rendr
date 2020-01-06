@@ -16,9 +16,7 @@ export default function DefaultTemplate(props: TemplateProps) {
       </Head>
 
       <header>{containerRenderer("header", blocks)}</header>
-      <nav>{containerRenderer("nav", blocks)}</nav>
-      <article>{containerRenderer("article", blocks)}</article>
-      <aside>{containerRenderer("aside", blocks)}</aside>
+      <article>{containerRenderer("body", blocks)}</article>
       <footer>{containerRenderer("footer", blocks)}</footer>
     </>
   );

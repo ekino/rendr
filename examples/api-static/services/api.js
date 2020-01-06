@@ -216,7 +216,7 @@ const routes = {
 
 // Configure a page for each matching url.
 module.exports.loader = rendrLoader.createChainedLoader([
-  rendrLoader.errorBoundaryLoader,
+  rendrLoader.createErrorBoundaryLoader(),
   basePageLoader,
   rendrLoader.createInMemoryLoader(routes)
 ]);

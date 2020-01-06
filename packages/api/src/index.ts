@@ -23,6 +23,11 @@ export function createApi(loader: Loader): Express.RequestHandler {
       return;
     }
 
+    // the loader already send content, nothing for use
+    if (res.headersSent) {
+      return;
+    }
+
     res.set("X-Rendr-Content-Type", "rendr/document");
 
     res.json(page);

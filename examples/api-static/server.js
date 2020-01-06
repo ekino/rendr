@@ -11,14 +11,18 @@ app.use((req, res, next) => {
   const message = `[${new Date().toISOString()}}] api-static - ${req.method} ${
     req.url
   }`;
-  console.log(message);
 
   next();
 
   console.log(`${message} - ${res.statusCode}`);
 });
 
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: "X-Rendr-Content-Type"
+  })
+);
+
 app.use("/api", rendrApi.createApi(api.loader));
 app.use("/", (req, res) => {
   res.redirect("/api/", 301);

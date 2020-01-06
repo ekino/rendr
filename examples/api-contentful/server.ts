@@ -17,7 +17,11 @@ if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: "X-Rendr-Content-Type"
+  })
+);
 
 app.use((req: IncomingMessage, res: ServerResponse, next) => {
   const message = `[${new Date().toISOString()}] api-contentful - ${

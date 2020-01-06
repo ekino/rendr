@@ -106,7 +106,7 @@ Here is how it works:
 // Each of them will be executed in sequence as long as they return the execution of the `next` function
 module.exports.loader = rendrLoader.createChainedLoader([
   // Here is our error catcher
-  rendrLoader.errorBoundaryLoader,
+  rendrLoader.createErrorBoundaryLoader(),
   rendrLoader.createInMemoryLoader(routes)
 ]);
 ```

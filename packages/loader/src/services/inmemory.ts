@@ -47,6 +47,6 @@ export function createInMemoryLoader(paths: InMemorySettings): Loader {
       throw new NotFoundError();
     }
 
-    return await result.pageBuilder(ctx, page, () => {});
+    return next(await result.pageBuilder(ctx, page, () => {}));
   };
 }

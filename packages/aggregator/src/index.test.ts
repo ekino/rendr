@@ -1,6 +1,6 @@
 import { RequestCtx, Page } from "@ekino/rendr-core";
 
-import { createAggregator } from "./index";
+import { createAggregatorLoader } from "./index";
 
 function createContext(data: {} = {}): RequestCtx {
   const ctx: RequestCtx = {
@@ -22,7 +22,7 @@ function createContext(data: {} = {}): RequestCtx {
 describe("test inmemory code", () => {
   it("test createAggregator - empty init", async () => {
     const ctx = createContext();
-    const aggregator = createAggregator({});
+    const aggregator = createAggregatorLoader({});
     const page = new Page();
     await aggregator(ctx, page, () => {});
 
@@ -33,7 +33,7 @@ describe("test inmemory code", () => {
 
   it("test createAggregator - with handlers", async () => {
     const ctx = createContext();
-    const aggregator = createAggregator({
+    const aggregator = createAggregatorLoader({
       handler: block => {
         block.settings.test = "Salut";
 

@@ -31,14 +31,17 @@ export const createChainedLoader: (loaders: Loader[]) => Loader = loaders => {
 // Simple version of a loader that catches errors during the execution of
 // following loaders
 // Feel free to use your own if you want to manage other error codes
-export const errorBoundaryLoader: Loader = async (ctx, page, next) => {
-  let resultPage: Page | void;
-  try {
-    resultPage = await next();
-  } catch (err) {
-    resultPage = createPage();
-    resultPage.statusCode = err instanceof NotFoundError ? 404 : 500;
-    resultPage.settings.message = err.message;
-  }
-  return resultPage;
+export const createErrorBoundaryLoader: () => Loader = () => {
+  return async (ctx, page, next) => {
+    let resultPage: Page | void;
+    try {
+      resultPage = await next();
+    } catch (err) {
+      resultPage = createPage();
+      resultPage.statusCode = err instanceof NotFoundError ? 404 : 500;
+      resultPage.settings.message = err.message;
+    }
+
+    return resultPage;
+  };
 };

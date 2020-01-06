@@ -1,12 +1,16 @@
-import { PageBuilder } from "@ekino/rendr-loader";
-import { GetArticles } from "../helper/contents";
 import {
   defaultContentfulClient,
   contentfulNormalizer
 } from "../helper/contentful";
-import { getPage } from "../helper/page";
 
-export const articleList: PageBuilder = async (ctx, page) => {
+import { GetArticles } from "../helper/contents";
+
+import { BlockDefinition, RequestCtx } from "@ekino/rendr-core";
+
+export const articles = async (
+  definition: BlockDefinition,
+  ctx: RequestCtx
+) => {
   // We first get the articles from contentful
   const articles = await GetArticles(defaultContentfulClient(ctx), {
     domain: ctx.hostname,
@@ -14,14 +18,14 @@ export const articleList: PageBuilder = async (ctx, page) => {
     page: "page" in ctx.query ? ctx.query.page : 1 // we can deal with the pagination like this.
   });
 
-  const articlesPage = await getPage(ctx, page);
+  definition.settings.blocks = [];
 
   // @ts-ignore - length does not exists in the definition
   if (articles.length === 0) {
     // no article
-    articlesPage.head.title = "Sorry, no article for now...";
+    // articlesPage.head.title = "Sorry, no article for now...";
 
-    articlesPage.blocks.push({
+    definition.settings.blocks.push({
       container: "body",
       type: "rendr.text",
       order: 1,
@@ -31,10 +35,10 @@ export const articleList: PageBuilder = async (ctx, page) => {
       }
     });
 
-    return articlesPage;
+    return;
   }
 
-  articlesPage.blocks.push({
+  definition.settings.blocks.push({
     container: "body",
     settings: {
       title: "Articles list",
@@ -47,7 +51,7 @@ export const articleList: PageBuilder = async (ctx, page) => {
   articles.items.forEach((entry, i) => {
     const article = contentfulNormalizer(entry);
 
-    articlesPage.blocks.push({
+    definition.settings.blocks.push({
       container: "body",
       settings: {
         title: article.title,
@@ -63,5 +67,5 @@ export const articleList: PageBuilder = async (ctx, page) => {
     });
   });
 
-  return articlesPage;
+  return definition;
 };

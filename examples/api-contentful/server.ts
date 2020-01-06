@@ -1,16 +1,9 @@
-import {
-  createInMemoryLoader,
-  createChainedLoader,
-  errorBoundaryLoader
-} from "@ekino/rendr-loader";
-
 import { createApi } from "@ekino/rendr-api";
-
 import express from "express";
 import cors from "cors";
-
-import * as Pages from "./pages";
 import { IncomingMessage, ServerResponse } from "http";
+
+import loader from "./helper/loader";
 
 if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
   console.error(
@@ -19,20 +12,6 @@ if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
 
   process.exit(1);
 }
-
-// define routes
-const routes = {
-  "/sitemap.xml": Pages.sitemap,
-  "/articles": Pages.articleList,
-  "/articles/:slug": Pages.article,
-  "/*": Pages.catchAll
-};
-
-// configure page loaders
-const loader = createChainedLoader([
-  errorBoundaryLoader,
-  createInMemoryLoader(routes)
-]);
 
 // configure server
 const port = parseInt(process.env.PORT, 10) || 3000;

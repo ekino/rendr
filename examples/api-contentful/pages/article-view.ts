@@ -12,7 +12,7 @@ import {
   BlockDefinition
 } from "@ekino/rendr-core";
 
-export const article: PageBuilder = async (ctx, page) => {
+export const articleView: PageBuilder = async (ctx, page) => {
   // We first load the Article object from contentful
   const entry = await GetArticle(
     defaultContentfulClient(ctx),
@@ -63,8 +63,19 @@ export const article: PageBuilder = async (ctx, page) => {
     description: article.seo.description
   });
 
+  const viewBlock = articlePage.blocks.find(def => {
+    return def.type === "article.view";
+  });
+
+  // no article.view block definied ... someone remove it from the management system
+  if (!viewBlock) {
+    return articlePage;
+  }
+
+  viewBlock.settings.blocks = [];
+
   // add related blocks for the page
-  articlePage.blocks.push({
+  viewBlock.settings.blocks.push({
     container: "body",
     // for simplicity, the rendr.text block is used, however you can create
     // new type to match the layout block available (that you have to create depends on
@@ -82,7 +93,7 @@ export const article: PageBuilder = async (ctx, page) => {
   // the article is also composed from a set of block we can just reuse them
   article.blocks.forEach((block: BlockDefinition) => {
     block.order = 100 + block.order;
-    articlePage.blocks.push(block);
+    viewBlock.settings.blocks.push(block);
   });
 
   // for now, authors and images are not in used.

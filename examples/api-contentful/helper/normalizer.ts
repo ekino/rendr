@@ -1,11 +1,12 @@
 import { Entry } from "contentful";
-
-const emptyProfile = {
-  enabled: false,
-  id: "-",
-  title: "No picture",
-  url: ""
-};
+import {
+  EntryNormalizer,
+  fixImageUrl,
+  normalizePicture,
+  emptyPicture,
+  validEntry,
+  createBlockDefinition
+} from "@ekino/rendr-loader-contentful";
 
 import { BlockDefinition, normalizeBlockDefinition } from "@ekino/rendr-core";
 
@@ -18,14 +19,12 @@ import {
   ContentfulBlockRawConfiguration
 } from "./types";
 
-import {
-  EntryNormalizer,
-  fixImageUrl,
-  normalizePicture,
-  emptyPicture,
-  validEntry,
-  createBlockDefinition
-} from "@ekino/rendr-loader-contentful";
+const emptyProfile = {
+  enabled: false,
+  id: "-",
+  title: "No picture",
+  url: ""
+};
 
 export function normalizeBlockText(
   entry: Entry<ContentfulBlockText>,

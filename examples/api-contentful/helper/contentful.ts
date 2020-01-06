@@ -4,6 +4,7 @@ import {
   createContentfulLoader,
   ClientFactory
 } from "@ekino/rendr-loader-contentful";
+
 import {
   normalizeAuthor,
   normalizeBlockText,
@@ -13,9 +14,7 @@ import {
   normalizeBlockRawConfiguration
 } from "./normalizer";
 
-import { RequestCtx } from "@ekino/rendr-core";
-
-export const defaultContentfulClient: ClientFactory = (ctx: RequestCtx) => {
+export const defaultContentfulClient: ClientFactory = ctx => {
   // you can use the ctx object to change the client
   // ie: to either use the public API or the preview API.
   return createClient({

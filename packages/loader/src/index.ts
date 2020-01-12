@@ -6,7 +6,6 @@ import {
   RendrError,
   RequestCtx
 } from "@ekino/rendr-core";
-import { type } from "os";
 
 export * from "./types";
 export * from "./services/inmemory";

@@ -1,7 +1,11 @@
 import { createPage } from "@ekino/rendr-rendering-nextjs";
 import { createAggregatorLoader } from "@ekino/rendr-aggregator";
-import { createApiLoader, createChainedLoader } from "@ekino/rendr-loader";
-import { RequestCtx, BlockDefinition } from "@ekino/rendr-core";
+import {
+  createApiLoader,
+  createChainedLoader,
+  Loader
+} from "@ekino/rendr-loader";
+import { RequestCtx, BlockDefinition, Page } from "@ekino/rendr-core";
 
 import dynamic from "next/dynamic";
 
@@ -32,7 +36,23 @@ const handlers = {
 };
 
 // initialize related code required to make the page works.
-const apiLoader = createApiLoader("http://localhost:3000/api");
+const apiLoader: Loader = (ctx, page, next) => {
+  let url = "";
+
+  if (ctx.isClientSide) {
+    url = `${location.origin}/api`;
+  } else if (ctx.req.headers["x-now-deployment-url"]) {
+    // are we on now.sh ?
+    url = `https://${ctx.req.headers["x-now-deployment-url"]}/api`;
+  } else {
+    url = "http://localhost:3000/api";
+  }
+
+  const loader = createApiLoader(url);
+
+  return loader(ctx, page, next);
+};
+
 const pageAggregator = createAggregatorLoader(handlers);
 
 const loader = createChainedLoader([apiLoader, pageAggregator]);

@@ -12,7 +12,7 @@
     "CONTENTFUL_ACCESS_TOKEN": "@contentful_access_token"
   },
   "routes": [
-    { "src": "/api/.*", "methods": ["GET", "OPTIONS"], "dest": "/server.ts"},
+    { "src": "/api/(.*)", "methods": ["GET", "OPTIONS"], "destination": "https://contentful-api.rande.now.sh/api/$1"},
     { "src": "/.*", "status": 302, "headers": { "Location": "/api/" }}
   ]
 }

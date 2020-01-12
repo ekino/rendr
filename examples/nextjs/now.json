@@ -1,0 +1,12 @@
+{
+    "name": "nextjs",
+    "version": 2,
+    "regions": ["cdg1"],
+    "public": true,
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "routes": [
+      { "src": "/api/(.*)", "dest": "https://contentful-api.rande.now.sh/api/$1"}
+    ]
+  }

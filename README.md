@@ -76,3 +76,7 @@ Add information => need to explain the `examples` folder
 ## Contributing
 
 Please see our [CONTRIBUTING.md](https://github.com/ekino/rendr/blob/master/CONTRIBUTING.md).
+
+## Publishing new version
+
+Please see our [PUBLISHING.md](https://github.com/ekino/rendr/blob/master/PUBLISHING.md).

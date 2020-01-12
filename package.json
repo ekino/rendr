@@ -29,7 +29,7 @@
     "lint:ts": "tslint -p . -c tslint.json \"packages/*/src/**/*.ts\"",
     "test": "jest packages examples/api-contentful",
     "test:all": "yarn fmt:check && yarn lint:ts && yarn test && yarn build",
-    "publish": "lerna publish"
+    "distribute": "yarn audit && yarn build && yarn test && lerna publish --exact --dist-tag=latest --loglevel=debug --force-publish"
   },
   "resolutions": {
     "**/**/handlebars": "^4.5.3",

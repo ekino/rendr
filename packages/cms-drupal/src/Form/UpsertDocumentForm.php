@@ -21,8 +21,8 @@ final class UpsertDocumentForm extends ContentEntityForm
 {
     protected $messenger;
     protected $stringTranslation;
-    private $dateFormatter;
-    private $currentUser;
+    protected $dateFormatter;
+    protected $currentUser;
 
     /**
      * {@inheritdoc}

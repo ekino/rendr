@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityPublishedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
@@ -95,6 +96,16 @@ final class Document extends RevisionableContentEntityBase implements DocumentIn
                 ->setRevisionable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
+                ])
+                ->setDisplayConfigurable('form', true),
+            'content' => BaseFieldDefinition::create('entity_reference_revisions')
+                ->setLabel(new TranslatableMarkup('Content'))
+                ->setRequired(true)
+                ->setRevisionable(true)
+                ->setSetting('target_type', 'paragraph')
+                ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+                ->setDisplayOptions('form', [
+                    'type' => 'paragraphs',
                 ])
                 ->setDisplayConfigurable('form', true),
             'changed' => BaseFieldDefinition::create('changed')

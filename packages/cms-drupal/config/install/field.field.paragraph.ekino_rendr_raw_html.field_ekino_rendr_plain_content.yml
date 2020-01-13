@@ -3,6 +3,9 @@ dependencies:
     config:
         - "field.storage.paragraph.field_ekino_rendr_plain_content"
         - "paragraphs.paragraphs_type.ekino_rendr_raw_html"
+    enforced:
+        module:
+            - "ekino_rendr"
 field_name: "field_ekino_rendr_plain_content"
 entity_type: "paragraph"
 bundle: "ekino_rendr_raw_html"

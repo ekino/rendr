@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class UpsertChannelTypeForm extends BundleEntityFormBase
 {
-    private $channelTypeStorage;
+    protected $channelTypeStorage;
     protected $messenger;
     protected $stringTranslation;
 

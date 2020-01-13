@@ -1,8 +1,12 @@
 id: "paragraph.ekino_rendr_raw_html.default"
+status: true
 dependencies:
     config:
         - "field.field.paragraph.ekino_rendr_raw_html.field_ekino_rendr_plain_content"
         - "paragraphs.paragraphs_type.ekino_rendr_raw_html"
+    enforced:
+        module:
+            - "ekino_rendr"
 targetEntityType: "paragraph"
 bundle: "ekino_rendr_raw_html"
 mode: "default"

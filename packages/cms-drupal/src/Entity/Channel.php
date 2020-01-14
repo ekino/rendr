@@ -11,6 +11,8 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\user\EntityOwnerInterface;
+use Drupal\user\EntityOwnerTrait;
 
 /**
  * @ContentEntityType(
@@ -27,6 +29,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *      "label"="label",
  *      "published"="published",
  *      "revision"="revision_id",
+ *      "owner" = "uid",
  *   },
  *   field_ui_base_route="entity.ekino_rendr_channel_type.edit_form",
  *   handlers={
@@ -47,19 +50,20 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   label_singular=@Translation("channel"),
  *   label_plural=@Translation("channels"),
  *   links={
- *      "add-form"="/admin/config/ekino_rendr/channel/add/{ekino_rendr_channel_type}",
- *      "add-page"="/admin/config/ekino_rendr/channel/add",
- *      "canonical"="/admin/config/ekino_rendr/channel/{ekino_rendr_channel}",
- *      "collection"="/admin/config/ekino_rendr/channel",
- *      "delete-form"="/admin/config/ekino_rendr/channel/{ekino_rendr_channel}/delete",
- *      "edit-form"="/admin/config/ekino_rendr/channel/{ekino_rendr_channel}/edit"
+ *      "add-form"="/admin/structure/ekino_rendr/channel/add/{ekino_rendr_channel_type}",
+ *      "add-page"="/admin/structure/ekino_rendr/channel/add",
+ *      "canonical"="/admin/structure/ekino_rendr/channel/{ekino_rendr_channel}",
+ *      "collection"="/admin/structure/ekino_rendr/channel",
+ *      "delete-form"="/admin/structure/ekino_rendr/channel/{ekino_rendr_channel}/delete",
+ *      "edit-form"="/admin/structure/ekino_rendr/channel/{ekino_rendr_channel}/edit"
  *   }
  * )
  */
-final class Channel extends RevisionableContentEntityBase implements ChannelInterface
+final class Channel extends RevisionableContentEntityBase implements EntityOwnerInterface, ChannelInterface
 {
     use EntityChangedTrait;
     use EntityPublishedTrait;
+    use EntityOwnerTrait;
 
     const ID = 'ekino_rendr_channel';
 
@@ -103,6 +107,7 @@ final class Channel extends RevisionableContentEntityBase implements ChannelInte
                 ->setRequired(true),
         ] +
             parent::baseFieldDefinitions($entityType) +
+            self::ownerBaseFieldDefinitions($entityType) +
             $published;
     }
 

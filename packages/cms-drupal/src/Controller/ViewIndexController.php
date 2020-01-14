@@ -23,8 +23,8 @@ final class ViewIndexController
             '#theme' => 'admin_block_content',
             '#content' => [
                 [
-                    'url' => new Url('entity.ekino_rendr_document.collection'),
-                    'title' => $this->translation->translate('Manage documents'),
+                    'url' => new Url('entity.ekino_rendr_page.collection'),
+                    'title' => $this->translation->translate('Manage pages'),
                 ],
                 [
                     'url' => new Url('entity.ekino_rendr_template.collection'),

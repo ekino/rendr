@@ -1,0 +1,19 @@
+uuid: be0da8ff-7f21-4f32-9c1c-e273c7354ca0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.rendr_field_title
+    - paragraphs.paragraphs_type.ekino_rendr
+id: paragraph.block.rendr_field_title
+field_name: rendr_field_title
+entity_type: paragraph
+bundle: block
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

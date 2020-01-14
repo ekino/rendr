@@ -14,11 +14,11 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * @ContentEntityType(
- *   id="ekino_rendr_document",
- *   label=@Translation("Document"),
+ *   id="ekino_rendr_page",
+ *   label=@Translation("Page"),
  *
- *   admin_permission="administer ekino_rendr documents",
- *   base_table="ekino_rendr_document",
+ *   admin_permission="administer ekino_rendr pages",
+ *   base_table="ekino_rendr_page",
  *   bundle_entity_type = "ekino_rendr_template",
  *   bundle_label = @Translation("Template"),
  *   entity_keys={
@@ -30,37 +30,37 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   },
  *   handlers={
  *      "form"={
- *          "add"="Drupal\ekino_rendr\Form\UpsertDocumentForm",
- *          "edit"="Drupal\ekino_rendr\Form\UpsertDocumentForm"
+ *          "add"="Drupal\ekino_rendr\Form\UpsertPageForm",
+ *          "edit"="Drupal\ekino_rendr\Form\UpsertPageForm"
  *      },
- *      "list_builder"="Drupal\ekino_rendr\Entity\DocumentListBuilder",
+ *      "list_builder"="Drupal\ekino_rendr\Entity\PageListBuilder",
  *      "route_provider" = {
  *          "html"="Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
  *     },
  *   },
- *   label_collection=@Translation("Documents"),
+ *   label_collection=@Translation("Pages"),
  *   label_count=@PluralTranslation(
- *      singular="@count document",
- *      plural="@count documents",
+ *      singular="@count page",
+ *      plural="@count pages",
  *   ),
- *   label_singular=@Translation("document"),
- *   label_plural=@Translation("documents"),
+ *   label_singular=@Translation("page"),
+ *   label_plural=@Translation("pages"),
  *   links={
- *      "add-form"="/admin/config/ekino_rendr/document/add/{ekino_rendr_template}",
- *      "add-page"="/admin/config/ekino_rendr/document/add",
- *      "canonical"="/admin/config/ekino_rendr/document/{ekino_rendr_document}",
- *      "collection"="/admin/config/ekino_rendr/document",
- *      "delete-form"="/admin/config/ekino_rendr/document/{ekino_rendr_document}/delete",
- *      "edit-form"="/admin/config/ekino_rendr/document/{ekino_rendr_document}/edit"
+ *      "add-form"="/admin/content/ekino_rendr_page/add/{ekino_rendr_template}",
+ *      "add-page"="/admin/content/ekino_rendr_page/add",
+ *      "canonical"="/admin/content/ekino_rendr_page/{ekino_rendr_page}",
+ *      "collection"="/admin/content/ekino_rendr_page",
+ *      "delete-form"="/admin/content/ekino_rendr_page/{ekino_rendr_page}/delete",
+ *      "edit-form"="/admin/content/ekino_rendr_page/{ekino_rendr_page}/edit"
  *   }
  * )
  */
-final class Document extends RevisionableContentEntityBase implements DocumentInterface
+final class Page extends RevisionableContentEntityBase implements PageInterface
 {
     use EntityChangedTrait;
     use EntityPublishedTrait;
 
-    const ID = 'ekino_rendr_document';
+    const ID = 'ekino_rendr_page';
 
     public function getPath(): string
     {

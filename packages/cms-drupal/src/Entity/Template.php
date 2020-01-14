@@ -13,7 +13,7 @@ use Drupal\ekino_rendr\Model\Container;
  *   label=@Translation("Template"),
  *
  *   admin_permission="administer ekino_rendr templates",
- *   bundle_of="ekino_rendr_document",
+ *   bundle_of="ekino_rendr_page",
  *   config_export={
  *      "id",
  *      "label",
@@ -37,9 +37,9 @@ use Drupal\ekino_rendr\Model\Container;
  *   label_singular=@Translation("template"),
  *   label_plural=@Translation("templates"),
  *   links={
- *      "add-form"="/admin/config/ekino_rendr/template/add",
- *      "canonical"="/admin/config/ekino_rendr/template/{ekino_rendr_template}",
- *      "collection"="/admin/config/ekino_rendr/template",
+ *      "add-form"="/admin/structure/ekino_rendr/template/add",
+ *      "canonical"="/admin/structure/ekino_rendr/template/{ekino_rendr_template}",
+ *      "collection"="/admin/structure/ekino_rendr/template",
  *   }
  * )
  */

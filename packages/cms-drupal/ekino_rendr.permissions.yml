@@ -7,5 +7,5 @@ administer ekino_rendr channels:
 administer ekino_rendr templates:
     title: "Administer ekino_rendr templates"
 
-administer ekino_rendr documents:
-    title: "Administer ekino_rendr documents"
+administer ekino_rendr pages:
+    title: "Administer ekino_rendr pages"

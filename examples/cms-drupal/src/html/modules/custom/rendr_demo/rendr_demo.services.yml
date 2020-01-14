@@ -1,0 +1,14 @@
+services:
+  rendr_demo.data_fixtures.page:
+    class: 'Drupal\rendr_demo\DataFixtures\PageGenerator'
+    arguments:
+      - "@entity_type.manager"
+    tags:
+      - { name: "data_fixtures", alias: "page", priority: 1 }
+
+  rendr_demo.data_fixtures.channel:
+    class: 'Drupal\rendr_demo\DataFixtures\ChannelGenerator'
+    arguments:
+      - "@entity_type.manager"
+    tags:
+      - { name: "data_fixtures", alias: "channel" }

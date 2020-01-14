@@ -1,0 +1,9 @@
+src/html/core
+src/html/modules/contrib
+src/html/sites/*/settings*.php
+src/html/sites/*/services*.yml
+src/html/sites/*/files
+src/html/sites/*/private
+src/html/vendor
+src/html/debug.log
+src/html/drupal_setup.sh

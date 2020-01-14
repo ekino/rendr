@@ -1,5 +1,5 @@
-ekino_rendr:
-    path: "/admin/config/ekino_rendr"
+ekino_rendr.main.menu:
+    path: "/admin/structure/ekino_rendr"
     defaults:
         _controller: 'Drupal\ekino_rendr\Controller\ViewIndexController'
         _title: "ekino rendr"

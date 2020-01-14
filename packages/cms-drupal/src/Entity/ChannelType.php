@@ -39,11 +39,11 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *   label_singular=@Translation("channel type"),
  *   label_plural=@Translation("channel types"),
  *   links={
- *      "add-form"="/admin/config/ekino_rendr/channel_type/add",
- *      "canonical"="/admin/config/ekino_rendr/channel_type/{ekino_rendr_channel_type}",
- *      "collection"="/admin/config/ekino_rendr/channel_type",
- *      "delete-form"="/admin/config/ekino_rendr/channel_type/{ekino_rendr_channel_type}/delete",
- *      "edit-form"="/admin/config/ekino_rendr/channel_type/{ekino_rendr_channel_type}/edit"
+ *      "add-form"="/admin/structure/ekino_rendr/channel_type/add",
+ *      "canonical"="/admin/structure/ekino_rendr/channel_type/{ekino_rendr_channel_type}",
+ *      "collection"="/admin/structure/ekino_rendr/channel_type",
+ *      "delete-form"="/admin/structure/ekino_rendr/channel_type/{ekino_rendr_channel_type}/delete",
+ *      "edit-form"="/admin/structure/ekino_rendr/channel_type/{ekino_rendr_channel_type}/edit"
  *   }
  * )
  */

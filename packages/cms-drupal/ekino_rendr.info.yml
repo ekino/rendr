@@ -1,6 +1,7 @@
-name: "ekino rendr"
+name: "Ekino Rendr"
 type: "module"
 core: "8.x"
+description: Adds a basic page builder system based on paragrahs for the blocks. Also expose an api compatible with Rendr
 dependencies:
-    - "node"
-    - "paragraphs"
+  - "node"
+  - "paragraphs"

@@ -1,0 +1,23 @@
+uuid: 9ca87775-03e3-474a-ba63-57e3b2e50898
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.rendr_field_cta
+    - paragraphs.paragraphs_type.ekino_rendr
+  module:
+    - link
+id: paragraph.block.rendr_field_cta
+field_name: rendr_field_cta
+entity_type: paragraph
+bundle: block
+label: CTA
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

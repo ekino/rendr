@@ -1,0 +1,9 @@
+uuid: ea2e82cb-aabf-4be1-96a2-c8c5473b11f0
+langcode: en
+status: true
+dependencies: {  }
+id: ekino_rendr
+label: Block
+icon_uuid: null
+description: 'Main building block'
+behavior_plugins: {  }

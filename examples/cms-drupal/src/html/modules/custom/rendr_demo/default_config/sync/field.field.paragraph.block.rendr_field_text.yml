@@ -1,0 +1,21 @@
+uuid: 347ff8ae-3dc8-4100-b83b-93fc31b9ff87
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.rendr_field_text
+    - paragraphs.paragraphs_type.ekino_rendr
+  module:
+    - text
+id: paragraph.block.rendr_field_text
+field_name: rendr_field_text
+entity_type: paragraph
+bundle: block
+label: Text
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

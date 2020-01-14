@@ -11,7 +11,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class DocumentListBuilder extends EntityListBuilder
+final class PageListBuilder extends EntityListBuilder
 {
     protected $stringTranslation;
 
@@ -52,7 +52,7 @@ final class DocumentListBuilder extends EntityListBuilder
     /**
      * {@inheritdoc}
      *
-     * @param Document
+     * @param Page
      */
     public function buildRow(EntityInterface $entity): array
     {

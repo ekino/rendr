@@ -1,5 +1,33 @@
-ekino_rendr.link.menu:
-  title: "ekino rendr"
-  parent: "system.admin"
-  route_name: "ekino_rendr"
-  weight: "999"
+# main structure
+system.admin_structure.ekino_rendr:
+  title: 'Rendr Structure'
+  parent: system.admin_structure
+  description: 'Create and manage Channels and templates.'
+  route_name: ekino_rendr.main.menu
+
+# structure sublevel
+entity.ekino_rendr_channel_type.collection:
+  title: 'Rendr Channel types'
+  parent: system.admin_structure.ekino_rendr
+  description: 'Create and manage Channel types.'
+  route_name: entity.ekino_rendr_channel_type.collection
+
+entity.ekino_rendr_channel.collection:
+  title: 'Rendr Channels'
+  parent: system.admin_structure.ekino_rendr
+  description: 'Create and manage Channels.'
+  route_name: entity.ekino_rendr_channel.collection
+
+entity.ekino_rendr_template.collection:
+  title: 'Rendr Templates'
+  parent: system.admin_structure.ekino_rendr
+  description: 'Create and manage templates.'
+  route_name: entity.ekino_rendr_template.collection
+
+# content
+entity.ekino_rendr_page.collection:
+  title: 'Rendr Pages'
+  parent: system.admin_content
+  description: 'Create and manage Pages.'
+  route_name: entity.ekino_rendr_page.collection
+

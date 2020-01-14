@@ -14,10 +14,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\ekino_rendr\Entity\Document;
+use Drupal\ekino_rendr\Entity\Page;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class UpsertDocumentForm extends ContentEntityForm
+final class UpsertPageForm extends ContentEntityForm
 {
     protected $messenger;
     protected $stringTranslation;
@@ -27,7 +27,7 @@ final class UpsertDocumentForm extends ContentEntityForm
     /**
      * {@inheritdoc}
      */
-    public function __construct(
+    protected function __construct(
         EntityRepositoryInterface $entityRepository,
         MessengerInterface $messenger,
         TranslationInterface $translation,
@@ -37,7 +37,6 @@ final class UpsertDocumentForm extends ContentEntityForm
         TimeInterface $time = null
     ) {
         parent::__construct($entityRepository, $entityTypeBundleInfo, $time);
-
         $this->messenger = $messenger;
         $this->stringTranslation = $translation;
         $this->dateFormatter = $dateFormatter;
@@ -65,7 +64,7 @@ final class UpsertDocumentForm extends ContentEntityForm
      */
     public function form(array $form, FormStateInterface $formState)
     {
-        if (!$this->entity instanceof Document) {
+        if (!$this->entity instanceof Page) {
             throw new \LogicException();
         }
 
@@ -118,17 +117,17 @@ final class UpsertDocumentForm extends ContentEntityForm
     {
         $this->entity->setNewRevision(true);
         $this->entity->setRevisionCreationTime($this->time->getRequestTime());
-        $this->entity->setRevisionUserId($this->currentUser->id());
+        $this->entity->setRevisionUserId($this->currentUser ? $this->currentUser->id() : 1);
 
         $result = parent::save($form, $formState);
 
         switch ($result) {
             case SAVED_NEW:
-                $message = 'The "%label%" document was created.';
+                $message = 'The "%label%" page was created.';
 
                 break;
             case SAVED_UPDATED:
-                $message = 'The "%label%" document was updated.';
+                $message = 'The "%label%" page was updated.';
 
                 break;
             default:

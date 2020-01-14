@@ -1,0 +1,36 @@
+version: "3.1"
+
+services:
+  http_server:
+    build:
+      context: .
+      dockerfile: ./http_server/Dockerfile
+    image: drupal-http-server:latest
+    volumes:
+      - ../src/html:/var/www/html
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - drupal_fpm
+
+  drupal_fpm:
+    build:
+      context: .
+      dockerfile: ./drupal_fpm/Dockerfile
+    image: drupal-with-composer:latest
+    ports:
+      - 9000:9000
+    volumes:
+      - ../src/html:/var/www/html
+    restart: always
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:10
+    environment:
+      POSTGRES_PASSWORD: example
+    restart: always
+    ports:
+      - 5432:5432

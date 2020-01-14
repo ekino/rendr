@@ -8,6 +8,6 @@ use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
 
-interface DocumentInterface extends RevisionLogInterface, EntityChangedInterface, EntityPublishedInterface
+interface PageInterface extends RevisionLogInterface, EntityChangedInterface, EntityPublishedInterface
 {
 }

@@ -1,0 +1,64 @@
+uuid: 24260f54-a554-48c1-8aed-ae292ac7ac75
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ekino_rendr.rendr_field_cta
+    - field.field.paragraph.ekino_rendr.rendr_field_display
+    - field.field.paragraph.ekino_rendr.rendr_field_image
+    - field.field.paragraph.ekino_rendr.rendr_field_text
+    - field.field.paragraph.ekino_rendr.rendr_field_title
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.ekino_rendr
+  module:
+    - image
+    - link
+    - text
+id: paragraph.ekino_rendr.default
+targetEntityType: paragraph
+bundle: ekino_rendr
+mode: default
+content:
+  rendr_field_cta:
+    weight: 3
+    settings:
+      placeholder_url: ""
+      placeholder_title: ""
+    third_party_settings: {}
+    type: link_default
+    region: content
+  rendr_field_display:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ""
+    third_party_settings: {}
+    type: string_textfield
+    region: content
+  rendr_field_image:
+    weight: 2
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {}
+    type: image_image
+    region: content
+  rendr_field_text:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ""
+    third_party_settings: {}
+    type: text_textarea
+    region: content
+  rendr_field_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ""
+    third_party_settings: {}
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true

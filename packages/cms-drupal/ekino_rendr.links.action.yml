@@ -10,8 +10,8 @@ ekino_rendr.link.action.channel.add:
     appears_on:
         - "entity.ekino_rendr_channel.collection"
 
-ekino_rendr.link.action.document.add:
-    route_name: "entity.ekino_rendr_document.add_page"
-    title: "Add a document"
+ekino_rendr.link.action.page.add:
+    route_name: "entity.ekino_rendr_page.add_page"
+    title: "Add a page"
     appears_on:
-        - "entity.ekino_rendr_document.collection"
+        - "entity.ekino_rendr_page.collection"

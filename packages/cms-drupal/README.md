@@ -13,3 +13,6 @@ Please see our [CONTRIBUTING.md](https://github.com/ekino/rendr/CONTRIBUTING.md)
 ## Authors
 
 - Thomas Rabaix ([@th0masr](https://twitter.com/th0masr)) – [Ekino](https://ekino.com)
+
+## Exposing your entities
+Please refer to this [doc](./doc/serialisation.md)

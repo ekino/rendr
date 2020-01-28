@@ -1,16 +1,18 @@
-uuid: 784469d7-2d4e-4efb-9974-d67eeee8da5f
+uuid: a3d5f507-2a72-4218-8cb3-ac89eb535167
 langcode: en
 status: true
 dependencies:
   module:
-    - link
     - paragraphs
-id: paragraph.rendr_field_cta
-field_name: rendr_field_cta
+id: paragraph.field_rendr_title
+field_name: field_rendr_title
 entity_type: paragraph
-type: link
-settings: {  }
-module: link
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true

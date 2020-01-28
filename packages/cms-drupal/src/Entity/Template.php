@@ -38,7 +38,6 @@ use Drupal\ekino_rendr\Model\Container;
  *   label_plural=@Translation("templates"),
  *   links={
  *      "add-form"="/admin/structure/ekino_rendr/template/add",
- *      "canonical"="/admin/structure/ekino_rendr/template/{ekino_rendr_template}",
  *      "collection"="/admin/structure/ekino_rendr/template",
  *   }
  * )

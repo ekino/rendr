@@ -1,11 +1,11 @@
-uuid: a3d5f507-2a72-4218-8cb3-ac89eb535167
+uuid: eca943b8-2f3c-4ad0-8b7a-25c35c88b51f
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.rendr_field_title
-field_name: rendr_field_title
+id: paragraph.field_rendr_display
+field_name: field_rendr_display
 entity_type: paragraph
 type: string
 settings:

@@ -1,18 +1,18 @@
-uuid: be0da8ff-7f21-4f32-9c1c-e273c7354ca0
+uuid: b1541d2f-d6c4-452e-989d-deb189744369
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.rendr_field_title
+    - field.storage.paragraph.field_rendr_title
     - paragraphs.paragraphs_type.ekino_rendr
-id: paragraph.block.rendr_field_title
-field_name: rendr_field_title
+id: paragraph.ekino_rendr.field_rendr_title
+field_name: field_rendr_title
 entity_type: paragraph
-bundle: block
+bundle: ekino_rendr
 label: Title
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

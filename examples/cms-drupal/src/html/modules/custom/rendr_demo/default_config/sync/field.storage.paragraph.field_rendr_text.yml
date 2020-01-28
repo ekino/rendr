@@ -5,8 +5,8 @@ dependencies:
   module:
     - paragraphs
     - text
-id: paragraph.rendr_field_text
-field_name: rendr_field_text
+id: paragraph.field_rendr_text
+field_name: field_rendr_text
 entity_type: paragraph
 type: text_long
 settings: {  }

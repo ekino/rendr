@@ -3,12 +3,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.rendr_field_image
+    - field.storage.paragraph.field_rendr_image
     - paragraphs.paragraphs_type.ekino_rendr
   module:
     - image
-id: paragraph.ekino_rendr.rendr_field_image
-field_name: rendr_field_image
+id: paragraph.ekino_rendr.field_rendr_image
+field_name: field_rendr_image
 entity_type: paragraph
 bundle: ekino_rendr
 label: Image

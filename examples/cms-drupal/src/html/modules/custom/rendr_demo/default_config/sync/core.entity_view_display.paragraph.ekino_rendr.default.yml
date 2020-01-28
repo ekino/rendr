@@ -3,34 +3,31 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.ekino_rendr.rendr_field_cta
-    - field.field.paragraph.ekino_rendr.rendr_field_display
-    - field.field.paragraph.ekino_rendr.rendr_field_image
-    - field.field.paragraph.ekino_rendr.rendr_field_text
-    - field.field.paragraph.ekino_rendr.rendr_field_title
+    - field.field.paragraph.ekino_rendr.field_rendr_container
+    - field.field.paragraph.ekino_rendr.field_rendr_display
+    - field.field.paragraph.ekino_rendr.field_rendr_image
+    - field.field.paragraph.ekino_rendr.field_rendr_image_position
+    - field.field.paragraph.ekino_rendr.field_rendr_subtitle
+    - field.field.paragraph.ekino_rendr.field_rendr_text
+    - field.field.paragraph.ekino_rendr.field_rendr_title
     - paragraphs.paragraphs_type.ekino_rendr
   module:
     - image
-    - link
+    - options
     - text
 id: paragraph.ekino_rendr.default
 targetEntityType: paragraph
 bundle: ekino_rendr
 mode: default
 content:
-  rendr_field_cta:
-    type: link
-    weight: 3
-    region: content
+  field_rendr_container:
+    weight: 7
     label: above
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
+    settings: {  }
     third_party_settings: {  }
-  rendr_field_display:
+    type: list_default
+    region: content
+  field_rendr_display:
     weight: 4
     label: above
     settings:
@@ -38,7 +35,7 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  rendr_field_image:
+  field_rendr_image:
     weight: 2
     label: above
     settings:
@@ -47,14 +44,28 @@ content:
     third_party_settings: {  }
     type: image
     region: content
-  rendr_field_text:
+  field_rendr_image_position:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_rendr_subtitle:
+    weight: 5
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_rendr_text:
     weight: 1
     label: above
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
-  rendr_field_title:
+  field_rendr_title:
     weight: 0
     label: above
     settings:

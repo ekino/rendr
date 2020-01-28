@@ -12,3 +12,16 @@ services:
       - "@entity_type.manager"
     tags:
       - { name: "data_fixtures", alias: "channel" }
+
+  Drupal\rendr_demo\Normalizer\TextParagraphNormalizer:
+    arguments:
+      - "ekino_rendr"
+    tags:
+      - { name: "ekino_rendr.paragraph_normalizer" }
+
+  Drupal\rendr_demo\Normalizer\ArticleParagraphNormalizer:
+    arguments:
+      - "ekino_rendr_raw_html"
+      - "@entity_type.manager"
+    tags:
+      - { name: "ekino_rendr.paragraph_normalizer" }

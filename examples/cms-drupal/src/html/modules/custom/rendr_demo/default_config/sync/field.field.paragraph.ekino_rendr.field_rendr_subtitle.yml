@@ -1,23 +1,21 @@
-uuid: acef0622-bc05-4575-a4fa-d812a64f455d
+uuid: 203db678-deef-40b7-89ff-8772bd9f554a
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.rendr_field_cta
+    - field.storage.paragraph.field_rendr_subtitle
     - paragraphs.paragraphs_type.ekino_rendr
   module:
-    - link
-id: paragraph.ekino_rendr.rendr_field_cta
-field_name: rendr_field_cta
+    - text
+id: paragraph.ekino_rendr.field_rendr_subtitle
+field_name: field_rendr_subtitle
 entity_type: paragraph
 bundle: ekino_rendr
-label: CTA
+label: Subtitle
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings:
-  title: 1
-  link_type: 17
-field_type: link
+settings: {  }
+field_type: text

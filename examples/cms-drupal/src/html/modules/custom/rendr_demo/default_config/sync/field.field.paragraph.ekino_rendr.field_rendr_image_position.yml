@@ -1,0 +1,21 @@
+uuid: 5e087a7c-2419-47df-aa0c-981890d9fe89
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_rendr_image_position
+    - paragraphs.paragraphs_type.ekino_rendr
+  module:
+    - options
+id: paragraph.ekino_rendr.field_rendr_image_position
+field_name: field_rendr_image_position
+entity_type: paragraph
+bundle: ekino_rendr
+label: 'Image position'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

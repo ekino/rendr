@@ -49,76 +49,65 @@ final class PageGenerator implements Generator
         $paragraphs = [
             Paragraph::create([
                 'type' => 'ekino_rendr',
-                'rendr_field_title' => 'Need a Demo fast ?',
-                'rendr_field_display' => 'hero, text_center, half_screen_height',
-                'rendr_field_text' => '<p>Quite regularly, 
+                'field_rendr_title' => 'Need a Demo fast ?',
+                'field_rendr_display' => 'standard',
+                'field_rendr_text' => '<p>Quite regularly, 
 you want to build a simple demo with no complex setup, 
-but enough flexibility to play with and demonstrate behaviours.</p>
-<p><strong>tags:</strong> hero, text_center, half_screen_height</p>',
-                'rendr_field_image' => [
+but enough flexibility to play with and demonstrate behaviours.</p>',
+                'field_rendr_image' => [
                     'target_id' => $image_callback(__DIR__ . '/assets/benjamin-voros-phIFdC6lA4E-unsplash.jpg'),
                     'alt' => 'mountain'
                 ],
             ]),
             Paragraph::create([
                 'type' => 'ekino_rendr',
-                'rendr_field_title' => 'Showcasing Articles',
-                'rendr_field_display' => 'img_left, 2_col',
-                'rendr_field_text' => '<p>With a small summary. 
+                'field_rendr_title' => 'Showcasing Articles',
+                'field_rendr_text' => '<p>With a small summary. 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-<p><strong>tags:</strong> img_left, 2_col</p>',
-                'rendr_field_image' => [
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>',
+                'field_rendr_image' => [
                     'target_id' => $image_callback(__DIR__ . '/assets/matthew-guay-Q7wDdmgCBFg-unsplash.jpg'),
                     'alt' => 'news paper & tablet'
                 ],
             ]),
             Paragraph::create([
                 'type' => 'ekino_rendr',
-                'rendr_field_title' => 'Or showcasing products',
-                'rendr_field_display' => 'img_left, 2_col',
-                'rendr_field_text' => '<p>With a list of features.</p> 
+                'field_rendr_title' => 'Or showcasing products',
+                'field_rendr_text' => '<p>With a list of features.</p> 
 <ul>
 <li><strong>Feature 1:</strong> it is simple</li>
 <li><strong>Feature 2:</strong> it is flexible</li>
 <li><strong>Feature 2:</strong> it can be extended</li>
-</ul>
-<p><strong>tags:</strong> img_left, 2_col</p>',
-                'rendr_field_image' => [
+</ul>',
+                'field_rendr_image' => [
                     'target_id' => $image_callback(__DIR__ . '/assets/neil-soni-6wdRuK7bVTE-unsplash.jpg'),
                     'alt' => 'news paper & tablet'
                 ],
             ]),
             Paragraph::create([
                 'type' => 'ekino_rendr',
-                'rendr_field_title' => 'Little css',
-                'rendr_field_display' => 'background_color_light_grey, 3_col, text_center',
-                'rendr_field_text' => '<p>It mostly uses a grid system
+                'field_rendr_title' => 'Little css',
+                'field_rendr_text' => '<p>It mostly uses a grid system
 based on cols and rows
 like bootstrap css.</p> 
 <p><strong>tags:</strong> background_color_light_grey, 3_col, text_center</p>',
             ]),
             Paragraph::create([
                 'type' => 'ekino_rendr',
-                'rendr_field_title' => 'React templates',
-                'rendr_field_display' => 'background_color_light_grey, 3_col, text_center',
-                'rendr_field_text' => '<p>Templates are made using react.
+                'field_rendr_title' => 'React templates',
+                'field_rendr_display' => 'background_color_light_grey, 3_col, text_center',
+                'field_rendr_text' => '<p>Templates are made using react.
 This is also were the tags are resolved.</p>
-<p><a href="#">Some Link</a></p> 
-<p><strong>tags:</strong> background_color_light_grey, 3_col, text_center</p>',
+<p><a href="#">Some Link</a></p>',
             ]),
             Paragraph::create([
                 'type' => 'ekino_rendr',
-                'rendr_field_title' => 'Simple to contribute',
-                'rendr_field_display' => 'background_color_light_grey, 3_col, text_center',
-                'rendr_field_text' => '<p>The behaviour of this component is driven 
+                'field_rendr_title' => 'Simple to contribute',
+                'field_rendr_text' => '<p>The behaviour of this component is driven 
 by the tags you see at the bottom.
-You can add your own.
-But remember, </p>
-<p>THIS COMPONENT ALONE CANNOT SOLVE ALL CASES.</p> 
-<p><strong>tags:</strong> background_color_light_grey, 3_col, text_center</p>',
+You can add your own.</p>',
             ]),
         ];
 

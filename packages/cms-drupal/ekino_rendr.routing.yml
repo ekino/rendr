@@ -7,3 +7,12 @@ ekino_rendr.main.menu:
         _permission: "administer site configuration"
     options:
         _admin_route: true
+
+ekino_rendr.api.page:
+    path: "/ekino-rendr/api/page/{slug}"
+    defaults:
+        _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
+        _title: "ekino rendr API"
+        slug: ""
+    requirements:
+        _access: 'TRUE'

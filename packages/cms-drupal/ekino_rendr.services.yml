@@ -2,3 +2,22 @@ services:
     Drupal\ekino_rendr\Controller\ViewIndexController:
         arguments:
             - "@string_translation"
+
+    Drupal\ekino_rendr\Controller\ApiController:
+        arguments:
+            - "@entity_type.manager"
+            - "@serializer"
+
+    Drupal\ekino_rendr\Normalizer\PageNormalizer:
+        arguments:
+            - 'Drupal\ekino_rendr\Entity\PageInterface'
+            - 'rendr_json'
+        tags:
+            - { name: "normalizer", priority: 2 }
+
+    Drupal\ekino_rendr\Normalizer\ParagraphFieldNormalizer:
+        arguments:
+            - 'rendr_json'
+        tags:
+            - { name: "normalizer", priority: 9 }
+

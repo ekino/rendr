@@ -5,3 +5,4 @@ description: Adds a basic page builder system based on paragrahs for the blocks.
 dependencies:
   - "node"
   - "paragraphs"
+  - "serialization"

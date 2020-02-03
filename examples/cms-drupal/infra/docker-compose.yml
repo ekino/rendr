@@ -7,7 +7,7 @@ services:
       dockerfile: ./local/drupal/Dockerfile
     image: rendr_drupal:latest
     volumes:
-      - ../src/html:/var/www/html
+      - ../src:/var/www/html
     environment:
       UNIX_UID: $UNIX_UID
       UNIX_GID: $UNIX_GID

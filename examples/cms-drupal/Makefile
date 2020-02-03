@@ -1,18 +1,38 @@
 .DEFAULT_GOAL=start
 
 build:
-	docker-compose up -d --build
-	docker-compose exec drupal_fpm /bin/sh -c "cp /var/www/drupal_setup.sh /var/www/html && ./drupal_setup.sh"
+	docker-compose build
+	docker-compose up -d
+	chmod 755 src/html/sites/default
+	if [ ! -f src/html/sites/default/settings.php ]; then cp infra/local/drupal/settings.php src/html/sites/default; fi
+	if [ -d ../../packages/cms-drupal ]; then mkdir -p src/html/modules/custom/ekino_rendr && cp -rf ../../packages/cms-drupal/* src/html/modules/custom/ekino_rendr; fi
+	docker-compose exec rendr_drupal su www-data -c /bin/ash -l -c /drupal_setup.sh
+	docker-compose stop
+
+shell:
+	docker-compose exec rendr_drupal su www-data -c '(cd /var/www/html && /bin/ash -l)'
 
 destroy:
-	docker-compose rm
+	docker-compose rm -fvs
 
-reset:
+contribute: # copy change from local module to main repository
+	if [ -d ../../packages/cms-drupal ]; then cp -rvf src/html/modules/custom/ekino_rendr/* ../../packages/cms-drupal/; fi
+
+reset: contribute
+	# copy back path
+	if [ -f src/html/sites/default/settings.php ]; then chmod 755 src/html/sites/default/settings.php; fi
+	chmod 755 src/html/sites/default
+	rm -rf src/html/sites/default/settings.php
 	make stop destroy build
-	
+
 start:
 	docker-compose up
 
 stop:
 	docker-compose stop
+
+.env:
+	cp .env.dist $@
+	sed --in-place "s/{your_unix_uid}/$(shell id --user)/" $@
+	sed --in-place "s/{your_unix_gid}/$(shell id --group)/" $@
 

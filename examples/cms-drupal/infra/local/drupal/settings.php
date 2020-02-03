@@ -768,6 +768,4 @@ $databases['default']['default'] = array(
 $settings['config_sync_directory'] = 'sites/default/files/config_directory/sync';
 
 # Trusted hosts
-$settings['trusted_host_patterns'] = [
-  '^www\.drupal-cms\.localdev$',
-];
+$settings['trusted_host_patterns'] = [];

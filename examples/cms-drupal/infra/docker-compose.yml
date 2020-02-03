@@ -1,29 +1,20 @@
 version: "3.1"
 
 services:
-  http_server:
+  rendr_drupal:
     build:
       context: .
-      dockerfile: ./http_server/Dockerfile
-    image: drupal-http-server:latest
+      dockerfile: ./local/drupal/Dockerfile
+    image: rendr_drupal:latest
     volumes:
       - ../src/html:/var/www/html
+    environment:
+      UNIX_UID: $UNIX_UID
+      UNIX_GID: $UNIX_GID
+  
     ports:
-      - 80:80
+      - 8080:8080
       - 443:443
-    depends_on:
-      - drupal_fpm
-
-  drupal_fpm:
-    build:
-      context: .
-      dockerfile: ./drupal_fpm/Dockerfile
-    image: drupal-with-composer:latest
-    ports:
-      - 9000:9000
-    volumes:
-      - ../src/html:/var/www/html
-    restart: always
     depends_on:
       - postgres
 

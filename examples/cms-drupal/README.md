@@ -6,10 +6,18 @@ To run this example, you will need docker and (docker-compose)[https://docs.dock
 
 ## Installation
 
+Configure the .env file for your unix user: 
+
+```
+make .env
+```
+
+Configure the project (Load composer, fixtures, etc ...)
+
 ```bash
-make build
+make setup
 ```
 
 You are now setup.
 
-Please visit http://www.drupal-cms.localdev/ (You will need to declare this domain in your /etc/hosts with the address 127.0.0.1)
+Please visit http://localhost:8080/

@@ -2,6 +2,7 @@ node_modules
 examples/*/.next
 examples/*/.cache
 examples/*/yarn.lock
+examples/cms-drupal/**/ekino_rendr
 packages/*/dist
 packages/*/node_modules
 yarn-error.log

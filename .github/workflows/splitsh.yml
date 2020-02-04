@@ -1,0 +1,22 @@
+name: Split(sh!) 
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: A job to Splitsh your repository
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+
+      - name: Split(sh!) folder
+        id: hello
+        uses: rande/splitsh-github-action@master
+        with:
+          path: packages/cms-drupal
+          remote: git@git.drupal.org:project/ekino_rendr.git
+          private_key: ${{ secrets.DRUPAL_GIT_PRIVATE_KEY }}
+        

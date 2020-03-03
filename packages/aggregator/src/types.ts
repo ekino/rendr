@@ -6,7 +6,8 @@ export type HandlerList = {
 
 export type Handler = (
   definition: BlockDefinition,
-  ctx: RequestCtx
+  ctx: RequestCtx,
+  page: Page
 ) => Promise<BlockDefinition>;
 
 export type HandlerRegistry = (code: string) => Handler;

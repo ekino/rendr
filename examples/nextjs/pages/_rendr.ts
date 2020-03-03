@@ -31,7 +31,7 @@ const templates = {
 // ie: handlers aggregate values and set them into a block.
 //  => Aggregation at the view level is not that good but can be useful in some cases.
 const handlers = {
-  "rendr.agencies": (block: BlockDefinition, ctx: RequestCtx) =>
+  "rendr.agencies": (block: BlockDefinition, ctx: RequestCtx, page: Page) =>
     Promise.resolve(block)
 };
 

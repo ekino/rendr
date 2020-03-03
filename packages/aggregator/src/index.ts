@@ -11,7 +11,7 @@ export function createAggregatorLoader(handlers: HandlerList): Loader {
       page.blocks.map(async block => {
         const handler = handlerRegistry(block.type);
 
-        const result = await handler(block, ctx);
+        const result = await handler(block, ctx, page);
 
         return result;
       })

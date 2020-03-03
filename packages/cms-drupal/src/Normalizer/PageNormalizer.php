@@ -6,6 +6,7 @@ namespace Drupal\ekino_rendr\Normalizer;
 
 use Drupal\ekino_rendr\Transformer\ParagraphTransformerInterface;
 use Drupal\serialization\Normalizer\ContentEntityNormalizer;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Page normalizer.
@@ -40,6 +41,8 @@ class PageNormalizer extends ContentEntityNormalizer
         $attributes['head']['title'] = $object->get('title')->value;
         $attributes['path'] = $object->get('path')->value;
         $attributes['blocks'] = $data['content'];
+        $attributes['settings'] = $this->resolve($context);
+        $attributes['settings']['published'] = (bool) $object->get('published')->value;
 
         return $attributes;
     }
@@ -69,5 +72,18 @@ class PageNormalizer extends ContentEntityNormalizer
             'id' => '',
             'path' => '/',
         ];
+    }
+
+    /**
+     * Resolve context
+     *
+     * @return array
+     */
+    private function resolve(array $context)
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(['preview' => false]);
+        $resolver->setDefined(['preview']);
+        return $resolver->resolve($context);
     }
 }

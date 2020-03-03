@@ -16,3 +16,25 @@ ekino_rendr.api.page:
         slug: ""
     requirements:
         _access: 'TRUE'
+
+# # Target route structure with resolution by host
+# ekino_rendr.api.page_preview:
+#     path: "/ekino-rendr/api/page/{slug}"
+#     condition: 'request.host matches "_preview"'
+#     defaults:
+#         _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
+#         _title: "ekino rendr API"
+#         slug: ""
+#         preview: true
+#     requirements:
+#         _access: 'access content'
+
+ekino_rendr.api.page_preview:
+    path: "/_preview/ekino-rendr/api/page/{slug}"
+    defaults:
+        _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
+        _title: "ekino rendr API"
+        slug: ""
+        preview: true
+    requirements:
+        _preview_access_check: 'TRUE'

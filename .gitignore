@@ -12,3 +12,4 @@ coverage
 packages/*/composer.lock
 packages/*/vendor
 packages/*/.php_cs.cache
+.idea

@@ -32,6 +32,8 @@ services:
 
     ekino_rendr.access_checker.preview:
         class: Drupal\ekino_rendr\Access\PreviewAccessCheck
+        arguments:
+            - '@entity_type.manager'
         tags:
             - { name: access_check, applies_to: _preview_access_check }
 

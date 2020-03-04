@@ -5,7 +5,7 @@ build:
 	docker-compose up -d
 	chmod 755 src/sites/default
 	if [ ! -f src/sites/default/settings.php ]; then cp infra/local/drupal/settings.php src/sites/default; fi
-	if [ -d ../../packages/cms-drupal ]; then mkdir -p src/modules/custom/ekino_rendr && cp -rf ../../packages/cms-drupal/* src/modules/custom/ekino_rendr; fi
+	if [ -d ../../packages/cms-drupal ]; then mkdir -p src/modules/custom/ekino_rendr && yarn setup-drupal; fi
 	docker-compose exec rendr_drupal su www-data -c /bin/ash -l -c /drupal_setup.sh
 	docker-compose stop
 

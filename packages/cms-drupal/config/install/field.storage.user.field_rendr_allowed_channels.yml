@@ -1,0 +1,20 @@
+uuid: f0308868-244a-4048-a318-8fa7bcf188d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - ekino_rendr
+    - user
+id: user.field_rendr_allowed_channels
+field_name: field_rendr_allowed_channels
+entity_type: user
+type: entity_reference
+settings:
+  target_type: ekino_rendr_channel
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

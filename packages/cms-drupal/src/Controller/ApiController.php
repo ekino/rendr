@@ -7,6 +7,7 @@ namespace Drupal\ekino_rendr\Controller;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ekino_rendr\Resolver\PageResolverInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class ApiController
@@ -25,10 +26,13 @@ final class ApiController
         $this->pageResolver = $pageResolver;
     }
 
-    public function page($slug, $preview = false)
+    public function page(Request $request, $slug, $preview = false)
     {
         $pages = $this->entityTypeManager->getStorage('ekino_rendr_page')->loadByProperties(
-            $this->pageResolver->getPageConditions($slug, ['preview' => $preview])
+            $this->pageResolver->getPageConditions($slug, [
+                'preview' => $preview,
+                'allowed_channels' => $request->getSession()->get('rendr_allowed_channels'),
+            ])
         );
 
         if (0 === \count($pages)) {

@@ -20,7 +20,7 @@
     "clean-examples": "rm -rf examples/*/node_modules examples/*/.next examples/*/.cache",
     "clean-lib": "rm -rf node_modules packages/*/node_modules",
     "clean": "yarn clean-lib && yarn clean-examples",
-    "setup-drupal": "rsync -r --exclude='vendor' ./packages/cms-drupal/ ./examples/cms-drupal/src/modules/custom/ekino_rendr",
+    "setup-drupal": "rsync -r --exclude='vendor' ./packages/cms-drupal/ ./examples/cms-drupal/src/modules/custom/ekino_rendr --delete",
     "setup-examples": "for i in ./examples/*; do (cd $i && yarn && rm -rf node_modules/@ekino); done",
     "setup-lib": "yarn install && lerna bootstrap && yarn build",
     "setup": "yarn setup-lib && yarn setup-examples",

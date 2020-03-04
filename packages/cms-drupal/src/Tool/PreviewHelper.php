@@ -14,12 +14,12 @@ class PreviewHelper
     {
         $request = Request::create($uri);
 
-        if (strpos($uri, '/'.PreviewHelper::PREVIEW_PREFIX) === false) {
-            return sprintf(
+        if (false === \strpos($uri, '/'.self::PREVIEW_PREFIX)) {
+            return \sprintf(
                 '%s%s%s',
                 // This is a relative url
-                preg_match('/^https?:\/\//', $uri) ? $request->getSchemeAndHttpHost().'/' : '/',
-                PreviewHelper::PREVIEW_PREFIX,
+                \preg_match('/^https?:\/\//', $uri) ? $request->getSchemeAndHttpHost().'/' : '/',
+                self::PREVIEW_PREFIX,
                 $request->getRequestUri()
             );
         }

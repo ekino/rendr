@@ -75,7 +75,7 @@ class PageNormalizer extends ContentEntityNormalizer
     }
 
     /**
-     * Resolve context
+     * Resolve context.
      *
      * @return array
      */
@@ -84,6 +84,7 @@ class PageNormalizer extends ContentEntityNormalizer
         $resolver = new OptionsResolver();
         $resolver->setDefaults(['preview' => false]);
         $resolver->setDefined(['preview']);
+
         return $resolver->resolve($context);
     }
 }

@@ -1,0 +1,20 @@
+uuid: 29f5d816-ee71-490f-aaed-b7d442978204
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_rendr_preview_token
+  module:
+    - user
+id: user.user.field_rendr_preview_token
+field_name: field_rendr_preview_token
+entity_type: user
+bundle: user
+label: 'Rendr Preview Token'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

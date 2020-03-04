@@ -30,9 +30,8 @@ final class PageGenerator implements Generator
 
         $default_template = reset($template);
 
-
         $image_callback = function ($image_path) {
-            return (file_save_data(file_get_contents($image_path), 'public://' . basename($image_path), FileSystemInterface::EXISTS_REPLACE))->id();
+            return (file_save_data(file_get_contents($image_path), 'public://'.basename($image_path), FileSystemInterface::EXISTS_REPLACE))->id();
         };
 
         $pages = $this->entityTypeManager->getStorage('ekino_rendr_page')->loadByProperties([
@@ -51,39 +50,39 @@ final class PageGenerator implements Generator
                 'type' => 'ekino_rendr',
                 'field_rendr_title' => 'Need a Demo fast ?',
                 'field_rendr_display' => 'standard',
-                'field_rendr_text' => '<p>Quite regularly, 
-you want to build a simple demo with no complex setup, 
+                'field_rendr_text' => '<p>Quite regularly,
+you want to build a simple demo with no complex setup,
 but enough flexibility to play with and demonstrate behaviours.</p>',
                 'field_rendr_image' => [
-                    'target_id' => $image_callback(__DIR__ . '/assets/benjamin-voros-phIFdC6lA4E-unsplash.jpg'),
-                    'alt' => 'mountain'
+                    'target_id' => $image_callback(__DIR__.'/assets/benjamin-voros-phIFdC6lA4E-unsplash.jpg'),
+                    'alt' => 'mountain',
                 ],
             ]),
             Paragraph::create([
                 'type' => 'ekino_rendr',
                 'field_rendr_title' => 'Showcasing Articles',
-                'field_rendr_text' => '<p>With a small summary. 
+                'field_rendr_text' => '<p>With a small summary.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>',
                 'field_rendr_image' => [
-                    'target_id' => $image_callback(__DIR__ . '/assets/matthew-guay-Q7wDdmgCBFg-unsplash.jpg'),
-                    'alt' => 'news paper & tablet'
+                    'target_id' => $image_callback(__DIR__.'/assets/matthew-guay-Q7wDdmgCBFg-unsplash.jpg'),
+                    'alt' => 'news paper & tablet',
                 ],
             ]),
             Paragraph::create([
                 'type' => 'ekino_rendr',
                 'field_rendr_title' => 'Or showcasing products',
-                'field_rendr_text' => '<p>With a list of features.</p> 
+                'field_rendr_text' => '<p>With a list of features.</p>
 <ul>
 <li><strong>Feature 1:</strong> it is simple</li>
 <li><strong>Feature 2:</strong> it is flexible</li>
 <li><strong>Feature 2:</strong> it can be extended</li>
 </ul>',
                 'field_rendr_image' => [
-                    'target_id' => $image_callback(__DIR__ . '/assets/neil-soni-6wdRuK7bVTE-unsplash.jpg'),
-                    'alt' => 'news paper & tablet'
+                    'target_id' => $image_callback(__DIR__.'/assets/neil-soni-6wdRuK7bVTE-unsplash.jpg'),
+                    'alt' => 'news paper & tablet',
                 ],
             ]),
             Paragraph::create([
@@ -91,7 +90,7 @@ quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequa
                 'field_rendr_title' => 'Little css',
                 'field_rendr_text' => '<p>It mostly uses a grid system
 based on cols and rows
-like bootstrap css.</p> 
+like bootstrap css.</p>
 <p><strong>tags:</strong> background_color_light_grey, 3_col, text_center</p>',
             ]),
             Paragraph::create([
@@ -105,7 +104,7 @@ This is also were the tags are resolved.</p>
             Paragraph::create([
                 'type' => 'ekino_rendr',
                 'field_rendr_title' => 'Simple to contribute',
-                'field_rendr_text' => '<p>The behaviour of this component is driven 
+                'field_rendr_text' => '<p>The behaviour of this component is driven
 by the tags you see at the bottom.
 You can add your own.</p>',
             ]),
@@ -127,9 +126,8 @@ You can add your own.</p>',
             'title' => $title,
             'path' => $path,
             'content' => $content,
-            // 'channel' => [
-            //     'entity' => $default_channel,
-            // ],
+            // Default channel is normally created with id 1
+            'channels' => [1],
         ]);
         $page->setPublished(true);
 

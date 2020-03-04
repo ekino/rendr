@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class PreviewAccessCheck implements AccessInterface
 {
@@ -25,9 +26,9 @@ class PreviewAccessCheck implements AccessInterface
      */
     public function access(AccountInterface $account, Request $request)
     {
-        $session = $request->getSession();
+        $session = $request->getSession() ?? new Session();
 
-        if ($account->hasPermission('view ekino_rendr pages') || $session->get('rendr_allowed_channels')) {
+        if ($account->hasPermission('view ekino_rendr pages') || $session->get('rendr_token_owner')) {
             return AccessResult::allowed();
         }
 
@@ -46,8 +47,12 @@ class PreviewAccessCheck implements AccessInterface
         }
 
         $tokenOwner = \reset($users);
-        $allowedChannels = $tokenOwner->get('field_rendr_allowed_channels')->getValue();
-        $session->set('rendr_allowed_channels', \array_column($allowedChannels, 'target_id'));
+
+        if (!$tokenOwner->hasPermission('view ekino_rendr pages')) {
+            return AccessResult::forbidden();
+        }
+
+        $session->set('rendr_token_owner', $tokenOwner->id());
 
         return AccessResult::allowed();
     }

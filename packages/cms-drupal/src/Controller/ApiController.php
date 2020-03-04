@@ -31,7 +31,7 @@ final class ApiController
         $pages = $this->entityTypeManager->getStorage('ekino_rendr_page')->loadByProperties(
             $this->pageResolver->getPageConditions($slug, [
                 'preview' => $preview,
-                'allowed_channels' => $request->getSession()->get('rendr_allowed_channels'),
+                'request' => $request,
             ])
         );
 

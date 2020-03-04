@@ -15,10 +15,7 @@ shell:
 destroy:
 	docker-compose rm -fvs
 
-contribute: # copy change from local module to main repository
-	if [ -d ../../packages/cms-drupal ]; then cp -rvf src/modules/custom/ekino_rendr/* ../../packages/cms-drupal/; fi
-
-reset: contribute
+reset:
 	# copy back path
 	if [ -f src/sites/default/settings.php ]; then chmod 755 src/sites/default/settings.php; fi
 	chmod 755 src/sites/default

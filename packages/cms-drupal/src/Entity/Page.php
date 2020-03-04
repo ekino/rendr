@@ -108,6 +108,16 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
                     'type' => 'paragraphs',
                 ])
                 ->setDisplayConfigurable('form', true),
+            'channels' => BaseFieldDefinition::create('entity_reference')
+                ->setLabel(new TranslatableMarkup('Channels'))
+                ->setRequired(true)
+                ->setRevisionable(false)
+                ->setSetting('target_type', 'ekino_rendr_channel')
+                ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+                ->setDisplayOptions('form', [
+                    'type' => 'entity_reference_autocomplete',
+                ])
+                ->setDisplayConfigurable('form', true),
             'changed' => BaseFieldDefinition::create('changed')
                 ->setLabel(new TranslatableMarkup('Changed'))
                 ->setRequired(true),

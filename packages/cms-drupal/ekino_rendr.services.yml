@@ -29,6 +29,8 @@ services:
 
     ekino_rendr.resolver.page_resolver:
         class: 'Drupal\ekino_rendr\Resolver\PageResolver'
+        arguments:
+            - '@entity_type.manager'
 
     ekino_rendr.access_checker.preview:
         class: Drupal\ekino_rendr\Access\PreviewAccessCheck

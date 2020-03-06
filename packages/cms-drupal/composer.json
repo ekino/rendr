@@ -4,7 +4,8 @@
     "description": "The Drupal integration for ekino rendr.",
     "autoload": {
         "psr-4": {
-            "Drupal\\ekino_rendr\\": "src/"
+            "Drupal\\ekino_rendr\\": "src/",
+            "Drupal\\user\\": "vendor/drupal/core/modules/user/src/"
         }
     },
     "repositories": [
@@ -22,6 +23,7 @@
         "drupal/drupal": "*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpunit/phpunit": "6.5.14"
     }
 }

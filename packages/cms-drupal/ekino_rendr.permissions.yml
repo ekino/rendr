@@ -9,3 +9,6 @@ administer ekino_rendr templates:
 
 administer ekino_rendr pages:
     title: "Administer ekino_rendr pages"
+
+view ekino_rendr pages:
+    title: "View ekino_rendr pages"

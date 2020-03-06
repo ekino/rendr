@@ -6,7 +6,7 @@ To run this example, you will need docker and (docker-compose)[https://docs.dock
 
 ## Installation
 
-Configure the .env file for your unix user: 
+Configure the .env file for your unix user:
 
 ```
 make .env
@@ -15,9 +15,13 @@ make .env
 Configure the project (Load composer, fixtures, etc ...)
 
 ```bash
-make setup
+make build
 ```
 
 You are now setup.
+
+```bash
+make
+```
 
 Please visit http://localhost:8080/

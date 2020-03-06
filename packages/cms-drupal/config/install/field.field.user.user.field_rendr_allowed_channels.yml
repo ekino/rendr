@@ -1,0 +1,30 @@
+uuid: 0a434197-bfb5-4934-9f99-c1e0742b0c96
+langcode: en
+status: true
+dependencies:
+  config:
+    # @TODO Reference to an entity is a bad practice and must be avoided
+    - ekino_rendr.ekino_rendr_channel_type.1
+    - field.storage.user.field_rendr_allowed_channels
+  module:
+    - user
+id: user.user.field_rendr_allowed_channels
+field_name: field_rendr_allowed_channels
+entity_type: user
+bundle: user
+label: 'Rendr Allowed Channels'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:ekino_rendr_channel'
+  handler_settings:
+    target_bundles:
+      1: '1'
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

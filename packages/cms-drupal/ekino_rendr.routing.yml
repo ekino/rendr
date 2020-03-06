@@ -10,6 +10,7 @@ ekino_rendr.main.menu:
 
 ekino_rendr.api.page:
     path: "/ekino-rendr/api/page/{slug}"
+    condition: 'not(context.getHost() matches "/rendr-preview/")'
     defaults:
         _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
         _title: "ekino rendr API"
@@ -17,17 +18,17 @@ ekino_rendr.api.page:
     requirements:
         _access: 'TRUE'
 
-# # Target route structure with resolution by host
-# ekino_rendr.api.page_preview:
-#     path: "/ekino-rendr/api/page/{slug}"
-#     condition: 'request.host matches "rendr-preview"'
-#     defaults:
-#         _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
-#         _title: "ekino rendr API"
-#         slug: ""
-#         preview: true
-#     requirements:
-#         _preview_access_check: 'TRUE'
+# Target route structure with resolution by host
+ekino_rendr.api.page_preview_per_host:
+    path: "/ekino-rendr/api/page/{slug}"
+    condition: 'context.getHost() matches "/rendr-preview/"'
+    defaults:
+        _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
+        _title: "ekino rendr API"
+        slug: ""
+        preview: true
+    requirements:
+        _preview_access_check: 'TRUE'
 
 ekino_rendr.api.page_preview:
     path: "/_preview/ekino-rendr/api/page/{slug}"

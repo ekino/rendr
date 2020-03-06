@@ -17,7 +17,9 @@
     "require": {
         "php": ">=7.0.8",
         "drupal/core": "^8.7",
-        "drupal/paragraphs": "^1.10"
+        "drupal/paragraphs": "^1.10",
+        "symfony/expression-language": "^3.4",
+        "symfony/options-resolver": "^3.4"
     },
     "conflict": {
         "drupal/drupal": "*"

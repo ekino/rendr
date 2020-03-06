@@ -1,0 +1,5 @@
+entity.ekino_rendr_page.collection:
+  title: 'Rendr Pages'
+  route_name: entity.ekino_rendr_page.collection
+  base_route: system.admin_content
+

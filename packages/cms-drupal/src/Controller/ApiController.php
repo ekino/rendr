@@ -6,8 +6,10 @@ namespace Drupal\ekino_rendr\Controller;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ekino_rendr\Resolver\PageResolverInterface;
+use Drupal\user\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class ApiController
@@ -28,10 +30,18 @@ final class ApiController
 
     public function page(Request $request, $slug, $preview = false)
     {
+        $session = $request->getSession() ?? new Session();
+
+        if ($session->get('rendr_token_owner')) {
+            $user = $this->entityTypeManager->getStorage('user')->load($session->get('rendr_token_owner'));
+        } else {
+            $user = User::load(\Drupal::currentUser()->id());
+        }
+
         $pages = $this->entityTypeManager->getStorage('ekino_rendr_page')->loadByProperties(
             $this->pageResolver->getPageConditions($slug, [
                 'preview' => $preview,
-                'request' => $request,
+                'user' => $user,
             ])
         );
 

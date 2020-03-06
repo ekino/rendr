@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\ekino_rendr\Resolver;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\Entity\User;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,24 +13,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PageResolver implements PageResolverInterface
 {
-    protected $entityTypeManager;
-
-    public function __construct(
-        EntityTypeManagerInterface $entity_type_manager
-    ) {
-        $this->entityTypeManager = $entity_type_manager;
-    }
-
     public function getPageConditions($slug, $context = [])
     {
         $resolver = new OptionsResolver();
-        $resolver->setDefined('request');
+        $resolver->setDefined('user');
         $resolver->setDefaults([
             'preview' => false,
         ]);
         $resolver->setAllowedTypes('preview', 'bool');
-        $resolver->setAllowedTypes('request', Request::class);
-        $resolver->setRequired('request');
+        $resolver->setAllowedTypes('user', User::class);
+        $resolver->setRequired('user');
 
         $options = $resolver->resolve($context);
         $conditions = [
@@ -41,25 +30,17 @@ class PageResolver implements PageResolverInterface
             'path' => 0 === \strpos($slug, '/') ? $slug : '/'.$slug,
         ];
 
-        if (!$options['preview']) {
+        if ($options['preview']) {
+            $conditions = \array_merge($conditions, $this->getUserSpecificConditions($options['user']));
+        } else {
             $conditions['published'] = true;
         }
-
-        $conditions = \array_merge($conditions, $this->getUserSpecificConditions($options['request']));
 
         return $conditions;
     }
 
-    protected function getUserSpecificConditions(Request $request): array
+    protected function getUserSpecificConditions(User $user): array
     {
-        $session = $request->getSession() ?? new Session();
-
-        if ($session->get('rendr_token_owner')) {
-            $user = $this->entityTypeManager->getStorage('user')->load($session->get('rendr_token_owner'));
-        } else {
-            $user = User::load(\Drupal::currentUser()->id());
-        }
-
         if (false !== \array_search('administrator', $user->getRoles())) {
             return [];
         }

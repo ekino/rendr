@@ -43,10 +43,11 @@ final class PageListBuilder extends EntityListBuilder
     public function buildHeader(): array
     {
         return [
-            'id' => $this->stringTranslation->translate('Machine name'),
-            'title' => $this->stringTranslation->translate('Title'),
-            'path' => $this->stringTranslation->translate('Path'),
-        ] + parent::buildHeader();
+                'id' => $this->stringTranslation->translate('Machine name'),
+                'title' => $this->stringTranslation->translate('Title'),
+                'path' => $this->stringTranslation->translate('Path'),
+                'channels' => $this->stringTranslation->translate('Channels'),
+            ] + parent::buildHeader();
     }
 
     /**
@@ -57,9 +58,12 @@ final class PageListBuilder extends EntityListBuilder
     public function buildRow(EntityInterface $entity): array
     {
         return [
-            'id' => $entity->id(),
-            'title' => $entity->label(),
-            'path' => $entity->getPath(),
-        ] + parent::buildRow($entity);
+                'id' => $entity->id(),
+                'title' => $entity->label(),
+                'path' => $entity->getPath(),
+                'channels' => \implode(', ', \array_map(function ($entity) {
+                    return $entity->label();
+                }, $entity->get('channels')->referencedEntities())),
+            ] + parent::buildRow($entity);
     }
 }

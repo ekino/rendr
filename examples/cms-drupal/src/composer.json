@@ -24,7 +24,8 @@
         "drupal/data_fixtures": "^1.5",
         "drupal/paragraphs": "^1.10",
         "drush/drush": "^10.1",
-        "symfony/options-resolver": "^3.0 || ^4.0 || ^5.0"
+        "symfony/expression-language": "^3.4",
+        "symfony/options-resolver": "^3.4"
     },
     "require-dev": {
     },

@@ -13,8 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class PageListBuilder extends EntityListBuilder
 {
-    protected $stringTranslation;
-
     /**
      * {@inheritdoc}
      */
@@ -43,10 +41,10 @@ final class PageListBuilder extends EntityListBuilder
     public function buildHeader(): array
     {
         return [
-                'id' => $this->stringTranslation->translate('Machine name'),
-                'title' => $this->stringTranslation->translate('Title'),
-                'path' => $this->stringTranslation->translate('Path'),
-                'channels' => $this->stringTranslation->translate('Channels'),
+                'id' => $this->t('Machine name'),
+                'title' => $this->t('Title'),
+                'path' => $this->t('Path'),
+                'channels' => $this->t('Channels'),
             ] + parent::buildHeader();
     }
 

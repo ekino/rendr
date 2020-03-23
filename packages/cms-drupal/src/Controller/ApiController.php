@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\ekino_rendr\Controller;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\ekino_rendr\Entity\ChannelInterface;
 use Drupal\ekino_rendr\Resolver\PageResolverInterface;
 use Drupal\user\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,7 +29,7 @@ final class ApiController
         $this->pageResolver = $pageResolver;
     }
 
-    public function page(Request $request, $slug, $preview = false)
+    public function page(Request $request, $slug, ChannelInterface $channel = null, $preview = false)
     {
         $session = $request->getSession() ?? new Session();
 
@@ -42,6 +43,7 @@ final class ApiController
             $this->pageResolver->getPageConditions($slug, [
                 'preview' => $preview,
                 'user' => $user,
+                'channel' => $channel,
             ])
         );
 

@@ -13,8 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class ChannelListBuilder extends EntityListBuilder
 {
-    protected $stringTranslation;
-
     /**
      * {@inheritdoc}
      */
@@ -43,21 +41,21 @@ final class ChannelListBuilder extends EntityListBuilder
     public function buildHeader(): array
     {
         return [
-            'id' => $this->stringTranslation->translate('ID'),
-            'label' => $this->stringTranslation->translate('Label'),
-            'published' => $this->stringTranslation->translate('Published'),
+            'id' => $this->t('ID'),
+            'label' => $this->t('Label'),
+            'published' => $this->t('Published'),
         ] + parent::buildHeader();
     }
 
     /**
-     * @param Channel $entity
+     * {@inheritdoc}
      */
     public function buildRow(EntityInterface $entity): array
     {
         return [
             'id' => $entity->id(),
             'label' => $entity->label(),
-            'published' => $this->stringTranslation->translate($entity->isPublished() ? 'Yes' : 'No'),
+            'published' => $this->t($entity->isPublished() ? 'Yes' : 'No'),
         ] + parent::buildRow($entity);
     }
 }

@@ -18,7 +18,6 @@ ekino_rendr.api.page:
     requirements:
         _access: 'TRUE'
 
-# Target route structure with resolution by host
 ekino_rendr.api.page_preview_per_host:
     path: "/ekino-rendr/api/page/{slug}"
     condition: 'context.getHost() matches "/rendr-preview/"'

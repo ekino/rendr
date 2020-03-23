@@ -13,8 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class ChannelTypeListBuilder extends ConfigEntityListBuilder
 {
-    protected $stringTranslation;
-
     /**
      * {@inheritdoc}
      */
@@ -43,8 +41,8 @@ final class ChannelTypeListBuilder extends ConfigEntityListBuilder
     public function buildHeader(): array
     {
         return [
-            'id' => $this->stringTranslation->translate('Machine name'),
-            'label' => $this->stringTranslation->translate('Label'),
+            'id' => $this->t('Machine name'),
+            'label' => $this->t('Label'),
         ] + parent::buildHeader();
     }
 

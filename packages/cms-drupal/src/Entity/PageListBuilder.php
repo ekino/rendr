@@ -13,8 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class PageListBuilder extends EntityListBuilder
 {
-    protected $stringTranslation;
-
     /**
      * {@inheritdoc}
      */
@@ -43,10 +41,11 @@ final class PageListBuilder extends EntityListBuilder
     public function buildHeader(): array
     {
         return [
-            'id' => $this->stringTranslation->translate('Machine name'),
-            'title' => $this->stringTranslation->translate('Title'),
-            'path' => $this->stringTranslation->translate('Path'),
-        ] + parent::buildHeader();
+                'id' => $this->t('Machine name'),
+                'title' => $this->t('Title'),
+                'path' => $this->t('Path'),
+                'channels' => $this->t('Channels'),
+            ] + parent::buildHeader();
     }
 
     /**
@@ -57,9 +56,12 @@ final class PageListBuilder extends EntityListBuilder
     public function buildRow(EntityInterface $entity): array
     {
         return [
-            'id' => $entity->id(),
-            'title' => $entity->label(),
-            'path' => $entity->getPath(),
-        ] + parent::buildRow($entity);
+                'id' => $entity->id(),
+                'title' => $entity->label(),
+                'path' => $entity->getPath(),
+                'channels' => \implode(', ', \array_map(function ($entity) {
+                    return $entity->label();
+                }, $entity->get('channels')->referencedEntities())),
+            ] + parent::buildRow($entity);
     }
 }

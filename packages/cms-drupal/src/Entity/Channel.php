@@ -102,6 +102,25 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
                     'type' => 'string_textfield',
                 ])
                 ->setDisplayConfigurable('form', true),
+            'domain' => BaseFieldDefinition::create('string')
+                ->setLabel(new TranslatableMarkup('Domain'))
+                ->setRequired(true)
+                ->setRevisionable(true)
+                ->setDefaultValueCallback(__CLASS__.'::getDefaultKeyValue')
+                ->setDisplayOptions('form', [
+                    'type' => 'string_textfield',
+                ])
+                ->setDescription(new TranslatableMarkup('The domain name associated to this channel. e.g. www.example.com'))
+                ->setDisplayConfigurable('form', true),
+            'locale' => BaseFieldDefinition::create('string')
+                ->setLabel(new TranslatableMarkup('Locale'))
+                ->setRevisionable(true)
+                ->setDefaultValueCallback(__CLASS__.'::getDefaultKeyValue')
+                ->setDisplayOptions('form', [
+                    'type' => 'string_textfield',
+                ])
+                ->setDescription(new TranslatableMarkup('The locale prefix associated to this channel. e.g. en-gb'))
+                ->setDisplayConfigurable('form', true),
             'changed' => BaseFieldDefinition::create('changed')
                 ->setLabel(new TranslatableMarkup('Changed'))
                 ->setRequired(true),

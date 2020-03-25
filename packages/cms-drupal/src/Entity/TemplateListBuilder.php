@@ -14,8 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class TemplateListBuilder extends ConfigEntityListBuilder
 {
-    protected $stringTranslation;
-
     /**
      * {@inheritdoc}
      */
@@ -44,9 +42,9 @@ final class TemplateListBuilder extends ConfigEntityListBuilder
     public function buildHeader(): array
     {
         return [
-            'id' => $this->stringTranslation->translate('Machine name'),
-            'label' => $this->stringTranslation->translate('Label'),
-            'containers' => $this->stringTranslation->translate('Containers'),
+            'id' => $this->t('Machine name'),
+            'label' => $this->t('Label'),
+            'containers' => $this->t('Containers'),
         ] + parent::buildHeader();
     }
 

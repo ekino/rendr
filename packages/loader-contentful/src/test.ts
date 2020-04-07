@@ -15,6 +15,13 @@ export function createDummyEntry<T>(data: T): Entry<T> {
           linkType: "ContentType",
           id: "DummyEntry"
         }
+      },
+      space: {
+        sys: {
+          type: 'Link',
+          linkType: 'Space',
+          id: "DummySpace"
+        }
       }
     },
     fields: data,

@@ -38,15 +38,25 @@ class ParagraphFieldNormalizer extends EntityReferenceFieldItemNormalizer
         }
 
         $paragraph = $object->get('entity')->getValue();
-        $extendedContext = $context + ['serializer' => $this->serializer];
+        $normalizers = $this->normalizers;
 
-        foreach ($this->normalizers as $normalizer) {
-            if ($normalizer->supportsNormalization($paragraph)) {
-                return $normalizer->normalize($paragraph, $format, $extendedContext);
+        $normalizeParagraphs = function ($internalParagraph, $internalFormat, $internalContext) use ($normalizers) {
+            foreach ($normalizers as $normalizer) {
+                if ($normalizer->supportsNormalization($internalParagraph)) {
+                    return $normalizer->normalize($internalParagraph, $internalFormat, $internalContext);
+                }
             }
-        }
 
-        return $values;
+            return null;
+        };
+        $extendedContext = $context + [
+                'serializer' => $this->serializer,
+                'paragraph_normalizer_closure' => $normalizeParagraphs,
+            ];
+
+        $result = $normalizeParagraphs($paragraph, $format, $extendedContext);
+
+        return !empty($result) ? $result : $values;
     }
 
     /**

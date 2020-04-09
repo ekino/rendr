@@ -50,9 +50,7 @@ final class PageGenerator implements Generator
                 'type' => 'ekino_rendr',
                 'field_rendr_title' => 'Need a Demo fast ?',
                 'field_rendr_display' => 'standard',
-                'field_rendr_text' => '<p>Quite regularly,
-you want to build a simple demo with no complex setup,
-but enough flexibility to play with and demonstrate behaviours.</p>',
+                'field_rendr_text' => '<p>There are many challenges when doing Server Side Rendering with React (or any other similar stacks), it is not only about setting up a state management, or select the best CSS framework. The first challenge is on the logical architecture level, where do we put business logic, how can we do data aggregation, how can we do http caching with user\'s data, etc ... The second challenge, is how can we add flexibility to the end user to administrate the page layouts or templates (and not only contents).</p>',
                 'field_rendr_image' => [
                     'target_id' => $image_callback(__DIR__.'/assets/benjamin-voros-phIFdC6lA4E-unsplash.jpg'),
                     'alt' => 'mountain',
@@ -61,52 +59,17 @@ but enough flexibility to play with and demonstrate behaviours.</p>',
             Paragraph::create([
                 'type' => 'ekino_rendr',
                 'field_rendr_title' => 'Showcasing Articles',
-                'field_rendr_text' => '<p>With a small summary.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>',
+                'field_rendr_text' => '<p>When do you need this kind of solution?</p>
+<ul>
+<li>You have internal data sources (microservices or legacy system)</li>
+<li>You have a CMS but don\'t want to add custom codes or don\'t want to expose it to the world</li>
+<li>Your CMS cannot do the aggregation from different data sources</li>
+<li>You need to add some cache mechanisms to protect your internals systems</li>
+</ul>',
                 'field_rendr_image' => [
                     'target_id' => $image_callback(__DIR__.'/assets/matthew-guay-Q7wDdmgCBFg-unsplash.jpg'),
                     'alt' => 'news paper & tablet',
                 ],
-            ]),
-            Paragraph::create([
-                'type' => 'ekino_rendr',
-                'field_rendr_title' => 'Or showcasing products',
-                'field_rendr_text' => '<p>With a list of features.</p>
-<ul>
-<li><strong>Feature 1:</strong> it is simple</li>
-<li><strong>Feature 2:</strong> it is flexible</li>
-<li><strong>Feature 2:</strong> it can be extended</li>
-</ul>',
-                'field_rendr_image' => [
-                    'target_id' => $image_callback(__DIR__.'/assets/neil-soni-6wdRuK7bVTE-unsplash.jpg'),
-                    'alt' => 'news paper & tablet',
-                ],
-            ]),
-            Paragraph::create([
-                'type' => 'ekino_rendr',
-                'field_rendr_title' => 'Little css',
-                'field_rendr_text' => '<p>It mostly uses a grid system
-based on cols and rows
-like bootstrap css.</p>
-<p><strong>tags:</strong> background_color_light_grey, 3_col, text_center</p>',
-            ]),
-            Paragraph::create([
-                'type' => 'ekino_rendr',
-                'field_rendr_title' => 'React templates',
-                'field_rendr_display' => 'background_color_light_grey, 3_col, text_center',
-                'field_rendr_text' => '<p>Templates are made using react.
-This is also were the tags are resolved.</p>
-<p><a href="#">Some Link</a></p>',
-            ]),
-            Paragraph::create([
-                'type' => 'ekino_rendr',
-                'field_rendr_title' => 'Simple to contribute',
-                'field_rendr_text' => '<p>The behaviour of this component is driven
-by the tags you see at the bottom.
-You can add your own.</p>',
             ]),
         ];
 

@@ -59,7 +59,7 @@ final class PageListBuilder extends EntityListBuilder
                 'id' => $entity->id(),
                 'title' => $entity->label(),
                 'path' => $entity->getPath(),
-                'channels' => \implode(', ', \array_map(function ($entity) {
+                'channels' => \implode(', ', \array_map(static function ($entity) {
                     return $entity->label();
                 }, $entity->get('channels')->referencedEntities())),
             ] + parent::buildRow($entity);

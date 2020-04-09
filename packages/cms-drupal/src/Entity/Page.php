@@ -30,6 +30,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   },
  *   handlers={
  *      "form"={
+ *          "default"="Drupal\Core\Entity\ContentEntityForm",
  *          "add"="Drupal\ekino_rendr\Form\UpsertPageForm",
  *          "edit"="Drupal\ekino_rendr\Form\UpsertPageForm"
  *      },

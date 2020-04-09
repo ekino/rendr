@@ -10,34 +10,40 @@ use Drupal\ekino_rendr\Model\Container;
 /**
  * @ConfigEntityType(
  *   id="ekino_rendr_template",
- *   label=@Translation("Template"),
- *
- *   admin_permission="administer ekino_rendr templates",
- *   bundle_of="ekino_rendr_page",
- *   config_export={
- *      "id",
- *      "label",
- *      "containers"
- *   },
- *   entity_keys={
- *      "id"="id",
- *      "label"="label",
- *   },
+ *   label=@Translation("Page Template"),
+ *   label_collection=@Translation("Page Templates"),
+ *   label_count=@PluralTranslation(
+ *      singular="@count Page Template",
+ *      plural="@count Page Templates",
+ *   ),
+ *   label_singular=@Translation("Page Template"),
+ *   label_plural=@Translation("Page Templates"),
  *   handlers={
  *      "list_builder"="Drupal\ekino_rendr\Entity\TemplateListBuilder",
  *      "route_provider" = {
  *          "html"="Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
  *      },
+ *     "form" = {
+ *       "add" = "Drupal\ekino_rendr\Form\TemplateForm",
+ *       "edit" = "Drupal\ekino_rendr\Form\TemplateForm",
+ *       "delete" = "Drupal\ekino_rendr\Form\TemplateDeleteConfirm"
+ *     }
  *   },
- *   label_collection=@Translation("Templates"),
- *   label_count=@PluralTranslation(
- *      singular="@count template",
- *      plural="@count templates",
- *   ),
- *   label_singular=@Translation("template"),
- *   label_plural=@Translation("templates"),
+ *   config_prefix = "ekino_rendr_template",
+ *   admin_permission="administer ekino_rendr templates",
+ *   entity_keys={
+ *      "id"="id",
+ *      "label"="label",
+ *   },
+ *   config_export={
+ *      "id",
+ *      "label",
+ *      "containers"
+ *   },
+ *   bundle_of="ekino_rendr_page",
  *   links={
  *      "add-form"="/admin/structure/ekino_rendr/template/add",
+ *      "edit-form" = "/admin/structure/ekino_rendr/template/{ekino_rendr_template}",
  *      "collection"="/admin/structure/ekino_rendr/template",
  *   }
  * )

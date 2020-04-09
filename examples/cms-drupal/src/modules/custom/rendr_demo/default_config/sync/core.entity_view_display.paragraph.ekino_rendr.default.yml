@@ -6,7 +6,6 @@ dependencies:
     - field.field.paragraph.ekino_rendr.field_rendr_container
     - field.field.paragraph.ekino_rendr.field_rendr_display
     - field.field.paragraph.ekino_rendr.field_rendr_image
-    - field.field.paragraph.ekino_rendr.field_rendr_image_position
     - field.field.paragraph.ekino_rendr.field_rendr_subtitle
     - field.field.paragraph.ekino_rendr.field_rendr_text
     - field.field.paragraph.ekino_rendr.field_rendr_title
@@ -43,13 +42,6 @@ content:
       image_link: ''
     third_party_settings: {  }
     type: image
-    region: content
-  field_rendr_image_position:
-    weight: 6
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
     region: content
   field_rendr_subtitle:
     weight: 5

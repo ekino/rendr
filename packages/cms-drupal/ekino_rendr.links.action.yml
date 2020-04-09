@@ -15,3 +15,9 @@ ekino_rendr.link.action.page.add:
     title: "Add a page"
     appears_on:
         - "entity.ekino_rendr_page.collection"
+
+ekino_rendr.link.action.template.add:
+    route_name: 'entity.ekino_rendr_template.add'
+    title: 'Create Pages Template'
+    appears_on:
+        - entity.ekino_rendr_template.collection

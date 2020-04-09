@@ -27,7 +27,7 @@ final class UpsertPageForm extends ContentEntityForm
     /**
      * {@inheritdoc}
      */
-    protected function __construct(
+    public function __construct(
         EntityRepositoryInterface $entityRepository,
         MessengerInterface $messenger,
         TranslationInterface $translation,

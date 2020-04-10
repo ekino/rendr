@@ -6,6 +6,7 @@ namespace Drupal\rendr_demo\Normalizer;
 
 use Drupal\ekino_rendr\Normalizer\BaseParagraphNormalizer;
 use Drupal\ekino_rendr\Tool\PreviewHelper;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Text Paragraph transformer.
@@ -15,11 +16,10 @@ class TextParagraphNormalizer extends BaseParagraphNormalizer
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize(Paragraph $object, $format = null, array $context = [])
     {
         return [
             'id' => $object->get('id')->value,
-            'container' => $object->get('field_rendr_container')->value ?? 'body',
             'type' => 'rendr.text',
             'extra' => [
               'preview' => $context['preview'],
@@ -27,11 +27,8 @@ class TextParagraphNormalizer extends BaseParagraphNormalizer
             ],
             'settings' => [
                 'title' => $object->get('field_rendr_title')->value,
-                'subtitle' => $object->get('field_rendr_subtitle')->value,
-                'contents' => $object->get('field_rendr_text')->value,
-                'mode' => $object->get('field_rendr_display')->value,
+                'contents' => $object->get('field_rendr_description')->value,
                 'image' => $object->get('field_rendr_image')->value,
-                'image_position' => $object->get('field_rendr_image_position')->value,
             ],
         ];
     }

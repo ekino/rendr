@@ -10,11 +10,13 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\ekino_rendr\Entity\Page;
+use Drupal\ekino_rendr\Entity\Template;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class UpsertPageForm extends ContentEntityForm
@@ -23,6 +25,7 @@ final class UpsertPageForm extends ContentEntityForm
     protected $stringTranslation;
     protected $dateFormatter;
     protected $currentUser;
+    protected $entityTypeManager;
 
     /**
      * {@inheritdoc}
@@ -33,6 +36,7 @@ final class UpsertPageForm extends ContentEntityForm
         TranslationInterface $translation,
         DateFormatterInterface $dateFormatter,
         AccountProxyInterface $accountProxy,
+        EntityTypeManagerInterface $entityTypeManager,
         EntityTypeBundleInfoInterface $entityTypeBundleInfo = null,
         TimeInterface $time = null
     ) {
@@ -41,6 +45,7 @@ final class UpsertPageForm extends ContentEntityForm
         $this->stringTranslation = $translation;
         $this->dateFormatter = $dateFormatter;
         $this->currentUser = $accountProxy;
+        $this->entityTypeManager = $entityTypeManager;
     }
 
     /**
@@ -54,6 +59,7 @@ final class UpsertPageForm extends ContentEntityForm
             $container->get('string_translation'),
             $container->get('date.formatter'),
             $container->get('current_user'),
+            $container->get('entity_type.manager'),
             $container->get('entity_type.bundle.info'),
             $container->get('datetime.time')
         );
@@ -73,39 +79,40 @@ final class UpsertPageForm extends ContentEntityForm
             throw new \LogicException();
         }
 
-        $form = [
-            '#theme' => 'node_edit_form',
-            '#attached' => [
-                'library' => [
-                    'node/form',
+        $form = parent::form($form, $formState) + [
+                'rendr_containers' => [
+                    '#type' => 'vertical_tabs',
+                    '#weight' => 2,
                 ],
-            ],
-            'advanced' => [
-                '#type' => 'container',
-                '#attributes' => [
-                    'class' => 'entity-meta',
-                ],
-                'meta' => [
-                    '#type' => 'container',
-                    '#attributes' => [
-                        'class' => 'entity-meta__header',
-                    ],
-                    'changed' => [
-                        '#type' => 'item',
-                        '#wrapper_attributes' => [
-                            'class' => 'entity-meta__last-saved container-inline',
-                        ],
-                        '#markup' => \sprintf('<label>%s</label> %s', $this->stringTranslation->translate('Last saved'), $this->entity->isNew() ? $this->stringTranslation->translate('Not saved yet') : $this->dateFormatter->format($this->entity->getChangedTime())),
-                        '#allowed_tags' => [
-                            'label',
-                        ],
-                        '#value' => $this->entity->getChangedTime(),
-                    ],
-                ],
-            ],
-        ] + parent::form($form, $formState);
+            ];
 
-        $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#group'] = 'meta';
+        $form['publication_section'] = [
+            '#type' => 'details',
+            '#title' => $this
+                ->t('Publication & Channels'),
+            '#group' => 'rendr_containers',
+            '#weight' => 99, // high weight so this tab is rendered last
+        ];
+        $form['publication_section']['channels'] = $form['channels'];
+        $form['publication_section'][$entityType->getKey('published')] = $form[$entityType->getKey('published')];
+
+        unset($form['channels']);
+        unset($form[$entityType->getKey('published')]);
+
+        foreach (\array_keys($form) as $fieldKey) {
+            if (\preg_match(Template::CONTAINER_KEY_PATTERN, $fieldKey, $matches)) {
+                $form[$matches[1].'_section'] = [
+                    '#type' => 'details',
+                    '#title' => $this
+                        ->t(\str_replace('_', ' ', $matches[1])),
+                    '#weight' => $form[$fieldKey]['#weight'] ?? 0,
+                    '#group' => 'rendr_containers',
+                ];
+
+                $form[$matches[1].'_section'][$fieldKey] = $form[$fieldKey];
+                unset($form[$fieldKey]);
+            }
+        }
 
         return $form;
     }

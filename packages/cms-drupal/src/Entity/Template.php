@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\ekino_rendr\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
-use Drupal\ekino_rendr\Model\Container;
 
 /**
  * @ConfigEntityType(
@@ -38,32 +37,18 @@ use Drupal\ekino_rendr\Model\Container;
  *   config_export={
  *      "id",
  *      "label",
- *      "containers"
  *   },
  *   bundle_of="ekino_rendr_page",
  *   links={
  *      "add-form"="/admin/structure/ekino_rendr/template/add",
- *      "edit-form" = "/admin/structure/ekino_rendr/template/{ekino_rendr_template}",
+ *      "edit-form" = "/admin/structure/ekino_rendr/template/{ekino_rendr_template}/edit",
+ *      "delete-form" = "/admin/structure/ekino_rendr/template/{ekino_rendr_template}/delete",
  *      "collection"="/admin/structure/ekino_rendr/template",
  *   }
  * )
  */
 final class Template extends ConfigEntityBundleBase implements TemplateInterface
 {
-    const ID = 'ekino_rendr_template';
-
-    /**
-     * @return Container[]
-     */
-    public function getContainers()
-    {
-        $containers = $this->get('containers');
-        if (!\is_array($containers)) {
-            return [];
-        }
-
-        return \array_map(static function ($row): Container {
-            return new Container($row['id'], $row['label']);
-        }, $containers);
-    }
+    public const ID = 'ekino_rendr_template';
+    public const CONTAINER_KEY_PATTERN = '/^field_rendr_(.+)_container$/';
 }

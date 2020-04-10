@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\ekino_rendr\Normalizer;
 
+use Drupal\ekino_rendr\Entity\Template;
 use Drupal\ekino_rendr\Transformer\ParagraphTransformerInterface;
 use Drupal\serialization\Normalizer\ContentEntityNormalizer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,10 +38,23 @@ class PageNormalizer extends ContentEntityNormalizer
     {
         $data = parent::normalize($object, $format, $context);
         $attributes = $this->createPage();
+        $containers = \array_filter($data, static function ($key) {
+            return \preg_match(Template::CONTAINER_KEY_PATTERN, $key);
+        }, ARRAY_FILTER_USE_KEY);
+        $blocks = [];
+
+        foreach ($containers as $key => $container) {
+            \preg_match(Template::CONTAINER_KEY_PATTERN, $key, $matches);
+            $blocks = \array_merge($blocks, \array_map(static function ($block) use ($matches) {
+                $block['container'] = $matches[1];
+
+                return $block;
+            }, $container));
+        }
 
         $attributes['head']['title'] = $object->get('title')->value;
         $attributes['path'] = $object->get('path')->value;
-        $attributes['blocks'] = $data['content'];
+        $attributes['blocks'] = $blocks;
         $attributes['settings'] = $this->resolve($context);
         $attributes['settings']['published'] = (bool) $object->get('published')->value;
 

@@ -1,12 +1,3 @@
 id: "default"
 label: "Default"
-containers:
-    -
-        id: "header"
-        label: "Header"
-    -
-        id: "body"
-        label: "Body"
-    -
-        id: "footer"
-        label: "Footer"
+

@@ -30,14 +30,12 @@ class ArticleParagraphNormalizer extends BaseParagraphNormalizer
      */
     public function normalize($object, $format = null, array $context = [])
     {
-        $articles = $this->entityTypeManager->getStorage('node')->loadByProperties([
-            'nid' => $object->get('field_article')->getValue()[0]['target_id']
-        ]);
-        $article = reset($articles);
+        $article = $this->entityTypeManager->getStorage('node')->load(
+          $object->get('field_article')->getValue()[0]['target_id']
+        );
 
         return [
             'id' => $object->get('id'),
-            'container' => 'body',
             'type' => 'rendr.articles',
             'settings' => [
                 'article' => $this->normalizeArticle($article),

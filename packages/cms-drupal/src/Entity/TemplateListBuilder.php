@@ -9,11 +9,32 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\ekino_rendr\Model\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class TemplateListBuilder extends ConfigEntityListBuilder
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(EntityTypeInterface $entityType, EntityStorageInterface $storage, TranslationInterface $translation)
+    {
+        parent::__construct($entityType, $storage);
+
+        $this->stringTranslation = $translation;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function createInstance(ContainerInterface $container, EntityTypeInterface $entityType): self
+    {
+        return new self(
+            $entityType,
+            $container->get('entity_type.manager')->getStorage($entityType->id()),
+            $container->get('string_translation')
+        );
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -22,7 +43,6 @@ final class TemplateListBuilder extends ConfigEntityListBuilder
         return [
             'id' => $this->t('Machine name'),
             'label' => $this->t('Label'),
-            'containers' => $this->t('Containers'),
         ] + parent::buildHeader();
     }
 
@@ -36,14 +56,6 @@ final class TemplateListBuilder extends ConfigEntityListBuilder
         return [
             'id' => $entity->id(),
             'label' => $entity->label(),
-            'containers' => [
-                'data' => [
-                    '#theme' => 'item_list',
-                    '#items' => \array_map(static function (Container $container): string {
-                        return $container->getLabel();
-                    }, $entity->getContainers()),
-                ],
-            ],
         ] + parent::buildRow($entity);
     }
 }

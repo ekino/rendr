@@ -8,13 +8,13 @@ ekino_rendr.main.menu:
     options:
         _admin_route: true
 
-entity.ekino_rendr_template.add:
-    path: '/admin/structure/ekino_rendr/template/add'
-    defaults:
-        _entity_form: 'ekino_rendr_template.add'
-        _title: 'Add Page Template'
-    requirements:
-        _permission: 'administer page template'
+#entity.ekino_rendr_template.add:
+#    path: '/admin/structure/ekino_rendr/template/add'
+#    defaults:
+#        _entity_form: 'ekino_rendr_template.add'
+#        _title: 'Add Page Template'
+#    requirements:
+#        _permission: 'administer page template'
 
 ekino_rendr.api.page:
     path: "/ekino-rendr/api/page/{slug}"

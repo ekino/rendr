@@ -3,13 +3,13 @@ import { GetArticle } from "../helper/contents";
 
 import {
   defaultContentfulClient,
-  contentfulNormalizer
+  contentfulNormalizer,
 } from "../helper/contentful";
 import { getPage } from "../helper/page";
 import {
   NotFoundError,
   InternalServerError,
-  BlockDefinition
+  BlockDefinition,
 } from "@ekino/rendr-core";
 
 export const articleView: PageBuilder = async (ctx, page) => {
@@ -18,7 +18,7 @@ export const articleView: PageBuilder = async (ctx, page) => {
     defaultContentfulClient(ctx),
     ctx.params["slug"],
     {
-      domain: ctx.hostname
+      domain: ctx.hostname,
     }
   );
 
@@ -36,7 +36,7 @@ export const articleView: PageBuilder = async (ctx, page) => {
       ...ctx,
       // we need to load the correct page and it cannot be the original path
       // as it will change on all requests: "/articles/slug-1", "/articles/slug-2", etc ...
-      pathname: "/articles/:slug"
+      pathname: "/articles/:slug",
     },
     page
   );
@@ -57,13 +57,13 @@ export const articleView: PageBuilder = async (ctx, page) => {
   articlePage.head.title = article.title;
 
   articlePage.head.meta.push({
-    keywords: article.seo.keywords
+    keywords: article.seo.keywords,
   });
   articlePage.head.meta.push({
-    description: article.seo.description
+    description: article.seo.description,
   });
 
-  const viewBlock = articlePage.blocks.find(def => {
+  const viewBlock = articlePage.blocks.find((def) => {
     return def.type === "article.view";
   });
 
@@ -83,11 +83,11 @@ export const articleView: PageBuilder = async (ctx, page) => {
     type: "rendr.text",
     settings: {
       title: article.title,
-      contents: article.abstract
+      contents: article.abstract,
     },
     // set a low priority to component on the page (from contentful),
     // can be defined to be show before the main article
-    order: 100
+    order: 100,
   });
 
   // the article is also composed from a set of block we can just reuse them

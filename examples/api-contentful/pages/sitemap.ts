@@ -2,7 +2,7 @@ import {
   createPageReference as ref,
   createPageReferencesGenerator,
   RequestCtx,
-  Page
+  Page,
 } from "@ekino/rendr-core";
 import { createSitemapPageBuilder } from "@ekino/rendr-sitemap";
 import { GetPages } from "@ekino/rendr-loader-contentful";
@@ -14,7 +14,7 @@ import { defaultContentfulClient } from "../helper/contentful";
 export const sitemap = (ctx: RequestCtx, page: Page) => {
   const generator = createPageReferencesGenerator({
     pages: () => pagesGenerator(ctx),
-    articles: () => articlesGenerator(ctx)
+    articles: () => articlesGenerator(ctx),
   });
 
   return createSitemapPageBuilder(generator)(ctx, page);
@@ -29,7 +29,7 @@ async function* pagesGenerator(ctx: RequestCtx) {
 
   // for now we don't handle pagination...
   const options = {
-    domain: ctx.hostname
+    domain: ctx.hostname,
   };
 
   try {
@@ -40,7 +40,7 @@ async function* pagesGenerator(ctx: RequestCtx) {
 
       yield ref(`${baseUrl}${entry.fields.path}`, {
         priority: 0.5,
-        lastmod: date
+        lastmod: date,
       });
     }
   } catch (err) {
@@ -57,7 +57,7 @@ async function* articlesGenerator(ctx: RequestCtx) {
 
   // for now we don't handle pagination...
   const options = {
-    domain: ctx.hostname
+    domain: ctx.hostname,
   };
 
   try {
@@ -68,7 +68,7 @@ async function* articlesGenerator(ctx: RequestCtx) {
 
       yield ref(`${baseUrl}/articles/${entry.fields.slug}`, {
         priority: 0.5,
-        lastmod: date
+        lastmod: date,
       });
     }
   } catch (err) {

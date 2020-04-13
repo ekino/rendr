@@ -14,12 +14,12 @@ function createContext(data: {}): RequestCtx {
     pathname: "/",
     query: {},
     params: {},
-    asPath: "/"
+    asPath: "/",
   };
 
   return {
     ...ctx,
-    ...data
+    ...data,
   };
 }
 
@@ -35,7 +35,7 @@ describe("test loader", () => {
           expect(query).toEqual({
             content_type: "rendr_website",
             limit: 100,
-            skip: 0
+            skip: 0,
           });
 
           return loadJson(`${__dirname}/__fixtures__/loader/website.json`);
@@ -47,7 +47,7 @@ describe("test loader", () => {
             "fields.path": "/",
             "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
             include: 10,
-            limit: 1
+            limit: 1,
           });
 
           return loadJson(`${__dirname}/__fixtures__/loader/main_page.json`);
@@ -59,12 +59,12 @@ describe("test loader", () => {
             "fields.code": "root",
             "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
             include: 10,
-            limit: 1
+            limit: 1,
           });
 
           return loadJson(`${__dirname}/__fixtures__/loader/parent_page.json`);
         }
-      }
+      },
     });
 
     const normalizer = createNormalizer();

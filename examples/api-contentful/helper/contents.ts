@@ -8,13 +8,13 @@ import { ContentfulAuthor, ContentfulArticle } from "./types";
 let defaultOptions = {
   status: 1,
   limit: 100,
-  page: 1
+  page: 1,
 };
 
 let defaultArchiveOptions = {
   status: 1,
   limit: 32,
-  page: 1
+  page: 1,
 };
 
 export async function GetArticles(
@@ -36,7 +36,7 @@ export async function GetArticles(
     skip: (opts.page - 1) * opts.limit,
     content_type: "rendr_article",
     "fields.published_at[lte]": new Date(),
-    "fields.website.sys.id": site.sys.id
+    "fields.website.sys.id": site.sys.id,
   };
 
   if (!("order" in query)) {
@@ -65,7 +65,7 @@ export async function GetArticle(
     limit: 2,
     content_type: "rendr_article",
     "fields.published_at[lte]": new Date(),
-    "fields.website.sys.id": site.sys.id
+    "fields.website.sys.id": site.sys.id,
   };
 
   // query['fields.type'] = 'type' in opts ? opts.type : 'post';
@@ -91,7 +91,7 @@ export async function GetAuthor(
   const query = {
     "fields.slug": slug,
     limit: 2,
-    content_type: "rendr_author"
+    content_type: "rendr_author",
   };
 
   const result = await client.getEntries<ContentfulAuthor>(query);
@@ -115,6 +115,6 @@ export async function GetAuthorArticles(
   const author = await GetAuthor(client, slug, opts);
 
   return GetArticles(client, {
-    authors: [author.sys.id]
+    authors: [author.sys.id],
   });
 }

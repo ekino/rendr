@@ -4,7 +4,7 @@ import {
   transformGenerator,
   AsyncPageReferenceGenerator,
   StreamCreator,
-  pipeIteratorToWritable
+  pipeIteratorToWritable,
 } from "@ekino/rendr-core";
 
 import { toSitemapEntry, createSitemapWritable } from "./sitemap";
@@ -14,7 +14,7 @@ import { Writable } from "stream";
 async function* generatorLoop(i: number): AsyncPageReferenceGenerator {
   for (let x = 0; x < i; x++) {
     yield createPageReference(`https://localhost/${x}/${"x".repeat(40)}`, {
-      lastmod: "2005-01-01"
+      lastmod: "2005-01-01",
     });
   }
 }
@@ -22,7 +22,7 @@ async function* generatorLoop(i: number): AsyncPageReferenceGenerator {
 describe("Test sitemaps code", () => {
   test("test toSitemapEntry with date", () => {
     const ref = createPageReference("https://myurl.com/", {
-      lastmod: new Date("2019-10-24T14:16:29.329Z")
+      lastmod: new Date("2019-10-24T14:16:29.329Z"),
     });
 
     const s = toSitemapEntry(ref);
@@ -33,7 +33,7 @@ describe("Test sitemaps code", () => {
   test("test sitemap with index file", async () => {
     const generator = createPageReferencesGenerator({
       group_1: () => generatorLoop(40000),
-      group_2: () => generatorLoop(50000)
+      group_2: () => generatorLoop(50000),
     });
 
     let call = 0;
@@ -48,14 +48,14 @@ describe("Test sitemaps code", () => {
         write(chunk, encoding, callback) {
           call++;
           callback();
-        }
+        },
       });
 
       return stream;
     };
 
     const sitemapWritable = createSitemapWritable(streamCreator, {
-      basePathIndex: "https://localhost"
+      basePathIndex: "https://localhost",
     });
 
     await pipeIteratorToWritable(iter, sitemapWritable);
@@ -69,7 +69,7 @@ describe("Test sitemaps code", () => {
   test("test sitemap with no index file", async () => {
     const generator = createPageReferencesGenerator({
       group_1: () => generatorLoop(10),
-      group_2: () => generatorLoop(5)
+      group_2: () => generatorLoop(5),
     });
 
     let buffer = "";
@@ -84,14 +84,14 @@ describe("Test sitemaps code", () => {
         write(chunk, encoding, callback) {
           buffer += chunk;
           callback();
-        }
+        },
       });
 
       return stream;
     };
 
     const sitemapWritable = createSitemapWritable(streamCreator, {
-      basePathIndex: ""
+      basePathIndex: "",
     });
 
     await pipeIteratorToWritable(iter, sitemapWritable);

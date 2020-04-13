@@ -5,7 +5,7 @@ import {
   BlockDefinition,
   Settings,
   NormalizationError,
-  createPage
+  createPage,
 } from "@ekino/rendr-core";
 
 import {
@@ -16,27 +16,27 @@ import {
   ContentfulAsset,
   EntryNormalizerList,
   EntryNormalizer,
-  BaseContentfulBlock
+  BaseContentfulBlock,
 } from "./types";
 
 const ASSET_REGEXP = /(images\.(ctfassets\.net|contentful\.com)([0-9a-zA-Z/\-_]*)\.([a-z]{1,4}))/g;
 const ASSET_FORMATS: Map = {
   jpg: "jpg",
   jpeg: "jpg",
-  png: "png"
+  png: "png",
 };
 
 export const emptyPicture = {
   enabled: false,
   id: "-",
   title: "No picture",
-  url: ""
+  url: "",
 };
 
 export const defaultNormalizers: EntryNormalizerList = {
   rendr_page: normalizePage,
   rendr_website: normalizeWebsite,
-  asset: normalizePicture // Asset is the default from contentul
+  asset: normalizePicture, // Asset is the default from contentul
 };
 
 export function createNormalizer(
@@ -44,7 +44,7 @@ export function createNormalizer(
 ): EntryNormalizer {
   const normalizers: EntryNormalizerList = {
     ...defaultNormalizers,
-    ...extraNormalizers
+    ...extraNormalizers,
   };
 
   return function normalizer(
@@ -131,12 +131,12 @@ export function normalizePage(
     id: entry.sys.id,
     head: {
       title: entry.fields.title,
-      meta: [] as Settings[]
+      meta: [] as Settings[],
     },
     path: entry.fields.path ? entry.fields.path : "",
     template: entry.fields.layout ? entry.fields.layout : "default",
     settings: entry.fields.settings,
-    blocks: [] as BlockDefinition[]
+    blocks: [] as BlockDefinition[],
   };
 
   if (entry.fields.blocks) {
@@ -148,14 +148,14 @@ export function normalizePage(
   if (entry.fields.seo_keywords && entry.fields.seo_keywords.length > 0) {
     data.head.meta.push({
       name: "keywords",
-      content: entry.fields.seo_keywords
+      content: entry.fields.seo_keywords,
     });
   }
 
   if (entry.fields.seo_description && entry.fields.seo_description.length > 0) {
     data.head.meta.push({
       name: "description",
-      content: entry.fields.seo_description
+      content: entry.fields.seo_description,
     });
   }
 
@@ -166,7 +166,7 @@ export function normalizePicture(entry: ContentfulAsset): Asset {
   return {
     id: entry.sys.id,
     title: entry.fields.title,
-    url: fixHttps(fixImageUrl(entry.fields.file.url))
+    url: fixHttps(fixImageUrl(entry.fields.file.url)),
   };
 }
 
@@ -182,7 +182,7 @@ export function normalizeWebsite(
     culture: site.fields.culture,
     countryCode: site.fields.country_code,
     order: site.fields.order ? site.fields.order : 99,
-    enabled: !!site.fields.enabled
+    enabled: !!site.fields.enabled,
   };
 }
 
@@ -195,6 +195,6 @@ export function createBlockDefinition(
     container: entry.fields.container,
     order: entry.fields.order >= 0 ? entry.fields.order : 99,
     settings: settings,
-    type: type
+    type: type,
   };
 }

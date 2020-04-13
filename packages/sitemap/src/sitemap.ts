@@ -3,7 +3,7 @@ import {
   StreamCreator,
   PageReferenceGenerator,
   transformGenerator,
-  pipeIteratorToWritable
+  pipeIteratorToWritable,
 } from "@ekino/rendr-core";
 import { PageBuilder } from "@ekino/rendr-loader";
 
@@ -23,7 +23,7 @@ export async function sendSitemap(
   const iter = transformGenerator(generator(), toSitemapEntry);
 
   const sitemapWritable = createSitemapWritable((name: string) => res, {
-    basePathIndex: ""
+    basePathIndex: "",
   });
 
   await pipeIteratorToWritable(iter, sitemapWritable);
@@ -103,7 +103,7 @@ export function createSitemapWritable(
 
       streamMap.write(chunk, encoding);
       callback();
-    }
+    },
   });
 
   w.on("finish", () => {
@@ -136,7 +136,7 @@ export function toSitemapEntry(ref: PageReference): string {
   const settings = {
     lastmod,
     changefreq: ref.settings.changefreq ? ref.settings.changefreq : "weekly",
-    priority: ref.settings.priority ? ref.settings.priority : "0.8"
+    priority: ref.settings.priority ? ref.settings.priority : "0.8",
   };
 
   return `<url><loc>${ref.url}</loc><lastmod>${settings.lastmod}</lastmod><priority>${settings.priority}</priority></url>`;

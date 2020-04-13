@@ -1,9 +1,9 @@
-module.exports = async function(migration) {
+module.exports = async function (migration) {
   const page = migration.editContentType("rendr_page");
   page.changeFieldControl("published_at", "datePicker", "builtin", {
     helpText: "The date where the page will be public",
     format: "time",
-    ampm: "24"
+    ampm: "24",
   });
 
   let article = migration.editContentType("rendr_article");
@@ -11,6 +11,6 @@ module.exports = async function(migration) {
   article.changeFieldControl("published_at", "datePicker", "builtin", {
     helpText: "The date where the page will be public",
     format: "time",
-    ampm: "24"
+    ampm: "24",
   });
 };

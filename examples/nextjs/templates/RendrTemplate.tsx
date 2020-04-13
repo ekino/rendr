@@ -6,7 +6,7 @@ import { TemplateProps } from "@ekino/rendr-template-react";
 export default function RendrTemplate({
   containerRenderer,
   page,
-  blocks
+  blocks,
 }: TemplateProps) {
   return (
     <div className="container mx-auto">

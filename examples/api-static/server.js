@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    exposedHeaders: "X-Rendr-Content-Type"
+    exposedHeaders: "X-Rendr-Content-Type",
   })
 );
 
@@ -31,7 +31,7 @@ app.use("/", (req, res) => {
 // if the file is call directly, then the server is started,
 // if the file is imported, the server is not started
 if (require.main === module) {
-  app.listen(port, err => {
+  app.listen(port, (err) => {
     if (err) {
       throw err;
     }

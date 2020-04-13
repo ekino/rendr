@@ -1,20 +1,20 @@
 import { AsyncPageReferenceGenerator } from "./types";
 import {
   createPageReferencesGenerator,
-  createPageReference
+  createPageReference,
 } from "./generator";
 
 async function* pagesGenerator(): AsyncPageReferenceGenerator {
-  await new Promise(resolve => setTimeout(resolve, 10));
+  await new Promise((resolve) => setTimeout(resolve, 10));
 
   yield createPageReference("https://localhost/" + "x".repeat(40 - 18), {
-    lastmod: "2005-01-01"
+    lastmod: "2005-01-01",
   });
 
-  await new Promise(resolve => setTimeout(resolve, 10));
+  await new Promise((resolve) => setTimeout(resolve, 10));
 
   yield createPageReference("https://localhost/", {
-    lastmod: "2005-01-01"
+    lastmod: "2005-01-01",
   });
 }
 
@@ -22,7 +22,7 @@ describe("Test generator for page listing", () => {
   test("test createPageGenerator", async () => {
     const generator = createPageReferencesGenerator({
       group_1: pagesGenerator,
-      group_2: pagesGenerator
+      group_2: pagesGenerator,
     });
 
     const iter = generator();

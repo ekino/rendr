@@ -9,7 +9,7 @@ import {
   createTemplateRegistry,
   ComponentList,
   createBlockRenderer,
-  createContainerRenderer
+  createContainerRenderer,
 } from "@ekino/rendr-template-react";
 
 import { createDynamicPage } from "./components/DynamicPage";
@@ -55,7 +55,7 @@ export async function getInitialProps(
 
   if (!pageProps || !("page" in pageProps)) {
     return {
-      pageProps: {}
+      pageProps: {},
     };
   }
 
@@ -77,7 +77,7 @@ export function getComponent(
 
   return {
     Component,
-    pageProps
+    pageProps,
   };
 }
 

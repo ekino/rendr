@@ -34,7 +34,7 @@ export class Page {
   public type: string = "document";
   public template: string = "default";
   public cache: Cache = {
-    ttl: 0
+    ttl: 0,
   };
   public head: Head = {
     titleTemplate: "%s",
@@ -42,7 +42,7 @@ export class Page {
     title: "-",
     link: "",
     htmlAttributes: {},
-    meta: []
+    meta: [],
   };
   public blocks: BlockDefinition[] = [];
   public settings: Settings = {};

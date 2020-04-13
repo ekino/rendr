@@ -3,8 +3,9 @@ import { createAggregatorLoader } from "@ekino/rendr-aggregator";
 import {
   createApiLoader,
   createChainedLoader,
-  Loader
+  Loader,
 } from "@ekino/rendr-loader";
+
 import { RequestCtx, BlockDefinition, Page } from "@ekino/rendr-core";
 
 import dynamic from "next/dynamic";
@@ -17,14 +18,14 @@ const components = {
   "article.view": dynamic(() => import("../components/NestedBlocks")),
   "rendr.text": dynamic(() => import("../components/RendrText")),
   "rendr.footer": dynamic(() => import("../components/RendrFooter")),
-  "rendr.header": dynamic(() => import("../components/RendrHeader"))
+  "rendr.header": dynamic(() => import("../components/RendrHeader")),
 };
 
 // Configure the template available for the page. A template is a standard React component.
 const templates = {
   // rendr: dynamic(() => import("../templates/RendrTemplate"))
   rendr: RendrTemplate,
-  default: RendrTemplate
+  default: RendrTemplate,
 };
 
 // optional handlers, only use this if you need to add information into block
@@ -32,7 +33,7 @@ const templates = {
 //  => Aggregation at the view level is not that good but can be useful in some cases.
 const handlers = {
   "rendr.agencies": (block: BlockDefinition, ctx: RequestCtx, page: Page) =>
-    Promise.resolve(block)
+    Promise.resolve(block),
 };
 
 // initialize related code required to make the page works.

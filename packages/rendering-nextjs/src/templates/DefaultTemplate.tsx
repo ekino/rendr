@@ -10,7 +10,7 @@ export default function DefaultTemplate(props: TemplateProps) {
     <>
       <Head>
         <title>{props.page.head.title}</title>
-        {props.page.head.meta.map(settings => (
+        {props.page.head.meta.map((settings) => (
           <meta {...settings} />
         ))}
       </Head>

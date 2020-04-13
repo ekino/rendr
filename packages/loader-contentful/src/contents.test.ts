@@ -19,11 +19,11 @@ describe("Contents loading from ", () => {
         expect(query).toEqual({
           content_type: "rendr_website",
           limit: 100,
-          skip: 0
+          skip: 0,
         });
 
         return loadJson(`${__dirname}/__fixtures__/contents/websites.json`);
-      }
+      },
     });
 
     expect(await GetWebsites(client)).toMatchSnapshot();
@@ -35,11 +35,11 @@ describe("Contents loading from ", () => {
         expect(query).toEqual({
           content_type: "rendr_website",
           limit: 100,
-          skip: 0
+          skip: 0,
         });
 
         return loadJson(`${__dirname}/__fixtures__/contents/websites.json`);
-      }
+      },
     });
 
     expect(await GetWebsite(client, "ekino.com")).toMatchSnapshot();
@@ -51,11 +51,11 @@ describe("Contents loading from ", () => {
         expect(query).toEqual({
           content_type: "rendr_website",
           limit: 100,
-          skip: 0
+          skip: 0,
         });
 
         return loadJson(`${__dirname}/__fixtures__/contents/websites.json`);
-      }
+      },
     });
 
     try {
@@ -73,13 +73,13 @@ describe("Contents loading from ", () => {
           "fields.path": "/",
           "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
           limit: 1,
-          content_type: "rendr_page"
+          content_type: "rendr_page",
         });
 
         return loadJson(
           `${__dirname}/__fixtures__/contents/empty_collection.json`
         );
-      }
+      },
     });
 
     const website: Website = {
@@ -90,7 +90,7 @@ describe("Contents loading from ", () => {
       culture: "en_GB",
       countryCode: "GDB",
       order: 0,
-      enabled: true
+      enabled: true,
     };
 
     try {
@@ -108,11 +108,11 @@ describe("Contents loading from ", () => {
           "fields.path": "/",
           "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
           limit: 1,
-          content_type: "rendr_page"
+          content_type: "rendr_page",
         });
 
         return loadJson(`${__dirname}/__fixtures__/contents/pages.json`);
-      }
+      },
     });
 
     const website: Website = {
@@ -123,7 +123,7 @@ describe("Contents loading from ", () => {
       culture: "en_GB",
       countryCode: "GDB",
       order: 0,
-      enabled: true
+      enabled: true,
     };
 
     expect(await GetPage(client, website, "/")).toMatchSnapshot();

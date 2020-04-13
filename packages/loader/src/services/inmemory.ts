@@ -8,7 +8,7 @@ const route = createMatcher({
   sensitive: false,
   strict: true,
   end: true,
-  start: true
+  start: true,
 });
 
 export function createInMemoryLoader(paths: InMemorySettings): Loader {
@@ -23,12 +23,12 @@ export function createInMemoryLoader(paths: InMemorySettings): Loader {
     routes.push({
       path,
       matcher: route(path),
-      pageBuilder: paths[path]
+      pageBuilder: paths[path],
     });
   }
 
   return async (ctx, page, next) => {
-    const result = routes.find(conf => {
+    const result = routes.find((conf) => {
       const { matcher, path } = conf;
 
       // @ts-ignore - definition does not exist...

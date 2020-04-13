@@ -6,7 +6,7 @@ import { BlockRenderer } from "@ekino/rendr-template-react";
 
 export default function NestedBlocks({
   blocks,
-  blockRenderer
+  blockRenderer,
 }: {
   blocks: BlockDefinition[];
   blockRenderer: BlockRenderer;

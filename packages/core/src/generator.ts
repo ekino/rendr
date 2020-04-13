@@ -2,7 +2,7 @@ import {
   PageReference,
   PageReferenceGenerators,
   Settings,
-  TransformGenerator
+  TransformGenerator,
 } from "./types";
 
 import { finished as StreamFinished, Writable } from "stream";
@@ -28,7 +28,7 @@ export function createPageReference(
   return {
     url,
     group: "",
-    settings: settings ? settings : {}
+    settings: settings ? settings : {},
   };
 }
 

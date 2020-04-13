@@ -4,14 +4,14 @@ import {
   createPage,
   NotFoundError,
   RendrError,
-  RequestCtx
+  RequestCtx,
 } from "@ekino/rendr-core";
 
 export * from "./types";
 export * from "./services/inmemory";
 export * from "./services/api";
 
-export const createChainedLoader: (loaders: Loader[]) => Loader = loaders => {
+export const createChainedLoader: (loaders: Loader[]) => Loader = (loaders) => {
   return async (ctx, page, next) => {
     let i = 0;
     let internalPage = page;
@@ -60,7 +60,7 @@ type Logger = Partial<{
 export function generateErrorHandler(logger: Logger) {
   return (err: Error | RendrError, ctx: RequestCtx, page: Page): MaybePage => {
     const fullStack = flattenStackTrace(err);
-    fullStack.forEach(stack => logger.log(stack));
+    fullStack.forEach((stack) => logger.log(stack));
 
     if (ctx.res && ctx.res.headersSent) {
       ctx.res.end();

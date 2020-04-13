@@ -7,19 +7,19 @@ async function cleanSpace(makeRequest, migration) {
     "rendr_block_footer",
     "rendr_website",
     "rendr_page",
-    "rendr_article"
+    "rendr_article",
   ];
 
   // Get all entries, and delete them if needed
   const entries = await makeRequest({
     method: "GET",
-    url: "/entries"
+    url: "/entries",
   });
 
   // prebuild a collection of entries, entries need to be deleted on
   // a specifics orders due to dependency.
   const collections = {};
-  entries.items.forEach(i => {
+  entries.items.forEach((i) => {
     if (rendrTypes.includes(i.sys.contentType.sys.id)) {
       if (!collections[i.sys.contentType.sys.id]) {
         collections[i.sys.contentType.sys.id] = [];
@@ -31,12 +31,12 @@ async function cleanSpace(makeRequest, migration) {
 
   const contentTypes = await makeRequest({
     method: "GET",
-    url: "/content_types"
+    url: "/content_types",
   });
 
   const installedTypes = contentTypes.items
-    .map(element => element.sys.id)
-    .filter(id => id.substr(0, 5) === "rendr");
+    .map((element) => element.sys.id)
+    .filter((id) => id.substr(0, 5) === "rendr");
   for (let x = 0; x < rendrTypes.length; x++) {
     const type = rendrTypes[x];
 
@@ -50,7 +50,7 @@ async function cleanSpace(makeRequest, migration) {
         try {
           await makeRequest({
             method: "DELETE",
-            url: `/entries/${collections[type][index]}/published`
+            url: `/entries/${collections[type][index]}/published`,
           });
         } catch (err) {
           console.log(`Ignoring error (${err.message})`);
@@ -58,7 +58,7 @@ async function cleanSpace(makeRequest, migration) {
 
         await makeRequest({
           method: "DELETE",
-          url: `/entries/${collections[type][index]}`
+          url: `/entries/${collections[type][index]}`,
         });
       }
     }
@@ -76,7 +76,7 @@ function createField(entity, id, name, opts = {}) {
     disabled: false,
     omitted: false,
     ...opts,
-    name
+    name,
   });
 }
 
@@ -101,7 +101,7 @@ function createAsset(entity, id, name, opts = {}) {
     ...opts,
     type: "Link",
     validations: [],
-    linkType: "Asset"
+    linkType: "Asset",
   });
 }
 
@@ -113,15 +113,15 @@ function createAuthor(migration) {
   const author = migration.createContentType("rendr_author", {
     name: "Rendr > Author",
     description: "Author used in pages or articles",
-    displayField: "name"
+    displayField: "name",
   });
 
   createSymbol(author, "name", "Name", {
-    required: true
+    required: true,
   });
   createSymbol(author, "job_title", "Job Title");
   createSymbol(author, "slug", "Slug", {
-    required: true
+    required: true,
   });
   createSymbol(author, "social_twitter", "Twitter Account");
   createSymbol(author, "social_facebook", "Facebook Account");
@@ -134,49 +134,49 @@ function createWebsite(migration) {
   const website = migration.createContentType("rendr_website", {
     name: "Rendr > Site",
     description: "Websites used by the platform",
-    displayField: "name"
+    displayField: "name",
   });
 
   createSymbol(website, "name", "Name", {
-    required: true
+    required: true,
   });
   createField(website, "domains", "Domains", {
     required: true,
     type: "Array",
     items: {
       type: "Symbol",
-      validations: []
-    }
+      validations: [],
+    },
   });
 
   createSymbol(website, "path", "Path", {
-    required: true
+    required: true,
   });
 
   createSymbol(website, "culture", "Culture");
   createSymbol(website, "country_code", "Country Code");
   createInteger(website, "order", "Order");
   createBoolean(website, "enabled", "Enabled", {
-    required: true
+    required: true,
   });
 }
 
 function createDefault(migration, code, opts) {
   const block = migration.createContentType(code, {
     ...opts,
-    displayField: "internal_title"
+    displayField: "internal_title",
   });
 
   createSymbol(block, "internal_title", "Internal Title", {
-    required: true
+    required: true,
   });
   createSymbol(block, "container", "Container", {
     required: true,
     validations: [
       {
-        in: getDefaultContainerNames()
-      }
-    ]
+        in: getDefaultContainerNames(),
+      },
+    ],
   });
   createInteger(block, "order", "Order");
 
@@ -185,49 +185,49 @@ function createDefault(migration, code, opts) {
 
 function createBasicBlocks(migration) {
   const blockText = createDefault(migration, "rendr_block_text", {
-    name: "Rendr > Block > Text"
+    name: "Rendr > Block > Text",
   });
   createSymbol(blockText, "title", "Title");
   createSymbol(blockText, "subtitle", "Sub-Title");
   createField(blockText, "contents", "Contents", {
-    type: "Text"
+    type: "Text",
   });
   createSymbol(blockText, "mode", "Mode", {
     required: false,
     validations: [
       {
-        in: ["jumbotron", "standard", "image", "quote"]
-      }
-    ]
+        in: ["jumbotron", "standard", "image", "quote"],
+      },
+    ],
   });
   createAsset(blockText, "image", "Image");
   createSymbol(blockText, "image_position", "Image Position", {
     required: false,
     validations: [
       {
-        in: ["left", "right"]
-      }
-    ]
+        in: ["left", "right"],
+      },
+    ],
   });
 
   const blockRawConfiguration = createDefault(
     migration,
     "rendr_block_raw_configuration",
     {
-      name: "Rendr > Block > Raw Configuration"
+      name: "Rendr > Block > Raw Configuration",
     }
   );
 
   createField(blockRawConfiguration, "configuration", "Configuration", {
-    type: "Object"
+    type: "Object",
   });
 
   const blockHeader = createDefault(migration, "rendr_block_header", {
-    name: "Rendr > Block > Header"
+    name: "Rendr > Block > Header",
   });
 
   const blockFooter = createDefault(migration, "rendr_block_footer", {
-    name: "Rendr > Block > Footer"
+    name: "Rendr > Block > Footer",
   });
 }
 
@@ -235,11 +235,11 @@ function createArticle(migration) {
   const article = migration.createContentType("rendr_article", {
     name: "Rendr > Article",
     description: "Article",
-    displayField: "title"
+    displayField: "title",
   });
 
   createSymbol(article, "title", "Page title", {
-    required: true
+    required: true,
   });
   createSymbol(article, "type", "Type");
   createText(article, "abstract", "Abstract");
@@ -247,7 +247,7 @@ function createArticle(migration) {
   createSymbol(article, "seo_keywords", "Seo Keywords");
 
   createSymbol(article, "slug", "Slug", {
-    required: true
+    required: true,
   });
 
   createField(article, "blocks", "Blocks", {
@@ -256,16 +256,16 @@ function createArticle(migration) {
       type: "Link",
       validations: [
         {
-          linkContentType: ["rendr_block_text"]
-        }
+          linkContentType: ["rendr_block_text"],
+        },
       ],
-      linkType: "Entry"
-    }
+      linkType: "Entry",
+    },
   });
 
   createField(article, "published_at", "Publication Date", {
     type: "Date",
-    required: true
+    required: true,
   });
 
   createField(article, "authors", "Authors", {
@@ -274,21 +274,21 @@ function createArticle(migration) {
       type: "Link",
       validations: [
         {
-          linkContentType: ["rendr_author"]
-        }
+          linkContentType: ["rendr_author"],
+        },
       ],
-      linkType: "Entry"
-    }
+      linkType: "Entry",
+    },
   });
 
   createField(article, "website", "Website", {
     type: "Link",
     validations: [
       {
-        linkContentType: ["rendr_website"]
-      }
+        linkContentType: ["rendr_website"],
+      },
     ],
-    linkType: "Entry"
+    linkType: "Entry",
   });
 
   createAsset(article, "image_list", "List image");
@@ -301,20 +301,20 @@ function createPage(migration) {
   const page = migration.createContentType("rendr_page", {
     name: "Rendr > Page",
     description: "Page with blocks",
-    displayField: "title"
+    displayField: "title",
   });
 
   createSymbol(page, "title", "Page title", {
-    required: true
+    required: true,
   });
   createSymbol(page, "seo_description", "Seo Description");
   createSymbol(page, "seo_keywords", "Seo Keywords");
   createSymbol(page, "extends", "Extends", {
     validations: [
       {
-        in: ["root"]
-      }
-    ]
+        in: ["root"],
+      },
+    ],
   });
 
   createSymbol(page, "path", "Path");
@@ -322,10 +322,10 @@ function createPage(migration) {
     type: "Link",
     validations: [
       {
-        linkContentType: ["rendr_website"]
-      }
+        linkContentType: ["rendr_website"],
+      },
     ],
-    linkType: "Entry"
+    linkType: "Entry",
   });
 
   createField(page, "blocks", "Blocks", {
@@ -338,32 +338,32 @@ function createPage(migration) {
             "rendr_block_text",
             "rendr_block_raw_configuration",
             "rendr_block_header",
-            "rendr_block_footer"
-          ]
-        }
+            "rendr_block_footer",
+          ],
+        },
       ],
-      linkType: "Entry"
-    }
+      linkType: "Entry",
+    },
   });
 
   createSymbol(page, "layout", "Layout", {
     required: true,
     validations: [
       {
-        in: ["default", "error"]
-      }
-    ]
+        in: ["default", "error"],
+      },
+    ],
   });
 
   createInteger(page, "ttl", "Time-To-Live");
 
   createField(page, "published_at", "Publication Date", {
     type: "Date",
-    required: true
+    required: true,
   });
 
   createField(page, "settings", "Settings", {
-    type: "Object"
+    type: "Object",
   });
 
   createSymbol(page, "code", "Code");
@@ -371,7 +371,7 @@ function createPage(migration) {
   return page;
 }
 
-module.exports = async function(
+module.exports = async function (
   migration,
   { makeRequest, spaceId, accessToken }
 ) {

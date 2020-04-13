@@ -3,7 +3,7 @@ import React from "react";
 import { Page } from "@ekino/rendr-core";
 import {
   TemplateRegistry,
-  ContainerRenderer
+  ContainerRenderer,
 } from "@ekino/rendr-template-react";
 
 // more element available on ReplaceComponentRendererArgs

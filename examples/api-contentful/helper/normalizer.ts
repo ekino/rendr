@@ -5,7 +5,7 @@ import {
   normalizePicture,
   emptyPicture,
   validEntry,
-  createBlockDefinition
+  createBlockDefinition,
 } from "@ekino/rendr-loader-contentful";
 
 import { BlockDefinition, normalizeBlockDefinition } from "@ekino/rendr-core";
@@ -16,14 +16,14 @@ import {
   ContentfulArticle,
   Article,
   ContentfulBlockText,
-  ContentfulBlockRawConfiguration
+  ContentfulBlockRawConfiguration,
 } from "./types";
 
 const emptyProfile = {
   enabled: false,
   id: "-",
   title: "No picture",
-  url: ""
+  url: "",
 };
 
 export function normalizeBlockText(
@@ -38,7 +38,7 @@ export function normalizeBlockText(
     image: entry.fields.image ? normalizers(entry.fields.image) : emptyPicture,
     image_position: entry.fields.image_position
       ? entry.fields.image_position
-      : "left"
+      : "left",
   });
 }
 
@@ -83,11 +83,11 @@ export function normalizeAuthor(
     social: {
       twitter: entry.fields.social_twitter,
       facebook: entry.fields.social_facebook,
-      linkedin: entry.fields.social_linkedin
+      linkedin: entry.fields.social_linkedin,
     },
     image: entry.fields.image
       ? normalizePicture(entry.fields.image)
-      : emptyProfile
+      : emptyProfile,
   };
 }
 
@@ -105,25 +105,27 @@ export function normalizeArticle(
         : emptyPicture,
       header: entry.fields.image_header
         ? normalizer(entry.fields.image_header)
-        : emptyPicture
+        : emptyPicture,
     },
     title: entry.fields.title ? entry.fields.title : "",
     authors: entry.fields.authors
       ? entry.fields.authors
-          .filter(entry => validEntry(entry))
-          .map(entry => normalizer(entry))
+          .filter((entry) => validEntry(entry))
+          .map((entry) => normalizer(entry))
       : [],
     blocks: entry.fields.blocks
       ? entry.fields.blocks
-          .filter(entry => validEntry(entry))
-          .map(entry => normalizer(entry))
+          .filter((entry) => validEntry(entry))
+          .map((entry) => normalizer(entry))
       : [],
     slug: entry.fields.slug ? entry.fields.slug : "",
     seo: {
       description: entry.fields.seo_description,
-      keywords: entry.fields.seo_keywords
+      keywords: entry.fields.seo_keywords,
     },
     published_at: entry.fields.published_at,
-    website: entry.fields.website ? normalizer(entry.fields.website) : undefined
+    website: entry.fields.website
+      ? normalizer(entry.fields.website)
+      : undefined,
   };
 }

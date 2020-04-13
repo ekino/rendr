@@ -6,7 +6,7 @@ import App from "next/app";
 export default class MyApp extends App {
   static async getInitialProps({
     Component,
-    ctx
+    ctx,
   }: {
     Component: any;
     ctx: any;

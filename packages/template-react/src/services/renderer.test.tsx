@@ -11,17 +11,17 @@ interface ArticleViewProps {
 }
 
 const registry = createBlockRegistry({
-  one: props => <div>One</div>,
+  one: (props) => <div>One</div>,
   "article.view": (props: ArticleViewProps & BlockRendererProps) => {
     const { blocks, blockRenderer } = props;
     let id = 0;
 
-    const blockComponents = blocks.map(block =>
+    const blockComponents = blocks.map((block) =>
       blockRenderer(block, `key_${id++}`)
     );
 
     return <div>Two{blockComponents}</div>;
-  }
+  },
 });
 
 const blockRenderer = createBlockRenderer(registry);
@@ -32,7 +32,7 @@ describe("Test renderer", () => {
       type: "one",
       settings: {},
       container: "body",
-      order: 1
+      order: 1,
     };
 
     const output = blockRenderer(block, "key_1");
@@ -51,18 +51,18 @@ describe("Test renderer", () => {
             type: "one",
             settings: {},
             container: "body",
-            order: 1
+            order: 1,
           },
           {
             type: "one",
             settings: {},
             container: "body",
-            order: 1
-          }
-        ]
+            order: 1,
+          },
+        ],
       },
       container: "body",
-      order: 1
+      order: 1,
     };
 
     const output = blockRenderer(block, "key_2");

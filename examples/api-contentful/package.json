@@ -2,7 +2,7 @@
   "name": "@ekino/rendr-demo-contentful-api",
   "version": "0.0.9",
   "engines": { 
-    "node": "10.x" 
+    "node": "12.x" 
   },
   "dependencies": {
     "@ekino/rendr-api": "latest",

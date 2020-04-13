@@ -9,11 +9,11 @@ describe("Contents loading from ", () => {
         expect(query).toEqual({
           content_type: "rendr_author",
           "fields.slug": "thomas-rabaix",
-          limit: 2
+          limit: 2,
         });
 
         return loadJson(`${__dirname}/__fixtures__/contents/authors.json`);
-      }
+      },
     });
 
     expect(await GetAuthor(client, "thomas-rabaix")).toMatchSnapshot();
@@ -25,13 +25,13 @@ describe("Contents loading from ", () => {
         expect(query).toEqual({
           content_type: "rendr_author",
           "fields.slug": "thomas-rabaix",
-          limit: 2
+          limit: 2,
         });
 
         return loadJson(
           `${__dirname}/__fixtures__/contents/duplicate_authors.json`
         );
-      }
+      },
     });
 
     try {
@@ -52,20 +52,20 @@ describe("Contents loading from ", () => {
           expect(query).toEqual({
             content_type: "rendr_website",
             limit: 100,
-            skip: 0
+            skip: 0,
           });
 
           return {
             items: [
               {
                 sys: {
-                  id: "632kl7enPots4PISSnD6DV"
+                  id: "632kl7enPots4PISSnD6DV",
                 },
                 fields: {
-                  domains: ["ekino.co.uk"]
-                }
-              }
-            ]
+                  domains: ["ekino.co.uk"],
+                },
+              },
+            ],
           };
         }
 
@@ -77,17 +77,17 @@ describe("Contents loading from ", () => {
             "fields.published_at[lte]": "fail to mock the date...",
             "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
             "fields.slug": "headless-cms-challenge",
-            limit: 2
+            limit: 2,
           });
 
           return loadJson(`${__dirname}/__fixtures__/contents/article.json`);
         }
-      }
+      },
     });
 
     expect(
       await GetArticle(client, "headless-cms-challenge", {
-        domain: "ekino.co.uk"
+        domain: "ekino.co.uk",
       })
     ).toMatchSnapshot();
   });

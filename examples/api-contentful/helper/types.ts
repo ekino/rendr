@@ -4,7 +4,7 @@ import {
   ContentfulAsset,
   ContentfulWebsite,
   Website,
-  Asset
+  Asset,
 } from "@ekino/rendr-loader-contentful";
 import { Entry } from "contentful";
 

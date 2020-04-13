@@ -1,6 +1,6 @@
 import {
   defaultContentfulClient,
-  contentfulNormalizer
+  contentfulNormalizer,
 } from "../helper/contentful";
 
 import { GetArticles } from "../helper/contents";
@@ -15,7 +15,7 @@ export const articles = async (
   const articles = await GetArticles(defaultContentfulClient(ctx), {
     domain: ctx.hostname,
     limit: 32,
-    page: "page" in ctx.query ? ctx.query.page : 1 // we can deal with the pagination like this.
+    page: "page" in ctx.query ? ctx.query.page : 1, // we can deal with the pagination like this.
   });
 
   definition.settings.blocks = [];
@@ -31,8 +31,8 @@ export const articles = async (
       order: 1,
       settings: {
         title: "Sorry :(",
-        contents: "No article for now, please come back soon!!!"
-      }
+        contents: "No article for now, please come back soon!!!",
+      },
     });
 
     return;
@@ -42,10 +42,10 @@ export const articles = async (
     container: "body",
     settings: {
       title: "Articles list",
-      contents: "Please find the articles"
+      contents: "Please find the articles",
     },
     order: 1,
-    type: "rendr.text"
+    type: "rendr.text",
   });
 
   articles.items.forEach((entry, i) => {
@@ -59,11 +59,11 @@ export const articles = async (
         contents: article.abstract,
         link: {
           title: article.title,
-          href: `/articles/${article.slug}`
-        }
+          href: `/articles/${article.slug}`,
+        },
       },
       order: i,
-      type: "rendr.text"
+      type: "rendr.text",
     });
   });
 

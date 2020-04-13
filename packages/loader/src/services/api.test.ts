@@ -15,7 +15,7 @@ describe("test API Loader", () => {
     // @ts-ignore
     req.headers = {
       accept: "text/html",
-      "accept-encoding": "gzip"
+      "accept-encoding": "gzip",
     };
 
     const rawData = JSON.stringify(createPage({}));
@@ -29,7 +29,7 @@ describe("test API Loader", () => {
     let cptCall = 0;
     const resp = {
       headers: {
-        "x-rendr-content-type": "rendr/document"
+        "x-rendr-content-type": "rendr/document",
       },
       data: new Readable({
         read(size) {
@@ -37,8 +37,8 @@ describe("test API Loader", () => {
           pos = pos + size;
           cptCall++;
           this.push(content.length ? content : null);
-        }
-      })
+        },
+      }),
     };
     // @ts-ignore
     axios.get.mockResolvedValue(resp);
@@ -51,7 +51,7 @@ describe("test API Loader", () => {
       req: req,
       res: res,
       isServerSide: true,
-      isClientSide: false
+      isClientSide: false,
     };
 
     // @ts-ignore
@@ -68,14 +68,14 @@ describe("test API Loader", () => {
     // @ts-ignore
     req.headers = {
       accept: "text/html",
-      "accept-encoding": "gzip"
+      "accept-encoding": "gzip",
     };
 
     let strPage = "the content to be streamed...";
     let pos = 0;
     const resp = {
       headers: {
-        "x-rendr-content-type": "rendr/octet-stream"
+        "x-rendr-content-type": "rendr/octet-stream",
       },
       data: new Readable({
         read(size) {
@@ -83,8 +83,8 @@ describe("test API Loader", () => {
           pos = pos + size;
 
           this.push(content.length ? content : null);
-        }
-      })
+        },
+      }),
     };
 
     // @ts-ignore
@@ -94,7 +94,7 @@ describe("test API Loader", () => {
     const res = new Writable({
       write(chunk) {
         data += chunk;
-      }
+      },
     });
 
     const ctx = {
@@ -104,7 +104,7 @@ describe("test API Loader", () => {
       req: req,
       res: res,
       isServerSide: true,
-      isClientSide: false
+      isClientSide: false,
     };
 
     // @ts-ignore

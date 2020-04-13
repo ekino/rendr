@@ -5,7 +5,7 @@ import {
   createTemplateRegistry,
   ComponentList,
   createBlockRenderer,
-  createContainerRenderer
+  createContainerRenderer,
 } from "@ekino/rendr-template-react";
 
 import { createGatsbyPage } from "./components/GatsbyPageWrapper";

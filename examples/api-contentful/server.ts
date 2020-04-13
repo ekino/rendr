@@ -19,7 +19,7 @@ const app = express();
 
 app.use(
   cors({
-    exposedHeaders: "X-Rendr-Content-Type"
+    exposedHeaders: "X-Rendr-Content-Type",
   })
 );
 

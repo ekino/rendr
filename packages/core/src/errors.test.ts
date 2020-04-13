@@ -2,29 +2,29 @@ import {
   NotFoundError,
   InternalServerError,
   NormalizationError,
-  RendrError
+  RendrError,
 } from "./errors";
 
 const errors = [
   {
     class: NotFoundError,
     message: "Not Found Error",
-    name: "NotFoundError"
+    name: "NotFoundError",
   },
   {
     class: InternalServerError,
     message: "Internal Server Error",
-    name: "InternalServerError"
+    name: "InternalServerError",
   },
   {
     class: NormalizationError,
     message: "Normalization Error",
-    name: "NormalizationError"
-  }
+    name: "NormalizationError",
+  },
 ];
 
 describe("test errors", () => {
-  errors.forEach(error => {
+  errors.forEach((error) => {
     it(`${error.message} > should return default message`, () => {
       const err = new error.class();
 

@@ -5,7 +5,7 @@ import { Page, createContext } from "@ekino/rendr-core";
 import { Loader } from "@ekino/rendr-loader";
 import {
   TemplateRegistry,
-  ContainerRenderer
+  ContainerRenderer,
 } from "@ekino/rendr-template-react";
 
 export interface DynamicPageProps {
@@ -36,7 +36,7 @@ export function createDynamicPage(
         page,
         query: ctx.query,
         pathname: ctx.pathname,
-        asPath: ctx.asPath
+        asPath: ctx.asPath,
       };
     }
 

@@ -11,7 +11,7 @@ services:
     environment:
       UNIX_UID: $UNIX_UID
       UNIX_GID: $UNIX_GID
-  
+
     ports:
       - 8080:8080
       - 443:443

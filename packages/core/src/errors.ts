@@ -6,27 +6,27 @@ function getErrorParameters(
 ): Partial<RendrError> {
   if (args.length === 0) {
     return {
-      message: defaultMessage
+      message: defaultMessage,
     };
   }
 
   if (args.length === 1 && typeof args[0] === "string") {
     return {
-      message: args[0]
+      message: args[0],
     };
   }
 
   if (args.length === 1 && typeof args[0] !== "string") {
     return {
       message: defaultMessage,
-      previousError: args[0]
+      previousError: args[0],
     };
   }
 
   if (args.length === 2) {
     return {
       message: args[0],
-      previousError: args[1]
+      previousError: args[1],
     };
   }
 
@@ -45,7 +45,7 @@ export class RendrError /* extends Error */ {
     Object.assign(this, {
       ...getErrorParameters("Rendr Error", args),
       stack: new Error().stack,
-      name: "RendrError"
+      name: "RendrError",
     });
   }
 }
@@ -59,7 +59,7 @@ export class NotFoundError extends RendrError {
     Object.assign(this, {
       ...getErrorParameters("Not Found Error", args),
       stack: new Error().stack,
-      name: "NotFoundError"
+      name: "NotFoundError",
     });
   }
 }
@@ -70,7 +70,7 @@ export class InternalServerError extends RendrError {
     Object.assign(this, {
       ...getErrorParameters("Internal Server Error", args),
       stack: new Error().stack,
-      name: "InternalServerError"
+      name: "InternalServerError",
     });
   }
 }
@@ -81,7 +81,7 @@ export class NormalizationError extends RendrError {
     Object.assign(this, {
       ...getErrorParameters("Normalization Error", args),
       stack: new Error().stack,
-      name: "NormalizationError"
+      name: "NormalizationError",
     });
   }
 }

@@ -11,12 +11,12 @@ function createContext(data: {}): RequestCtx {
     res: jest.fn(),
     pathname: "/",
     query: {},
-    asPath: "/"
+    asPath: "/",
   };
 
   return {
     ...ctx,
-    ...data
+    ...data,
   };
 }
 
@@ -32,7 +32,7 @@ const paths: InMemorySettings = {
   "/": (_ctx: RequestCtx, basePage: Page) => {
     basePage.statusCode = 418;
     return Promise.resolve(basePage);
-  }
+  },
 };
 
 describe("test inmemory code", () => {
@@ -46,7 +46,7 @@ describe("test inmemory code", () => {
     const checks = [
       { pathname: "/", exception: false, statusCode: 418 },
       { pathname: "/blog/hello-world", exception: false, statusCode: 419 },
-      { pathname: "/not-found", exception: true }
+      { pathname: "/not-found", exception: true },
     ];
 
     const loader = createInMemoryLoader(paths);

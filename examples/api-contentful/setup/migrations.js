@@ -4,13 +4,13 @@ const options = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,
   accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
   environmentId: process.env.CONTENTFUL_ENV || "master",
-  yes: true
+  yes: true,
 };
 
 async function run(name) {
   await runMigration({
     ...options,
-    ...{ filePath: `${__dirname}/migrations/${name}.js` }
+    ...{ filePath: `${__dirname}/migrations/${name}.js` },
   });
 }
 

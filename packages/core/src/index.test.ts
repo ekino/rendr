@@ -12,8 +12,8 @@ describe("test create page", () => {
     const page = createPage({
       head: {
         title: "My Custom Title",
-        meta: []
-      }
+        meta: [],
+      },
     });
 
     expect(page).toMatchSnapshot();
@@ -22,8 +22,8 @@ describe("test create page", () => {
   it("with cache", () => {
     const page = createPage({
       cache: {
-        ttl: 999
-      }
+        ttl: 999,
+      },
     });
 
     expect(page).toMatchSnapshot();
@@ -35,17 +35,17 @@ describe("test create page", () => {
         {
           container: "main",
           settings: {
-            foo: "bar"
+            foo: "bar",
           },
-          type: "my.container"
+          type: "my.container",
         },
         {
           settings: {
-            non: "valid block as missing the type attribute"
-          }
+            non: "valid block as missing the type attribute",
+          },
         },
-        1
-      ]
+        1,
+      ],
     });
 
     expect(page).toMatchSnapshot();
@@ -67,21 +67,21 @@ describe("test mergePages", () => {
         container: "header",
         order: 1,
         settings: {},
-        type: "type-parent-1"
+        type: "type-parent-1",
       },
       {
         container: "header",
         order: 1,
         settings: {},
-        type: "type-parent-2"
-      }
+        type: "type-parent-2",
+      },
     ];
 
     const page = new Page();
     page.id = "the child page";
     page.head.defaultTitle = "";
     page.head.htmlAttributes = {
-      foo: "bar"
+      foo: "bar",
     };
     page.head.meta = [{ property: "value" }];
     page.cache.ttl = 100;
@@ -93,14 +93,14 @@ describe("test mergePages", () => {
         container: "header",
         order: 1,
         settings: {},
-        type: "type-child-1"
+        type: "type-child-1",
       },
       {
         container: "header",
         order: 1,
         settings: {},
-        type: "type-child-2"
-      }
+        type: "type-child-2",
+      },
     ];
 
     const p = mergePages([parent, page]);

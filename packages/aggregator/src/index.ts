@@ -8,7 +8,7 @@ export function createAggregatorLoader(handlers: HandlerList): Loader {
 
   return async (ctx, page, next) => {
     page.blocks = await Promise.all(
-      page.blocks.map(async block => {
+      page.blocks.map(async (block) => {
         const handler = handlerRegistry(block.type);
 
         const result = await handler(block, ctx, page);

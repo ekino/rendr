@@ -14,31 +14,32 @@ async function* generator() {
 
   yield ref(`${baseUrl}/`, {
     priority: 1,
-    lastmod: date
+    lastmod: date,
   });
+
   yield ref(`${baseUrl}/about`, {
-    lastmod: date
+    lastmod: date,
   });
   yield ref(`${baseUrl}/humans.txt`, {
-    lastmod: date
+    lastmod: date,
   });
 
   yield ref(`${baseUrl}/post`, {
     priority: 0.5,
-    lastmod: date
+    lastmod: date,
   });
 
   for (let x = 0; x < 2000; x++) {
     if (x != 0 && x % 32 == 0) {
       yield ref(`${baseUrl}/post/page/${x / 32}`, {
         priority: 0.5,
-        lastmod: date
+        lastmod: date,
       });
     }
 
     yield ref(`${baseUrl}/post/slug-${x}`, {
       priority: 0.5,
-      lastmod: date
+      lastmod: date,
     });
   }
 }

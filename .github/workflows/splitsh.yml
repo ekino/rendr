@@ -1,6 +1,6 @@
-name: Split(sh!) 
+name: Split(sh!)
 
-on: 
+on:
   push:
     branches: [master, develop]
 
@@ -31,4 +31,3 @@ jobs:
           remote: git@git.drupal.org:project/ekino_rendr.git
           private_key: ${{ secrets.DRUPAL_GIT_PRIVATE_KEY }}
           remote_branch: 8.x-1.x-dev
-  

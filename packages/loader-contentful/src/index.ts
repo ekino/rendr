@@ -2,14 +2,14 @@ import { Loader } from "@ekino/rendr-loader";
 import {
   mergePages,
   NotFoundError,
-  InternalServerError
+  InternalServerError,
 } from "@ekino/rendr-core";
 
 import {
   EntryNormalizer,
   ClientFactory,
   ContentfulPage,
-  Website
+  Website,
 } from "./types";
 import { GetWebsite } from "./contents";
 export * from "./normalizer";
@@ -21,7 +21,7 @@ export function createContentfulLoader(
   clientFactory: ClientFactory,
   normalizer: EntryNormalizer
 ): Loader {
-  return async function(ctx, page, next) {
+  return async function (ctx, page, next) {
     // create the query
     const client = clientFactory(ctx);
 
@@ -42,7 +42,7 @@ export function createContentfulLoader(
       limit: 1,
       content_type: "rendr_page",
       include: 10,
-      "fields.website.sys.id": site.id
+      "fields.website.sys.id": site.id,
     };
 
     const pages = await client.getEntries<ContentfulPage>(queryMainPage);
@@ -62,7 +62,7 @@ export function createContentfulLoader(
       limit: 1,
       content_type: "rendr_page",
       include: 10,
-      "fields.website.sys.id": site.id
+      "fields.website.sys.id": site.id,
     });
 
     if (parentPage.items.length !== 1) {
@@ -73,7 +73,7 @@ export function createContentfulLoader(
 
     return mergePages([
       normalizer(parentPage.items[0]),
-      normalizer(pages.items[0])
+      normalizer(pages.items[0]),
     ]);
   };
 }

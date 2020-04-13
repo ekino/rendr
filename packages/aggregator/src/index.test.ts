@@ -10,12 +10,12 @@ function createContext(data: {} = {}): RequestCtx {
     res: jest.fn(),
     pathname: "/",
     query: {},
-    params: {}
+    params: {},
   };
 
   return {
     ...ctx,
-    ...data
+    ...data,
   };
 }
 
@@ -34,11 +34,11 @@ describe("test inmemory code", () => {
   it("test createAggregator - with handlers", async () => {
     const ctx = createContext();
     const aggregator = createAggregatorLoader({
-      handler: block => {
+      handler: (block) => {
         block.settings.test = "Salut";
 
         return Promise.resolve(block);
-      }
+      },
     });
 
     let page = new Page();
@@ -47,7 +47,7 @@ describe("test inmemory code", () => {
       order: 0,
       container: "body",
       type: "handler",
-      settings: {}
+      settings: {},
     });
 
     await aggregator(ctx, page, () => {});

@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function RendrText({
   contents,
   rawHtml,
-  link
+  link,
 }: {
   contents: string;
   rawHtml: string;

@@ -13,14 +13,14 @@ const ctx: RequestCtx = {
   // @ts-ignore
   res: {
     statusCode: 200,
-    end: jest.fn()
+    end: jest.fn(),
   },
   isServerSide: true,
   isClientSide: false,
   pathname: "/",
   query: {},
   asPath: "/",
-  settings: {}
+  settings: {},
 };
 
 const loader1: Loader = (ctx, page, next) => {
@@ -28,7 +28,7 @@ const loader1: Loader = (ctx, page, next) => {
     type: "block1",
     order: 0,
     settings: {},
-    container: null
+    container: null,
   });
   return next();
 };
@@ -38,7 +38,7 @@ const loader2: Loader = (ctx, page, next) => {
     type: "block2",
     order: 0,
     settings: {},
-    container: null
+    container: null,
   });
   return next();
 };
@@ -107,7 +107,7 @@ describe("test Chained Loader", () => {
     const loader = createChainedLoader([
       loader1,
       referenceChangeLoader,
-      loader2
+      loader2,
     ]);
     const resultPage = await loader(ctx, mainPage, () => {});
 
@@ -124,7 +124,7 @@ describe("test Chained Loader", () => {
     const loader = createChainedLoader([
       resultPageNullifierLoader,
       loader1,
-      loader2
+      loader2,
     ]);
     const resultPage = await loader(ctx, mainPage, () => {});
 
@@ -152,7 +152,7 @@ describe("test errorBoundaryLoader", () => {
       errorBoundaryLoader,
       (context, page, next) => {
         throw new Error("An error");
-      }
+      },
     ]);
     const resultPage = await loader(ctx, mainPage, () => {});
     // @ts-ignore
@@ -167,7 +167,7 @@ describe("test errorBoundaryLoader", () => {
       errorBoundaryLoader,
       (context, page, next) => {
         throw new Error("An error");
-      }
+      },
     ]);
     ctx.isServerSide = false;
     ctx.isClientSide = true;
@@ -187,7 +187,7 @@ describe("test errorBoundaryLoader", () => {
       errorBoundaryLoader,
       (context, page, next) => {
         throw new Error("An error");
-      }
+      },
     ]);
     const oldEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = "production";
@@ -205,7 +205,7 @@ describe("test errorBoundaryLoader", () => {
       (context, page, next) => {
         context.res.headersSent = true;
         throw new Error("An error");
-      }
+      },
     ]);
 
     const resultPage = await loader(ctx, mainPage, () => {});

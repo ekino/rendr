@@ -17,7 +17,7 @@ export function isArray(data: any): boolean {
 
 export function normalizeCache(data: any): Cache {
   const cache: Cache = {
-    ttl: 0
+    ttl: 0,
   };
 
   if (!isObject(data)) {
@@ -36,7 +36,7 @@ export function normalizeHead(data: any): Head {
     title: "-",
     link: "",
     htmlAttributes: {},
-    meta: []
+    meta: [],
   };
 
   if (!isObject(data)) {
@@ -77,7 +77,7 @@ export function normalizeBlockDefinitions(data: any[]): BlockDefinition[] {
     return blocks;
   }
 
-  data.map(b => {
+  data.map((b) => {
     const block = normalizeBlockDefinition(b);
 
     if (!block) {
@@ -104,7 +104,7 @@ export function normalizeBlockDefinition(data: any): BlockDefinition | void {
     order: "order" in data ? data.order : 0,
     settings:
       "settings" in data && isObject(data.settings) ? data.settings : {},
-    type: data.type
+    type: data.type,
   };
 }
 
@@ -162,7 +162,7 @@ export function createContext(
     req: isServerSide ? req : null,
     // @ts-ignore
     res: isServerSide ? res : null,
-    settings: {}
+    settings: {},
   };
 
   return ctx;
@@ -172,7 +172,7 @@ export function createContext(
 export function mergePages(pages: Page[]): Page {
   const page = new Page();
 
-  pages.forEach(p => {
+  pages.forEach((p) => {
     page.cache.ttl = p.cache.ttl;
     page.head = {
       titleTemplate:
@@ -190,7 +190,7 @@ export function mergePages(pages: Page[]): Page {
           ? p.head.htmlAttributes
           : page.head.htmlAttributes,
       // for meta, we append from parent
-      meta: [...page.head.meta, ...p.head.meta]
+      meta: [...page.head.meta, ...p.head.meta],
     };
     page.path = p.path;
     page.template = p.template.length > 0 ? p.template : page.template;

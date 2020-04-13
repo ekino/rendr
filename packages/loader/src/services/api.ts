@@ -10,7 +10,7 @@ const headersToTransfers = [
   "Content-Range",
   "Content-Length",
   "Accept-Ranges",
-  "Date"
+  "Date",
 ];
 
 // The loader is used to load the Page definition from an API
@@ -22,7 +22,7 @@ export function createApiLoader(baseUrl: string): Loader {
     const url = `${baseUrl}${ctx.asPath}`;
 
     const headers: any = {
-      "X-User-Agent": "ekino/rendr"
+      "X-User-Agent": "ekino/rendr",
     };
 
     let responseType: ResponseType = "json";
@@ -41,7 +41,7 @@ export function createApiLoader(baseUrl: string): Loader {
 
     const response = await Axios.get(url, {
       responseType,
-      headers
+      headers,
     });
 
     if (!("x-rendr-content-type" in response.headers)) {
@@ -77,7 +77,7 @@ export function createApiLoader(baseUrl: string): Loader {
       if (response.headers["x-rendr-content-type"] !== "rendr/document") {
         ctx.res.statusCode = response.status;
 
-        headersToTransfers.forEach(n => {
+        headersToTransfers.forEach((n) => {
           if (n.toLowerCase() in response.headers) {
             ctx.res.setHeader(n, response.headers[n.toLowerCase()]);
           }
@@ -124,7 +124,7 @@ function pipePageToClient(source: Readable): Promise<Page> {
       data += chunk;
 
       callback();
-    }
+    },
   });
 
   return pipe(source, dest).then(() => {

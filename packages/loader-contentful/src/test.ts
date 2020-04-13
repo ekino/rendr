@@ -13,20 +13,20 @@ export function createDummyEntry<T>(data: T): Entry<T> {
         sys: {
           type: "Link",
           linkType: "ContentType",
-          id: "DummyEntry"
-        }
+          id: "DummyEntry",
+        },
       },
       space: {
         sys: {
-          type: 'Link',
-          linkType: 'Space',
-          id: "DummySpace"
-        }
-      }
+          type: "Link",
+          linkType: "Space",
+          id: "DummySpace",
+        },
+      },
     },
     fields: data,
     toPlainObject: () => ({}),
-    update: () => Promise.resolve(this)
+    update: () => Promise.resolve(this),
   };
 }
 
@@ -68,6 +68,6 @@ export function getMockClient(
     sync: async (query: any) => {
       throw new Error("The method should not be called");
     },
-    ...methods
+    ...methods,
   };
 }

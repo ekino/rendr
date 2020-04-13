@@ -21,7 +21,7 @@ export function createContainerRenderer(
     return (
       <>
         {blocks
-          .filter(block => name === block.container)
+          .filter((block) => name === block.container)
           .map((block, i) => {
             return renderBlock(block, `k_${i}`);
           })}

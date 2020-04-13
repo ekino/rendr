@@ -12,7 +12,7 @@ export function createBlockRegistry(blocks: ComponentList): BlockRegistry {
     if (code in blocks) {
       return {
         component: blocks[code],
-        settings
+        settings,
       };
     }
 
@@ -20,8 +20,8 @@ export function createBlockRegistry(blocks: ComponentList): BlockRegistry {
       component: blocks["default"],
       settings: {
         name: code,
-        settings
-      }
+        settings,
+      },
     };
   };
 }
@@ -33,7 +33,7 @@ export function createTemplateRegistry(
     templates["default"] = DefaultTemplate;
   }
 
-  return code => {
+  return (code) => {
     if (code in templates) {
       return templates[code];
     }

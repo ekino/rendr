@@ -8,13 +8,13 @@ import { Website, ContentfulWebsite, ContentfulPage } from "./types";
 let defaultOptions = {
   status: 1,
   limit: 100,
-  page: 1
+  page: 1,
 };
 
 let defaultArchiveOptions = {
   status: 1,
   limit: 32,
-  page: 1
+  page: 1,
 };
 
 export async function GetWebsites(
@@ -26,11 +26,11 @@ export async function GetWebsites(
   const query = {
     limit: opts.limit,
     skip: (opts.page - 1) * opts.limit,
-    content_type: "rendr_website"
+    content_type: "rendr_website",
   };
 
   return (await client.getEntries<ContentfulWebsite>(query)).items
-    .filter(item => validEntry(item))
+    .filter((item) => validEntry(item))
     .sort((a, b) => {
       return a.fields.order === b.fields.order
         ? 0
@@ -53,7 +53,7 @@ export async function GetWebsite(
 
   const sites = await GetWebsites(client, { ...options });
 
-  const result = sites.find(site => {
+  const result = sites.find((site) => {
     if (!site.fields.domains) {
       return false;
     }
@@ -85,7 +85,7 @@ export async function GetPages(
     limit: opts.limit,
     skip: (opts.page - 1) * opts.limit,
     content_type: "rendr_page",
-    "fields.website.sys.id": site.sys.id
+    "fields.website.sys.id": site.sys.id,
   };
 
   return await client.getEntries<ContentfulPage>(query);
@@ -101,12 +101,12 @@ export async function GetPage(
     limit: 1,
     content_type: "rendr_page",
     "fields.path": path,
-    "fields.website.sys.id": website.id
+    "fields.website.sys.id": website.id,
   };
 
   const result = (
     await client.getEntries<ContentfulPage>(query)
-  ).items.filter(item => validEntry(item));
+  ).items.filter((item) => validEntry(item));
 
   if (result.length === 0) {
     throw new NotFoundError(

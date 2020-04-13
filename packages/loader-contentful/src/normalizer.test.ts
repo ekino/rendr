@@ -35,23 +35,23 @@ describe("test fix url", () => {
         source:
           "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpg",
         expected:
-          "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpg?fm=jpg"
+          "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpg?fm=jpg",
       },
       {
         source:
           "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.png hello //images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpeg",
         expected:
-          "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.png?fm=png hello //images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpeg?fm=jpg"
+          "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.png?fm=png hello //images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpeg?fm=jpg",
       },
       {
         source:
           '<a href="//images.contentful.com/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png"><img alt="Figure 3. Screenshot illustrating the way to run a jupyter notebook cell." src="//images.contentful.com/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png"></a>',
         expected:
-          '<a href="//images.ctfassets.net/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png?fm=png"><img alt="Figure 3. Screenshot illustrating the way to run a jupyter notebook cell." src="//images.ctfassets.net/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png?fm=png"></a>'
-      }
+          '<a href="//images.ctfassets.net/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png?fm=png"><img alt="Figure 3. Screenshot illustrating the way to run a jupyter notebook cell." src="//images.ctfassets.net/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png?fm=png"></a>',
+      },
     ];
 
-    contents.forEach(v => {
+    contents.forEach((v) => {
       expect(fixImageUrl(v.source)).toEqual(v.expected);
     });
   });
@@ -94,8 +94,8 @@ describe("test normalizer", () => {
       name: "2CV",
       data: "1",
       wheel: createDummyEntry<ContentfulWeel>({
-        info: ""
-      })
+        info: "",
+      }),
     });
 
     const result = normalizer(entry);
@@ -110,7 +110,7 @@ describe("test normalizer", () => {
           speed: entry.fields.speed,
           name: entry.fields.name,
           data: parseInt(entry.fields.data, 10),
-          wheel: normalizer(entry.fields.wheel)
+          wheel: normalizer(entry.fields.wheel),
         };
       },
       wheel: (entry: Entry<ContentfulWeel>) => {
@@ -118,9 +118,9 @@ describe("test normalizer", () => {
 
         return {
           brand: split[0],
-          size: parseInt(split[1], 10)
+          size: parseInt(split[1], 10),
         };
-      }
+      },
     };
     const normalizer = createNormalizer(normalizers);
 
@@ -129,8 +129,8 @@ describe("test normalizer", () => {
       name: "2CV",
       data: "1",
       wheel: createDummyEntry<ContentfulWeel>({
-        info: "michelin,17"
-      })
+        info: "michelin,17",
+      }),
     });
     entry.sys.contentType.sys.id = "car"; // so the normalizer can catch the value
     entry.fields.wheel.sys.contentType.sys.id = "wheel";
@@ -144,10 +144,10 @@ describe("test normalizer", () => {
     "rendr_page",
     "rendr_page_missing_field",
     "rendr_website",
-    "asset"
+    "asset",
   ];
 
-  files.forEach(file => {
+  files.forEach((file) => {
     it(`test ${file}.json`, () => {
       const normalizer = createNormalizer({});
       const entry = loadJson(

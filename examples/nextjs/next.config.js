@@ -8,7 +8,7 @@ const nextConfig = {
     // number of pages that should be kept simultaneously without being disposed
     pagesBufferLength: 2,
     // optionally configure a port for the onDemandEntries WebSocket, not needed by default
-    websocketPort: 7002
+    websocketPort: 7002,
     // optionally configure a proxy path for the onDemandEntries WebSocket, not need by default
     // websocketProxyPath: '/hmr',
     // optionally configure a proxy port for the onDemandEntries WebSocket, not need by default
@@ -17,7 +17,7 @@ const nextConfig = {
   pageExtensions: ["jsx", "js", "ts", "tsx"],
   webpack(config, { buildId, dev, isServer, defaultLoaders }) {
     return config;
-  }
+  },
 };
 
 module.exports = withCss(nextConfig);

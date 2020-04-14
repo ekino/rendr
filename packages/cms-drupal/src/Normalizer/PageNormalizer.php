@@ -42,11 +42,14 @@ class PageNormalizer extends ContentEntityNormalizer
             return \preg_match(Template::CONTAINER_KEY_PATTERN, $key);
         }, ARRAY_FILTER_USE_KEY);
         $blocks = [];
+        $blockOrder = 0;
 
         foreach ($containers as $key => $container) {
             \preg_match(Template::CONTAINER_KEY_PATTERN, $key, $matches);
-            $blocks = \array_merge($blocks, \array_map(static function ($block) use ($matches) {
+            $blocks = \array_merge($blocks, \array_map(static function ($block) use ($matches, &$blockOrder) {
                 $block['container'] = $matches[1];
+                $block['order'] = $blockOrder;
+                $blockOrder++;
 
                 return $block;
             }, $container));

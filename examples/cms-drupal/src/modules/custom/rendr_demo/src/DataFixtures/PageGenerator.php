@@ -50,7 +50,7 @@ final class PageGenerator implements Generator
                 'type' => 'ekino_rendr',
                 'field_rendr_title' => 'Ekino Rendr',
                 'field_rendr_display' => 'standard',
-                'field_rendr_text' => '<p>There are many challenges when doing Server Side Rendering with React (or any other similar stacks), it is not only about setting up a state management, or select the best CSS framework. The first challenge is on the logical architecture level, where do we put business logic, how can we do data aggregation, how can we do http caching with user\'s data, etc ... The second challenge, is how can we add flexibility to the end user to administrate the page layouts or templates (and not only contents).</p>',
+                'field_rendr_description' => '<p>There are many challenges when doing Server Side Rendering with React (or any other similar stacks), it is not only about setting up a state management, or select the best CSS framework. The first challenge is on the logical architecture level, where do we put business logic, how can we do data aggregation, how can we do http caching with user\'s data, etc ... The second challenge, is how can we add flexibility to the end user to administrate the page layouts or templates (and not only contents).</p>',
                 'field_rendr_image' => [
                     'target_id' => $image_callback(__DIR__.'/assets/benjamin-voros-phIFdC6lA4E-unsplash.jpg'),
                     'alt' => 'mountain',
@@ -59,7 +59,7 @@ final class PageGenerator implements Generator
             Paragraph::create([
                 'type' => 'ekino_rendr',
                 'field_rendr_title' => 'When do you need this kind of solution?',
-                'field_rendr_text' => '<ul>
+                'field_rendr_description' => '<ul>
 <li>You have internal data sources (microservices or legacy system)</li>
 <li>You have a CMS but don\'t want to add custom codes or don\'t want to expose it to the world</li>
 <li>Your CMS cannot do the aggregation from different data sources</li>

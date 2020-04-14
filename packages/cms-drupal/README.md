@@ -14,5 +14,9 @@ Please see our [CONTRIBUTING.md](https://github.com/ekino/rendr/CONTRIBUTING.md)
 
 - Thomas Rabaix ([@th0masr](https://twitter.com/th0masr)) – [Ekino](https://ekino.com)
 
+
+## Creating new Templates
+Please refer to this [doc](./doc/templates.md)
+
 ## Exposing your entities
 Please refer to this [doc](./doc/serialisation.md)

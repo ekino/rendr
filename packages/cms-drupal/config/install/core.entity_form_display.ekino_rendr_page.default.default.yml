@@ -1,0 +1,107 @@
+uuid: f381c1b5-ec9d-4b41-b553-a937c900256c
+langcode: en
+status: true
+dependencies:
+  config:
+    - ekino_rendr.ekino_rendr_template.default
+    - field.field.ekino_rendr_page.default.field_rendr_body_container
+    - field.field.ekino_rendr_page.default.field_rendr_footer_container
+    - field.field.ekino_rendr_page.default.field_rendr_header_container
+  module:
+    - paragraphs
+id: ekino_rendr_page.default.default
+targetEntityType: ekino_rendr_page
+bundle: default
+mode: default
+content:
+  channels:
+    type: entity_reference_autocomplete
+    region: content
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_rendr_body_container:
+    type: paragraphs
+    weight: 3
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ekino_rendr
+      features:
+        duplicate: duplicate
+        collapse_edit_all: collapse_edit_all
+        add_above: '0'
+    third_party_settings: {  }
+  field_rendr_footer_container:
+    type: paragraphs
+    weight: 4
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ekino_rendr
+      features:
+        duplicate: duplicate
+        collapse_edit_all: collapse_edit_all
+        add_above: '0'
+    third_party_settings: {  }
+  field_rendr_header_container:
+    type: paragraphs
+    weight: 2
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ekino_rendr
+      features:
+        duplicate: duplicate
+        collapse_edit_all: collapse_edit_all
+        add_above: '0'
+    third_party_settings: {  }
+  path:
+    type: string_textfield
+    region: content
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  published:
+    type: boolean_checkbox
+    region: content
+    weight: 6
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    region: content
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

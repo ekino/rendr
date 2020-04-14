@@ -1,9 +1,0 @@
-id: "ekino_rendr_raw_html"
-dependencies:
-    enforced:
-        module:
-            - "ekino_rendr"
-label: 'ekino rendr - Raw HTML'
-icon_uuid: null
-description: ""
-behavior_plugins: {  }

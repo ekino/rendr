@@ -30,6 +30,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   },
  *   handlers={
  *      "form"={
+ *          "default"="Drupal\Core\Entity\ContentEntityForm",
  *          "add"="Drupal\ekino_rendr\Form\UpsertPageForm",
  *          "edit"="Drupal\ekino_rendr\Form\UpsertPageForm"
  *      },
@@ -45,6 +46,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   ),
  *   label_singular=@Translation("page"),
  *   label_plural=@Translation("pages"),
+ *   field_ui_base_route="entity.ekino_rendr_template.edit_form",
  *   links={
  *      "add-form"="/admin/content/ekino_rendr_page/add/{ekino_rendr_template}",
  *      "add-page"="/admin/content/ekino_rendr_page/add",
@@ -96,16 +98,6 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
                 ->setRevisionable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
-                ])
-                ->setDisplayConfigurable('form', true),
-            'content' => BaseFieldDefinition::create('entity_reference_revisions')
-                ->setLabel(new TranslatableMarkup('Content'))
-                ->setRequired(true)
-                ->setRevisionable(true)
-                ->setSetting('target_type', 'paragraph')
-                ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-                ->setDisplayOptions('form', [
-                    'type' => 'paragraphs',
                 ])
                 ->setDisplayConfigurable('form', true),
             'channels' => BaseFieldDefinition::create('entity_reference')

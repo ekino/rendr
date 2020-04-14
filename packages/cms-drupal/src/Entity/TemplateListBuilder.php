@@ -9,7 +9,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\ekino_rendr\Model\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class TemplateListBuilder extends ConfigEntityListBuilder
@@ -44,7 +43,6 @@ final class TemplateListBuilder extends ConfigEntityListBuilder
         return [
             'id' => $this->t('Machine name'),
             'label' => $this->t('Label'),
-            'containers' => $this->t('Containers'),
         ] + parent::buildHeader();
     }
 
@@ -58,14 +56,6 @@ final class TemplateListBuilder extends ConfigEntityListBuilder
         return [
             'id' => $entity->id(),
             'label' => $entity->label(),
-            'containers' => [
-                'data' => [
-                    '#theme' => 'item_list',
-                    '#items' => \array_map(static function (Container $container): string {
-                        return $container->getLabel();
-                    }, $entity->getContainers()),
-                ],
-            ],
         ] + parent::buildRow($entity);
     }
 }

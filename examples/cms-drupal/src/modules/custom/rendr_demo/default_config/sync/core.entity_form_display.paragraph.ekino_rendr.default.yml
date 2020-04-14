@@ -3,12 +3,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.ekino_rendr.field_rendr_container
-    - field.field.paragraph.ekino_rendr.field_rendr_display
+    - field.field.paragraph.ekino_rendr.field_rendr_description
     - field.field.paragraph.ekino_rendr.field_rendr_image
-    - field.field.paragraph.ekino_rendr.field_rendr_image_position
-    - field.field.paragraph.ekino_rendr.field_rendr_subtitle
-    - field.field.paragraph.ekino_rendr.field_rendr_text
     - field.field.paragraph.ekino_rendr.field_rendr_title
     - image.style.thumbnail
     - paragraphs.paragraphs_type.ekino_rendr
@@ -20,49 +16,23 @@ targetEntityType: paragraph
 bundle: ekino_rendr
 mode: default
 content:
-  field_rendr_container:
-    weight: 6
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_rendr_display:
-    weight: 5
+  field_rendr_description:
+    weight: 1
     settings:
-      size: 60
+      rows: 5
       placeholder: ''
+      summary_rows: 2
+      show_summary: false
     third_party_settings: {  }
-    type: string_textfield
+    type: text_textarea_with_summary
     region: content
   field_rendr_image:
-    weight: 3
+    weight: 2
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
-    region: content
-  field_rendr_image_position:
-    weight: 4
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_rendr_subtitle:
-    weight: 1
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textfield
-    region: content
-  field_rendr_text:
-    weight: 2
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
     region: content
   field_rendr_title:
     weight: 0

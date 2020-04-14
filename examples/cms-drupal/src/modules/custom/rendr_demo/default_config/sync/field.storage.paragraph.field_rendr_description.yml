@@ -1,16 +1,15 @@
-uuid: df3fbd59-eb7d-4814-b5b0-cb8ce8e799b4
+uuid: cbbd8b80-c270-42ea-9c9b-37270140d91d
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
     - text
-id: paragraph.field_rendr_subtitle
-field_name: field_rendr_subtitle
+id: paragraph.field_rendr_description
+field_name: field_rendr_description
 entity_type: paragraph
-type: text
-settings:
-  max_length: 255
+type: text_with_summary
+settings: {  }
 module: text
 locked: false
 cardinality: 1

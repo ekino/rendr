@@ -1,0 +1,29 @@
+uuid: c2ef93a2-a572-4025-8867-493916cc8368
+langcode: en
+status: true
+dependencies:
+  config:
+    - ekino_rendr.ekino_rendr_template.default
+    - field.storage.ekino_rendr_page.field_rendr_footer_container
+  module:
+    - entity_reference_revisions
+id: ekino_rendr_page.default.field_rendr_footer_container
+field_name: field_rendr_footer_container
+entity_type: ekino_rendr_page
+bundle: default
+label: 'Footer Container'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles: null
+    target_bundles_drag_drop:
+      ekino_rendr:
+        weight: 3
+        enabled: false
+field_type: entity_reference_revisions

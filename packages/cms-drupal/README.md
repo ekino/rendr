@@ -1,7 +1,7 @@
 ---
 <p align="center">
 <strong>
-The package is part of the `@ekino/rendr` project. Please visit <a aria-label=rendr learn" href="https://github.com/ekino/rendr">https://github.com/ekino/rendr</a> to get started with rendr.
+The package is part of the `@ekino/rendr` project. Please visit <a aria-label="rendr learn" href="https://github.com/ekino/rendr">https://github.com/ekino/rendr</a> to get started with rendr.
 </strong>
 </p>
 ---

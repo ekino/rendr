@@ -45,12 +45,15 @@ class ChannelResolver implements ArgumentValueResolverInterface
             $locale = isset($parsedUrl['path']) && '/' !== $parsedUrl['path'] ? \substr($parsedUrl['path'], 1) : null;
         }
 
-        $channels = $this->entityTypeManager->getStorage('ekino_rendr_channel')->loadByProperties(
-            [
-                'domain' => $host,
-                'locale' => $locale,
-            ]
-        );
+        // @TODO raise an issue
+        // There is an issue where loadByProperties would return no result if 2 keys are passed at the same time
+        $channels = $this->entityTypeManager->getStorage('ekino_rendr_channel')->loadByProperties([
+            'domain' => $host,
+//            'locale' => $locale,
+        ]);
+        $channels = \array_filter($channels, function ($channel) use ($locale) {
+            return $channel->get('locale')->value === $locale;
+        });
 
         if (0 === \count($channels)) {
             yield null;

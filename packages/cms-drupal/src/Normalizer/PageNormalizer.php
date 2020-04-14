@@ -49,7 +49,7 @@ class PageNormalizer extends ContentEntityNormalizer
             $blocks = \array_merge($blocks, \array_map(static function ($block) use ($matches, &$blockOrder) {
                 $block['container'] = $matches[1];
                 $block['order'] = $blockOrder;
-                $blockOrder++;
+                ++$blockOrder;
 
                 return $block;
             }, $container));

@@ -94,7 +94,7 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
                 ->setDisplayConfigurable('form', true),
             'path' => BaseFieldDefinition::create('string')
                 ->setLabel(new TranslatableMarkup('Path'))
-                ->setRequired(true)
+                ->setRequired(false)
                 ->setRevisionable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
@@ -103,13 +103,30 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
             'channels' => BaseFieldDefinition::create('entity_reference')
                 ->setLabel(new TranslatableMarkup('Channels'))
                 ->setRequired(true)
-                ->setRevisionable(false)
+                ->setRevisionable(true)
                 ->setSetting('target_type', 'ekino_rendr_channel')
                 ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
                 ->setDisplayOptions('form', [
                     'type' => 'entity_reference_autocomplete',
                 ])
                 ->setDisplayConfigurable('form', true),
+            'parent_page' => BaseFieldDefinition::create('entity_reference')
+                ->setLabel(new TranslatableMarkup('Parent Page'))
+                ->setRequired(false)
+                ->setRevisionable(true)
+                ->setSetting('target_type', 'ekino_rendr_page')
+                ->setCardinality(1)
+                ->setDisplayOptions('form', [
+                    'type' => 'entity_reference_autocomplete',
+                ])
+                ->setDisplayConfigurable('form', true),
+            'container_inheritance' => BaseFieldDefinition::create('string')
+                ->setLabel(new TranslatableMarkup('Container inheritance'))
+                ->setRequired(false)
+                ->setRevisionable(true)
+                ->setDisplayOptions('form', [
+                    'type' => 'hidden',
+                ]),
             'changed' => BaseFieldDefinition::create('changed')
                 ->setLabel(new TranslatableMarkup('Changed'))
                 ->setRequired(true),

@@ -51,4 +51,5 @@ final class Template extends ConfigEntityBundleBase implements TemplateInterface
 {
     public const ID = 'ekino_rendr_template';
     public const CONTAINER_KEY_PATTERN = '/^field_rendr_(.+)_container$/';
+    public const CONTAINER_KEY_FORMAT = 'field_rendr_%s_container';
 }

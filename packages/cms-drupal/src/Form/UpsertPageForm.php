@@ -86,18 +86,10 @@ final class UpsertPageForm extends ContentEntityForm
                 ],
             ];
 
-        $form['publication_section'] = [
-            '#type' => 'details',
-            '#title' => $this
-                ->t('Publication & Channels'),
-            '#group' => 'rendr_containers',
-            '#weight' => 99, // high weight so this tab is rendered last
-        ];
-        $form['publication_section']['channels'] = $form['channels'];
-        $form['publication_section'][$entityType->getKey('published')] = $form[$entityType->getKey('published')];
-
-        unset($form['channels']);
-        unset($form[$entityType->getKey('published')]);
+        // Manage container tabs
+        $inheritedContainers = $this->entity->get('container_inheritance')->value ?
+            \explode(',', $this->entity->get('container_inheritance')->value) :
+            [];
 
         foreach (\array_keys($form) as $fieldKey) {
             if (\preg_match(Template::CONTAINER_KEY_PATTERN, $fieldKey, $matches)) {
@@ -109,7 +101,19 @@ final class UpsertPageForm extends ContentEntityForm
                     '#group' => 'rendr_containers',
                 ];
 
+                $form[$matches[1].'_section'][$matches[1].'_container_inheritance'] = [
+                    '#type' => 'checkbox',
+                    '#title' => $this
+                        ->t('Inherit from parent Page'),
+                    '#default_value' => \in_array($matches[1], $inheritedContainers) ? 1 : 0,
+                ];
                 $form[$matches[1].'_section'][$fieldKey] = $form[$fieldKey];
+                $form[$matches[1].'_section'][$fieldKey]['#states'] = [
+                    //show this field only if not inherited
+                    'visible' => [
+                        \sprintf(':input[name="%s_container_inheritance"]', $matches[1]) => ['checked' => false],
+                    ],
+                ];
                 unset($form[$fieldKey]);
             }
         }
@@ -120,8 +124,78 @@ final class UpsertPageForm extends ContentEntityForm
     /**
      * {@inheritdoc}
      */
+    public function validateForm(array &$form, FormStateInterface $formState)
+    {
+        // Path unicity
+        if (!empty($formState->getValue('path')[0]['value'])) {
+            $otherPages = $this->entityTypeManager->getStorage('ekino_rendr_page')->loadByProperties([
+                'path' => $formState->getValue('path')[0]['value'],
+            ]);
+
+            $channels = \array_map(static function ($channel) {
+                if (\is_array($channel)) {
+                    return $channel['target_id'];
+                }
+            }, $formState->getValue('channels'));
+
+            foreach ($otherPages as $otherPage) {
+                $otherChannels = \array_map(static function ($otherChannel) {
+                    return $otherChannel->id();
+                }, $otherPage->get('channels')->referencedEntities());
+
+                if ($otherPage->id() !== $this->entity->id() && !empty(\array_intersect($channels, $otherChannels))) {
+                    $formState->setErrorByName(
+                        'path',
+                        $this->t('Path must be unique per channel. The page "%title" is also using the path "%path".', [
+                            '%title' => $otherPage->get('title')->value,
+                            '%path' => $otherPage->get('path')->value,
+                        ]));
+                    break;
+                }
+            }
+        }
+
+        // Container inheritance
+        $inheritedContainers = $this->getInheritedContainerValues($formState);
+
+        if (!empty($inheritedContainers) && empty($formState->getValue('parent_page')[0]['target_id'])) {
+            $formState->setErrorByName(
+                'parent_page',
+                $this->t('You must select a parent page to enable inheritance.')
+            );
+        }
+
+        // Parent cyclic reference
+        if (!empty($formState->getValue('parent_page')[0]['target_id']) && $this->entity->id()) {
+            $parentPage = $this->entityTypeManager->getStorage('ekino_rendr_page')->load($formState->getValue('parent_page')[0]['target_id']);
+
+            while ($parentPage) {
+                $parentPage = \reset($parentPage->get('parent_page')->referencedEntities());
+
+                if ($parentPage && $parentPage->id() === $this->entity->id()) {
+                    $formState->setErrorByName(
+                        'parent_page',
+                        $this->t(
+                            'Cyclic Reference error. You cannot assign page %title as parent since it is already a child of the current page',
+                            ['%title' => $parentPage->get('title')->value]
+                        )
+                    );
+                    break;
+                }
+            }
+        }
+
+        parent::validateForm($form, $formState);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function save(array $form, FormStateInterface $formState)
     {
+        $inheritedContainers = $this->getInheritedContainerValues($formState);
+
+        $this->entity->set('container_inheritance', \implode(',', $inheritedContainers));
         $this->entity->setNewRevision(true);
         $this->entity->setRevisionCreationTime($this->time->getRequestTime());
         $this->entity->setRevisionUserId($this->currentUser ? $this->currentUser->id() : 1);
@@ -148,5 +222,18 @@ final class UpsertPageForm extends ContentEntityForm
         $formState->setRedirectUrl($this->entity->toUrl('edit-form'));
 
         return $result;
+    }
+
+    private function getInheritedContainerValues(FormStateInterface $formState)
+    {
+        $inheritedContainers = [];
+
+        foreach ($formState->getValues() as $key => $value) {
+            if (\preg_match('/^(.*)_container_inheritance$/', $key, $matches) && 1 === $value) {
+                $inheritedContainers[] = \trim($matches[1]);
+            }
+        }
+
+        return $inheritedContainers;
     }
 }

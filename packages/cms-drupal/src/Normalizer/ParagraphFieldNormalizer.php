@@ -11,20 +11,12 @@ use Drupal\serialization\Normalizer\EntityReferenceFieldItemNormalizer;
  */
 class ParagraphFieldNormalizer extends EntityReferenceFieldItemNormalizer
 {
-    /**
-     * @var ParagraphTransformerInterface[]
-     */
-    protected $normalizers = [];
+    protected $format = 'rendr_json';
 
     /**
-     * Constructs a ParagraphNormalizer object.
-     *
-     * @param string|array $format The supported format
+     * @var ParagraphNormalizerInterface[]
      */
-    public function __construct($format)
-    {
-        $this->format = $format;
-    }
+    protected $normalizers = [];
 
     /**
      * {@inheritdoc}

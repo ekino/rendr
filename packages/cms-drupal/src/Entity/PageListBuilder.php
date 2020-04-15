@@ -45,6 +45,7 @@ final class PageListBuilder extends EntityListBuilder
                 'title' => $this->t('Title'),
                 'path' => $this->t('Path'),
                 'channels' => $this->t('Channels'),
+                'parent_page' => $this->t('Parent Page'),
             ] + parent::buildHeader();
     }
 
@@ -55,6 +56,8 @@ final class PageListBuilder extends EntityListBuilder
      */
     public function buildRow(EntityInterface $entity): array
     {
+        $parentPage = \reset($entity->get('parent_page')->referencedEntities());
+
         return [
                 'id' => $entity->id(),
                 'title' => $entity->label(),
@@ -62,6 +65,7 @@ final class PageListBuilder extends EntityListBuilder
                 'channels' => \implode(', ', \array_map(static function ($entity) {
                     return $entity->label();
                 }, $entity->get('channels')->referencedEntities())),
+                'parent_page' => $parentPage ? $parentPage->get('title')->value : '',
             ] + parent::buildRow($entity);
     }
 }

@@ -37,7 +37,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *      "list_builder"="Drupal\ekino_rendr\Entity\PageListBuilder",
  *      "route_provider" = {
  *          "html"="Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
- *     },
+ *      },
+ *     "views_data" = "Drupal\views\EntityViewsData",
  *   },
  *   label_collection=@Translation("Pages"),
  *   label_count=@PluralTranslation(

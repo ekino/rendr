@@ -23,7 +23,7 @@ export interface Head {
   titleTemplate: string;
   defaultTitle: string;
   title: string;
-  link: string;
+  links: Settings[];
   htmlAttributes: Settings;
   meta: Settings[];
 }
@@ -40,7 +40,7 @@ export class Page {
     titleTemplate: "%s",
     defaultTitle: "-",
     title: "-",
-    link: "",
+    links: [],
     htmlAttributes: {},
     meta: [],
   };

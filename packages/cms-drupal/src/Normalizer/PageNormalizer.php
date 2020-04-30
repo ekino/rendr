@@ -92,7 +92,7 @@ class PageNormalizer extends ContentEntityNormalizer
                 'titleTemplate' => 'Ekino - %s',
                 'defaultTitle' => '-',
                 'title' => '-',
-                'link' => '',
+                'links' => [],
                 'htmlAttributes' => [],
                 'meta' => [],
             ],

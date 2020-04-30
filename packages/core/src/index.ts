@@ -34,7 +34,7 @@ export function normalizeHead(data: any): Head {
     titleTemplate: "%s",
     defaultTitle: "-",
     title: "-",
-    link: "",
+    links: [],
     htmlAttributes: {},
     meta: [],
   };
@@ -55,8 +55,8 @@ export function normalizeHead(data: any): Head {
     head.title = data.title;
   }
 
-  if ("link" in data) {
-    head.link = data.link;
+  if ("links" in data) {
+    head.links = data.links;
   }
 
   if ("htmlAttributes" in data) {
@@ -184,7 +184,7 @@ export function mergePages(pages: Page[]): Page {
           ? p.head.defaultTitle
           : page.head.defaultTitle,
       title: p.head.title.length > 0 ? p.head.title : page.head.title,
-      link: p.head.link.length > 0 ? p.head.link : page.head.link,
+      links: [...page.head.links, ...p.head.links],
       htmlAttributes:
         Object.keys(p.head.htmlAttributes).length > 0
           ? p.head.htmlAttributes

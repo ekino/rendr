@@ -14,17 +14,19 @@ There are 3 units in rendr:
 - A `page`: contains several blocks and a page related information: header, template, path, etc ...
 - A `website` (or a `channel`): contains a set of pages and can be use to target a client type or a specific domain.
 
-The internal structure of the CMS does not have to respect these content types; however the public API need to output these content types. 
+The internal structure of the CMS does not have to respect these content types; however the public API need to output these content types.
 
 For instance, this is the output of one API call using the rendr format:
 
 **Request**
+
 ```http
 GET /api/ HTTP/2
 Host: api.contents.com
 ```
 
 **Response**
+
 ```
 content-type: application/json; charset=utf-8
 cache-control: public, max-age=0, must-revalidate
@@ -32,6 +34,7 @@ date: Fri, 29 Nov 2019 10:45:23 GMT
 x-rendr-content-type: rendr/document
 x-powered-by: MyCMS Solution
 ```
+
 ```json
 {
   "statusCode": 200,
@@ -44,7 +47,7 @@ x-powered-by: MyCMS Solution
     "titleTemplate": "Ekino - %s",
     "defaultTitle": "-",
     "title": "-",
-    "link": "",
+    "links": [],
     "htmlAttributes": {},
     "meta": []
   },
@@ -96,9 +99,9 @@ The `id` fields are string as some can be `uuid`, `string` or any other unique i
 
 ## Requirements
 
- - The integration should provide an automated solution to load datastructure definition using the CMS features (migrations, api call, etc ...)
- - The integration should provide a set of fixtures: to test the solution and demonstrate how that works.
- - The demo should respect the section "Demon" in this documents.
+- The integration should provide an automated solution to load datastructure definition using the CMS features (migrations, api call, etc ...)
+- The integration should provide a set of fixtures: to test the solution and demonstrate how that works.
+- The demo should respect the section "Demon" in this documents.
 
 ## Demo
 
@@ -112,7 +115,7 @@ The main purpose of the demo is to make sure all elements are there to have a go
 - `/about`: should return the about page
 - `/articles`: should return the articles page with a list of post and an pagination section => the API should accept a `page` query string.
 - `/articles/:slug`: should return a page with the current blog post corresponding to the `slug` field.
-- `/error/:errorCode`: return an error page with ``errorCode`` as the ``statusCode`` of the response.
+- `/error/:errorCode`: return an error page with `errorCode` as the `statusCode` of the response.
 - `/exception/:type`: Should return an exception (`type` can `NotFoundError`, `InternalServerError` or `NormalizationError`).
 
 **Binary results**
@@ -136,6 +139,7 @@ enabled = true
 ```
 
 **Page: Homepage**
+
 ```
 title = "Homepage"
 seo description = "The homepage"
@@ -162,6 +166,7 @@ ttl = 3600
 ```
 
 **About**
+
 ```
 title = "About"
 seo description = "About page"
@@ -188,6 +193,7 @@ ttl = 3600
 ```
 
 **Articles list**
+
 ```
 title = "Articles"
 seo description = "Article archives"
@@ -223,6 +229,7 @@ ttl = 3600
 ```
 
 **Articles view**
+
 ```
 title = "Articles view"
 seo description = "Article view"

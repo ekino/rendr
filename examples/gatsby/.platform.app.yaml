@@ -1,0 +1,29 @@
+name: view-gatsby
+
+type: "nodejs:12"
+
+build:
+  flavor: none
+
+dependencies:
+  nodejs:
+    yarn: "*"
+
+web:
+  commands:
+    start: (yarn build && yarn start -p $PORT)
+
+hooks:
+  build: |
+    yarn setup
+
+mounts:
+  "/.cache":
+    source: local
+    source_path: "caches"
+
+  "/public":
+    source: local
+    source_path: "public"
+
+disk: 512

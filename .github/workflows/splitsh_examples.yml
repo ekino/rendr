@@ -1,0 +1,24 @@
+name: Split(sh!) Examples
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Split Examples
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+
+      - name: Split - Examples
+        uses: rande/splitsh-github-action@master
+        # if: github.ref == 'refs/heads/master'
+        with:
+          path: examples
+          remote: ${{ secrets.PLATFORMSH_GIT_URL }}
+          private_key: ${{ secrets.PLATFORMSH_PRIVATE_KEY }}
+          remote_branch: develop

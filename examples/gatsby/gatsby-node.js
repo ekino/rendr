@@ -25,8 +25,8 @@ exports.createPagesStatefully = async ({ actions, reporter }) => {
 
   let remoteApi = "http://localhost:3000/api"
 
-  if (process.env.REMOTE_API) {
-    remoteApi = process.env.REMOTE_API
+  if (process.env.RENDR_REMOTE_API) {
+    remoteApi = process.env.RENDR_REMOTE_API
   }
 
   reporter.info("★ rendr > Loading sitemap")
@@ -34,7 +34,7 @@ exports.createPagesStatefully = async ({ actions, reporter }) => {
 
   const loader = createChainedLoader([createApiLoader(remoteApi)])
 
-  reporter.info("★ rendr > Loading page definitions")
+  reporter.info(`★ rendr > Pushing page definitions to Gatsby (${pageReferences.length})`)
 
   for (const i in pageReferences) {
     const url = parseUrl(pageReferences[i].loc)

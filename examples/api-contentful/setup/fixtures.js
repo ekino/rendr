@@ -49,7 +49,15 @@ const loadFixtures = async () => {
         "en-US": "Entry title",
       },
       domains: {
-        "en-US": ["localhost", "127.0.0.1", "contentful-api.rande.now.sh"],
+        "en-US": [
+          "localhost", 
+          "127.0.0.1", 
+          "contentful-api.rande.now.sh", 
+          "contentful.api.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site", 
+          "nextjs.view.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
+          "contentful.api.demo.develop-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site", 
+          "nextjs.view.demo.develop-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site"
+        ],
       },
       path: {
         "en-US": "/",

@@ -1,0 +1,23 @@
+name: api-contentful
+
+type: "nodejs:12"
+
+build:
+  flavor: none
+
+dependencies:
+  nodejs:
+    yarn: "*"
+
+web:
+  commands:
+    start: yarn start
+
+hooks:
+  build: |
+    yarn setup
+    yarn build
+    node setup/migrations.js 
+    node setup/fixtures.js
+
+disk: 512

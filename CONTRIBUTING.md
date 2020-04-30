@@ -32,7 +32,7 @@ Start contributing!
 
 You can try to run the demo to check if everything is working fine:
 
-    cd examples/api-static && yarn start
+    cd examples/api-static && yarn dev
 
 And visit:
 

@@ -42,8 +42,9 @@ const apiLoader: Loader = (ctx, page, next) => {
 
   if (ctx.isClientSide) {
     url = `${location.origin}/api`;
-  } else if (ctx.req.headers["x-now-deployment-url"]) {
-    // are we on now.sh ?
+  } else if (ctx.req.headers["x-original-route"]) { // are we on platform.sh ?
+    url = `https://${ctx.hostname}/api`;
+  } else if (ctx.req.headers["x-now-deployment-url"]) { // are we on now.sh ?
     url = `https://${ctx.req.headers["x-now-deployment-url"]}/api`;
   } else {
     url = "http://localhost:3000/api";

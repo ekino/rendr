@@ -5,6 +5,6 @@
     "public": true,
     "env": {
       "NODE_ENV": "production",
-      "REMOTE_API": "https://static-api.rande.now.sh/api"
+      "RENDR_REMOTE_API": "https://static-api.rande.now.sh/api"
     }
   }

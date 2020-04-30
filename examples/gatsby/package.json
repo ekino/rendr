@@ -25,11 +25,11 @@
     "xml2json": "^0.11.2"
   },
   "scripts": {
+    "setup": "yarn install",
     "build": "gatsby build",
-    "start": "gatsby develop",
+    "start": "gatsby serve",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   }
 }

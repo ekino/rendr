@@ -23,9 +23,10 @@
     "typescript": "^3.7.4"
   },
   "scripts": {
-    "build": "next build",
     "setup": "yarn install",
-    "start": "ts-node --project tsconfig.dev.json dev.ts"
+    "build": "next build",
+    "dev": "ts-node --project tsconfig.dev.json dev.ts",
+    "start": "next start"
   },
   "private": true
 }

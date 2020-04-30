@@ -1,0 +1,114 @@
+name: api-drupal
+
+type: 'php:7.4'
+
+build:
+    flavor: none
+
+relationships:
+    database: "drupal_demo_database:postgresql"
+
+runtime:
+    extensions:
+        - pdo_pgsql
+
+hooks:
+    build: |
+        mv src/* .
+        rm -rvf infra src
+        mv sites/example.settings.platformsh.php sites/default/settings.php 
+        composer install
+        git clone https://git.drupalcode.org/project/ekino_rendr.git modules/custom/ekino_rendr
+        composer require platformsh/config-reader
+    deploy: |
+        r=`echo $PLATFORM_RELATIONSHIPS | base64 -d`
+        export POSTGRES_USERNAME=`echo $r | jq -r '.database [0].username'`
+        export POSTGRES_PASSWORD=`echo $r | jq -r '.database [0].password'`
+        export POSTGRES_HOSTNAME=`echo $r | jq -r '.database [0].host'`
+        export POSTGRES_PORT=`echo $r | jq -r '.database [0].port'`
+        export POSTGRES_DBNAME=`echo $r | jq -r '.database [0].path'`
+        
+        ./vendor/bin/drush site:install standard -y --db-url=pgsql://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DBNAME} --account-name=admin --account-pass=${DRUPAL_ADMIN_PASSWORD} --site-name='Drupal Rendr Demo'
+        ./vendor/bin/drush cache-rebuild
+        ./vendor/bin/drush -y en language content_translation serialization data_fixtures paragraphs rendr_demo
+        ./vendor/bin/drush -y cim --partial --source=./modules/custom/rendr_demo/default_config/sync
+        ./vendor/bin/drush -y fixtures:load all
+
+mounts:
+    '/sites/default/files':
+        source: local
+        source_path: 'files'
+    '/tmp':
+        source: local
+        source_path: 'tmp'
+    '/private':
+        source: local
+        source_path: 'private'
+    '/.drush':
+        source: local
+        source_path: 'drush'
+    '/drush-backups':
+        source: local
+        source_path: 'drush-backups'
+    '/.console':
+        source: local
+        source_path: 'console'
+
+web:
+    # Specific parameters for different URL prefixes.
+    locations:
+        '/':
+            # The folder from which to serve static assets, for this location.
+            #
+            # This is a filesystem path, relative to the application root.
+            root: ''
+
+            # How long to allow static assets from this location to be cached.
+            #
+            # Can be a time in seconds, or -1 for no caching. Times can be
+            # suffixed with "s" (seconds), "m" (minutes), "h" (hours), "d"
+            # (days), "w" (weeks), "M" (months, as 30 days) or "y" (years, as
+            # 365 days).
+            expires: 5m
+
+            # Whether to forward disallowed and missing resources from this
+            # location to the application.
+            #
+            # Can be true, false or a URI path string.
+            passthru: '/index.php'
+
+            # Deny access to static files in this location.
+            allow: false
+
+            # Rules for specific URI patterns.
+            rules:
+                # Allow access to common static files.
+                '\.(jpe?g|png|gif|svgz?|css|js|map|ico|bmp|eot|woff2?|otf|ttf)$':
+                    allow: true
+                '^/robots\.txt$':
+                    allow: true
+                '^/sitemap\.xml$':
+                    allow: true
+
+                # Deny direct access to configuration files.
+                '^/sites/sites\.php$':
+                    scripts: false
+                '^/sites/[^/]+/settings.*?\.php$':
+                    scripts: false
+
+        '/sites/default/files':
+            # Allow access to all files in the public files directory.
+            allow: true
+            expires: 5m
+            passthru: '/index.php'
+            root: 'sites/default/files'
+
+            # Do not execute PHP scripts.
+            scripts: false
+
+            rules:
+                # Provide a longer TTL (2 weeks) for aggregated CSS and JS files.
+                '^/sites/default/files/(css|js)':
+                    expires: 2w
+
+disk: 512

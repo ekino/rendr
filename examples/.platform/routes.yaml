@@ -1,0 +1,23 @@
+"https://static.api.demo.{default}/":
+  type: upstream
+  upstream: "api-static:http"
+
+"https://contentful.api.demo.{default}/":
+  type: upstream
+  upstream: "api-contentful:http"
+
+"https://drupal.api.demo.{default}/":
+  type: upstream
+  upstream: "api-drupal:http"
+
+"https://nextjs.view.demo.{default}/api":
+  type: upstream
+  upstream: "api-contentful:http"
+
+"https://nextjs.view.demo.{default}/":
+  type: upstream
+  upstream: "view-nextjs:http"
+
+"https://gatsby.view.demo.{default}/":
+  type: upstream
+  upstream: "view-gatsby:http"

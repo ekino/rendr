@@ -1,0 +1,21 @@
+name: api-static
+
+type: "nodejs:12"
+
+build:
+  flavor: none
+
+dependencies:
+  nodejs:
+    yarn: "*"
+
+web:
+  commands:
+    start: yarn start
+
+hooks:
+  build: |
+    yarn setup
+    yarn build
+
+disk: 512

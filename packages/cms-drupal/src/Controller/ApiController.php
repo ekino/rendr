@@ -53,7 +53,11 @@ final class ApiController
 
         $page = \reset($pages);
 
-        return new JsonResponse($this->serializer->normalize($page, 'rendr_json', ['preview' => $preview]), 200, [
+        return new JsonResponse($this->serializer->normalize($page, 'rendr_json', [
+            'preview' => $preview,
+            'slug' => $slug,
+            'channel' => $channel,
+        ]), 200, [
             'content-type' => 'application/json',
         ]);
     }

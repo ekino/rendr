@@ -19,14 +19,19 @@ use Drupal\user\EntityOwnerTrait;
  *   id="ekino_rendr_channel",
  *   label=@Translation("Channel"),
  *
+ *   translatable = TRUE,
  *   admin_permission="administer ekino_rendr channels",
  *   base_table="ekino_rendr_channel",
+ *   data_table = "ekino_rendr_channel_field_data",
+ *   revision_table = "ekino_rendr_channel_revision",
+ *   revision_data_table = "ekino_rendr_channel_field_revision",
  *   bundle_entity_type = "ekino_rendr_channel_type",
  *   bundle_label = @Translation("Channel type"),
  *   entity_keys={
  *      "id"="id",
  *      "bundle"="channel_type",
  *      "label"="label",
+ *      "langcode" = "langcode",
  *      "published"="published",
  *      "revision"="revision_id",
  *      "owner" = "uid",
@@ -78,6 +83,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
         $published[$entityType->getKey('published')]
             ->setRevisionable(true)
             ->setDefaultValue(false)
+            ->setTranslatable(true)
             ->setDisplayOptions('form', [
                 'type' => 'boolean_checkbox',
             ])
@@ -88,6 +94,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
                 ->setLabel(new TranslatableMarkup('Label'))
                 ->setRequired(true)
                 ->setRevisionable(true)
+                ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
@@ -106,7 +113,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
                 ->setLabel(new TranslatableMarkup('Domain'))
                 ->setRequired(true)
                 ->setRevisionable(true)
-                ->setDefaultValueCallback(__CLASS__.'::getDefaultKeyValue')
+                ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
@@ -115,7 +122,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
             'locale' => BaseFieldDefinition::create('string')
                 ->setLabel(new TranslatableMarkup('Locale'))
                 ->setRevisionable(true)
-                ->setDefaultValueCallback(__CLASS__.'::getDefaultKeyValue')
+                ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])

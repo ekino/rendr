@@ -1,4 +1,3 @@
-uuid: 5a607d69-cd78-4214-9ae4-aa3f6bd9743f
 langcode: en
 status: true
 dependencies:
@@ -7,7 +6,7 @@ dependencies:
     - user
 id: rendr_page
 label: 'Rendr Page'
-module: views
+module: ekino_rendr
 description: ''
 tag: ''
 base_table: ekino_rendr_page

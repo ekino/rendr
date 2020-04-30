@@ -80,11 +80,40 @@ final class UpsertPageForm extends ContentEntityForm
         }
 
         $form = parent::form($form, $formState) + [
+                '#theme' => 'node_edit_form',
+                '#attached' => [
+                    'library' => [
+                        'node/form',
+                        'seven/node-form',
+                    ],
+                ],
                 'rendr_containers' => [
                     '#type' => 'vertical_tabs',
                     '#weight' => 2,
                 ],
             ];
+        $form['advanced']['#type'] = 'container';
+        $form['advanced']['#attributes']['class'][] = 'entity-meta';
+
+        $form['meta'] = [
+            '#type' => 'container',
+            '#group' => 'advanced',
+            '#attributes' => ['class' => ['entity-meta__header']],
+        ];
+
+        $form['meta']['status'] = [
+            '#type' => 'item',
+            '#markup' => $this->entity->isPublished() ? $this->t('Published') : $this->t('Not published'),
+            '#access' => !$this->entity->isNew(),
+            '#wrapper_attributes' => ['class' => ['entity-meta__title', 'layout-region-node-footer__content']],
+            '#weight' => 20,
+        ];
+
+        $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#group'] = 'meta';
+        $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#weight'] = 22;
+        $form['parent_page']['#group'] = 'meta';
+        $form['channels']['#group'] = 'meta';
+        $form['published']['#group'] = 'footer';
 
         // Manage container tabs
         $inheritedContainers = $this->entity->get('container_inheritance')->value ?

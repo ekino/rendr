@@ -9,6 +9,10 @@ services:
             - '@serializer'
             - '@ekino_rendr.resolver.page_resolver'
 
+    Drupal\ekino_rendr\Form\ChannelDuplicateForm:
+        arguments:
+            - '@ekino_rendr.duplicator.channel_duplicator'
+
     Drupal\ekino_rendr\Normalizer\PageNormalizer:
         arguments:
             - '@entity_type.manager'
@@ -47,4 +51,10 @@ services:
         autowire: true
         tags:
             - { name: controller.argument_value_resolver, priority: 50 }
+
+
+    ekino_rendr.duplicator.channel_duplicator:
+        class: Drupal\ekino_rendr\Duplicator\ChannelDuplicator
+        arguments:
+            - '@entity_type.manager'
 

@@ -17,7 +17,7 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\ekino_rendr\Entity\Channel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class UpsertChannelForm extends ContentEntityForm
+final class ChannelUpsertForm extends ContentEntityForm
 {
     protected $messenger;
     protected $stringTranslation;

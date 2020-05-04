@@ -19,7 +19,7 @@ use Drupal\ekino_rendr\Entity\Page;
 use Drupal\ekino_rendr\Entity\Template;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class UpsertPageForm extends ContentEntityForm
+final class PageUpsertForm extends ContentEntityForm
 {
     protected $messenger;
     protected $stringTranslation;

@@ -12,7 +12,7 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\ekino_rendr\Entity\ChannelType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class UpsertChannelTypeForm extends BundleEntityFormBase
+final class ChannelTypeUpsertForm extends BundleEntityFormBase
 {
     protected $channelTypeStorage;
     protected $messenger;

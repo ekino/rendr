@@ -36,8 +36,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   handlers={
  *      "form"={
  *          "default"="Drupal\Core\Entity\ContentEntityForm",
- *          "add"="Drupal\ekino_rendr\Form\UpsertPageForm",
- *          "edit"="Drupal\ekino_rendr\Form\UpsertPageForm"
+ *          "add"="Drupal\ekino_rendr\Form\PageUpsertForm",
+ *          "edit"="Drupal\ekino_rendr\Form\PageUpsertForm"
  *      },
  *      "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *      "list_builder"="Drupal\ekino_rendr\Entity\PageListBuilder",
@@ -74,6 +74,11 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
     public function getPath(): string
     {
         return \is_string($path = $this->get('path')->value) ? $path : '';
+    }
+
+    public function getTitle(): string
+    {
+        return \is_string($title = $this->get('title')->value) ? $title : '';
     }
 
     /**
@@ -143,5 +148,13 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
         ] +
             parent::baseFieldDefinitions($entityType) +
             $published;
+    }
+
+    public function createDuplicate()
+    {
+        $duplicate = parent::createDuplicate();
+        $duplicate->set('published', false);
+
+        return $duplicate;
     }
 }

@@ -1,1 +1,23 @@
 <?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\ekino_rendr\Entity\ChannelInterface;
+
+/**
+ * Implements hook_entity_operation().
+ */
+function ekino_rendr_entity_operation(EntityInterface $entity)
+{
+    $operations = [];
+
+    if ($entity instanceof ChannelInterface &&
+        \Drupal::currentUser()->hasPermission('administer ekino_rendr channels')) {
+        $operations['duplicate'] = [
+            'title' => t('Duplicate'),
+            'weight' => 50,
+            'url' => $entity->toUrl('form-duplicate'),
+        ];
+    }
+
+    return $operations;
+}

@@ -39,8 +39,9 @@ use Drupal\user\EntityOwnerTrait;
  *   field_ui_base_route="entity.ekino_rendr_channel_type.edit_form",
  *   handlers={
  *      "form"={
- *          "add"="Drupal\ekino_rendr\Form\UpsertChannelForm",
- *          "edit"="Drupal\ekino_rendr\Form\UpsertChannelForm"
+ *          "add"="Drupal\ekino_rendr\Form\ChannelUpsertForm",
+ *          "edit"="Drupal\ekino_rendr\Form\ChannelUpsertForm"
+ *          "duplicate"="Drupal\ekino_rendr\Form\ChannelDuplicateForm"
  *      },
  *      "list_builder"="Drupal\ekino_rendr\Entity\ChannelListBuilder",
  *      "route_provider" = {
@@ -140,5 +141,16 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
     public static function getDefaultKeyValue(): string
     {
         return (new Php())->generate();
+    }
+
+    public function createDuplicate()
+    {
+        $duplicate = parent::createDuplicate();
+
+        $duplicate->set('key', self::getDefaultKeyValue());
+        $duplicate->set('title', $duplicate->get('title')->value.' - DUPLICATE');
+        $duplicate->set('locale', $duplicate->get('locale')->value.' - DUPLICATE');
+
+        return $duplicate;
     }
 }

@@ -40,6 +40,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *          "edit"="Drupal\ekino_rendr\Form\PageUpsertForm"
  *      },
  *      "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
+ *      "views_data" = "Drupal\lsm\ViewsData\PageViewsData",
  *      "list_builder"="Drupal\ekino_rendr\Entity\PageListBuilder",
  *      "route_provider" = {
  *          "html"="Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
@@ -115,6 +116,7 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
                     'type' => 'string_textfield',
                 ])
                 ->setDisplayConfigurable('form', true),
+                // NodeAccessControlHandler for autocomplete in edit form
             'channels' => BaseFieldDefinition::create('entity_reference')
                 ->setLabel(new TranslatableMarkup('Channels'))
                 ->setRequired(true)
@@ -154,6 +156,11 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
     {
         $duplicate = parent::createDuplicate();
         $duplicate->set('published', false);
+
+        foreach ($duplicate->getTranslationLanguages() as $langcode => $language) {
+            $translation = $duplicate->getTranslation($langcode);
+            $translation->set('published', false);
+        }
 
         return $duplicate;
     }

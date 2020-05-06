@@ -1,15 +1,16 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - ekino_rendr.ekino_rendr_channel_type.1
   module:
     - ekino_rendr
-    - user
-id: rendr_page
-label: 'Rendr Page'
+id: rendr_pages
+label: 'Rendr Pages'
 module: ekino_rendr
-description: ''
+description: 'Find and manage Rendr Pages.'
 tag: ''
-base_table: ekino_rendr_page
+base_table: ekino_rendr_page_field_data
 base_field: id
 display:
   default:
@@ -19,9 +20,8 @@ display:
     position: 0
     display_options:
       access:
-        type: perm
-        options:
-          perm: 'administer ekino_rendr pages'
+        type: none
+        options: {  }
       cache:
         type: tag
         options: {  }
@@ -63,39 +63,16 @@ display:
             next: ››
       style:
         type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            title: title
-          info:
-            title:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
       row:
         type: fields
-        options:
-          inline: {  }
-          separator: ''
-          hide_empty: false
-          default_field_elements: true
       fields:
         title:
-          id: title
-          table: ekino_rendr_page
+          table: ekino_rendr_page_field_data
           field: title
+          id: title
+          entity_type: null
+          entity_field: title
+          plugin_id: field
           relationship: none
           group_type: group
           admin_label: ''
@@ -142,8 +119,7 @@ display:
           hide_alter_empty: true
           click_sort_column: value
           type: string
-          settings:
-            link_to_entity: false
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -154,12 +130,9 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: null
-          entity_field: title
-          plugin_id: field
         path:
           id: path
-          table: ekino_rendr_page
+          table: ekino_rendr_page_field_data
           field: path
           relationship: none
           group_type: group
@@ -273,7 +246,7 @@ display:
           click_sort_column: target_id
           type: entity_reference_label
           settings:
-            link: false
+            link: true
           group_column: target_id
           group_columns: {  }
           group_rows: true
@@ -289,7 +262,7 @@ display:
           plugin_id: field
         parent_page:
           id: parent_page
-          table: ekino_rendr_page
+          table: ekino_rendr_page_field_data
           field: parent_page
           relationship: none
           group_type: group
@@ -352,6 +325,73 @@ display:
           entity_type: ekino_rendr_page
           entity_field: parent_page
           plugin_id: field
+        published:
+          id: published
+          table: ekino_rendr_page_field_data
+          field: published
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Published
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: boolean
+          settings:
+            format: default
+            format_custom_true: ''
+            format_custom_false: ''
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: ekino_rendr_page
+          entity_field: published
+          plugin_id: field
         operations:
           id: operations
           table: ekino_rendr_page
@@ -406,7 +446,7 @@ display:
       filters:
         title:
           id: title
-          table: ekino_rendr_page
+          table: ekino_rendr_page_field_data
           field: title
           relationship: none
           group_type: group
@@ -447,9 +487,54 @@ display:
           entity_type: ekino_rendr_page
           entity_field: title
           plugin_id: string
+        channels_target_id_1:
+          id: channels_target_id_1
+          table: ekino_rendr_page__channels
+          field: channels_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: channels_target_id_1_op
+            label: Channels
+            description: ''
+            use_operator: false
+            operator: channels_target_id_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: channels_target_id_1
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          channel_type: '1'
+          entity_type: ekino_rendr_page
+          entity_field: channels
+          plugin_id: channels_target_id
         published:
           id: published
-          table: ekino_rendr_page
+          table: ekino_rendr_page_field_data
           field: published
           relationship: none
           group_type: group
@@ -490,6 +575,7 @@ display:
           entity_type: ekino_rendr_page
           entity_field: published
       sorts: {  }
+      title: 'Rendr Pages'
       header: {  }
       footer: {  }
       empty: {  }
@@ -500,9 +586,6 @@ display:
         operator: AND
         groups:
           1: AND
-      title: 'Page Collection'
-      link_url: /admin/content/ekino_rendr_page
-      link_display: '0'
     cache_metadata:
       max-age: -1
       contexts:
@@ -510,17 +593,16 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user.permissions
+        - user
       tags: {  }
   page_1:
     display_plugin: page
     id: page_1
-    display_title: 'Rendr Page'
+    display_title: Page
     position: 1
     display_options:
       display_extenders: {  }
       path: admin/content/ekino_rendr_page
-      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:
@@ -528,5 +610,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user.permissions
+        - user
       tags: {  }

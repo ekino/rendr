@@ -11,10 +11,10 @@ entity.ekino_rendr_channel.canonical:
             ekino_rendr_channel:
                 type: entity:ekino_rendr_channel
 
-ekino_rendr_channel.duplicate:
+entity.ekino_rendr_channel.form_duplicate:
     path: '/admin/content/ekino_rendr_channel/{ekino_rendr_channel}/duplicate'
     defaults:
-        _entity_form: 'channel.duplicate'
+        _entity_form: 'ekino_rendr_channel.duplicate'
     requirements:
         _permission: 'administer ekino_rendr channels'
 

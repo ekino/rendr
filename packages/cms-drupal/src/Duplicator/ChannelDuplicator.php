@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\ekino_rendr\Duplicator;
 
-use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ekino_rendr\Entity\ChannelInterface;
 use Drupal\ekino_rendr\Entity\PageInterface;

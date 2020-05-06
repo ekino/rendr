@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\ekino_rendr\Form;
 
-use Drupal\Core\Entity\EntityConfirmFormBase;
+use Drupal\Core\Entity\ContentEntityConfirmFormBase;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\ekino_rendr\Duplicator\ChannelDuplicatorInterface;
 use Drupal\ekino_rendr\Entity\ChannelInterface;
 use Drupal\ekino_rendr\Entity\PageInterface;
 
-class ChannelDuplicateForm extends EntityConfirmFormBase
+class ChannelDuplicateForm extends ContentEntityConfirmFormBase
 {
     /**
      * @var ChannelDuplicatorInterface
@@ -20,9 +21,10 @@ class ChannelDuplicateForm extends EntityConfirmFormBase
     /**
      * ChannelDuplicateForm constructor.
      */
-    public function __construct(ChannelDuplicatorInterface $channelDuplicator)
+    public function __construct(ChannelDuplicatorInterface $channelDuplicator, EntityRepositoryInterface $entity_repository)
     {
         $this->channelDuplicator = $channelDuplicator;
+        parent::__construct($entity_repository);
     }
 
     /**
@@ -34,7 +36,23 @@ class ChannelDuplicateForm extends EntityConfirmFormBase
         $entity = $this->getEntity();
 
         return $this->t(
-            "Duplicating this channel will generate the following changes:\n".$this->getDuplicationSummaryText(),
+            'Duplicate channel %label',
+            [
+                '%label' => $entity->label(),
+            ]
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDescription()
+    {
+        /** @var ChannelInterface $entity */
+        $entity = $this->getEntity();
+
+        return $this->t(
+            '<p>Duplicating this channel will generate the following changes:</p>'.$this->getDuplicationSummaryText(),
             \array_merge([
                 '%label' => $entity->label(),
             ], $this->getDuplicationSummaryParameters($entity))
@@ -52,6 +70,7 @@ class ChannelDuplicateForm extends EntityConfirmFormBase
             // If available, return the collection URL.
             return $entity->toUrl('collection');
         }
+
         // Otherwise fall back to the default link template.
         return $entity->toUrl();
     }
@@ -102,10 +121,10 @@ class ChannelDuplicateForm extends EntityConfirmFormBase
 
     protected function getDuplicationSummaryText()
     {
-        return "* %countUpdated pages updated.\n
-  - %exampleUpdated\n
-* %countDuplicated pages duplicated\n
-  - %exampleDuplicated";
+        return '<ul>
+<li>%countUpdated pages updated<br/>%exampleUpdated</li>
+<li>%countDuplicated pages duplicated<br/>%exampleDuplicated</li>
+</ul>';
     }
 
     protected function getDuplicationSummaryParameters(ChannelInterface $channel)

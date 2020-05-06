@@ -1,0 +1,7 @@
+views.filter.channels_target_id:
+  type: views.filter.many_to_one
+  label: 'Channel'
+  mapping:
+    channel_type:
+      type: string
+      label: 'Channel type'

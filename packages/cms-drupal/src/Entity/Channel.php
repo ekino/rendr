@@ -29,6 +29,7 @@ use Drupal\user\EntityOwnerTrait;
  *   bundle_label = @Translation("Channel type"),
  *   entity_keys={
  *      "id"="id",
+ *      "uuid" = "uuid",
  *      "bundle"="channel_type",
  *      "label"="label",
  *      "langcode" = "langcode",
@@ -41,7 +42,6 @@ use Drupal\user\EntityOwnerTrait;
  *      "form"={
  *          "add"="Drupal\ekino_rendr\Form\ChannelUpsertForm",
  *          "edit"="Drupal\ekino_rendr\Form\ChannelUpsertForm"
- *          "duplicate"="Drupal\ekino_rendr\Form\ChannelDuplicateForm"
  *      },
  *      "list_builder"="Drupal\ekino_rendr\Entity\ChannelListBuilder",
  *      "route_provider" = {
@@ -100,16 +100,6 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
                     'type' => 'string_textfield',
                 ])
                 ->setDisplayConfigurable('form', true),
-            'key' => BaseFieldDefinition::create('string')
-                ->setLabel(new TranslatableMarkup('Key'))
-                ->setRequired(true)
-                ->setRevisionable(true)
-                ->setDefaultValueCallback(__CLASS__.'::getDefaultKeyValue')
-                ->addConstraint('UniqueField')
-                ->setDisplayOptions('form', [
-                    'type' => 'string_textfield',
-                ])
-                ->setDisplayConfigurable('form', true),
             'domain' => BaseFieldDefinition::create('string')
                 ->setLabel(new TranslatableMarkup('Domain'))
                 ->setRequired(true)
@@ -147,9 +137,14 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
     {
         $duplicate = parent::createDuplicate();
 
-        $duplicate->set('key', self::getDefaultKeyValue());
-        $duplicate->set('title', $duplicate->get('title')->value.' - DUPLICATE');
+        $duplicate->set('label', $duplicate->get('label')->value.' - DUPLICATE');
         $duplicate->set('locale', $duplicate->get('locale')->value.' - DUPLICATE');
+
+        foreach ($duplicate->getTranslationLanguages() as $langcode => $language) {
+            $translation = $duplicate->getTranslation($langcode);
+            $translation->set('label', $translation->get('label')->value.' - DUPLICATE');
+            $translation->set('locale', $translation->get('locale')->value.' - DUPLICATE');
+        }
 
         return $duplicate;
     }

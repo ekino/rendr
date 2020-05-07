@@ -540,7 +540,7 @@ display:
           group_type: group
           admin_label: ''
           operator: '='
-          value: '1'
+          value: All
           group: 1
           exposed: true
           expose:
@@ -552,7 +552,7 @@ display:
             operator_limit_selection: false
             operator_list: {  }
             identifier: published
-            required: true
+            required: false
             remember: false
             multiple: false
             remember_roles:

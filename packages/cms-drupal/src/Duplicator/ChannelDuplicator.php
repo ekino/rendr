@@ -32,7 +32,7 @@ class ChannelDuplicator implements ChannelDuplicatorInterface
 
         /** @var PageInterface $layoutPage */
         foreach ($layoutPages as $layoutPage) {
-            $layoutPage->get('channels')->add($duplicate);
+            $layoutPage->get('channels')->appendItem($duplicate->id());
             $layoutPage->save();
         }
 
@@ -69,7 +69,7 @@ class ChannelDuplicator implements ChannelDuplicatorInterface
 
         $hasChildren = static function ($currentPage) use ($pages) {
             foreach ($pages as $page) {
-                if (\array_column($page->get('parent_page')->getValue(), 'target_id') === $currentPage->id()) {
+                if (\array_column($page->get('parent_page')->getValue(), 'target_id')[0] === $currentPage->id()) {
                     return true;
                 }
             }

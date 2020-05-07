@@ -41,6 +41,7 @@ use Drupal\user\EntityOwnerTrait;
  *   handlers={
  *      "form"={
  *          "add"="Drupal\ekino_rendr\Form\ChannelUpsertForm",
+ *          "delete"="Drupal\Core\Entity\ContentEntityDeleteForm",
  *          "edit"="Drupal\ekino_rendr\Form\ChannelUpsertForm"
  *      },
  *      "list_builder"="Drupal\ekino_rendr\Entity\ChannelListBuilder",
@@ -137,10 +138,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
     {
         $duplicate = parent::createDuplicate();
 
-        $duplicate->set('label', $duplicate->get('label')->value.' - DUPLICATE');
-        $duplicate->set('locale', $duplicate->get('locale')->value.' - DUPLICATE');
-
-        foreach ($duplicate->getTranslationLanguages() as $langcode => $language) {
+        foreach ($duplicate->getTranslationLanguages(true) as $langcode => $language) {
             $translation = $duplicate->getTranslation($langcode);
             $translation->set('label', $translation->get('label')->value.' - DUPLICATE');
             $translation->set('locale', $translation->get('locale')->value.' - DUPLICATE');

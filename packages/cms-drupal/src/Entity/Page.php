@@ -37,6 +37,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *      "form"={
  *          "default"="Drupal\Core\Entity\ContentEntityForm",
  *          "add"="Drupal\ekino_rendr\Form\PageUpsertForm",
+ *          "delete"="Drupal\Core\Entity\ContentEntityDeleteForm",
  *          "edit"="Drupal\ekino_rendr\Form\PageUpsertForm"
  *      },
  *      "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",

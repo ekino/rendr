@@ -1,3 +1,44 @@
+entity.ekino_rendr_channel.canonical:
+    path: '/admin/content/ekino_rendr_channel/{ekino_rendr_channel}'
+    defaults:
+        _controller: '\Drupal\ekino_rendr\Controller\ContentViewController::viewChannel'
+        _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
+    requirements:
+        ekino_rendr_page: \d+
+        _permission: 'administer ekino_rendr channels'
+    options:
+        parameters:
+            ekino_rendr_channel:
+                type: entity:ekino_rendr_channel
+
+entity.ekino_rendr_channel.form_duplicate:
+    path: '/admin/content/ekino_rendr_channel/{ekino_rendr_channel}/duplicate'
+    defaults:
+        _entity_form: 'ekino_rendr_channel.duplicate'
+    requirements:
+        _permission: 'administer ekino_rendr channels'
+
+entity.ekino_rendr_page.canonical:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}'
+    defaults:
+        _controller: '\Drupal\ekino_rendr\Controller\ContentViewController::view'
+        _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
+    requirements:
+        ekino_rendr_page: \d+
+        _permission: 'administer ekino_rendr pages'
+    options:
+        parameters:
+            ekino_rendr_page:
+                type: entity:ekino_rendr_page
+
+#entity.ekino_rendr_template.add:
+#    path: '/admin/structure/ekino_rendr/template/add'
+#    defaults:
+#        _entity_form: 'ekino_rendr_template.add'
+#        _title: 'Add Page Template'
+#    requirements:
+#        _permission: 'administer page template'
+
 ekino_rendr.main.menu:
     path: "/admin/structure/ekino_rendr"
     defaults:
@@ -7,14 +48,6 @@ ekino_rendr.main.menu:
         _permission: "administer site configuration"
     options:
         _admin_route: true
-
-#entity.ekino_rendr_template.add:
-#    path: '/admin/structure/ekino_rendr/template/add'
-#    defaults:
-#        _entity_form: 'ekino_rendr_template.add'
-#        _title: 'Add Page Template'
-#    requirements:
-#        _permission: 'administer page template'
 
 ekino_rendr.api.page:
     path: "/ekino-rendr/api/page/{slug}"

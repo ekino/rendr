@@ -23,8 +23,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *   },
  *   handlers={
  *      "form"={
- *          "add"="Drupal\ekino_rendr\Form\UpsertChannelTypeForm",
- *          "edit"="Drupal\ekino_rendr\Form\UpsertChannelTypeForm"
+ *          "add"="Drupal\ekino_rendr\Form\ChannelTypeUpsertForm",
+ *          "edit"="Drupal\ekino_rendr\Form\ChannelTypeUpsertForm"
  *      },
  *      "list_builder"="Drupal\ekino_rendr\Entity\ChannelTypeListBuilder",
  *      "route_provider" = {

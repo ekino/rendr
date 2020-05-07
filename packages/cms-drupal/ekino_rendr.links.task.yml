@@ -3,3 +3,22 @@ entity.ekino_rendr_page.collection:
   route_name: entity.ekino_rendr_page.collection
   base_route: system.admin_content
 
+entity.ekino_rendr_channel.canonical:
+  title: 'View'
+  route_name: entity.ekino_rendr_channel.canonical
+  base_route: entity.ekino_rendr_channel.canonical
+
+entity.ekino_rendr_channel.edit_form:
+  title: Edit
+  route_name: entity.ekino_rendr_channel.edit_form
+  base_route: entity.ekino_rendr_channel.canonical
+
+entity.ekino_rendr_page.canonical:
+  title: View
+  route_name: entity.ekino_rendr_page.canonical
+  base_route: entity.ekino_rendr_page.canonical
+
+entity.ekino_rendr_page.edit_form:
+  title: Edit
+  route_name: entity.ekino_rendr_page.edit_form
+  base_route: entity.ekino_rendr_page.canonical

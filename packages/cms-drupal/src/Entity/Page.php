@@ -17,23 +17,30 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   id="ekino_rendr_page",
  *   label=@Translation("Page"),
  *
+ *   translatable = TRUE,
  *   admin_permission="administer ekino_rendr pages",
  *   base_table="ekino_rendr_page",
+ *   data_table = "ekino_rendr_page_field_data",
+ *   revision_table = "ekino_rendr_page_revision",
+ *   revision_data_table = "ekino_rendr_page_field_revision",
  *   bundle_entity_type = "ekino_rendr_template",
  *   bundle_label = @Translation("Template"),
  *   entity_keys={
  *      "id"="id",
  *      "bundle"="template",
  *      "label"="title",
+ *      "langcode" = "langcode",
  *      "published"="published",
  *      "revision"="revision_id",
  *   },
  *   handlers={
  *      "form"={
  *          "default"="Drupal\Core\Entity\ContentEntityForm",
- *          "add"="Drupal\ekino_rendr\Form\UpsertPageForm",
- *          "edit"="Drupal\ekino_rendr\Form\UpsertPageForm"
+ *          "add"="Drupal\ekino_rendr\Form\PageUpsertForm",
+ *          "edit"="Drupal\ekino_rendr\Form\PageUpsertForm"
  *      },
+ *      "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
+ *      "views_data" = "Drupal\lsm\ViewsData\PageViewsData",
  *      "list_builder"="Drupal\ekino_rendr\Entity\PageListBuilder",
  *      "route_provider" = {
  *          "html"="Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
@@ -70,6 +77,11 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
         return \is_string($path = $this->get('path')->value) ? $path : '';
     }
 
+    public function getTitle(): string
+    {
+        return \is_string($title = $this->get('title')->value) ? $title : '';
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -79,6 +91,7 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
         $published[$entityType->getKey('published')]
             ->setRevisionable(true)
             ->setDefaultValue(false)
+            ->setTranslatable(true)
             ->setDisplayOptions('form', [
                 'type' => 'boolean_checkbox',
             ])
@@ -89,6 +102,7 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
                 ->setLabel(new TranslatableMarkup('Title'))
                 ->setRequired(true)
                 ->setRevisionable(true)
+                ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
@@ -97,10 +111,12 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
                 ->setLabel(new TranslatableMarkup('Path'))
                 ->setRequired(false)
                 ->setRevisionable(true)
+                ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
                 ->setDisplayConfigurable('form', true),
+                // NodeAccessControlHandler for autocomplete in edit form
             'channels' => BaseFieldDefinition::create('entity_reference')
                 ->setLabel(new TranslatableMarkup('Channels'))
                 ->setRequired(true)
@@ -134,5 +150,18 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
         ] +
             parent::baseFieldDefinitions($entityType) +
             $published;
+    }
+
+    public function createDuplicate()
+    {
+        $duplicate = parent::createDuplicate();
+        $duplicate->set('published', false);
+
+        foreach ($duplicate->getTranslationLanguages() as $langcode => $language) {
+            $translation = $duplicate->getTranslation($langcode);
+            $translation->set('published', false);
+        }
+
+        return $duplicate;
     }
 }

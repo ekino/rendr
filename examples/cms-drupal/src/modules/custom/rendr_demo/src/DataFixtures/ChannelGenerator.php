@@ -41,7 +41,7 @@ final class ChannelGenerator implements Generator
             $channel_type->enforceIsNew();
             $channel_type->save();
         } else {
-            $channel_type = reset($channel_types);
+            $channel_type = \reset($channel_types);
         }
 
         $channel = Channel::create([

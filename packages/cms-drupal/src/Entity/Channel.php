@@ -19,14 +19,20 @@ use Drupal\user\EntityOwnerTrait;
  *   id="ekino_rendr_channel",
  *   label=@Translation("Channel"),
  *
+ *   translatable = TRUE,
  *   admin_permission="administer ekino_rendr channels",
  *   base_table="ekino_rendr_channel",
+ *   data_table = "ekino_rendr_channel_field_data",
+ *   revision_table = "ekino_rendr_channel_revision",
+ *   revision_data_table = "ekino_rendr_channel_field_revision",
  *   bundle_entity_type = "ekino_rendr_channel_type",
  *   bundle_label = @Translation("Channel type"),
  *   entity_keys={
  *      "id"="id",
+ *      "uuid" = "uuid",
  *      "bundle"="channel_type",
  *      "label"="label",
+ *      "langcode" = "langcode",
  *      "published"="published",
  *      "revision"="revision_id",
  *      "owner" = "uid",
@@ -34,8 +40,8 @@ use Drupal\user\EntityOwnerTrait;
  *   field_ui_base_route="entity.ekino_rendr_channel_type.edit_form",
  *   handlers={
  *      "form"={
- *          "add"="Drupal\ekino_rendr\Form\UpsertChannelForm",
- *          "edit"="Drupal\ekino_rendr\Form\UpsertChannelForm"
+ *          "add"="Drupal\ekino_rendr\Form\ChannelUpsertForm",
+ *          "edit"="Drupal\ekino_rendr\Form\ChannelUpsertForm"
  *      },
  *      "list_builder"="Drupal\ekino_rendr\Entity\ChannelListBuilder",
  *      "route_provider" = {
@@ -78,6 +84,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
         $published[$entityType->getKey('published')]
             ->setRevisionable(true)
             ->setDefaultValue(false)
+            ->setTranslatable(true)
             ->setDisplayOptions('form', [
                 'type' => 'boolean_checkbox',
             ])
@@ -88,16 +95,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
                 ->setLabel(new TranslatableMarkup('Label'))
                 ->setRequired(true)
                 ->setRevisionable(true)
-                ->setDisplayOptions('form', [
-                    'type' => 'string_textfield',
-                ])
-                ->setDisplayConfigurable('form', true),
-            'key' => BaseFieldDefinition::create('string')
-                ->setLabel(new TranslatableMarkup('Key'))
-                ->setRequired(true)
-                ->setRevisionable(true)
-                ->setDefaultValueCallback(__CLASS__.'::getDefaultKeyValue')
-                ->addConstraint('UniqueField')
+                ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
@@ -106,7 +104,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
                 ->setLabel(new TranslatableMarkup('Domain'))
                 ->setRequired(true)
                 ->setRevisionable(true)
-                ->setDefaultValueCallback(__CLASS__.'::getDefaultKeyValue')
+                ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
@@ -115,7 +113,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
             'locale' => BaseFieldDefinition::create('string')
                 ->setLabel(new TranslatableMarkup('Locale'))
                 ->setRevisionable(true)
-                ->setDefaultValueCallback(__CLASS__.'::getDefaultKeyValue')
+                ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
@@ -133,5 +131,21 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
     public static function getDefaultKeyValue(): string
     {
         return (new Php())->generate();
+    }
+
+    public function createDuplicate()
+    {
+        $duplicate = parent::createDuplicate();
+
+        $duplicate->set('label', $duplicate->get('label')->value.' - DUPLICATE');
+        $duplicate->set('locale', $duplicate->get('locale')->value.' - DUPLICATE');
+
+        foreach ($duplicate->getTranslationLanguages() as $langcode => $language) {
+            $translation = $duplicate->getTranslation($langcode);
+            $translation->set('label', $translation->get('label')->value.' - DUPLICATE');
+            $translation->set('locale', $translation->get('locale')->value.' - DUPLICATE');
+        }
+
+        return $duplicate;
     }
 }

@@ -10,4 +10,5 @@ use Drupal\Core\Entity\RevisionLogInterface;
 
 interface PageInterface extends RevisionLogInterface, EntityChangedInterface, EntityPublishedInterface
 {
+    public function getTitle();
 }

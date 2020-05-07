@@ -17,7 +17,7 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\ekino_rendr\Entity\Channel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class UpsertChannelForm extends ContentEntityForm
+final class ChannelUpsertForm extends ContentEntityForm
 {
     protected $messenger;
     protected $stringTranslation;
@@ -75,40 +75,72 @@ final class UpsertChannelForm extends ContentEntityForm
         }
 
         $form = [
-            '#theme' => 'node_edit_form',
-            '#attached' => [
-                'library' => [
-                    'node/form',
+                '#theme' => 'node_edit_form',
+                '#attached' => [
+                    'library' => [
+                        'node/form',
+                    ],
                 ],
-            ],
-            'advanced' => [
-                '#type' => 'container',
-                '#attributes' => [
-                    'class' => 'entity-meta',
-                ],
-                'meta' => [
+                'advanced' => [
                     '#type' => 'container',
                     '#attributes' => [
-                        'class' => 'entity-meta__header',
+                        'class' => 'entity-meta',
                     ],
-                    'changed' => [
-                        '#type' => 'item',
-                        '#wrapper_attributes' => [
-                            'class' => 'entity-meta__last-saved container-inline',
+                    'meta' => [
+                        '#type' => 'container',
+                        '#attributes' => [
+                            'class' => 'entity-meta__header',
                         ],
-                        '#markup' => \sprintf('<label>%s</label> %s', $this->stringTranslation->translate('Last saved'), $this->entity->isNew() ? $this->stringTranslation->translate('Not saved yet') : $this->dateFormatter->format($this->entity->getChangedTime())),
-                        '#allowed_tags' => [
-                            'label',
+                        'changed' => [
+                            '#type' => 'item',
+                            '#wrapper_attributes' => [
+                                'class' => 'entity-meta__last-saved container-inline',
+                            ],
+                            '#markup' => \sprintf('<label>%s</label> %s', $this->stringTranslation->translate('Last saved'), $this->entity->isNew() ? $this->stringTranslation->translate('Not saved yet') : $this->dateFormatter->format($this->entity->getChangedTime())),
+                            '#allowed_tags' => [
+                                'label',
+                            ],
+                            '#value' => $this->entity->getChangedTime(),
                         ],
-                        '#value' => $this->entity->getChangedTime(),
                     ],
                 ],
-            ],
-        ] + parent::form($form, $formState);
+            ] + parent::form($form, $formState);
 
         $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#group'] = 'meta';
 
         return $form;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validateForm(array &$form, FormStateInterface $formState)
+    {
+        $domain = $formState->getValue('domain')[0]['value'];
+        $locale = $formState->getValue('locale')[0]['value'];
+
+        $existingChannels = $this->entityTypeManager->getStorage('ekino_rendr_channel')->loadByProperties([
+            'domain' => $domain,
+        ]);
+
+        foreach ($existingChannels as $existingChannel) {
+            foreach ($existingChannel->getTranslationLanguages(true) as $langcode => $language) {
+                $translation = $existingChannel->getTranslation($langcode);
+
+                if ($translation->get('locale')->value === $locale &&
+                    ($this->entity->id() !== $translation->id() || $this->entity->language()->getId() !== $translation->language()->getId())
+                ) {
+                    $formState->setErrorByName(
+                        'locale',
+                        $this->t('The pair domain + locale must be unique. The channel "%title" is also using the same combination.', [
+                            '%title' => $translation->get('label')->value,
+                        ]));
+                    break 2;
+                }
+            }
+        }
+
+        parent::validateForm($form, $formState);
     }
 
     /**

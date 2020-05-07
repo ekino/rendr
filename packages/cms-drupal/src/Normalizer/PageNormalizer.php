@@ -11,7 +11,6 @@ use Drupal\Core\Entity\EntityTypeRepositoryInterface;
 use Drupal\ekino_rendr\Entity\PageInterface;
 use Drupal\ekino_rendr\Entity\Template;
 use Drupal\serialization\Normalizer\ContentEntityNormalizer;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Page normalizer.
@@ -59,7 +58,7 @@ class PageNormalizer extends ContentEntityNormalizer
         foreach ($containers as $key => $container) {
             \preg_match(Template::CONTAINER_KEY_PATTERN, $key, $matches);
             $blocks = \array_merge($blocks, \array_map(static function ($block) use ($matches, &$blockOrder) {
-                $block['container'] = $matches[1];
+                $block['container'] = $block['container'] ?? $matches[1];
                 $block['order'] = $blockOrder;
                 ++$blockOrder;
 
@@ -70,7 +69,7 @@ class PageNormalizer extends ContentEntityNormalizer
         $attributes['head']['title'] = $object->get('title')->value;
         $attributes['path'] = $object->get('path')->value;
         $attributes['blocks'] = $blocks;
-        $attributes['settings'] = $this->resolve($context);
+        $attributes['settings'] = ['preview' => $context['preview'] ?? false];
         $attributes['settings']['published'] = (bool) $object->get('published')->value;
 
         return $attributes;
@@ -101,20 +100,6 @@ class PageNormalizer extends ContentEntityNormalizer
             'id' => '',
             'path' => '/',
         ];
-    }
-
-    /**
-     * Resolve context.
-     *
-     * @return array
-     */
-    private function resolve(array $context)
-    {
-        $resolver = new OptionsResolver();
-        $resolver->setDefaults(['preview' => false]);
-        $resolver->setDefined(['preview']);
-
-        return $resolver->resolve($context);
     }
 
     /**

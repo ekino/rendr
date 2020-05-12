@@ -18,6 +18,13 @@ entity.ekino_rendr_channel.form_duplicate:
     requirements:
         _permission: 'administer ekino_rendr channels'
 
+entity.ekino_rendr_page.form_duplicate:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/duplicate'
+    defaults:
+        _entity_form: 'ekino_rendr_page.duplicate'
+    requirements:
+        _permission: 'administer ekino_rendr pages'
+
 entity.ekino_rendr_page.canonical:
     path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}'
     defaults:

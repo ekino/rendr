@@ -5,6 +5,7 @@ dependencies:
     - ekino_rendr.ekino_rendr_channel_type.1
   module:
     - ekino_rendr
+    - user
 id: rendr_pages
 label: 'Rendr Pages'
 module: ekino_rendr
@@ -20,8 +21,9 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'administer ekino_rendr pages'
       cache:
         type: tag
         options: {  }
@@ -594,6 +596,7 @@ display:
         - url
         - url.query_args
         - user
+        - user.permissions
       tags: {  }
   page_1:
     display_plugin: page
@@ -611,4 +614,5 @@ display:
         - url
         - url.query_args
         - user
+        - user.permissions
       tags: {  }

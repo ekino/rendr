@@ -14,6 +14,10 @@ services:
             - '@ekino_rendr.duplicator.channel_duplicator'
             - '@entity.repository'
 
+    Drupal\ekino_rendr\Form\PageDuplicateForm:
+        arguments:
+            - '@entity.repository'
+
     Drupal\ekino_rendr\Normalizer\PageNormalizer:
         arguments:
             - '@entity_type.manager'

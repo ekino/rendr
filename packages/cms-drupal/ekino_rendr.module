@@ -1,8 +1,8 @@
 <?php
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\ekino_rendr\Entity\ChannelInterface;
+use Drupal\ekino_rendr\Entity\PageInterface;
 use Drupal\field\FieldStorageConfigInterface;
 
 /**
@@ -11,9 +11,12 @@ use Drupal\field\FieldStorageConfigInterface;
 function ekino_rendr_entity_operation(EntityInterface $entity)
 {
     $operations = [];
+    $channelCondition = $entity instanceof ChannelInterface &&
+        \Drupal::currentUser()->hasPermission('administer ekino_rendr channels');
+    $pageCondition = $entity instanceof PageInterface &&
+        \Drupal::currentUser()->hasPermission('administer ekino_rendr pages');
 
-    if ($entity instanceof ChannelInterface &&
-        \Drupal::currentUser()->hasPermission('administer ekino_rendr channels')) {
+    if ($channelCondition || $pageCondition) {
         $operations['duplicate'] = [
             'title' => t('Duplicate'),
             'weight' => 50,
@@ -33,6 +36,9 @@ function ekino_rendr_entity_type_build(array &$entity_types)
     $entity_types['ekino_rendr_channel']
         ->setFormClass('duplicate', 'Drupal\ekino_rendr\Form\ChannelDuplicateForm')
         ->setLinkTemplate('form-duplicate', '/admin/content/ekino_rendr_channel/{ekino_rendr_channel}/duplicate');
+    $entity_types['ekino_rendr_page']
+        ->setFormClass('duplicate', 'Drupal\ekino_rendr\Form\PageDuplicateForm')
+        ->setLinkTemplate('form-duplicate', '/admin/content/ekino_rendr_page/{ekino_rendr_page}/duplicate');
 }
 
 /**

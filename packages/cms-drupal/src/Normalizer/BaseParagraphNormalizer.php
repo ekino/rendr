@@ -9,14 +9,14 @@ use Drupal\paragraphs\Entity\Paragraph;
 abstract class BaseParagraphNormalizer implements ParagraphNormalizerInterface
 {
     /**
-     * @var string|array The supported paragraph type
+     * @var string The supported paragraph type
      */
     protected $supportedParagraphType;
 
     /**
      * Constructs a ParagraphTransformer object.
      *
-     * @param string|array $supported_paragraph_type The supported paragraph type
+     * @param string $supported_paragraph_type The supported paragraph type
      */
     public function __construct($supported_paragraph_type)
     {
@@ -33,6 +33,6 @@ abstract class BaseParagraphNormalizer implements ParagraphNormalizerInterface
      */
     final public function supportsNormalization(Paragraph $object)
     {
-        return \in_array($object->getType(), (array) $this->supportedParagraphType);
+        return $object->getType() === $this->supportedParagraphType;
     }
 }

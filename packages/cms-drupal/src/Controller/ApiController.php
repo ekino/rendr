@@ -56,6 +56,7 @@ final class ApiController
         return new JsonResponse($this->serializer->normalize($page, 'rendr_json', [
             'preview' => $preview,
             'slug' => $slug,
+            'request' => $request,
             'channel' => $channel,
         ]), 200, [
             'content-type' => 'application/json',

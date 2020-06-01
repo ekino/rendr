@@ -31,6 +31,9 @@ export function createApiLoader(baseUrl: string): Loader {
       if ("range" in ctx.req.headers) {
         headers["range"] = ctx.req.headers["range"];
       }
+      if ("user-agent" in ctx.req.headers) {
+        headers["user-agent"] = ctx.req.headers["user-agent"];
+      }
 
       headers["accept"] = ctx.req.headers["accept"];
       // please note: axios does not support br (brotli)

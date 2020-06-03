@@ -9,7 +9,7 @@ Page {
   "head": Object {
     "defaultTitle": "-",
     "htmlAttributes": Object {},
-    "link": "",
+    "links": Array [],
     "meta": Array [],
     "title": "-",
     "titleTemplate": "%s",
@@ -41,7 +41,7 @@ Page {
   "head": Object {
     "defaultTitle": "-",
     "htmlAttributes": Object {},
-    "link": "",
+    "links": Array [],
     "meta": Array [],
     "title": "-",
     "titleTemplate": "%s",
@@ -64,7 +64,7 @@ Page {
   "head": Object {
     "defaultTitle": "-",
     "htmlAttributes": Object {},
-    "link": "",
+    "links": Array [],
     "meta": Array [],
     "title": "-",
     "titleTemplate": "%s",
@@ -87,7 +87,7 @@ Page {
   "head": Object {
     "defaultTitle": "-",
     "htmlAttributes": Object {},
-    "link": "",
+    "links": Array [],
     "meta": Array [],
     "title": "My Custom Title",
     "titleTemplate": "%s",
@@ -173,7 +173,7 @@ Page {
     "htmlAttributes": Object {
       "foo": "bar",
     },
-    "link": "",
+    "links": Array [],
     "meta": Array [
       Object {
         "name": "foo",

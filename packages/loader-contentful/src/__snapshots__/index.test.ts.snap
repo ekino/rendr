@@ -9,7 +9,7 @@ Page {
   "head": Object {
     "defaultTitle": "-",
     "htmlAttributes": Object {},
-    "link": "",
+    "links": Array [],
     "meta": Array [
       Object {
         "content": "/",

@@ -5,17 +5,17 @@ export default function RendrHeader() {
   const Menu = (
     <>
       <div className="text-sm lg:flex-grow">
-        <Link href="/_rendr" as={"/"}>
+        <Link href="/[...page]" as={"/"}>
           <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
             home
           </a>
         </Link>
-        <Link href="/_rendr" as={"/about"}>
+        <Link href="/[...page]" as={"/about"}>
           <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
             About
           </a>
         </Link>
-        <Link href="/_rendr" as={"/articles"}>
+        <Link href="/[...page]" as={"/articles"}>
           <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
             Articles
           </a>

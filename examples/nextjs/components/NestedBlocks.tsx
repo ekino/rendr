@@ -1,6 +1,5 @@
 import React from "react";
 
-import Link from "next/link";
 import { BlockDefinition } from "@ekino/rendr-core";
 import { BlockRenderer } from "@ekino/rendr-template-react";
 

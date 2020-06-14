@@ -20,7 +20,7 @@ export default function RendrText({
 
   if (link) {
     components.push(
-      <Link key="3" href="/_rendr" as={link.href}>
+      <Link key="3" href="/[...page]" as={link.href}>
         <a>{link.href}</a>
       </Link>
     );

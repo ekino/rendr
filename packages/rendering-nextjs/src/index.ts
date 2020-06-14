@@ -15,6 +15,10 @@ import {
 import { createDynamicPage } from "./components/DynamicPage";
 
 export function updateNextData(props: any, defaultPage = "/_rendr") {
+  console.log(
+    "@ekino/rendr-rendering-nextjs:updateNextData is deprecated, and can be removed, see examples."
+  );
+
   if (
     !props.__NEXT_DATA__.err &&
     props.__NEXT_DATA__.props.pageProps &&
@@ -28,6 +32,9 @@ export async function getInitialProps(
   RendrPage: NextComponentType<NextPageContext, any, {}>,
   { Component, ctx }: AppContext
 ) {
+  console.log(
+    "@ekino/rendr-rendering-nextjs:getInitialProps is deprecated, and can be removed, see examples."
+  );
   let pageProps = {};
 
   if (Component.getInitialProps) {
@@ -66,6 +73,10 @@ export function getComponent(
   RendrPage: NextComponentType<NextPageContext, any, {}>,
   props: any
 ) {
+  console.log(
+    "@ekino/rendr-rendering-nextjs:getComponent is deprecated, and can be removed, see examples."
+  );
+
   let { Component, pageProps } = props;
 
   // once loaded in the javascript, the router will return

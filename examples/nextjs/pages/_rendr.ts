@@ -8,9 +8,9 @@ import {
 
 import { RequestCtx, BlockDefinition, Page } from "@ekino/rendr-core";
 
-import dynamic from "next/dynamic";
-
 import RendrTemplate from "../templates/RendrTemplate";
+
+import dynamic from "next/dynamic";
 
 // Configure components used on pages. A component is a standard React component.
 const components = {
@@ -42,9 +42,11 @@ const apiLoader: Loader = (ctx, page, next) => {
 
   if (ctx.isClientSide) {
     url = `${location.origin}/api`;
-  } else if (ctx.req.headers["x-original-route"]) { // are we on platform.sh ?
+  } else if (ctx.req.headers["x-original-route"]) {
+    // are we on platform.sh ?
     url = `https://${ctx.hostname}/api`;
-  } else if (ctx.req.headers["x-now-deployment-url"]) { // are we on now.sh ?
+  } else if (ctx.req.headers["x-now-deployment-url"]) {
+    // are we on now.sh ?
     url = `https://${ctx.req.headers["x-now-deployment-url"]}/api`;
   } else {
     url = "http://localhost:3000/api";

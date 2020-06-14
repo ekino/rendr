@@ -26,7 +26,7 @@
     "setup": "yarn install",
     "build": "next build",
     "dev": "ts-node --project tsconfig.dev.json dev.ts",
-    "start": "next start"
+    "start": "next start -p 8000"
   },
   "private": true
 }

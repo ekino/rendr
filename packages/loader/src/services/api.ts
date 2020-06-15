@@ -1,8 +1,8 @@
 import { createPage, Page } from "@ekino/rendr-core";
 import { Readable, Writable } from "stream";
-import Axios, { ResponseType } from "axios";
+import Axios, { ResponseType, AxiosRequestConfig } from "axios";
 
-import { Loader } from "../types";
+import { Loader, AxiosOptionsBuilder } from "../types";
 
 const headersToTransfers = [
   "Last-Modified",
@@ -13,14 +13,19 @@ const headersToTransfers = [
   "Date",
 ];
 
+function defaultOptionsBuilder(url: string, options: AxiosRequestConfig) {
+  return { url, options };
+}
+
 // The loader is used to load the Page definition from an API
 // This code can be called from the nodejs or the browser.
 // However the pipe for raw binary are not likely to be run by the browser
 // as the server will stream the content, and so cannot be run by the browser.
-export function createApiLoader(baseUrl: string): Loader {
+export function createApiLoader(
+  baseUrl: string,
+  optionsBuilder: AxiosOptionsBuilder = defaultOptionsBuilder
+): Loader {
   return async (ctx, page, next) => {
-    const url = `${baseUrl}${ctx.asPath}`;
-
     const headers: any = {
       "X-User-Agent": "ekino/rendr",
     };
@@ -39,10 +44,12 @@ export function createApiLoader(baseUrl: string): Loader {
       responseType = "stream";
     }
 
-    const response = await Axios.get(url, {
+    const { url, options } = optionsBuilder(`${baseUrl}${ctx.asPath}`, {
       responseType,
       headers,
     });
+
+    const response = await Axios.get(url, options);
 
     if (!("x-rendr-content-type" in response.headers)) {
       // @todo: check how we can add a logger here

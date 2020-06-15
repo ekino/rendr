@@ -1,4 +1,5 @@
 import { Page, RequestCtx } from "@ekino/rendr-core";
+import { AxiosRequestConfig } from "axios";
 
 export type MaybePage = Promise<Page | void> | Page | void;
 
@@ -19,3 +20,8 @@ export type RouteConfiguration = {
 export interface InMemorySettings {
   [index: string]: PageBuilder | Loader;
 }
+
+export type AxiosOptionsBuilder = (
+  url: string,
+  options: AxiosRequestConfig
+) => { url: string; options: AxiosRequestConfig };

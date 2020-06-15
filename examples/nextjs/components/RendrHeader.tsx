@@ -5,7 +5,7 @@ export default function RendrHeader() {
   const Menu = (
     <>
       <div className="text-sm lg:flex-grow">
-        <Link href="/[...page]" as={"/"}>
+        <Link href="/" as={"/"}>
           <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
             home
           </a>

@@ -36,6 +36,8 @@ const handlers = {
     Promise.resolve(block),
 };
 
+export const BUILD_VERSION = "_BUILD_VERSION_";
+
 // initialize related code required to make the page works.
 const apiLoader: Loader = (ctx, page, next) => {
   let url = "";
@@ -52,7 +54,13 @@ const apiLoader: Loader = (ctx, page, next) => {
     url = "http://localhost:3000/api";
   }
 
-  const loader = createApiLoader(url);
+  const loader = createApiLoader(url, (url, options) => {
+    options.params = {
+      _build_version: BUILD_VERSION,
+    };
+
+    return { url, options };
+  });
 
   return loader(ctx, page, next);
 };

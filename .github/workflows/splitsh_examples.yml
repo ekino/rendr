@@ -16,9 +16,9 @@ jobs:
 
       - name: Split - Examples
         uses: rande/splitsh-github-action@master
-        # if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         with:
           path: examples
           remote: ${{ secrets.PLATFORMSH_GIT_URL }}
           private_key: ${{ secrets.PLATFORMSH_PRIVATE_KEY }}
-          remote_branch: develop
+          remote_branch: master

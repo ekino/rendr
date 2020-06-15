@@ -55,8 +55,8 @@ const loadFixtures = async () => {
           "contentful-api.rande.now.sh",
           "contentful.api.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
           "nextjs.view.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
-          "contentful.api.demo.develop-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
-          "nextjs.view.demo.develop-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
+          "nextjs.view.demo.develop-sr3snxi-g4cifmmuhuaz2.eu-4.platformsh.site",
+          "contentful.api.demo.develop-sr3snxi-g4cifmmuhuaz2.eu-4.platformsh.site",
         ],
       },
       path: {

@@ -24,4 +24,4 @@ You are now setup.
 make
 ```
 
-Please visit http://localhost:8080/
+Please visit http://localhost:3000/

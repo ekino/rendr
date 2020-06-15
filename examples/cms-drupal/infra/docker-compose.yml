@@ -13,8 +13,8 @@ services:
       UNIX_GID: $UNIX_GID
 
     ports:
-      - 8080:8080
-      - 443:443
+      - ${COMPOSE_BIND_IP:-0.0.0.0}:3000:3000
+      - ${COMPOSE_BIND_IP:-0.0.0.0}:443:443
     depends_on:
       - postgres
 
@@ -24,4 +24,4 @@ services:
       POSTGRES_PASSWORD: example
     restart: always
     ports:
-      - 5432:5432
+      - ${COMPOSE_BIND_IP:-0.0.0.0}:5432:5432

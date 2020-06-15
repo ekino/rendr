@@ -37,7 +37,7 @@ const routes = {
     // add related blocks for the page
     page.blocks.push({
       container: "body",
-      type: "rendr.jumbotron",
+      type: "rendr.text",
       settings: {
         title: "Rendr (by ekino.)",
         contents: "A page rendering engine built on top of React and NextJS.",

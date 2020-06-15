@@ -34,7 +34,9 @@ exports.createPagesStatefully = async ({ actions, reporter }) => {
 
   const loader = createChainedLoader([createApiLoader(remoteApi)])
 
-  reporter.info(`★ rendr > Pushing page definitions to Gatsby (${pageReferences.length})`)
+  reporter.info(
+    `★ rendr > Pushing page definitions to Gatsby (${pageReferences.length})`
+  )
 
   for (const i in pageReferences) {
     const url = parseUrl(pageReferences[i].loc)

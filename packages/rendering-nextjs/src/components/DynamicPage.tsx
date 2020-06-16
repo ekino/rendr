@@ -30,6 +30,15 @@ export function createDynamicPage(
 
       if (ctx.isServerSide && page instanceof Page) {
         ctx.res.statusCode = page.statusCode;
+
+        if (page.cache.ttl > 0) {
+          ctx.res.setHeader(
+            "Cache-Control",
+            `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`
+          );
+        } else {
+          ctx.res.setHeader("Cache-Control", "private, max-age=0, no-cache");
+        }
       }
 
       return {

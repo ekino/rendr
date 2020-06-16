@@ -133,10 +133,13 @@ export function normalizePage(
       title: entry.fields.title,
       meta: [] as Settings[],
     },
-    path: entry.fields.path ? entry.fields.path : "",
-    template: entry.fields.layout ? entry.fields.layout : "default",
+    path: entry.fields.path ?? "",
+    template: entry.fields.layout ?? "default",
     settings: entry.fields.settings,
     blocks: [] as BlockDefinition[],
+    cache: {
+      ttl: entry.fields.ttl ?? 0,
+    },
   };
 
   if (entry.fields.blocks) {

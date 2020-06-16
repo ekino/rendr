@@ -24,7 +24,7 @@ export function normalizeCache(data: any): Cache {
     return cache;
   }
 
-  cache.ttl = "ttl" in data ? parseInt(data.ttl, 0) : 0;
+  cache.ttl = "ttl" in data ? parseInt(data.ttl, 10) : 0;
 
   return cache;
 }

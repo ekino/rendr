@@ -4,7 +4,7 @@ exports[`test loader page with no extend page 1`] = `
 Page {
   "blocks": Array [],
   "cache": Object {
-    "ttl": 0,
+    "ttl": 1000,
   },
   "head": Object {
     "defaultTitle": "-",

@@ -11,6 +11,9 @@ const headersToTransfers = [
   "Content-Length",
   "Accept-Ranges",
   "Date",
+  "Cache-Control",
+  "Expires",
+  "Etag",
 ];
 
 function defaultOptionsBuilder(url: string, options: AxiosRequestConfig) {

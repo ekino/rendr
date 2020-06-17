@@ -64,4 +64,12 @@ class TemplateForm extends EntityForm
 
         return $form;
     }
+
+    public function save(array $form, FormStateInterface $form_state)
+    {
+        $result = parent::save($form, $form_state);
+        $form_state->setRedirectUrl($this->entity->toUrl('collection'));
+
+        return $result;
+    }
 }

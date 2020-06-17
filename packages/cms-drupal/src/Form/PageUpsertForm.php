@@ -113,6 +113,7 @@ final class PageUpsertForm extends ContentEntityForm
         $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#weight'] = 22;
         $form['parent_page']['#group'] = 'meta';
         $form['channels']['#group'] = 'meta';
+        $form['ttl']['#group'] = 'meta';
         $form['published']['#group'] = 'footer';
 
         // Manage container tabs

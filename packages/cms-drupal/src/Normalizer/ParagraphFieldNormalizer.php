@@ -41,10 +41,11 @@ class ParagraphFieldNormalizer extends EntityReferenceFieldItemNormalizer
 
             return null;
         };
+
         $extendedContext = $context + [
-                'serializer' => $this->serializer,
-                'paragraph_normalizer_closure' => $normalizeParagraphs,
-            ];
+            'serializer' => $this->serializer,
+            'paragraph_normalizer_closure' => $normalizeParagraphs,
+        ];
 
         $result = $normalizeParagraphs($paragraph, $format, $extendedContext);
 

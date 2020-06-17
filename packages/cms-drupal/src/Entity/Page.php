@@ -145,6 +145,14 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
                 ->setDisplayOptions('form', [
                     'type' => 'hidden',
                 ]),
+            'ttl' => BaseFieldDefinition::create('integer')
+                ->setLabel(new TranslatableMarkup('TTL'))
+                ->setDescription(new TranslatableMarkup('How long the page should be stored in cache. In seconds.'))
+                ->setRequired(false)
+                ->setRevisionable(false)
+                ->setDisplayOptions('form', [
+                    'type' => 'number',
+                ]),
             'changed' => BaseFieldDefinition::create('changed')
                 ->setLabel(new TranslatableMarkup('Changed'))
                 ->setRequired(true),
@@ -164,5 +172,12 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
         }
 
         return $duplicate;
+    }
+
+    public function getTtl(ChannelInterface $channel = null)
+    {
+        $default = $channel ? $channel->getPrivateSetting('default_ttl', 0) : 0;
+
+        return (int) (\is_numeric($this->get('ttl')->value) ? $this->get('ttl')->value : $default);
     }
 }

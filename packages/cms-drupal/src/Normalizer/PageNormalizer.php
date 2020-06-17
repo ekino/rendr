@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeRepositoryInterface;
 use Drupal\ekino_rendr\Entity\PageInterface;
 use Drupal\ekino_rendr\Entity\Template;
+use Drupal\ekino_rendr\Model\PageResponse;
 use Drupal\serialization\Normalizer\ContentEntityNormalizer;
 
 /**
@@ -41,7 +42,7 @@ class PageNormalizer extends ContentEntityNormalizer
     {
         $object = $this->resolveContainerInheritance($object);
         $data = parent::normalize($object, $format, $context);
-        $attributes = $this->createPage();
+        $attributes = PageResponse::createPage();
         $containers = \array_filter($data, static function ($key) {
             return \preg_match(Template::CONTAINER_KEY_PATTERN, $key);
         }, ARRAY_FILTER_USE_KEY);
@@ -57,49 +58,37 @@ class PageNormalizer extends ContentEntityNormalizer
 
         foreach ($containers as $key => $container) {
             \preg_match(Template::CONTAINER_KEY_PATTERN, $key, $matches);
-            $blocks = \array_merge($blocks, \array_map(static function ($block) use ($matches, &$blockOrder) {
+            $cb = static function ($block) use ($matches, &$blockOrder) {
                 $block['container'] = $block['container'] ?? $matches[1];
                 $block['order'] = $blockOrder;
                 ++$blockOrder;
 
                 return $block;
-            }, $container));
+            };
+
+            foreach ($container as $block) {
+                if (empty($block['bubbled_blocks'])) {
+                    $blocks[] = $cb($block);
+                } else {
+                    $blocks = \array_merge($blocks, \array_map($cb, $block['blocks']));
+                }
+            }
         }
+
+        $channelData = $context['channel'] ? [
+            'id' => $context['channel']->uuid(),
+            'settings' => $context['channel']->getPublicSettings(),
+        ] : [];
 
         $attributes['head']['title'] = $object->get('title')->value;
         $attributes['path'] = $object->get('path')->value;
         $attributes['blocks'] = $blocks;
+        $attributes['cache'] = ['ttl' => $object->getTtl($context['channel'])];
         $attributes['settings'] = ['preview' => $context['preview'] ?? false];
         $attributes['settings']['published'] = (bool) $object->get('published')->value;
+        $attributes['channel'] = $channelData;
 
         return $attributes;
-    }
-
-    /**
-     * Create an array compatible with Rendr page.
-     *
-     * @return array
-     */
-    private function createPage()
-    {
-        return [
-            'statusCode' => 200,
-            'type' => 'document',
-            'template' => 'rendr',
-            'cache' => ['ttl' => 0],
-            'head' => [
-                'titleTemplate' => 'Ekino - %s',
-                'defaultTitle' => '-',
-                'title' => '-',
-                'links' => [],
-                'htmlAttributes' => [],
-                'meta' => [],
-            ],
-            'blocks' => [],
-            'settings' => [],
-            'id' => '',
-            'path' => '/',
-        ];
     }
 
     /**

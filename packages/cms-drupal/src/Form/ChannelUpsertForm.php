@@ -140,6 +140,16 @@ final class ChannelUpsertForm extends ContentEntityForm
             }
         }
 
+        [$values, $errors] = Channel::extractSettingValues($formState->getValue('public_settings')[0]['value']);
+
+        if (!empty($errors)) {
+            $formState->setErrorByName(
+                'settings',
+                $this->t('Every setting must be in the format key=value. Invalid format at line %line', [
+                    '%line' => $errors[0] + 1,
+                ]));
+        }
+
         parent::validateForm($form, $formState);
     }
 

@@ -11,4 +11,6 @@ use Drupal\Core\Entity\RevisionLogInterface;
 interface PageInterface extends RevisionLogInterface, EntityChangedInterface, EntityPublishedInterface
 {
     public function getTitle();
+
+    public function getTtl(ChannelInterface $channel = null);
 }

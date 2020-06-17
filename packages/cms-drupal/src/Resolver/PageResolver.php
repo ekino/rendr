@@ -37,6 +37,8 @@ class PageResolver implements PageResolverInterface
         if ($options['channel']) {
             $conditions['channels'] = [$options['channel']->id()];
             $conditions['langcode'] = [$options['channel']->language()->getId()];
+        } else {
+            $conditions['channels'] = null;
         }
 
         if ($options['preview']) {

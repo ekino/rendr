@@ -10,4 +10,11 @@ use Drupal\Core\Entity\RevisionLogInterface;
 
 interface ChannelInterface extends RevisionLogInterface, EntityChangedInterface, EntityPublishedInterface
 {
+    public function getPublicSettings(): array;
+
+    public function getPublicSetting($key, $default = null);
+
+    public function getPrivateSettings(): array;
+
+    public function getPrivateSetting($key, $default = null);
 }

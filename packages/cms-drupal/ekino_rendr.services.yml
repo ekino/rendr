@@ -6,8 +6,7 @@ services:
     Drupal\ekino_rendr\Controller\ApiController:
         arguments:
             - '@entity_type.manager'
-            - '@serializer'
-            - '@ekino_rendr.resolver.page_resolver'
+            - '@ekino_rendr.manager.page'
 
     Drupal\ekino_rendr\Form\ChannelDuplicateForm:
         arguments:
@@ -40,6 +39,16 @@ services:
 
     ekino_rendr.resolver.page_resolver:
         class: 'Drupal\ekino_rendr\Resolver\PageResolver'
+
+    ekino_rendr.repository.page:
+        class: 'Drupal\ekino_rendr\Repository\PageRepository'
+
+    ekino_rendr.manager.page:
+        class: 'Drupal\ekino_rendr\Manager\PageManager'
+        arguments:
+            - '@serializer'
+            - '@ekino_rendr.resolver.page_resolver'
+            - '@ekino_rendr.repository.page'
 
     ekino_rendr.access_checker.preview:
         class: Drupal\ekino_rendr\Access\PreviewAccessCheck

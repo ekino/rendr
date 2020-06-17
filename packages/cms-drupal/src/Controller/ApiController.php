@@ -6,27 +6,23 @@ namespace Drupal\ekino_rendr\Controller;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ekino_rendr\Entity\ChannelInterface;
-use Drupal\ekino_rendr\Resolver\PageResolverInterface;
+use Drupal\ekino_rendr\Manager\PageManagerInterface;
+use Drupal\ekino_rendr\Model\PageResponse;
 use Drupal\user\Entity\User;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class ApiController
 {
     protected $entityTypeManager;
-    protected $serializer;
-    protected $pageResolver;
+    protected $pageManager;
 
     public function __construct(
         EntityTypeManagerInterface $entity_type_manager,
-        NormalizerInterface $serializer,
-        PageResolverInterface $pageResolver
+        PageManagerInterface $pageManager
     ) {
         $this->entityTypeManager = $entity_type_manager;
-        $this->serializer = $serializer;
-        $this->pageResolver = $pageResolver;
+        $this->pageManager = $pageManager;
     }
 
     public function page(Request $request, $slug, ChannelInterface $channel = null, $preview = false)
@@ -39,27 +35,20 @@ final class ApiController
             $user = User::load(\Drupal::currentUser()->id());
         }
 
-        $pages = $this->entityTypeManager->getStorage('ekino_rendr_page')->loadByProperties(
-            $this->pageResolver->getPageConditions($slug, [
-                'preview' => $preview,
-                'user' => $user,
-                'channel' => $channel,
-            ])
-        );
+        try {
+            $pageData = $this->pageManager->getPageData($request, $slug, $user, $channel, $preview);
 
-        if (0 === \count($pages)) {
-            return new JsonResponse(['message' => 'The page with slug '.$slug.' could not be found'], 404);
+            if (!$pageData) {
+                \Drupal::logger('ekino_rendr')->warning('The page with slug @slug could not be found', ['@slug' => $slug]);
+
+                $pageData = $this->pageManager->get404PageData($request, $user, $channel, $preview);
+            }
+        } catch (\Exception $exception) {
+            \Drupal::logger('ekino_rendr')->error($exception->getMessage()."\n".$exception->getTraceAsString());
+
+            $pageData = $this->pageManager->get500PageData($request, $user, $channel, $preview);
         }
 
-        $page = \reset($pages);
-
-        return new JsonResponse($this->serializer->normalize($page, 'rendr_json', [
-            'preview' => $preview,
-            'slug' => $slug,
-            'request' => $request,
-            'channel' => $channel,
-        ]), 200, [
-            'content-type' => 'application/json',
-        ]);
+        return PageResponse::createJsonResponse($pageData);
     }
 }

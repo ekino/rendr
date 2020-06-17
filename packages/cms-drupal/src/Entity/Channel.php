@@ -74,6 +74,9 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
 
     const ID = 'ekino_rendr_channel';
 
+    private $publicSettings = null;
+    private $privateSettings = null;
+
     /**
      * {@inheritdoc}
      */
@@ -120,6 +123,28 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
                 ])
                 ->setDescription(new TranslatableMarkup('The locale prefix associated to this channel. e.g. en-gb'))
                 ->setDisplayConfigurable('form', true),
+            'private_settings' => BaseFieldDefinition::create('string_long')
+                    ->setLabel(new TranslatableMarkup('Private Settings'))
+                    ->setRevisionable(false)
+                    ->setTranslatable(false)
+                    ->setDisplayOptions('form', [
+                        'type' => 'string_textarea',
+                        'settings' => [
+                            'rows' => 5,
+                        ],
+                    ])
+                    ->setDescription(new TranslatableMarkup('Internal settings. Enter one value per line, in the format key=value.')),
+            'public_settings' => BaseFieldDefinition::create('string_long')
+                ->setLabel(new TranslatableMarkup('Public Settings'))
+                ->setRevisionable(false)
+                ->setTranslatable(false)
+                ->setDisplayOptions('form', [
+                    'type' => 'string_textarea',
+                    'settings' => [
+                        'rows' => 5,
+                    ],
+                ])
+                ->setDescription(new TranslatableMarkup('Publicly exposed settings. Enter one value per line, in the format key=value.')),
             'changed' => BaseFieldDefinition::create('changed')
                 ->setLabel(new TranslatableMarkup('Changed'))
                 ->setRequired(true),
@@ -134,6 +159,41 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
         return (new Php())->generate();
     }
 
+    /**
+     * Extracts the values array from the setting field.
+     *
+     * @param string $string
+     *                       The raw string to extract values from
+     *
+     * @return array
+     *               The first element is the list of valid values
+     *               The second element contains the indexes of wrongly formatted lines
+     */
+    public static function extractSettingValues($string)
+    {
+        $values = [];
+        $errors = [];
+
+        $list = \explode("\n", $string);
+        $list = \array_map('trim', $list);
+        $list = \array_filter($list, 'strlen');
+
+        foreach ($list as $position => $text) {
+            // Check for an explicit key.
+            $matches = [];
+            if (\preg_match('/(.*)=(.*)/', $text, $matches)) {
+                // Trim key and value to avoid unwanted spaces issues.
+                $key = \trim($matches[1]);
+                $value = \trim($matches[2]);
+                $values[$key] = $value;
+            } else {
+                $errors[] = $position;
+            }
+        }
+
+        return [$values, $errors];
+    }
+
     public function createDuplicate()
     {
         $duplicate = parent::createDuplicate();
@@ -145,5 +205,37 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
         }
 
         return $duplicate;
+    }
+
+    public function getPublicSettings(): array
+    {
+        if (null === $this->settings) {
+            $this->publicSettings = \is_string($settings = $this->get('public_settings')->value) ? self::extractSettingValues($settings)[0] : [];
+        }
+
+        return $this->publicSettings;
+    }
+
+    public function getPrivateSettings(): array
+    {
+        if (null === $this->settings) {
+            $this->privateSettings = \is_string($settings = $this->get('private_settings')->value) ? self::extractSettingValues($settings)[0] : [];
+        }
+
+        return $this->privateSettings;
+    }
+
+    public function getPublicSetting($key, $default = null)
+    {
+        $settings = $this->getPublicSettings();
+
+        return \array_key_exists($key, $settings) ? $settings[$key] : $default;
+    }
+
+    public function getPrivateSetting($key, $default = null)
+    {
+        $settings = $this->getPrivateSettings();
+
+        return \array_key_exists($key, $settings) ? $settings[$key] : $default;
     }
 }

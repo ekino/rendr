@@ -31,7 +31,7 @@ export function createDynamicPage(
       if (ctx.isServerSide && page instanceof Page) {
         ctx.res.statusCode = page.statusCode;
 
-        if (page.cache.ttl > 0) {
+        if (page.cache.ttl > 0 && page.statusCode == 200) {
           ctx.res.setHeader(
             "Cache-Control",
             `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`

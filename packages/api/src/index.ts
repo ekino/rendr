@@ -30,7 +30,7 @@ export function createApi(loader: Loader): Express.RequestHandler {
 
     res.set("X-Rendr-Content-Type", "rendr/document");
 
-    if (page.cache.ttl > 0) {
+    if (page.cache.ttl > 0 && page.statusCode == 200) {
       res.set(
         "Cache-Control",
         `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Test\ekino_rendr\Resolver;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\ekino_rendr\Entity\Channel;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\ekino_rendr\Entity\ChannelInterface;
 use Drupal\ekino_rendr\Resolver\PageResolver;
 use Drupal\user\Entity\User;
@@ -34,6 +34,7 @@ class PageResolverTest extends TestCase
             ], [
                 'path' => '/foo',
                 'published' => true,
+                'channels' => null,
             ]],
             // Add a / before the slug if not present
             [[
@@ -45,6 +46,7 @@ class PageResolverTest extends TestCase
             ], [
                 'path' => '/foo',
                 'published' => true,
+                'channels' => null,
             ]],
             // In preview mode, we remove the publication condition
             // but restrict access depending on the user permissions
@@ -68,6 +70,7 @@ class PageResolverTest extends TestCase
                 ]),
             ], [
                 'path' => '/foo',
+                'channels' => null,
             ]],
             // If a channel is provided, the restriction is applied regardless of the context
             [[
@@ -80,6 +83,7 @@ class PageResolverTest extends TestCase
             ], [
                 'path' => '/foo',
                 'channels' => ['an_id'],
+                'langcode' => [null],
             ]],
         ];
     }
@@ -95,6 +99,9 @@ class PageResolverTest extends TestCase
         $channel->expects($this->any())
             ->method('id')
             ->willReturn($channelId);
+        $channel->expects($this->any())
+            ->method('language')
+            ->willReturn($this->createMock(LanguageInterface::class));
         $user = $this->createMock(User::class);
         $that = $this;
         $user->expects($this->any())

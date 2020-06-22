@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface PageManagerInterface
 {
-    public function getPageData(Request $request, $slug, UserInterface $user, ChannelInterface $channel = null, $preview = false);
+    public function getPageData(Request $request, $slug, UserInterface $user, ChannelInterface $channel = null, $preview = false, $extraContext = []);
 
     public function get404PageData(Request $request, UserInterface $user, ChannelInterface $channel = null, $preview = false);
 

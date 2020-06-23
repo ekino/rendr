@@ -40,6 +40,7 @@ class PageNormalizer extends ContentEntityNormalizer
      */
     public function normalize($object, $format = null, array $context = [])
     {
+        /** @var PageInterface $object */
         $object = $this->resolveContainerInheritance($object);
         $data = parent::normalize($object, $format, $context);
         $attributes = PageResponse::createPage();
@@ -80,10 +81,18 @@ class PageNormalizer extends ContentEntityNormalizer
             'settings' => $context['channel']->getPublicSettings(),
         ] : [];
 
-        $attributes['head']['title'] = $object->get('title')->value;
+        $attributes['head']['title'] = $object->get('seo_title')->value ?: $object->getTitle();
+        $attributes['head']['meta'][] = [
+            'property' => 'og:title',
+            'content' => $object->get('seo_title')->value ?: $object->getTitle(),
+        ];
+        $attributes['head']['meta'][] = [
+            'property' => 'og:description',
+            'content' => $object->get('seo_description')->value,
+        ];
         $attributes['path'] = $object->get('path')->value;
         $attributes['blocks'] = $blocks;
-        $attributes['cache'] = ['ttl' => $object->getTtl($context['channel'])];
+        $attributes['cache'] = ['ttl' => $context['preview'] ? 0 : $object->getTtl($context['channel'])];
         $attributes['settings'] = ['preview' => $context['preview'] ?? false];
         $attributes['settings']['published'] = (bool) $object->get('published')->value;
         $attributes['channel'] = $channelData;

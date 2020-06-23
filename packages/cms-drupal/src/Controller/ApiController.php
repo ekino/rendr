@@ -86,7 +86,7 @@ final class ApiController
             );
         }
 
-        return $this->forwardFromRoute($route, $request, $channel);
+        return $this->forwardFromRoute($route, $request, $channel, $preview);
     }
 
     public function page(Request $request, $slug, ChannelInterface $channel = null, $preview = false)
@@ -110,7 +110,7 @@ final class ApiController
         return PageResponse::createJsonResponse($pageData);
     }
 
-    protected function forwardFromRoute(array $route, Request $request, ChannelInterface $channel = null)
+    protected function forwardFromRoute(array $route, Request $request, ChannelInterface $channel = null, $preview = false)
     {
         $subRequest = clone $request;
         $subRequest->attributes = new ParameterBag($route);
@@ -120,6 +120,7 @@ final class ApiController
         return $this->forward([$class, $controller[1]], \array_merge($route, [
             'request' => $subRequest,
             'channel' => $channel,
+            'preview' => $preview,
         ]));
     }
 

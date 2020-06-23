@@ -15,9 +15,15 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\Core\Url;
 use Drupal\ekino_rendr\Entity\Page;
 use Drupal\ekino_rendr\Entity\Template;
+use Drupal\ekino_rendr\Event\PreviewUrlEvent;
+use Drupal\ekino_rendr\Model\PageFormTemplate;
+use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class PageUpsertForm extends ContentEntityForm
 {
@@ -26,6 +32,7 @@ final class PageUpsertForm extends ContentEntityForm
     protected $dateFormatter;
     protected $currentUser;
     protected $entityTypeManager;
+    protected $eventDispatcher;
 
     /**
      * {@inheritdoc}
@@ -37,6 +44,7 @@ final class PageUpsertForm extends ContentEntityForm
         DateFormatterInterface $dateFormatter,
         AccountProxyInterface $accountProxy,
         EntityTypeManagerInterface $entityTypeManager,
+        EventDispatcherInterface $eventDispatcher,
         EntityTypeBundleInfoInterface $entityTypeBundleInfo = null,
         TimeInterface $time = null
     ) {
@@ -46,6 +54,7 @@ final class PageUpsertForm extends ContentEntityForm
         $this->dateFormatter = $dateFormatter;
         $this->currentUser = $accountProxy;
         $this->entityTypeManager = $entityTypeManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -60,6 +69,7 @@ final class PageUpsertForm extends ContentEntityForm
             $container->get('date.formatter'),
             $container->get('current_user'),
             $container->get('entity_type.manager'),
+            $container->get('event_dispatcher'),
             $container->get('entity_type.bundle.info'),
             $container->get('datetime.time')
         );
@@ -79,6 +89,7 @@ final class PageUpsertForm extends ContentEntityForm
             throw new \LogicException();
         }
 
+        $user = User::load(\Drupal::currentUser()->id());
         $form = parent::form($form, $formState) + [
                 '#theme' => 'node_edit_form',
                 '#attached' => [
@@ -105,16 +116,38 @@ final class PageUpsertForm extends ContentEntityForm
             '#type' => 'item',
             '#markup' => $this->entity->isPublished() ? $this->t('Published') : $this->t('Not published'),
             '#access' => !$this->entity->isNew(),
-            '#wrapper_attributes' => ['class' => ['entity-meta__title', 'layout-region-node-footer__content']],
+            '#wrapper_attributes' => ['class' => ['entity-meta__title']],
             '#weight' => 20,
+        ];
+        $form['meta']['preview_urls'] = [
+            '#type' => 'item',
+            '#markup' => $this->generatePreviewUrlsTable($user),
+            '#weight' => 22,
+        ];
+
+        $form['meta']['sidebar_details'] = [
+            '#type' => 'details',
+            '#title' => $this->t('Details'),
+            '#weight' => 50,
+        ];
+
+        $form['meta']['sidebar_seo'] = [
+            '#type' => 'details',
+            '#title' => $this->t('SEO'),
+            '#weight' => 52,
         ];
 
         $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#group'] = 'meta';
         $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#weight'] = 22;
-        $form['parent_page']['#group'] = 'meta';
-        $form['channels']['#group'] = 'meta';
-        $form['ttl']['#group'] = 'meta';
-        $form['published']['#group'] = 'footer';
+
+        $form['parent_page']['#group'] = 'sidebar_details';
+        $form['langcode']['#group'] = 'sidebar_details';
+        $form['channels']['#group'] = 'sidebar_details';
+        $form['ttl']['#group'] = 'sidebar_details';
+        $form['published']['#group'] = 'sidebar_details';
+
+        $form['seo_title']['#group'] = 'sidebar_seo';
+        $form['seo_description']['#group'] = 'sidebar_seo';
 
         // Manage container tabs
         $inheritedContainers = $this->entity->get('container_inheritance')->value ?
@@ -265,5 +298,40 @@ final class PageUpsertForm extends ContentEntityForm
         }
 
         return $inheritedContainers;
+    }
+
+    private function generatePreviewUrlsTable(UserInterface $user)
+    {
+        if (empty($this->entity->get('path')->value)) {
+            return '';
+        }
+
+        $rows = [];
+
+        foreach ($this->entity->get('channels')->referencedEntities() as $channel) {
+            $translation = $channel->getTranslation($this->entity->language()->getId()) ?: $channel;
+            $event = new PreviewUrlEvent(
+                'ekino_rendr.api.page_preview',
+                [
+                    'slug' => \str_replace('/', '', $this->entity->get('path')->value),
+                    '_preview_token' => $user->get('field_rendr_preview_token')->value,
+                ],
+                [],
+                $translation
+            );
+
+            $this->eventDispatcher->dispatch(PreviewUrlEvent::EVENT, $event);
+
+            if (!$event->getRouteName() && !$event->getUrl()) {
+                continue;
+            }
+
+            $rows[] = [
+                $event->getChannel() ? $event->getChannel()->get('label')->value : $this->entity->language()->getId(),
+                $event->getUrl() ?: (new Url($event->getRouteName(), $event->getRouteParameters(), $event->getOptions()))->toString(),
+            ];
+        }
+
+        return PageFormTemplate::getPreviewTable($rows);
     }
 }

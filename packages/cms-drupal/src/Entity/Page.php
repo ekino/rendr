@@ -156,6 +156,26 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
             'changed' => BaseFieldDefinition::create('changed')
                 ->setLabel(new TranslatableMarkup('Changed'))
                 ->setRequired(true),
+            'seo_title' => BaseFieldDefinition::create('string')
+                ->setLabel(new TranslatableMarkup('SEO Title'))
+                ->setRevisionable(true)
+                ->setTranslatable(true)
+                ->setDisplayOptions('form', [
+                    'type' => 'string_textfield',
+                ])
+                ->setDisplayConfigurable('form', true)
+                ->setDescription(new TranslatableMarkup('Title to display in the meta of the page.')),
+            'seo_description' => BaseFieldDefinition::create('string_long')
+                ->setLabel(new TranslatableMarkup('SEO Description'))
+                ->setRevisionable(true)
+                ->setTranslatable(true)
+                ->setDisplayOptions('form', [
+                    'type' => 'string_textarea',
+                    'settings' => [
+                        'rows' => 3,
+                    ],
+                ])
+                ->setDescription(new TranslatableMarkup('Used for page meta and content share.')),
         ] +
             parent::baseFieldDefinitions($entityType) +
             $published;

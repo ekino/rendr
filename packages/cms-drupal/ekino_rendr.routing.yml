@@ -56,6 +56,34 @@ ekino_rendr.main.menu:
     options:
         _admin_route: true
 
+ekino_rendr.api.catchall:
+  path: "/ekino-rendr/api-catchall"
+  condition: 'not(context.getHost() matches "/rendr-preview/")'
+  defaults:
+    _controller: 'Drupal\ekino_rendr\Controller\ApiController::catchAll'
+    _title: "Ekino Rendr API Catchall"
+  requirements:
+    _access: 'TRUE'
+
+ekino_rendr.api.catchall_preview:
+  path: "/ekino-rendr/api-catchall"
+  condition: 'context.getHost() matches "/rendr-preview/'
+  defaults:
+    _controller: 'Drupal\ekino_rendr\Controller\ApiController::catchAll'
+    _title: "Ekino Rendr API Catchall"
+    preview: true
+  requirements:
+    _preview_access_check: 'TRUE'
+
+ekino_rendr.api.catchall_preview_per_host:
+  path: "/_preview/ekino-rendr/api-catchall"
+  defaults:
+    _controller: 'Drupal\ekino_rendr\Controller\ApiController::catchAll'
+    _title: "Ekino Rendr API Catchall"
+    preview: true
+  requirements:
+    _preview_access_check: 'TRUE'
+
 ekino_rendr.api.page:
     path: "/ekino-rendr/api/page/{slug}"
     condition: 'not(context.getHost() matches "/rendr-preview/")'

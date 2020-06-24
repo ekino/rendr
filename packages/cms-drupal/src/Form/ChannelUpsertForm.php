@@ -117,7 +117,7 @@ final class ChannelUpsertForm extends ContentEntityForm
     public function validateForm(array &$form, FormStateInterface $formState)
     {
         $domain = $formState->getValue('domain')[0]['value'];
-        $locale = $formState->getValue('locale')[0]['value'];
+        $path = $formState->getValue('path')[0]['value'];
 
         $existingChannels = $this->entityTypeManager->getStorage('ekino_rendr_channel')->loadByProperties([
             'domain' => $domain,
@@ -127,12 +127,12 @@ final class ChannelUpsertForm extends ContentEntityForm
             foreach ($existingChannel->getTranslationLanguages(true) as $langcode => $language) {
                 $translation = $existingChannel->getTranslation($langcode);
 
-                if ($translation->get('locale')->value === $locale &&
+                if ($translation->get('path')->value === $path &&
                     ($this->entity->id() !== $translation->id() || $this->entity->language()->getId() !== $translation->language()->getId())
                 ) {
                     $formState->setErrorByName(
-                        'locale',
-                        $this->t('The pair domain + locale must be unique. The channel "%title" is also using the same combination.', [
+                        'path',
+                        $this->t('The pair domain + path must be unique. The channel "%title" is also using the same combination.', [
                             '%title' => $translation->get('label')->value,
                         ]));
                     break 2;

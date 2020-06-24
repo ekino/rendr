@@ -35,14 +35,14 @@ class ChannelResolver implements ArgumentValueResolverInterface
     public function resolve(Request $request, ArgumentMetadata $argument)
     {
         $host = $request->getHost();
-        $locale = $request->getLocale();
         $rendrChannel = $request->get('rendr_channel');
+        $path = '';
 
         if ($rendrChannel) {
             $rendrChannel = 0 === \strpos($rendrChannel, 'http') ? $rendrChannel : \sprintf('http://%s', $rendrChannel);
             $parsedUrl = \parse_url($rendrChannel);
             $host = $parsedUrl['host'];
-            $locale = isset($parsedUrl['path']) && '/' !== $parsedUrl['path'] ? \substr($parsedUrl['path'], 1) : null;
+            $path = isset($parsedUrl['path']) && '/' !== $parsedUrl['path'] ? \substr($parsedUrl['path'], 1) : null;
         }
 
         // @TODO raise an issue
@@ -51,8 +51,8 @@ class ChannelResolver implements ArgumentValueResolverInterface
             'domain' => $host,
 //            'locale' => $locale,
         ]);
-        $channels = \array_filter($channels, function ($channel) use ($locale) {
-            return $channel->get('locale')->value === $locale;
+        $channels = \array_filter($channels, function ($channel) use ($path) {
+            return $channel->get('path')->value === $path;
         });
 
         if (0 === \count($channels)) {
@@ -60,5 +60,56 @@ class ChannelResolver implements ArgumentValueResolverInterface
         }
 
         yield \reset($channels);
+    }
+
+    public static function findMatchingChannels(array $channels, $domain, $path)
+    {
+        $matching = [];
+
+        foreach ($channels as $channel) {
+            foreach ($channel->getTranslationLanguages(true) as $langcode => $language) {
+                $translation = $channel->getTranslation($langcode);
+
+                if (self::channelMatchPath($translation, $domain, $path)) {
+                    $matching[] = $translation;
+                }
+            }
+        }
+
+        \usort($matching, function ($a, $b) {
+            $aStr = $a->get('path')->value ?: '';
+            $bStr = $b->get('path')->value ?: '';
+            // Sort by path length descending so the first item
+            // is the best matching result
+            return \strlen($bStr) <=> \strlen($aStr);
+        });
+
+        return $matching;
+    }
+
+    public static function channelMatchPath(ChannelInterface $channel, $domain, $path)
+    {
+        $channelDomain = $channel->get('domain')->value ?: '';
+        $channelPath = $channel->get('path')->value ?: '';
+        $channelPrefix = 0 === \strpos($channelPath, '/') ? $channelPath : ('/'.$channelPath);
+        $regexPattern = '/' === $channelPrefix ? '/^\/.*$/' : \sprintf('/^%s(\/.*|)$/', \preg_quote($channelPrefix, '/'));
+
+        return $channelDomain === $domain &&
+            \preg_match($regexPattern, $path);
+    }
+
+    public static function getPathWithoutPrefix($path, ChannelInterface $channel = null)
+    {
+        if (!$channel) {
+            return $path;
+        }
+
+        $channelPath = $channel->get('path')->value ?: '';
+
+        if (empty($channelPath) || '/' === $channelPath) {
+            return $path;
+        }
+
+        return \substr($path, \strlen($channelPath) + 1);
     }
 }

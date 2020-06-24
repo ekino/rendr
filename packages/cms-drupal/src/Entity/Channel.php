@@ -114,14 +114,14 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
                 ])
                 ->setDescription(new TranslatableMarkup('The domain name associated to this channel. e.g. www.example.com'))
                 ->setDisplayConfigurable('form', true),
-            'locale' => BaseFieldDefinition::create('string')
-                ->setLabel(new TranslatableMarkup('Locale'))
+            'path' => BaseFieldDefinition::create('string')
+                ->setLabel(new TranslatableMarkup('Path'))
                 ->setRevisionable(true)
                 ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
-                ->setDescription(new TranslatableMarkup('The locale prefix associated to this channel. e.g. en-gb'))
+                ->setDescription(new TranslatableMarkup('The path prefix associated to this channel. e.g. en-gb'))
                 ->setDisplayConfigurable('form', true),
             'private_settings' => BaseFieldDefinition::create('string_long')
                     ->setLabel(new TranslatableMarkup('Private Settings'))
@@ -201,7 +201,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
         foreach ($duplicate->getTranslationLanguages(true) as $langcode => $language) {
             $translation = $duplicate->getTranslation($langcode);
             $translation->set('label', $translation->get('label')->value.' - DUPLICATE');
-            $translation->set('locale', $translation->get('locale')->value.' - DUPLICATE');
+            $translation->set('path', $translation->get('path')->value.'-DUPLICATE');
         }
 
         return $duplicate;

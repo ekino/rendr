@@ -7,6 +7,7 @@ services:
         arguments:
             - '@entity_type.manager'
             - '@ekino_rendr.manager.page'
+            - '@router'
 
     Drupal\ekino_rendr\Form\ChannelDuplicateForm:
         arguments:

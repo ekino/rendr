@@ -3,7 +3,8 @@ import { createDummyEntry } from "./test";
 import { createNormalizer } from "./index";
 import { EntryNormalizerList } from "./types";
 import { Entry } from "contentful";
-import { loadJson } from "./test";
+import { loadJson, createContext } from "./test";
+import { RequestCtx } from "@ekino/rendr-core";
 
 interface Wheel {
   brand: string;
@@ -89,6 +90,7 @@ describe("test normalizer", () => {
   it("with default values (no normalizer)", () => {
     const normalizer = createNormalizer();
 
+    const ctx = createContext({});
     const entry = createDummyEntry<ContentfulCar>({
       speed: 10,
       name: "2CV",
@@ -98,22 +100,22 @@ describe("test normalizer", () => {
       }),
     });
 
-    const result = normalizer(entry);
+    const result = normalizer(ctx, entry);
 
     expect(result).toBeUndefined();
   });
 
   it("with default values with normalizer", () => {
     const normalizers: EntryNormalizerList = {
-      car: (entry: Entry<ContentfulCar>, normalizer) => {
+      car: (ctx: RequestCtx, entry: Entry<ContentfulCar>, normalizer) => {
         return {
           speed: entry.fields.speed,
           name: entry.fields.name,
           data: parseInt(entry.fields.data, 10),
-          wheel: normalizer(entry.fields.wheel),
+          wheel: normalizer(ctx, entry.fields.wheel),
         };
       },
-      wheel: (entry: Entry<ContentfulWeel>) => {
+      wheel: (ctx: RequestCtx, entry: Entry<ContentfulWeel>) => {
         const split = entry.fields.info.split(",");
 
         return {
@@ -124,6 +126,7 @@ describe("test normalizer", () => {
     };
     const normalizer = createNormalizer(normalizers);
 
+    const ctx = createContext({});
     const entry = createDummyEntry<ContentfulCar>({
       speed: 10,
       name: "2CV",
@@ -135,7 +138,7 @@ describe("test normalizer", () => {
     entry.sys.contentType.sys.id = "car"; // so the normalizer can catch the value
     entry.fields.wheel.sys.contentType.sys.id = "wheel";
 
-    const result = normalizer(entry);
+    const result = normalizer(ctx, entry);
 
     expect(result).toMatchSnapshot();
   });
@@ -147,13 +150,15 @@ describe("test normalizer", () => {
     "asset",
   ];
 
+  const ctx = createContext({});
+
   files.forEach((file) => {
     it(`test ${file}.json`, () => {
       const normalizer = createNormalizer({});
       const entry = loadJson(
         `${__dirname}/__fixtures__/normalizer/${file}.json`
       );
-      const block = normalizer(entry);
+      const block = normalizer(ctx, entry);
 
       expect(block).toBeDefined();
       expect(block).toMatchSnapshot();

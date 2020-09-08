@@ -6,6 +6,7 @@ import {
   Settings,
   NormalizationError,
   createPage,
+  RequestCtx,
 } from "@ekino/rendr-core";
 
 import {
@@ -48,6 +49,7 @@ export function createNormalizer(
   };
 
   return function normalizer(
+    ctx: RequestCtx,
     entry: Entry<any> | ContentfulAsset,
     normalizerFn?: EntryNormalizer
   ): any {
@@ -68,7 +70,7 @@ export function createNormalizer(
     }
 
     try {
-      return normalizers[key](entry, normalizer);
+      return normalizers[key](ctx, entry, normalizer);
     } catch (err) {
       // log error
       throw new NormalizationError(err);
@@ -124,6 +126,7 @@ export function validEntry(
 }
 
 export function normalizePage(
+  ctx: RequestCtx,
   entry: Entry<ContentfulPage>,
   normalizer: EntryNormalizer
 ): Page {
@@ -144,7 +147,7 @@ export function normalizePage(
 
   if (entry.fields.blocks) {
     data.blocks = entry.fields.blocks.map((block: Entry<any>) => {
-      return normalizer(block);
+      return normalizer(ctx, block);
     });
   }
 
@@ -165,7 +168,10 @@ export function normalizePage(
   return createPage(data);
 }
 
-export function normalizePicture(entry: ContentfulAsset): Asset {
+export function normalizePicture(
+  ctx: RequestCtx,
+  entry: ContentfulAsset
+): Asset {
   return {
     id: entry.sys.id,
     title: entry.fields.title,
@@ -174,6 +180,7 @@ export function normalizePicture(entry: ContentfulAsset): Asset {
 }
 
 export function normalizeWebsite(
+  ctx: RequestCtx,
   site: Entry<ContentfulWebsite>,
   normalizers: EntryNormalizer
 ): Website {

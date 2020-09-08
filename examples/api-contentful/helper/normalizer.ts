@@ -8,7 +8,11 @@ import {
   createBlockDefinition,
 } from "@ekino/rendr-loader-contentful";
 
-import { BlockDefinition, normalizeBlockDefinition } from "@ekino/rendr-core";
+import {
+  BlockDefinition,
+  normalizeBlockDefinition,
+  RequestCtx,
+} from "@ekino/rendr-core";
 
 import {
   Author,
@@ -27,6 +31,7 @@ const emptyProfile = {
 };
 
 export function normalizeBlockText(
+  ctx: RequestCtx,
   entry: Entry<ContentfulBlockText>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
@@ -35,7 +40,9 @@ export function normalizeBlockText(
     subtitle: entry.fields.subtitle ? entry.fields.subtitle : "",
     contents: entry.fields.contents ? fixImageUrl(entry.fields.contents) : "",
     mode: entry.fields.mode ? entry.fields.mode : "standard",
-    image: entry.fields.image ? normalizers(entry.fields.image) : emptyPicture,
+    image: entry.fields.image
+      ? normalizers(ctx, entry.fields.image)
+      : emptyPicture,
     image_position: entry.fields.image_position
       ? entry.fields.image_position
       : "left",
@@ -43,10 +50,11 @@ export function normalizeBlockText(
 }
 
 export function normalizeBlockRawConfiguration(
+  ctx: RequestCtx,
   entry: Entry<ContentfulBlockRawConfiguration>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
-  const block = normalizeBlockDefinition(entry.fields.configuration);
+  const block = normalizeBlockDefinition(ctx, entry.fields.configuration);
 
   if (!block) {
     // ?
@@ -57,6 +65,7 @@ export function normalizeBlockRawConfiguration(
 }
 
 export function normalizeBlockHeader(
+  ctx: RequestCtx,
   entry: Entry<ContentfulBlockText>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
@@ -71,6 +80,7 @@ export function normalizeBlockFooter(
 }
 
 export function normalizeAuthor(
+  ctx: RequestCtx,
   entry: Entry<ContentfulAuthor>,
   normalizers: EntryNormalizer
 ): Author {
@@ -86,12 +96,13 @@ export function normalizeAuthor(
       linkedin: entry.fields.social_linkedin,
     },
     image: entry.fields.image
-      ? normalizePicture(entry.fields.image)
+      ? normalizePicture(ctx, entry.fields.image)
       : emptyProfile,
   };
 }
 
 export function normalizeArticle(
+  ctx: RequestCtx,
   entry: Entry<ContentfulArticle>,
   normalizer: EntryNormalizer
 ): Article {
@@ -101,22 +112,22 @@ export function normalizeArticle(
     abstract: entry.fields.abstract ? entry.fields.abstract : "",
     images: {
       list: entry.fields.image_list
-        ? normalizer(entry.fields.image_list)
+        ? normalizer(ctx, entry.fields.image_list)
         : emptyPicture,
       header: entry.fields.image_header
-        ? normalizer(entry.fields.image_header)
+        ? normalizer(ctx, entry.fields.image_header)
         : emptyPicture,
     },
     title: entry.fields.title ? entry.fields.title : "",
     authors: entry.fields.authors
       ? entry.fields.authors
           .filter((entry) => validEntry(entry))
-          .map((entry) => normalizer(entry))
+          .map((entry) => normalizer(ctx, entry))
       : [],
     blocks: entry.fields.blocks
       ? entry.fields.blocks
           .filter((entry) => validEntry(entry))
-          .map((entry) => normalizer(entry))
+          .map((entry) => normalizer(ctx, entry))
       : [],
     slug: entry.fields.slug ? entry.fields.slug : "",
     seo: {
@@ -125,7 +136,7 @@ export function normalizeArticle(
     },
     published_at: entry.fields.published_at,
     website: entry.fields.website
-      ? normalizer(entry.fields.website)
+      ? normalizer(ctx, entry.fields.website)
       : undefined,
   };
 }

@@ -6,9 +6,11 @@ export { Asset as ContentfulAsset } from "contentful";
 import { ContentfulClientApi } from "contentful";
 
 export interface EntryNormalizer {
-  (entry: Entry<any> | ContentfulAsset, normalizers?: EntryNormalizer):
-    | any
-    | void;
+  (
+    ctx: RequestCtx,
+    entry: Entry<any> | ContentfulAsset,
+    normalizers?: EntryNormalizer
+  ): any | void;
 }
 
 export type EntryNormalizerList = {

@@ -2,26 +2,7 @@ import { RequestCtx, Page } from "@ekino/rendr-core";
 
 import { createContentfulLoader } from "./index";
 import { createNormalizer } from "./normalizer";
-import { getMockClient, loadJson } from "./test";
-
-function createContext(data: {}): RequestCtx {
-  const ctx: RequestCtx = {
-    // @ts-ignore
-    req: jest.fn(),
-    // @ts-ignore
-    res: jest.fn(),
-    hostname: "ekino.co.uk",
-    pathname: "/",
-    query: {},
-    params: {},
-    asPath: "/",
-  };
-
-  return {
-    ...ctx,
-    ...data,
-  };
-}
+import { getMockClient, loadJson, createContext } from "./test";
 
 describe("test loader", () => {
   it("page with no extend page", async () => {

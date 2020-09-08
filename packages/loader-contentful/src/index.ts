@@ -29,7 +29,7 @@ export function createContentfulLoader(
     let site: Website;
 
     try {
-      site = normalizer(await GetWebsite(client, ctx.hostname));
+      site = normalizer(ctx, await GetWebsite(client, ctx.hostname));
     } catch (err) {
       throw new InternalServerError(
         `[Contentful] Unable to load the website - domain: ${ctx.hostname}`,
@@ -54,7 +54,7 @@ export function createContentfulLoader(
     }
 
     if (!pages.items[0].fields.extends) {
-      return normalizer(pages.items[0]);
+      return normalizer(ctx, pages.items[0]);
     }
 
     const parentPage = await client.getEntries<ContentfulPage>({
@@ -72,8 +72,8 @@ export function createContentfulLoader(
     }
 
     return mergePages([
-      normalizer(parentPage.items[0]),
-      normalizer(pages.items[0]),
+      normalizer(ctx, parentPage.items[0]),
+      normalizer(ctx, pages.items[0]),
     ]);
   };
 }

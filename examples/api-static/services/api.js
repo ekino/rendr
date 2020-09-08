@@ -128,7 +128,7 @@ const routes = {
       type: "rendr.text",
       settings: {
         rawHtml: true,
-        contents: `<a href="/post/page/${pageNumber + 1}">Next Page</a>`,
+        contents: `<a href="/articles/page/${pageNumber + 1}">Next Page</a>`,
       },
     });
 

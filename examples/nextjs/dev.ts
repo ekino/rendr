@@ -25,10 +25,7 @@ app
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all("*", (req, res) => handle(req, res));
 
-    server.listen(8000, (err) => {
-      if (err) {
-        throw err;
-      }
+    server.listen(8000, () => {
       console.log(`> Ready on port https://localhost:8000 `);
     });
   })

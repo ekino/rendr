@@ -13,6 +13,6 @@
         "setup": "yarn install",
         "build": "echo -",
         "dev": "NODE_ENV=development node server.js",
-        "start": "NODE_ENV=productioni node server.js"
+        "start": "NODE_ENV=production node server.js"
     }
 }

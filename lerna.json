@@ -1,7 +1,21 @@
 {
   "packages": [
-    "packages/*"
+    "packages/aggregator",
+    "packages/api",
+    "packages/core",
+    "packages/loader",
+    "packages/loader-contentful",
+    "packages/rendering-gatsby",
+    "packages/rendering-nextjs",
+    "packages/rendering-reactnative",
+    "packages/sitemap",
+    "packages/template-react"
   ],
+  "publishConfig":{
+    "ignore": [
+      "packages/cms-drupal"
+    ]
+  },
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "0.0.20"

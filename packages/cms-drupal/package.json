@@ -1,0 +1,11 @@
+{
+    "name": "@ekino/rendr-drupal-cms",
+    "version": "0.0.9",
+    "private": true,
+    "scripts": {
+        "setup": "echo -",
+        "build": "echo -",
+        "dev": "echo -",
+        "start": "echo -"
+    }
+}

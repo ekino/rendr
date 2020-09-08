@@ -14,7 +14,16 @@
   },
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/aggregator",
+    "packages/api",
+    "packages/core",
+    "packages/loader",
+    "packages/loader-contentful",
+    "packages/rendering-gatsby",
+    "packages/rendering-nextjs",
+    "packages/rendering-reactnative",
+    "packages/sitemap",
+    "packages/template-react"
   ],
   "scripts": {
     "clean-examples": "rm -rf examples/*/node_modules examples/*/.next examples/*/.cache",

@@ -11,12 +11,12 @@
     "packages/sitemap",
     "packages/template-react"
   ],
-  "publishConfig":{
+  "publishConfig": {
     "ignore": [
       "packages/cms-drupal"
     ]
   },
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "0.0.20"
+  "version": "0.0.21-alpha.0"
 }

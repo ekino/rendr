@@ -1,8 +1,6 @@
 {
     "name": "@ekino/rendr-demo-static-api",
     "version": "0.0.9",
-    "engines": {
-    },
     "private": true,
     "dependencies": {
         "@ekino/rendr-api": "latest",

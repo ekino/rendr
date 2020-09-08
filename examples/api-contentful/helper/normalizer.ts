@@ -54,7 +54,7 @@ export function normalizeBlockRawConfiguration(
   entry: Entry<ContentfulBlockRawConfiguration>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
-  const block = normalizeBlockDefinition(ctx, entry.fields.configuration);
+  const block = normalizeBlockDefinition(entry.fields.configuration);
 
   if (!block) {
     // ?
@@ -73,6 +73,7 @@ export function normalizeBlockHeader(
 }
 
 export function normalizeBlockFooter(
+  ctx: RequestCtx,
   entry: Entry<ContentfulBlockText>,
   normalizers: EntryNormalizer
 ): BlockDefinition {

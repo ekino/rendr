@@ -1,9 +1,6 @@
 {
   "name": "@ekino/rendr-demo-contentful-api",
   "version": "0.0.9",
-  "engines": { 
-    "node": "12.x" 
-  },
   "dependencies": {
     "@ekino/rendr-api": "latest",
     "@ekino/rendr-loader-contentful": "latest",

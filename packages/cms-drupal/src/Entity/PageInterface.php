@@ -12,5 +12,43 @@ interface PageInterface extends RevisionLogInterface, EntityChangedInterface, En
 {
     public function getTitle();
 
+    public function getPath();
+
+    public function getUrlAlias();
+
+    public function getDefaultPath();
+
+    /**
+     * @return bool
+     */
+    public function isDisplayable();
+
+    /**
+     * @return bool
+     */
+    public function isDynamic();
+
+    /**
+     * @return PageInterface[]
+     */
+    public function getSimilarPages();
+
+    /**
+     * @return PageInterface|null
+     */
+    public function getHierarchicalParentPage();
+
+    /**
+     * @param bool $includeCurrent
+     *
+     * @return PageInterface[]
+     */
+    public function getSameHierarchicalPages($includeCurrent = false);
+
+    /**
+     * @return PageInterface[]
+     */
+    public function getChildrenHierarchicalPages();
+
     public function getTtl(ChannelInterface $channel = null);
 }

@@ -19,9 +19,8 @@ services:
     tags:
       - { name: "ekino_rendr.paragraph_normalizer" }
 
-  Drupal\rendr_demo\Normalizer\ArticleParagraphNormalizer:
+  Drupal\rendr_demo\Normalizer\ContentParagraphNormalizer:
     arguments:
-      - "ekino_rendr_raw_html"
-      - "@entity_type.manager"
+      - "basic_content"
     tags:
       - { name: "ekino_rendr.paragraph_normalizer" }

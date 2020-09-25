@@ -18,8 +18,9 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\Url;
 use Drupal\ekino_rendr\Entity\Page;
 use Drupal\ekino_rendr\Entity\Template;
-use Drupal\ekino_rendr\Event\PreviewUrlEvent;
+use Drupal\ekino_rendr\Event\UrlEvent;
 use Drupal\ekino_rendr\Model\PageFormTemplate;
+use Drupal\ekino_rendr\Tool\UrlGenerator;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -99,7 +100,7 @@ final class PageUpsertForm extends ContentEntityForm
                     ],
                 ],
                 'rendr_containers' => [
-                    '#type' => 'vertical_tabs',
+                    '#type' => 'horizontal_tabs',
                     '#weight' => 2,
                 ],
             ];
@@ -110,6 +111,16 @@ final class PageUpsertForm extends ContentEntityForm
             '#type' => 'container',
             '#group' => 'advanced',
             '#attributes' => ['class' => ['entity-meta__header']],
+        ];
+        $form['meta_details'] = [
+            '#type' => 'container',
+            '#group' => 'advanced',
+            '#weight' => 2,
+        ];
+        $form['meta_url_alias'] = [
+            '#type' => 'container',
+            '#group' => 'advanced',
+            '#weight' => 3,
         ];
 
         $form['meta']['status'] = [
@@ -125,16 +136,23 @@ final class PageUpsertForm extends ContentEntityForm
             '#weight' => 22,
         ];
 
-        $form['meta']['sidebar_details'] = [
+        $form['meta_details']['sidebar_details'] = [
             '#type' => 'details',
             '#title' => $this->t('Details'),
             '#weight' => 50,
+            '#open' => true,
         ];
 
         $form['meta']['sidebar_seo'] = [
             '#type' => 'details',
             '#title' => $this->t('SEO'),
-            '#weight' => 52,
+            '#weight' => 49,
+        ];
+
+        $form['meta_url_alias']['sidebar_url_alias'] = [
+            '#type' => 'details',
+            '#title' => $this->t('Url Alias'),
+            '#weight' => 53,
         ];
 
         $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#group'] = 'meta';
@@ -148,6 +166,20 @@ final class PageUpsertForm extends ContentEntityForm
 
         $form['seo_title']['#group'] = 'sidebar_seo';
         $form['seo_description']['#group'] = 'sidebar_seo';
+
+        $form['path']['#group'] = 'sidebar_url_alias';
+        $form['url_alias']['#group'] = 'sidebar_url_alias';
+
+        \uasort($form, function ($a, $b) {
+            if (!\is_array($a) || !\array_key_exists('#weight', $a)) {
+                return -1;
+            }
+            if (!\is_array($b) || !\array_key_exists('#weight', $b)) {
+                return 1;
+            }
+
+            return $a['#weight'] <=> $b['#weight'];
+        });
 
         // Manage container tabs
         $inheritedContainers = $this->entity->get('container_inheritance')->value ?
@@ -189,8 +221,15 @@ final class PageUpsertForm extends ContentEntityForm
      */
     public function validateForm(array &$form, FormStateInterface $formState)
     {
-        // Path unicity
+        // Path unicity and validity
         if (!empty($formState->getValue('path')[0]['value'])) {
+            if (0 !== \strpos($formState->getValue('path')[0]['value'], '/')) {
+                $formState->setErrorByName(
+                    'path',
+                    $this->t('Path must start with a "/".')
+                );
+            }
+
             $otherPages = $this->entityTypeManager->getStorage('ekino_rendr_page')->loadByProperties([
                 'path' => $formState->getValue('path')[0]['value'],
             ]);
@@ -210,11 +249,39 @@ final class PageUpsertForm extends ContentEntityForm
                     $formState->setErrorByName(
                         'path',
                         $this->t('Path must be unique per channel. The page "%title" is also using the path "%path".', [
-                            '%title' => $otherPage->get('title')->value,
-                            '%path' => $otherPage->get('path')->value,
+                            '%title' => $otherPage->getTitle(),
+                            '%path' => $otherPage->getPath(),
                         ]));
                     break;
                 }
+            }
+        }
+
+        // Url Alias consistancy
+        if (!empty($formState->getValue('url_alias')[0]['value'])) {
+            $path = $formState->getValue('path')[0]['value'] ?: '';
+            $urlAlias = $formState->getValue('url_alias')[0]['value'] ?: '';
+            \preg_match('/(:.+)$/', $path, $pathMatches);
+            \preg_match('/(:.+)$/', $urlAlias, $urlAliasMatches);
+
+            $pathIsInvalid = 2 === \count($urlAliasMatches) && (2 !== \count($pathMatches) || $urlAliasMatches[1] !== $pathMatches[1]);
+            $urlAliasIsInvalid = 2 === \count($pathMatches) && (2 !== \count($urlAliasMatches) || $urlAliasMatches[1] !== $pathMatches[1]);
+
+            // Page must have a path
+            if (empty($path)) {
+                $formState->setErrorByName(
+                    'path',
+                    $this->t('Path must be set if you are using Url Alias.')
+                );
+            } elseif ($pathIsInvalid || $urlAliasIsInvalid) {
+                $formState->setErrorByName(
+                    'path',
+                    $this->t('There is a mismatch between path and Url Alis. In "%field", you are referencing a dynamic content "%key" that has no match in "%reciprocal".', [
+                        '%field' => $pathIsInvalid ? 'Url Alias' : 'Path',
+                        '%key' => $pathIsInvalid ? $urlAliasMatches[1] : $pathMatches[1],
+                        '%reciprocal' => $pathIsInvalid ? 'Path' : 'Url Alias',
+                    ])
+                );
             }
         }
 
@@ -233,7 +300,8 @@ final class PageUpsertForm extends ContentEntityForm
             $parentPage = $this->entityTypeManager->getStorage('ekino_rendr_page')->load($formState->getValue('parent_page')[0]['target_id']);
 
             while ($parentPage) {
-                $parentPage = \reset($parentPage->get('parent_page')->referencedEntities());
+                $entities = $parentPage->get('parent_page')->referencedEntities();
+                $parentPage = \reset($entities);
 
                 if ($parentPage && $parentPage->id() === $this->entity->id()) {
                     $formState->setErrorByName(
@@ -271,12 +339,20 @@ final class PageUpsertForm extends ContentEntityForm
 
                 break;
             case SAVED_UPDATED:
-                $message = 'The "%label%" page was updated.';
+                $message = 'The <a href="'.$this->entity->toUrl('edit-form')->toString().'">"%label%"</a> page was updated.';
 
                 break;
             default:
                 throw new \LogicException();
         }
+        \Drupal::logger('content')->notice(
+            "%username has updated the page <a href='@url'>%label</a>.",
+            [
+                '%username' => \Drupal::currentUser()->getAccountName(),
+                '@url' => $this->entity->toUrl('edit-form')->toString(),
+                '%label' => $this->entity->label(),
+            ]
+        );
 
         $this->messenger->addStatus($this->stringTranslation->translate($message, [
             '%label%' => $this->entity->label(),
@@ -302,32 +378,39 @@ final class PageUpsertForm extends ContentEntityForm
 
     private function generatePreviewUrlsTable(UserInterface $user)
     {
-        if (empty($this->entity->get('path')->value)) {
+        if (empty($this->entity->getDefaultPath())) {
             return '';
+        }
+
+        if ($this->entity->isDynamic()) {
+            return '<h4>Preview Urls</h4><div class="description">Dynamic pages have no preview url.</div>';
         }
 
         $rows = [];
 
         foreach ($this->entity->get('channels')->referencedEntities() as $channel) {
-            $translation = $channel->getTranslation($this->entity->language()->getId()) ?: $channel;
-            $event = new PreviewUrlEvent(
-                'ekino_rendr.api.page_preview',
+            $hasMatchingLanguage = \array_key_exists($this->entity->language()->getId(), $channel->getTranslationLanguages(true));
+            $translation = $hasMatchingLanguage ? $channel->getTranslation($this->entity->language()->getId()) : $channel;
+            $event = new UrlEvent(
+                'ekino_rendr.api.catchall_preview',
                 [
-                    'slug' => \str_replace('/', '', $this->entity->get('path')->value),
+                    'path' => UrlGenerator::generatePublicPageUrl($this->entity->getDefaultPath(), $translation),
+                    'channel' => $translation->id(),
                     '_preview_token' => $user->get('field_rendr_preview_token')->value,
                 ],
                 [],
-                $translation
+                $translation,
+                ['page' => $this->entity]
             );
 
-            $this->eventDispatcher->dispatch(PreviewUrlEvent::EVENT, $event);
+            $this->eventDispatcher->dispatch(UrlEvent::PAGE_URL_EVENT, $event);
 
             if (!$event->getRouteName() && !$event->getUrl()) {
                 continue;
             }
 
             $rows[] = [
-                $event->getChannel() ? $event->getChannel()->get('label')->value : $this->entity->language()->getId(),
+                $event->getChannel() ? $event->getChannel()->label() : $this->entity->language()->getId(),
                 $event->getUrl() ?: (new Url($event->getRouteName(), $event->getRouteParameters(), $event->getOptions()))->toString(),
             ];
         }

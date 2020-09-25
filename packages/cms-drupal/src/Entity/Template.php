@@ -29,7 +29,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     }
  *   },
  *   config_prefix = "ekino_rendr_template",
- *   admin_permission="administer ekino_rendr templates",
+ *   admin_permission="administer ekino_rendr_template",
  *   entity_keys={
  *      "id"="id",
  *      "label"="label",

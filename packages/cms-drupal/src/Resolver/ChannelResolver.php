@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\ekino_rendr\Resolver;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\ekino_rendr\Entity\Channel;
 use Drupal\ekino_rendr\Entity\ChannelInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
@@ -12,6 +13,10 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 class ChannelResolver implements ArgumentValueResolverInterface
 {
+    public const ID_REQUEST_KEY = 'channel';
+    public const DOMAIN_REQUEST_KEY = 'channel_domain';
+    public const PATH_REQUEST_KEY = 'path';
+
     protected $entityTypeManager;
 
     public function __construct(
@@ -34,13 +39,19 @@ class ChannelResolver implements ArgumentValueResolverInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument)
     {
+        if ($request->get(self::ID_REQUEST_KEY) && $channel = Channel::load($request->get(self::ID_REQUEST_KEY))) {
+            yield $channel;
+
+            return;
+        }
+
         $host = $request->getHost();
-        $rendrChannel = $request->get('rendr_channel');
+        $channelDomain = $request->get(self::DOMAIN_REQUEST_KEY);
         $path = '';
 
-        if ($rendrChannel) {
-            $rendrChannel = 0 === \strpos($rendrChannel, 'http') ? $rendrChannel : \sprintf('http://%s', $rendrChannel);
-            $parsedUrl = \parse_url($rendrChannel);
+        if ($channelDomain) {
+            $channelDomain = 0 === \strpos($channelDomain, 'http') ? $channelDomain : \sprintf('http://%s', $channelDomain);
+            $parsedUrl = \parse_url($channelDomain);
             $host = $parsedUrl['host'];
             $path = isset($parsedUrl['path']) && '/' !== $parsedUrl['path'] ? \substr($parsedUrl['path'], 1) : null;
         }
@@ -49,7 +60,8 @@ class ChannelResolver implements ArgumentValueResolverInterface
         // There is an issue where loadByProperties would return no result if 2 keys are passed at the same time
         $channels = $this->entityTypeManager->getStorage('ekino_rendr_channel')->loadByProperties([
             'domain' => $host,
-//            'locale' => $locale,
+            'published' => true,
+//            'path' => $path,
         ]);
         $channels = \array_filter($channels, function ($channel) use ($path) {
             return $channel->get('path')->value === $path;
@@ -57,9 +69,30 @@ class ChannelResolver implements ArgumentValueResolverInterface
 
         if (0 === \count($channels)) {
             yield null;
+
+            return;
         }
 
         yield \reset($channels);
+    }
+
+    public static function resolveChannelFromRequest(Request $request)
+    {
+        $storage = \Drupal::entityTypeManager()->getStorage('ekino_rendr_channel');
+
+        if ($request->get(self::ID_REQUEST_KEY)) {
+            return $storage->load($request->get(self::ID_REQUEST_KEY));
+        }
+
+        $domain = $request->get(self::DOMAIN_REQUEST_KEY);
+        $path = $request->get(self::PATH_REQUEST_KEY);
+        $channels = self::findMatchingChannels(
+            $storage->loadByProperties(['published' => true]),
+            $domain,
+            $path
+        );
+
+        return  \reset($channels) ?: null;
     }
 
     public static function findMatchingChannels(array $channels, $domain, $path)

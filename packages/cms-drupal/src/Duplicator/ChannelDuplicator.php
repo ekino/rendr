@@ -32,15 +32,18 @@ class ChannelDuplicator implements ChannelDuplicatorInterface
 
         /** @var PageInterface $layoutPage */
         foreach ($layoutPages as $layoutPage) {
-            $layoutPage->get('channels')->appendItem($duplicate->id());
-            $layoutPage->save();
-        }
+            $layoutClone = $layoutPage->createDuplicate();
+            $layoutClone->set('channels', [$duplicate]);
+            $layoutClone->save();
 
-        /** @var PageInterface $childPage */
-        foreach ($childrenPages as $childPage) {
-            $clone = $childPage->createDuplicate();
-            $clone->set('channels', [$duplicate]);
-            $clone->save();
+            foreach ($childrenPages as $childPage) {
+                if (\array_column($childPage->get('parent_page')->getValue(), 'target_id')[0] === $layoutPage->id()) {
+                    $clone = $childPage->createDuplicate();
+                    $clone->set('channels', [$duplicate]);
+                    $clone->set('parent_page', $layoutClone->id());
+                    $clone->save();
+                }
+            }
         }
 
         return $duplicate;
@@ -69,7 +72,9 @@ class ChannelDuplicator implements ChannelDuplicatorInterface
 
         $hasChildren = static function ($currentPage) use ($pages) {
             foreach ($pages as $page) {
-                if (\array_column($page->get('parent_page')->getValue(), 'target_id')[0] === $currentPage->id()) {
+                $parentIds = !empty($page->get('parent_page')->getValue()) ? \array_column($page->get('parent_page')->getValue(), 'target_id') : [];
+                $parentId = \reset($parentIds);
+                if ($parentId === $currentPage->id()) {
                     return true;
                 }
             }

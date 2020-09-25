@@ -51,7 +51,7 @@ class PageResolver implements PageResolverInterface
 
     protected function getUserSpecificConditions(User $user, ChannelInterface $channel = null): array
     {
-        if (false !== \array_search('administrator', $user->getRoles())) {
+        if (false !== \array_search('administrator', $user->getRoles()) || $user->hasPermission('bypass ekino_rendr_channel restriction')) {
             return [];
         }
 

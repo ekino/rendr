@@ -11,7 +11,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *   id="ekino_rendr_channel_type",
  *   label=@Translation("Channel type"),
  *
- *   admin_permission="administer ekino_rendr channel types",
+ *   admin_permission="administer ekino_rendr_channel_type",
  *   bundle_of="ekino_rendr_channel",
  *   config_export={
  *      "id",

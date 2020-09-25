@@ -41,6 +41,7 @@ class PageManager implements PageManagerInterface
             'slug' => $slug,
             'request' => $request,
             'channel' => $channel,
+            'page' => $page,
         ] + $extraContext);
     }
 
@@ -57,6 +58,7 @@ class PageManager implements PageManagerInterface
             'slug' => PageResponse::ERROR_404_PAGE,
             'request' => $request,
             'channel' => $channel,
+            'page' => $error404Page,
         ]);
 
         $result['statusCode'] = 404;
@@ -77,6 +79,7 @@ class PageManager implements PageManagerInterface
             'slug' => PageResponse::ERROR_500_PAGE,
             'request' => $request,
             'channel' => $channel,
+            'page' => $error500Page,
         ]);
 
         $result['statusCode'] = 500;
@@ -84,20 +87,34 @@ class PageManager implements PageManagerInterface
         return $result;
     }
 
-    protected function getPage($slug, UserInterface $user, ChannelInterface $channel = null, $preview = false)
+    public function getPage($slug, UserInterface $user, ChannelInterface $channel = null, $preview = false)
     {
-        $pages = $this->pageRepository->loadByProperties(
-            $this->pageResolver->getPageConditions($slug, [
-                'preview' => $preview,
-                'user' => $user,
-                'channel' => $channel,
-            ])
-        );
+        $conditions = $this->pageResolver->getPageConditions($slug, [
+            'preview' => $preview,
+            'user' => $user,
+            'channel' => $channel,
+        ]);
+
+        $urlAliasConditions = $conditions;
+        $urlAliasConditions['url_alias'] = $conditions['path'];
+        unset($urlAliasConditions['path']);
+
+        $pages = $this->pageRepository->loadByProperties($urlAliasConditions);
 
         if (0 === \count($pages)) {
+            $pages = $this->pageRepository->loadByProperties($conditions);
+
+            if (0 === \count($pages)) {
+                return null;
+            }
+        }
+
+        $page = \reset($pages);
+
+        if (!$page->hasTranslation($channel->language()->getId())) {
             return null;
         }
 
-        return \reset($pages);
+        return $page->getTranslation($channel->language()->getId());
     }
 }

@@ -11,6 +11,7 @@ use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\ekino_rendr\Repository\PageRepository;
 
 /**
  * @ContentEntityType(
@@ -18,7 +19,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   label=@Translation("Page"),
  *
  *   translatable = TRUE,
- *   admin_permission="administer ekino_rendr pages",
+ *   admin_permission="administer ekino_rendr_page",
  *   base_table="ekino_rendr_page",
  *   data_table = "ekino_rendr_page_field_data",
  *   revision_table = "ekino_rendr_page_revision",
@@ -41,7 +42,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *          "edit"="Drupal\ekino_rendr\Form\PageUpsertForm"
  *      },
  *      "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *      "views_data" = "Drupal\lsm\ViewsData\PageViewsData",
+ *      "views_data" = "Drupal\ekino_rendr\ViewsData\PageViewsData",
  *      "list_builder"="Drupal\ekino_rendr\Entity\PageListBuilder",
  *      "route_provider" = {
  *          "html"="Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
@@ -75,12 +76,32 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
 
     public function getPath(): string
     {
-        return \is_string($path = $this->get('path')->value) ? $path : '';
+        return $this->getStringFieldValue('path');
+    }
+
+    public function getUrlAlias(): string
+    {
+        return $this->getStringFieldValue('url_alias');
+    }
+
+    public function getDefaultPath(): string
+    {
+        return $this->getUrlAlias() ?: $this->getPath();
     }
 
     public function getTitle(): string
     {
-        return \is_string($title = $this->get('title')->value) ? $title : '';
+        return $this->getStringFieldValue('title');
+    }
+
+    public function isDisplayable(): bool
+    {
+        return !empty($this->getPath()) && false === \strpos($this->getPath(), ':');
+    }
+
+    public function isDynamic(): bool
+    {
+        return !$this->isDisplayable();
     }
 
     /**
@@ -112,12 +133,22 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
                 ->setLabel(new TranslatableMarkup('Path'))
                 ->setRequired(false)
                 ->setRevisionable(true)
+                ->setTranslatable(false)
+                ->setDisplayOptions('form', [
+                    'type' => 'string_textfield',
+                ])
+                ->setDisplayConfigurable('form', true)
+                ->setDescription(new TranslatableMarkup('Specify the base path by which the data are retrieved. This path is used to determine page hierarchy in the breadcrumb. Use url alias to specify a user friendly url for the page.')),
+            'url_alias' => BaseFieldDefinition::create('string')
+                ->setLabel(new TranslatableMarkup('Url Alias'))
+                ->setRequired(false)
+                ->setRevisionable(true)
                 ->setTranslatable(true)
                 ->setDisplayOptions('form', [
                     'type' => 'string_textfield',
                 ])
-                ->setDisplayConfigurable('form', true),
-                // NodeAccessControlHandler for autocomplete in edit form
+                ->setDisplayConfigurable('form', true)
+                ->setDescription(new TranslatableMarkup('Specify an alternative path by which this data can be accessed. For example, type "/about" when writing an about page.')),
             'channels' => BaseFieldDefinition::create('entity_reference')
                 ->setLabel(new TranslatableMarkup('Channels'))
                 ->setRequired(true)
@@ -185,10 +216,12 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
     {
         $duplicate = parent::createDuplicate();
         $duplicate->set('published', false);
+        $this->duplicateParagraphs($duplicate);
 
         foreach ($duplicate->getTranslationLanguages() as $langcode => $language) {
             $translation = $duplicate->getTranslation($langcode);
             $translation->set('published', false);
+            $this->duplicateParagraphs($translation);
         }
 
         return $duplicate;
@@ -199,5 +232,61 @@ final class Page extends RevisionableContentEntityBase implements PageInterface
         $default = $channel ? $channel->getPrivateSetting('default_ttl', 0) : 0;
 
         return (int) (\is_numeric($this->get('ttl')->value) ? $this->get('ttl')->value : $default);
+    }
+
+    public function getSimilarPages()
+    {
+        /** @var PageRepository $repository */
+        $repository = \Drupal::getContainer()->get('ekino_rendr.repository.page');
+
+        return $repository->getSimilarPages($this);
+    }
+
+    public function getHierarchicalParentPage()
+    {
+        /** @var PageRepository $repository */
+        $repository = \Drupal::getContainer()->get('ekino_rendr.repository.page');
+        $pages = $repository->getHierarchicalParentPage($this);
+
+        return \reset($pages);
+    }
+
+    public function getSameHierarchicalPages($includeCurrent = false)
+    {
+        /** @var PageRepository $repository */
+        $repository = \Drupal::getContainer()->get('ekino_rendr.repository.page');
+
+        return $repository->getSameHierarchicalPages($this, $includeCurrent);
+    }
+
+    public function getChildrenHierarchicalPages()
+    {
+        /** @var PageRepository $repository */
+        $repository = \Drupal::getContainer()->get('ekino_rendr.repository.page');
+
+        return $repository->getChildrenHierarchicalPages($this);
+    }
+
+    protected function getStringFieldValue($fieldName)
+    {
+        return \is_string($this->get($fieldName)->value) ? $this->get($fieldName)->value : '';
+    }
+
+    protected function duplicateParagraphs(PageInterface $page)
+    {
+        foreach ($page->getFieldDefinitions() as $field_definition) {
+            $field_storage_definition = $field_definition->getFieldStorageDefinition();
+            $field_settings = $field_storage_definition->getSettings();
+            $field_name = $field_storage_definition->getName();
+            if (isset($field_settings['target_type']) && 'paragraph' == $field_settings['target_type']) {
+                if (!$page->get($field_name)->isEmpty()) {
+                    foreach ($page->get($field_name) as $value) {
+                        if ($value->entity) {
+                            $value->entity = $value->entity->createDuplicate();
+                        }
+                    }
+                }
+            }
+        }
     }
 }

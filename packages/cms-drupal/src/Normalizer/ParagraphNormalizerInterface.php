@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\ekino_rendr\Normalizer;
 
-use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 
 interface ParagraphNormalizerInterface
 {
     /**
-     * @param Paragraph $object  The Paragrah object
-     * @param string    $format  The output format key
-     * @param array     $context The context to apply to this transformation
+     * @param ParagraphInterface $object  The Paragrah object
+     * @param string             $format  The output format key
+     * @param array              $context The context to apply to this transformation
      *
      * @return array
      */
-    public function normalize(Paragraph $object, $format = null, array $context = []);
+    public function normalize(ParagraphInterface $object, $format = null, array $context = []);
 
     /**
      * @return bool
      */
-    public function supportsNormalization(Paragraph $object);
+    public function supportsNormalization(ParagraphInterface $object);
 }

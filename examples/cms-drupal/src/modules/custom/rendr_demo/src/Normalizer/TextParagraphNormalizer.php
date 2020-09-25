@@ -8,6 +8,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\ekino_rendr\Normalizer\BaseParagraphNormalizer;
 use Drupal\ekino_rendr\Tool\PreviewHelper;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Text Paragraph transformer.
@@ -17,15 +18,11 @@ class TextParagraphNormalizer extends BaseParagraphNormalizer
     /**
      * {@inheritdoc}
      */
-    public function normalize(Paragraph $object, $format = null, array $context = [])
+    public function normalize(ParagraphInterface $object, $format = null, array $context = [])
     {
         return [
-            'id' => $object->get('id')->value,
+            'id' => $object->id(),
             'type' => 'rendr.text',
-            'extra' => [
-                'preview' => $context['preview'],
-                'internal_preview_link' => $context['preview'] ? PreviewHelper::convertToPreviewUrl('/some/url/here') : '',
-            ],
             'settings' => [
                 'title' => $object->get('field_rendr_title')->value,
                 'contents' => $object->get('field_rendr_description')->value,

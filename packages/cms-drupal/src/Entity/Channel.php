@@ -20,7 +20,7 @@ use Drupal\user\EntityOwnerTrait;
  *   label=@Translation("Channel"),
  *
  *   translatable = TRUE,
- *   admin_permission="administer ekino_rendr channels",
+ *   admin_permission="administer ekino_rendr_channel",
  *   base_table="ekino_rendr_channel",
  *   data_table = "ekino_rendr_channel_field_data",
  *   revision_table = "ekino_rendr_channel_revision",
@@ -209,7 +209,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
 
     public function getPublicSettings(): array
     {
-        if (null === $this->settings) {
+        if (null === $this->publicSettings) {
             $this->publicSettings = \is_string($settings = $this->get('public_settings')->value) ? self::extractSettingValues($settings)[0] : [];
         }
 
@@ -218,7 +218,7 @@ final class Channel extends RevisionableContentEntityBase implements EntityOwner
 
     public function getPrivateSettings(): array
     {
-        if (null === $this->settings) {
+        if (null === $this->privateSettings) {
             $this->privateSettings = \is_string($settings = $this->get('private_settings')->value) ? self::extractSettingValues($settings)[0] : [];
         }
 

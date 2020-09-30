@@ -60,8 +60,11 @@ class PageNormalizer extends ContentEntityNormalizer
         foreach ($containers as $key => $container) {
             \preg_match(Template::CONTAINER_KEY_PATTERN, $key, $matches);
             $cb = static function ($block) use ($matches, &$blockOrder) {
+                if (empty($block)) {
+                    return null;
+                }
                 $block['container'] = $block['container'] ?? $matches[1];
-                $block['order'] = $blockOrder;
+                $block['order'] = $block['order'] ?? $blockOrder;
                 ++$blockOrder;
 
                 return $block;
@@ -76,8 +79,15 @@ class PageNormalizer extends ContentEntityNormalizer
             }
         }
 
+        $blocks = \array_values(\array_filter($blocks));
+
+        \usort($blocks, function ($a, $b) {
+            return $a['order'] <=> $b['order'];
+        });
+
         $channelData = $context['channel'] ? [
             'id' => $context['channel']->uuid(),
+            'language' => $context['channel']->language()->getId(),
             'settings' => $context['channel']->getPublicSettings(),
         ] : [];
 
@@ -90,7 +100,7 @@ class PageNormalizer extends ContentEntityNormalizer
             'property' => 'og:description',
             'content' => $object->get('seo_description')->value,
         ];
-        $attributes['path'] = $object->get('path')->value;
+        $attributes['path'] = $object->getDefaultPath();
         $attributes['blocks'] = $blocks;
         $attributes['cache'] = ['ttl' => $context['preview'] ? 0 : $object->getTtl($context['channel'])];
         $attributes['settings'] = ['preview' => $context['preview'] ?? false];

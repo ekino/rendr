@@ -122,8 +122,8 @@ class ChannelDuplicateForm extends ContentEntityConfirmFormBase
     protected function getDuplicationSummaryText()
     {
         return '<ul>
-<li>%countUpdated pages updated<br/>%exampleUpdated</li>
-<li>%countDuplicated pages duplicated<br/>%exampleDuplicated</li>
+<li>%countUpdated layout pages duplicated<br/>%exampleUpdated</li>
+<li>%countDuplicated children pages duplicated<br/>%exampleDuplicated</li>
 </ul>';
     }
 

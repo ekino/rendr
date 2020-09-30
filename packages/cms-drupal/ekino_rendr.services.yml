@@ -56,7 +56,7 @@ services:
         arguments:
             - '@entity_type.manager'
         tags:
-            - { name: access_check, applies_to: _preview_access_check }
+            - { name: access_check, applies_to: _rendr_preview_access_check }
 
     # Retrieve the Channel associated to the current Request
     ekino_rendr.argument_resolver.channel_resolver:
@@ -71,4 +71,22 @@ services:
         class: Drupal\ekino_rendr\Duplicator\ChannelDuplicator
         arguments:
             - '@entity_type.manager'
+
+    ekino_rendr.page_cache_request_policy:
+        class: Drupal\ekino_rendr\Access\PreviewRequestPolicy
+        tags:
+            - { name: page_cache_request_policy}
+
+#################
+# @experimental #
+#################
+    Drupal\ekino_rendr\Controller\ContentApiController:
+        arguments:
+            - '@entity_type.manager'
+            - '@ekino_rendr.manager.page'
+
+    ekino_rendr.router_subscriber:
+        class: 'Drupal\ekino_rendr\Router\RouterSubscriber'
+        arguments:
+            - "@entity_type.manager"
 

@@ -1,0 +1,10 @@
+uuid: 0fe80e1c-51c6-458d-975f-72a87d6905ac
+langcode: en
+status: true
+dependencies: {  }
+id: basic_content
+label: 'Basic Content Block'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

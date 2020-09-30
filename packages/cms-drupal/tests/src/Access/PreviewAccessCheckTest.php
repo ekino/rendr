@@ -25,7 +25,7 @@ class PreviewAccessCheckTest extends TestCase
         $account = $this->createMock(AccountInterface::class);
         $account->expects($this->any())
             ->method('hasPermission')
-            ->with('view ekino_rendr pages')
+            ->with('preview ekino_rendr_page')
             ->willReturn($params['account_permission']);
 
         $session = new Session(new MockArraySessionStorage());
@@ -57,7 +57,7 @@ class PreviewAccessCheckTest extends TestCase
         $user = $this->createMock(User::class);
         $user->expects($this->exactly(1))
             ->method('hasPermission')
-            ->with('view ekino_rendr pages')
+            ->with('preview ekino_rendr_page')
             ->willReturn(true);
 
         return [

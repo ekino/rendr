@@ -5,7 +5,7 @@ entity.ekino_rendr_channel.canonical:
         _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
     requirements:
         ekino_rendr_page: \d+
-        _permission: 'administer ekino_rendr channels'
+        _permission: 'update ekino_rendr_channel'
     options:
         parameters:
             ekino_rendr_channel:
@@ -16,14 +16,21 @@ entity.ekino_rendr_channel.form_duplicate:
     defaults:
         _entity_form: 'ekino_rendr_channel.duplicate'
     requirements:
-        _permission: 'administer ekino_rendr channels'
+        _permission: 'update ekino_rendr_channel'
 
 entity.ekino_rendr_page.form_duplicate:
     path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/duplicate'
     defaults:
         _entity_form: 'ekino_rendr_page.duplicate'
     requirements:
-        _permission: 'administer ekino_rendr pages'
+        _permission: 'update ekino_rendr_page+administer ekino_rendr_page'
+
+entity.ekino_rendr_page.form_change_template:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/change_template'
+    defaults:
+        _entity_form: 'ekino_rendr_page.change_template'
+    requirements:
+        _permission: 'update ekino_rendr_page+administer ekino_rendr_page'
 
 entity.ekino_rendr_page.canonical:
     path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}'
@@ -32,7 +39,7 @@ entity.ekino_rendr_page.canonical:
         _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
     requirements:
         ekino_rendr_page: \d+
-        _permission: 'administer ekino_rendr pages'
+        _permission: 'view ekino_rendr_page+administer ekino_rendr_page'
     options:
         parameters:
             ekino_rendr_page:
@@ -65,7 +72,7 @@ ekino_rendr.api.catchall:
   requirements:
     _access: 'TRUE'
 
-ekino_rendr.api.catchall_preview:
+ekino_rendr.api.catchall_preview_per_host:
   path: "/ekino-rendr/api-catchall"
   condition: 'context.getHost() matches "/rendr-preview/'
   defaults:
@@ -73,19 +80,19 @@ ekino_rendr.api.catchall_preview:
     _title: "Ekino Rendr API Catchall"
     preview: true
   requirements:
-    _preview_access_check: 'TRUE'
+    _rendr_preview_access_check: 'TRUE'
 
-ekino_rendr.api.catchall_preview_per_host:
+ekino_rendr.api.catchall_preview:
   path: "/_preview/ekino-rendr/api-catchall"
   defaults:
     _controller: 'Drupal\ekino_rendr\Controller\ApiController::catchAll'
     _title: "Ekino Rendr API Catchall"
     preview: true
   requirements:
-    _preview_access_check: 'TRUE'
+    _rendr_preview_access_check: 'TRUE'
 
 ekino_rendr.api.page:
-    path: "/ekino-rendr/api/page/{slug}"
+    path: "/ekino-rendr/api/page"
     condition: 'not(context.getHost() matches "/rendr-preview/")'
     defaults:
         _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
@@ -95,7 +102,7 @@ ekino_rendr.api.page:
         _access: 'TRUE'
 
 ekino_rendr.api.page_preview_per_host:
-    path: "/ekino-rendr/api/page/{slug}"
+    path: "/ekino-rendr/api/page"
     condition: 'context.getHost() matches "/rendr-preview/"'
     defaults:
         _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
@@ -103,14 +110,17 @@ ekino_rendr.api.page_preview_per_host:
         slug: ""
         preview: true
     requirements:
-        _preview_access_check: 'TRUE'
+        _rendr_preview_access_check: 'TRUE'
 
 ekino_rendr.api.page_preview:
-    path: "/_preview/ekino-rendr/api/page/{slug}"
+    path: "/_preview/ekino-rendr/api/page"
     defaults:
         _controller: 'Drupal\ekino_rendr\Controller\ApiController::page'
         _title: "ekino rendr API"
         slug: ""
         preview: true
     requirements:
-        _preview_access_check: 'TRUE'
+        _rendr_preview_access_check: 'TRUE'
+
+route_callbacks:
+  - 'ekino_rendr.router_subscriber:routes'

@@ -1,14 +1,41 @@
-administer ekino_rendr channel types:
+administer ekino_rendr_channel_types:
     title: "Administer ekino_rendr channel types"
 
-administer ekino_rendr channels:
+administer ekino_rendr_channel:
     title: "Administer ekino_rendr channels"
 
-administer ekino_rendr templates:
+administer ekino_rendr_template:
     title: "Administer ekino_rendr templates"
 
-administer ekino_rendr pages:
+administer ekino_rendr_page:
     title: "Administer ekino_rendr pages"
 
-view ekino_rendr pages:
-    title: "View ekino_rendr pages"
+administer ekino_rendr_page fields:
+    title: "Administer ekino_rendr pages fields"
+
+administer ekino_rendr_page form display:
+    title: "Administer ekino_rendr pages form display"
+
+bypass ekino_rendr_channel restriction:
+  title: "Bypass ekino_rendr channel restriction"
+
+delete ekino_rendr_channel:
+  title: "Delete ekino_rendr channels"
+
+delete ekino_rendr_page:
+  title: "Delete ekino_rendr pages"
+
+preview ekino_rendr_page:
+  title: "Preview ekino_rendr pages"
+
+update ekino_rendr_channel:
+  title: "Edit ekino_rendr channels"
+
+update ekino_rendr_page:
+  title: "Edit ekino_rendr pages"
+
+view ekino_rendr_page:
+  title: "View ekino_rendr pages"
+
+view ekino_rendr_channel:
+  title: "View ekino_rendr channels"

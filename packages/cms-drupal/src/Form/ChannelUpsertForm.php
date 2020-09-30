@@ -177,6 +177,14 @@ final class ChannelUpsertForm extends ContentEntityForm
                 throw new \LogicException();
         }
 
+        \Drupal::logger('content')->notice(
+            "%username has updated the channel <a href='@url'>%label</a>.",
+            [
+                '%username' => \Drupal::currentUser()->getAccountName(),
+                '@url' => $this->entity->toUrl('edit-form')->toString(),
+                '%label' => $this->entity->label(),
+            ]
+        );
         $this->messenger->addStatus($this->stringTranslation->translate($message, [
             '%label%' => $this->entity->label(),
         ]));

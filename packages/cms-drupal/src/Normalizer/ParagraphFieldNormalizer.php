@@ -25,14 +25,27 @@ class ParagraphFieldNormalizer extends EntityReferenceFieldItemNormalizer
     {
         $values = parent::normalize($object, $format, $context);
 
+        if (!\array_key_exists('target_type', $values)) {
+            return $values;
+        }
+
         if ('paragraph' !== $values['target_type']) {
             return $values;
         }
 
         $paragraph = $object->get('entity')->getValue();
+
+        if ($paragraph->hasTranslation($context['channel']->language()->getId())) {
+            $paragraph = $paragraph->getTranslation($context['channel']->language()->getId());
+        }
+
         $normalizers = $this->normalizers;
 
         $normalizeParagraphs = function ($internalParagraph, $internalFormat, $internalContext) use ($normalizers) {
+            if (!$internalParagraph) {
+                return null;
+            }
+
             foreach ($normalizers as $normalizer) {
                 if ($normalizer->supportsNormalization($internalParagraph)) {
                     return $normalizer->normalize($internalParagraph, $internalFormat, $internalContext);
@@ -49,7 +62,7 @@ class ParagraphFieldNormalizer extends EntityReferenceFieldItemNormalizer
 
         $result = $normalizeParagraphs($paragraph, $format, $extendedContext);
 
-        return !empty($result) ? $result : $values;
+        return null !== $result ? $result : $values;
     }
 
     /**

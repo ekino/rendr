@@ -15,4 +15,6 @@ interface PageManagerInterface
     public function get404PageData(Request $request, UserInterface $user, ChannelInterface $channel = null, $preview = false);
 
     public function get500PageData(Request $request, UserInterface $user, ChannelInterface $channel = null, $preview = false);
+
+    public function getPage($slug, UserInterface $user, ChannelInterface $channel = null, $preview = false);
 }

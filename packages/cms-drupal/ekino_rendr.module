@@ -1,30 +1,67 @@
 <?php
 
+use Drupal\Component\Uuid\Php;
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\ekino_rendr\Entity\ChannelInterface;
 use Drupal\ekino_rendr\Entity\PageInterface;
+use Drupal\ekino_rendr\Event\UrlEvent;
+use Drupal\ekino_rendr\Model\PageFormTemplate;
+use Drupal\ekino_rendr\Tool\ArrayHelper;
+use Drupal\ekino_rendr\Tool\PreviewHelper;
+use Drupal\ekino_rendr\Tool\Slug;
+use Drupal\ekino_rendr\Tool\UrlGenerator;
 use Drupal\field\FieldStorageConfigInterface;
+use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
+use Drupal\views\Plugin\views\query\Sql;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_entity_operation().
  */
 function ekino_rendr_entity_operation(EntityInterface $entity)
 {
-    $operations = [];
-    $channelCondition = $entity instanceof ChannelInterface &&
-        \Drupal::currentUser()->hasPermission('administer ekino_rendr channels');
-    $pageCondition = $entity instanceof PageInterface &&
-        \Drupal::currentUser()->hasPermission('administer ekino_rendr pages');
+  $operations = [];
+  $channelCondition = $entity instanceof ChannelInterface &&
+      \Drupal::currentUser()->hasPermission('update ekino_rendr_channel');
+  $pageCondition = $entity instanceof PageInterface &&
+      \Drupal::currentUser()->hasPermission('update ekino_rendr_page');
 
-    if ($channelCondition || $pageCondition) {
-        $operations['duplicate'] = [
-            'title' => t('Duplicate'),
-            'weight' => 50,
-            'url' => $entity->toUrl('form-duplicate'),
-        ];
-    }
+  if ($channelCondition || $pageCondition) {
+    $operations['duplicate'] = [
+      'title' => t('Duplicate'),
+      'weight' => 50,
+      'url' => $entity->toUrl('form-duplicate'),
+    ];
+  }
 
-    return $operations;
+  if ($pageCondition) {
+    $operations['change-template'] = [
+      'title' => t('Change Template'),
+      'weight' => 55,
+      'url' => $entity->toUrl('form-change-template'),
+    ];
+  }
+
+  return $operations;
+}
+
+function ekino_rendr_entity_access(EntityInterface $entity, $operation, AccountInterface $account = null)
+{
+  $supportedOperations = ['view', 'update', 'delete'];
+  if (in_array($operation, $supportedOperations) && ($entity instanceof PageInterface || $entity instanceof ChannelInterface)) {
+    $account = $account ?: \Drupal::currentUser();
+
+    return AccessResult::allowedIf($account->hasPermission(
+        $operation.($entity instanceof PageInterface ? ' ekino_rendr_page' : ' ekino_rendr_chanel')
+    ));
+  }
+
+  return AccessResult::neutral();
 }
 
 /**
@@ -32,13 +69,16 @@ function ekino_rendr_entity_operation(EntityInterface $entity)
  */
 function ekino_rendr_entity_type_build(array &$entity_types)
 {
-    /** @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[] */
-    $entity_types['ekino_rendr_channel']
-        ->setFormClass('duplicate', 'Drupal\ekino_rendr\Form\ChannelDuplicateForm')
-        ->setLinkTemplate('form-duplicate', '/admin/content/ekino_rendr_channel/{ekino_rendr_channel}/duplicate');
-    $entity_types['ekino_rendr_page']
-        ->setFormClass('duplicate', 'Drupal\ekino_rendr\Form\PageDuplicateForm')
-        ->setLinkTemplate('form-duplicate', '/admin/content/ekino_rendr_page/{ekino_rendr_page}/duplicate');
+  /** @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[] */
+  $entity_types['ekino_rendr_channel']
+    ->setFormClass('duplicate', 'Drupal\ekino_rendr\Form\ChannelDuplicateForm')
+    ->setLinkTemplate('form-duplicate', '/admin/content/ekino_rendr_channel/{ekino_rendr_channel}/duplicate');
+  $entity_types['ekino_rendr_page']
+    ->setFormClass('duplicate', 'Drupal\ekino_rendr\Form\PageDuplicateForm')
+    ->setLinkTemplate('form-duplicate', '/admin/content/ekino_rendr_page/{ekino_rendr_page}/duplicate');
+  $entity_types['ekino_rendr_page']
+    ->setFormClass('change_template', 'Drupal\ekino_rendr\Form\PageTemplateForm')
+    ->setLinkTemplate('form-change-template', '/admin/content/ekino_rendr_page/{ekino_rendr_page}/change_template');
 }
 
 /**
@@ -46,15 +86,15 @@ function ekino_rendr_entity_type_build(array &$entity_types)
  */
 function ekino_rendr_field_views_data_alter(array &$data, FieldStorageConfigInterface $field_storage)
 {
-    if ($field_storage->getType() == 'entity_reference' && $field_storage->getSetting('target_type') == 'ekino_rendr_channel') {
-        foreach ($data as $table_name => $table_data) {
-            foreach ($table_data as $field_name => $field_data) {
-                if (isset($field_data['filter']) && $field_name != 'delta') {
-                    $data[$table_name][$field_name]['filter']['id'] = 'channels_target_id';
-                }
-            }
+  if ($field_storage->getType() == 'entity_reference' && $field_storage->getSetting('target_type') == 'ekino_rendr_channel') {
+    foreach ($data as $table_name => $table_data) {
+      foreach ($table_data as $field_name => $field_data) {
+        if (isset($field_data['filter']) && $field_name != 'delta') {
+          $data[$table_name][$field_name]['filter']['id'] = 'channels_target_id';
         }
+      }
     }
+  }
 }
 
 /**
@@ -62,5 +102,123 @@ function ekino_rendr_field_views_data_alter(array &$data, FieldStorageConfigInte
  */
 function ekino_rendr_views_data_alter(array &$data)
 {
-    $data['ekino_rendr_page__channels']['channels_target_id']['filter']['id'] = 'channels_target_id';
+  $data['ekino_rendr_page__channels']['channels_target_id']['filter']['id'] = 'channels_target_id';
 }
+
+/**
+ * Implements hook_entity_presave().
+ */
+function ekino_rendr_entity_presave(EntityInterface $entity)
+{
+  // automatically assign a preview token to users
+  if ($entity instanceof UserInterface &&
+    $entity->hasField('field_rendr_preview_token') &&
+    empty($entity->get('field_rendr_preview_token')->value)) {
+    $entity->set('field_rendr_preview_token', (new Php())->generate());
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function ekino_rendr_views_query_alter(ViewExecutable $view, Sql $query)
+{
+  $user = User::load(\Drupal::currentUser()->id());
+  $userIsAllowed = $user->hasPermission('bypass ekino_rendr_channel restriction');
+  // Don't alter any non-sql views queries.
+  // Don't modify the query if user is allowed or if the view isn't rendr_page
+  if (!($query instanceof Sql) || $view->id() !== 'rendr_pages' || $userIsAllowed) {
+    return;
+  }
+
+  $channelIds = array_column($user->get('field_rendr_allowed_channels')->getValue(), 'target_id');
+
+  if (empty($channelIds)) {
+    // if no channel is assign, return no result
+    $query->addWhere(
+      null,
+      'id',
+      null,
+      'IS NULL'
+    );
+  } else {
+    $query->addWhere(
+      null,
+      'ekino_rendr_page__channels.channels_target_id',
+      $channelIds,
+      'IN'
+    );
+  }
+}
+
+function ekino_rendr_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+    $applied = ArrayHelper::alterNestedKey('field_slug', function (&$value) {
+//    $value['#attributes']['readonly'] = 'readonly';
+//    $value['#disabled'] = true;
+    }, $form);
+
+    $node = $form_state->getFormObject()->getEntity();
+
+    if ($applied && $node->hasField('field_channels')) {
+        $rows = [];
+        $user = User::load(\Drupal::currentUser()->id());
+
+        foreach ($node->get('field_channels')->referencedEntities() as $channel) {
+            $hasMatchingLanguage = array_key_exists($node->language()->getId(), $channel->getTranslationLanguages(true));
+
+            if (!$hasMatchingLanguage) {
+                continue;
+            }
+
+            $translation = $channel->getTranslation($node->language()->getId());
+            $event = new UrlEvent(
+                'ekino_rendr.api.catchall_preview',
+                [
+                    'path' => UrlGenerator::generatePublicContentUrl($node, $translation),
+                    'channel' => $translation->id(),
+                    '_preview_token' => $user->get('field_rendr_preview_token')->value,
+                ],
+                [],
+                $translation,
+                ['content' => $node]
+            );
+
+            \Drupal::getContainer()->get('event_dispatcher')->dispatch(UrlEvent::CONTENT_URL_EVENT, $event);
+
+            if (!$event->getRouteName() && !$event->getUrl()) {
+                continue;
+            }
+
+            $rows[]  = [
+                $event->getChannel() ? $event->getChannel()->label() : $node->language()->getId(),
+                $event->getUrl() ?: (new Url($event->getRouteName(), $event->getRouteParameters(), $event->getOptions()))->toString(),
+            ];;
+        }
+
+        $form['meta']['preview_urls'] = [
+            '#type' => 'item',
+            '#markup' => PageFormTemplate::getPreviewTable($rows),
+            '#weight' => 55,
+        ];
+    }
+
+    foreach (array_keys($form['actions']) as $action) {
+        if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+            // Add custom handler to handle slug save
+            $form['actions'][$action]['#submit'][] = 'ekino_rendr_form_node_form_submit';
+        }
+    }
+}
+
+function ekino_rendr_form_node_form_submit($form, FormStateInterface $form_state)
+{
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $form_state->getFormObject()->getEntity();
+
+    if ($node->hasField('field_slug') && empty($form_state->getValue('field_slug')[0]['value'])) {
+        $node->set('field_slug', Slug::slugify($form_state->getValue('title')[0]['value']));
+        $node->save();
+    }
+}
+

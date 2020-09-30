@@ -3,7 +3,8 @@ langcode: en
 status: true
 dependencies: {  }
 id: ekino_rendr
-label: Block
+label: 'Basic Text Block'
 icon_uuid: null
+icon_default: null
 description: 'Main building block'
 behavior_plugins: {  }

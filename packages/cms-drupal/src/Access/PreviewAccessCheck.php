@@ -28,7 +28,7 @@ class PreviewAccessCheck implements AccessInterface
     {
         $session = $request->getSession() ?? new Session();
 
-        if ($account->hasPermission('view ekino_rendr pages') || $session->get('rendr_token_owner')) {
+        if ($account->hasPermission('preview ekino_rendr_page') || $session->get('rendr_token_owner')) {
             return AccessResult::allowed();
         }
 
@@ -48,7 +48,7 @@ class PreviewAccessCheck implements AccessInterface
 
         $tokenOwner = \reset($users);
 
-        if (!$tokenOwner->hasPermission('view ekino_rendr pages')) {
+        if (!$tokenOwner->hasPermission('preview ekino_rendr_page')) {
             return AccessResult::forbidden();
         }
 

@@ -7,6 +7,8 @@ namespace Drupal\ekino_rendr\Controller;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\ekino_rendr\Entity\ChannelInterface;
+use Drupal\ekino_rendr\Event\ContentEvent;
+use Drupal\ekino_rendr\Event\PageEvent;
 use Drupal\ekino_rendr\Exception\ContentNotFoundException;
 use Drupal\ekino_rendr\Manager\PageManagerInterface;
 use Drupal\ekino_rendr\Model\PageResponse;
@@ -57,19 +59,28 @@ final class ContentApiController
                 throw new ContentNotFoundException(400, \sprintf('No channel was provided.<br/>%s', \sprintf('%s::%s (l. %d)', __CLASS__, __FUNCTION__, __LINE__)));
             }
 
-            /* @deprecated Find a better way to resolve product line */
-            $content = $this->getContent(
-                $content_type,
-                $slug,
-                $channel,
+            $contentEvent = new ContentEvent($content_type, $slug, $channel, ['request' => $request]);
+            \Drupal::getContainer()->get('event_dispatcher')->dispatch(ContentEvent::CONTENT_LOAD_EVENT, $contentEvent);
+
+            $content = $contentEvent->getContent() ?: $this->getContent(
+                $contentEvent->getContentType(),
+                $contentEvent->getSlug(),
+                $contentEvent->getChannel(),
                 $preview
             );
 
+            $pageEvent = new PageEvent($pageSlug, $channel, [
+                'request' => $request,
+                'user' => $user,
+                'content' => $content,
+            ]);
+            \Drupal::getContainer()->get('event_dispatcher')->dispatch(PageEvent::PAGE_LOAD_EVENT, $pageEvent);
+
             $pageData = $this->pageManager->getPageData(
                 $request,
-                $pageSlug,
+                $pageEvent->getPageSlug(),
                 $user,
-                $channel,
+                $pageEvent->getChannel(),
                 $preview,
                 ['content' => $content]
             );
@@ -106,7 +117,7 @@ final class ContentApiController
         return PageResponse::createJsonResponse($pageData);
     }
 
-    private function getContent($contentType, $slug, $channel = null, $preview = false)
+    protected function getContent($contentType, $slug, $channel = null, $preview = false)
     {
         /** @var FieldableEntityInterface[] $contents */
         $conditions = [

@@ -394,7 +394,7 @@ final class PageUpsertForm extends ContentEntityForm
             $event = new UrlEvent(
                 'ekino_rendr.api.catchall_preview',
                 [
-                    'path' => UrlGenerator::generatePublicPageUrl($this->entity->getDefaultPath(), $translation),
+                    'path' => UrlGenerator::generatePublicPageUrl($this->entity->getDefaultPath(), $translation, [], ['base_url' => '']),
                     'channel' => $translation->id(),
                     '_preview_token' => $user->get('field_rendr_preview_token')->value,
                 ],

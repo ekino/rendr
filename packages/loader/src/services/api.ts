@@ -1,5 +1,11 @@
-import { createPage, Page } from "@ekino/rendr-core";
-import { Readable, Writable } from "stream";
+import {
+  createPage,
+  ClientSideError,
+  ResponsePage,
+  createResponsePage,
+  Map,
+  pipePageToClient,
+} from "@ekino/rendr-core";
 import Axios, { ResponseType, AxiosRequestConfig } from "axios";
 
 import { Loader, AxiosOptionsBuilder } from "../types";
@@ -47,97 +53,52 @@ export function createApiLoader(
       responseType = "stream";
     }
 
-    const { url, options } = optionsBuilder(`${baseUrl}${ctx.asPath}`, {
+    const { url, options } = optionsBuilder(`${baseUrl}${ctx.req.pathname}`, {
       responseType,
       headers,
+      params: ctx.req.query,
     });
 
     const response = await Axios.get(url, options);
 
     if (!("x-rendr-content-type" in response.headers)) {
       // @todo: check how we can add a logger here
-      return next();
+      return next(page);
     }
 
     // We are on the client side, so no need to pipe data to the client.
     // => already done by the server
     if (ctx.isClientSide) {
-      if (response.headers["x-rendr-content-type"] !== "rendr/document") {
-        next();
-      }
-
-      // express can send this content type: application/json; charset=utf-8
       if (
+        response.headers["x-rendr-content-type"] === "rendr/document" &&
+        response.headers["content-type"] &&
         response.headers["content-type"].substr(0, 16) === "application/json"
       ) {
         return next(createPage(response.data));
       }
 
-      // not a JSON, probably a stream !
-      //  => don't know how to deal with this use case...
-      return next();
+      throw new ClientSideError(
+        "Invalid x-rendr-content-type or content-type header value."
+      );
     }
 
     // we need to pipe data to the client as we are running this code from the server
     if (ctx.isServerSide) {
       if (response.headers["x-rendr-content-type"] === "rendr/document") {
-        return pipePageToClient(response.data);
+        return await pipePageToClient(response.data);
       }
 
       if (response.headers["x-rendr-content-type"] !== "rendr/document") {
-        ctx.res.statusCode = response.status;
+        const headers: Map = {};
 
         headersToTransfers.forEach((n) => {
           if (n.toLowerCase() in response.headers) {
-            ctx.res.setHeader(n, response.headers[n.toLowerCase()]);
+            headers[n] = response.headers[n.toLowerCase()];
           }
         });
 
-        return pipe(response.data, ctx.res);
+        return createResponsePage(headers, response.data, response.status);
       }
     }
   };
-}
-
-/**
- * This function pipe a Readable Stream into a Writable stream in order to pass
- * the response to the server from to the client. This is usefull to act as a proxy
- * and avoid to buffer all the response body in the current process.
- *
- * @param source
- * @param dest
- */
-function pipe(source: Readable, dest: Writable): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    source.pipe(dest);
-
-    source.on("end", (err: Error) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
-
-/**
- * This function pipe a Readable Stream into an internal buffer so it is possible
- * to reuse the buffer to create a Page object.
- *
- * @param source
- */
-function pipePageToClient(source: Readable): Promise<Page> {
-  let data = "";
-  const dest = new Writable({
-    write(chunk, _, callback) {
-      data += chunk;
-
-      callback();
-    },
-  });
-
-  return pipe(source, dest).then(() => {
-    return createPage(JSON.parse(data));
-  });
 }

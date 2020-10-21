@@ -1,10 +1,12 @@
 import { Loader, MaybePage } from "./types";
 import {
+  PageType,
   Page,
   createPage,
   NotFoundError,
   RendrError,
-  RequestCtx,
+  RendrCtx,
+  ResponsePage,
 } from "@ekino/rendr-core";
 
 export * from "./types";
@@ -16,8 +18,8 @@ export const createChainedLoader: (loaders: Loader[]) => Loader = (loaders) => {
     let i = 0;
     let internalPage = page;
 
-    async function internalNext(nextPage?: Page) {
-      if (nextPage instanceof Page) {
+    async function internalNext(nextPage?: PageType) {
+      if (nextPage) {
         internalPage = nextPage;
       }
       const loader = loaders[i];
@@ -53,18 +55,22 @@ type Logger = Partial<{
 
 // Behaviour is as follow:
 // 1. Always log the error stack
-// 2. If headers were sent, just ends the response
+// 2. If headers were sent, just ends the response => this should not be possible with the new Request/Response model
 // 3. The resultPage receives the message of the error in the key message of its settings
 // 4. In non production mode, resultPage also receives the error trace
 // 5. Client side, the error is thrown as normal for browser to catch it
 export function generateErrorHandler(logger: Logger) {
-  return (err: Error | RendrError, ctx: RequestCtx, page: Page): MaybePage => {
+  return (
+    err: Error | RendrError,
+    ctx: RendrCtx,
+    page: PageType
+  ): MaybePage => {
     const fullStack = flattenStackTrace(err);
     fullStack.forEach((stack) => logger.log(stack));
 
-    if (ctx.res && ctx.res.headersSent) {
-      ctx.res.end();
-      return;
+    if (!(page instanceof Page)) {
+      // not a classic page
+      return page;
     }
 
     const resultPage = createPage();
@@ -90,6 +96,7 @@ export function createErrorBoundaryLoader(logger: Logger = console): Loader {
       return await next();
     } catch (err) {
       const handler = generateErrorHandler(logger);
+
       return handler(err, ctx, page);
     }
   };

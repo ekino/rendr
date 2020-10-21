@@ -1,5 +1,5 @@
 import { createChainedLoader, createErrorBoundaryLoader } from "./index";
-import { Page, RequestCtx } from "@ekino/rendr-core";
+import { Page, createContext } from "@ekino/rendr-core";
 import { Loader } from "./types";
 
 const logger = { log: jest.fn() };
@@ -7,23 +7,14 @@ const errorBoundaryLoader = createErrorBoundaryLoader(logger);
 
 let mainPage: Page;
 let witnessPage: Page;
-const ctx: RequestCtx = {
-  // @ts-ignore
-  req: jest.fn(),
-  // @ts-ignore
-  res: {
-    statusCode: 200,
-    end: jest.fn(),
-  },
-  isServerSide: true,
-  isClientSide: false,
-  pathname: "/",
-  query: {},
-  asPath: "/",
-  settings: {},
-};
+
+const ctx = createContext("/");
 
 const loader1: Loader = (ctx, page, next) => {
+  if (!(page instanceof Page)) {
+    return next();
+  }
+
   page.blocks.push({
     type: "block1",
     order: 0,
@@ -34,6 +25,10 @@ const loader1: Loader = (ctx, page, next) => {
 };
 
 const loader2: Loader = (ctx, page, next) => {
+  if (!(page instanceof Page)) {
+    return next();
+  }
+
   page.blocks.push({
     type: "block2",
     order: 0,
@@ -44,6 +39,10 @@ const loader2: Loader = (ctx, page, next) => {
 };
 
 const blockingLoader: Loader = (ctx, page, next) => {
+  if (!(page instanceof Page)) {
+    return next();
+  }
+
   page.head.title = "block execution of the next loaders";
   // console.log("No call to the next function");
 };
@@ -56,11 +55,6 @@ const exitingLoader: Loader = (ctx, page, next) => {
 const referenceChangeLoader: Loader = (ctx, page, next) => {
   // console.log("Pass a new page to the next loader");
   return next(witnessPage);
-};
-
-const resultPageNullifierLoader: Loader = (ctx, page, next) => {
-  // console.log("Call next but do not return it");
-  next();
 };
 
 beforeEach(() => {
@@ -79,7 +73,7 @@ describe("test Chained Loader", () => {
   });
   it("should call successive loaders on the page reference given to it", async () => {
     const loader = createChainedLoader([loader1, loader2]);
-    const resultPage = await loader(ctx, mainPage, () => {});
+    const resultPage = await loader(ctx, mainPage);
 
     expect(mainPage.head.title).toEqual("main");
     expect(mainPage.blocks.length).toEqual(2);
@@ -89,7 +83,7 @@ describe("test Chained Loader", () => {
   });
   it("should stop the chain if one of the loader doesn't call next", async () => {
     const loader = createChainedLoader([loader1, blockingLoader, loader2]);
-    const resultPage = await loader(ctx, mainPage, () => {});
+    const resultPage = await loader(ctx, mainPage);
     expect(mainPage.head.title).toEqual("block execution of the next loaders");
     expect(mainPage.blocks.length).toEqual(1);
     expect(mainPage.blocks[0].type).toEqual("block1");
@@ -97,7 +91,7 @@ describe("test Chained Loader", () => {
   });
   it("should stop the chain and return the result of any loader that returns an object", async () => {
     const loader = createChainedLoader([loader1, exitingLoader, loader2]);
-    const resultPage = await loader(ctx, mainPage, () => {});
+    const resultPage = await loader(ctx, mainPage);
     // @ts-ignore
     expect(resultPage.head.title).toEqual("witness");
     // @ts-ignore
@@ -109,7 +103,7 @@ describe("test Chained Loader", () => {
       referenceChangeLoader,
       loader2,
     ]);
-    const resultPage = await loader(ctx, mainPage, () => {});
+    const resultPage = await loader(ctx, mainPage);
 
     expect(mainPage.head.title).toEqual("main");
     expect(mainPage.blocks.length).toEqual(1);
@@ -120,26 +114,12 @@ describe("test Chained Loader", () => {
     expect(witnessPage.blocks[0].type).toEqual("block2");
     expect(resultPage).toEqual(witnessPage);
   });
-  it("should change the reference and return undefined", async () => {
-    const loader = createChainedLoader([
-      resultPageNullifierLoader,
-      loader1,
-      loader2,
-    ]);
-    const resultPage = await loader(ctx, mainPage, () => {});
-
-    expect(mainPage.head.title).toEqual("main");
-    expect(mainPage.blocks.length).toEqual(2);
-    expect(mainPage.blocks[0].type).toEqual("block1");
-    expect(mainPage.blocks[1].type).toEqual("block2");
-    expect(resultPage).toBeUndefined();
-  });
 });
 
 describe("test errorBoundaryLoader", () => {
   it("should return the page reference given to it if no error", async () => {
     const loader = createChainedLoader([errorBoundaryLoader, loader1]);
-    const resultPage = await loader(ctx, mainPage, () => {});
+    const resultPage = await loader(ctx, mainPage);
 
     expect(mainPage.head.title).toEqual("main");
     expect(mainPage.blocks.length).toEqual(1);
@@ -154,7 +134,7 @@ describe("test errorBoundaryLoader", () => {
         throw new Error("An error");
       },
     ]);
-    const resultPage = await loader(ctx, mainPage, () => {});
+    const resultPage = await loader(ctx, mainPage);
     // @ts-ignore
     expect(resultPage.statusCode).toEqual(500);
     // @ts-ignore
@@ -174,7 +154,7 @@ describe("test errorBoundaryLoader", () => {
 
     let witnessError;
     try {
-      const resultPage = await loader(ctx, mainPage, () => {});
+      const resultPage = await loader(ctx, mainPage);
     } catch (err) {
       witnessError = err;
     }
@@ -191,27 +171,11 @@ describe("test errorBoundaryLoader", () => {
     ]);
     const oldEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = "production";
-    const resultPage = await loader(ctx, mainPage, () => {});
+    const resultPage = await loader(ctx, mainPage);
     // @ts-ignore
     expect(resultPage.settings.message).toEqual("An error");
     // @ts-ignore
     expect(resultPage.settings.stackTrace).toBeUndefined();
     process.env.NODE_ENV = oldEnv;
-  });
-
-  it("should call response end if headers have been sent", async () => {
-    const loader = createChainedLoader([
-      errorBoundaryLoader,
-      (context, page, next) => {
-        context.res.headersSent = true;
-        throw new Error("An error");
-      },
-    ]);
-
-    const resultPage = await loader(ctx, mainPage, () => {});
-    // @ts-ignore
-    expect(resultPage).toBeUndefined();
-    // @ts-ignore
-    expect(ctx.res.end).toHaveBeenCalled();
   });
 });

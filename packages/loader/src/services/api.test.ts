@@ -1,5 +1,11 @@
-import { createPage } from "@ekino/rendr-core";
-import { IncomingMessage, ServerResponse } from "http";
+import {
+  createPage,
+  createContext,
+  Page,
+  ResponsePage,
+  pipe,
+  pipePageToClient,
+} from "@ekino/rendr-core";
 import axios from "axios";
 import { Readable, Writable } from "stream";
 
@@ -10,13 +16,6 @@ jest.mock("axios");
 describe("test API Loader", () => {
   it("test rendr/document mode, ie a Page", async () => {
     const loader = createApiLoader("/api");
-
-    const req = jest.fn<IncomingMessage, any[]>();
-    // @ts-ignore
-    req.headers = {
-      accept: "text/html",
-      "accept-encoding": "gzip",
-    };
 
     const rawData = JSON.stringify(createPage({}));
     let largeData = "[";
@@ -30,6 +29,7 @@ describe("test API Loader", () => {
     const resp = {
       headers: {
         "x-rendr-content-type": "rendr/document",
+        "content-type": "application/json",
       },
       data: new Readable({
         read(size) {
@@ -43,33 +43,17 @@ describe("test API Loader", () => {
     // @ts-ignore
     axios.get.mockResolvedValue(resp);
 
-    const res = jest.fn<ServerResponse, any[]>();
-
-    const ctx = {
-      pathname: "/",
-      query: {},
-      req: req,
-      res: res,
-      isServerSide: true,
-      isClientSide: false,
-    };
+    const ctx = createContext("http://localhost");
 
     // @ts-ignore
-    const result = await loader(ctx);
-
-    expect(result).toMatchSnapshot();
+    const page = await loader(ctx, new Page(), (page) => page);
+    expect(page).toBeInstanceOf(Page);
+    expect(page).toMatchSnapshot();
     expect(cptCall).toBe(3);
   });
 
   it("test non rendr/document mode, ie a Binary File", async () => {
     const loader = createApiLoader("/api");
-
-    const req = jest.fn<IncomingMessage, any[]>();
-    // @ts-ignore
-    req.headers = {
-      accept: "text/html",
-      "accept-encoding": "gzip",
-    };
 
     let strPage = "the content to be streamed...";
     let pos = 0;
@@ -97,18 +81,15 @@ describe("test API Loader", () => {
       },
     });
 
-    const ctx = {
-      pathname: "/",
-      query: {},
-      params: {},
-      req: req,
-      res: res,
-      isServerSide: true,
-      isClientSide: false,
-    };
+    const ctx = createContext("http://localhost/");
 
     // @ts-ignore
-    const result = await loader(ctx);
+    const page = await loader(ctx, new Page(), (page) => page);
+    expect(page).toBeInstanceOf(ResponsePage);
+
+    if (page instanceof ResponsePage) {
+      await pipe(page.body, res);
+    }
 
     expect(data).toBe(strPage);
   });

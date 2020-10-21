@@ -1,7 +1,14 @@
 import { IncomingMessage, ServerResponse } from "http";
 import parse from "url-parse";
 
-import { Page, Cache, Head, BlockDefinition, RequestCtx } from "./types";
+import {
+  Page,
+  Cache,
+  Head,
+  BlockDefinition,
+  RendrCtx,
+  RendrRequest,
+} from "./types";
 
 export * from "./types";
 export * from "./errors";
@@ -130,42 +137,34 @@ export function createPage(data: any = {}): Page {
  * @param req
  * @param res
  */
-export function createContext(
-  req: IncomingMessage | { url: string },
-  res?: ServerResponse
-): RequestCtx {
-  // default to client, why not!
+export function createContext(url: string): RendrCtx {
   let isServerSide = false;
-  let fullUrl = req.url;
 
-  const asPath = req.url;
-
-  if (req instanceof IncomingMessage) {
-    isServerSide = true;
-    fullUrl = `https://${req.headers["host"]}${req.url}`;
+  if (window) {
+    isServerSide = false;
   }
 
-  const url = parse(fullUrl, true);
+  const urlInfo = parse(url, true);
 
-  const ctx: RequestCtx = {
-    hostname: url.hostname,
-    pathname: url.pathname,
-    query: url.query,
+  const request: RendrRequest = {
+    hostname: urlInfo.hostname,
+    pathname: urlInfo.pathname,
+    query: urlInfo.query,
     // params is empty because for now there are no
     // routing to analyse the pathname, this will be done later on
     // in the query process
     params: {},
-    asPath,
-    isServerSide,
-    isClientSide: !isServerSide,
-    // @ts-ignore
-    req: isServerSide ? req : null,
-    // @ts-ignore
-    res: isServerSide ? res : null,
-    settings: {},
+    headers: {},
+    body: "",
+    method: "GET",
   };
 
-  return ctx;
+  return {
+    isServerSide,
+    isClientSide: !isServerSide,
+    settings: {},
+    req: request,
+  };
 }
 
 // last page get the priority

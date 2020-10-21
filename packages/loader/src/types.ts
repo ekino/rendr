@@ -1,15 +1,15 @@
-import { Page, RequestCtx } from "@ekino/rendr-core";
+import { Page, RendrCtx, PageType } from "@ekino/rendr-core";
 import { AxiosRequestConfig } from "axios";
 
-export type MaybePage = Promise<Page | void> | Page | void;
+export type MaybePage = Promise<PageType> | PageType;
 
 export type Loader = (
-  ctx: RequestCtx,
-  page: Page,
-  next: (page?: MaybePage) => MaybePage
+  ctx: RendrCtx,
+  page: PageType,
+  next?: (page?: MaybePage) => MaybePage
 ) => MaybePage;
 
-export type PageBuilder = (ctx: RequestCtx, page: Page) => MaybePage;
+export type PageBuilder = (ctx: RendrCtx, page: Page) => MaybePage;
 
 export type RouteConfiguration = {
   path: string;

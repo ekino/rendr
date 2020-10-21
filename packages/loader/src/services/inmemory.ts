@@ -1,4 +1,4 @@
-import { NotFoundError } from "@ekino/rendr-core";
+import { NotFoundError, Page } from "@ekino/rendr-core";
 import { Loader, InMemorySettings, RouteConfiguration } from "../types";
 // @ts-ignore - definition does not exist...
 import createMatcher from "path-match";
@@ -27,18 +27,18 @@ export function createInMemoryLoader(paths: InMemorySettings): Loader {
     });
   }
 
-  return async (ctx, page, next) => {
+  return async (ctx, page, next = (page) => page) => {
     const result = routes.find((conf) => {
-      const { matcher, path } = conf;
+      const { matcher } = conf;
 
       // @ts-ignore - definition does not exist...
-      const params = matcher(ctx.pathname);
+      const params = matcher(ctx.req.pathname);
 
       if (!params) {
         return false;
       }
 
-      ctx.params = params;
+      ctx.req.params = params;
 
       return true;
     });
@@ -47,6 +47,10 @@ export function createInMemoryLoader(paths: InMemorySettings): Loader {
       throw new NotFoundError();
     }
 
-    return next(await result.pageBuilder(ctx, page, () => {}));
+    if (page instanceof Page) {
+      return next(await result.pageBuilder(ctx, page));
+    } else {
+      return next(page);
+    }
   };
 }

@@ -85,3 +85,14 @@ export class NormalizationError extends RendrError {
     });
   }
 }
+
+export class ClientSideError extends RendrError {
+  constructor(...args: any[]) {
+    super();
+    Object.assign(this, {
+      ...getErrorParameters("Client Side Error", args),
+      stack: new Error().stack,
+      name: "ClientSideError",
+    });
+  }
+}

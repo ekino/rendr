@@ -1,4 +1,3 @@
-import { IncomingMessage, ServerResponse } from "http";
 import parse from "url-parse";
 
 import {
@@ -8,11 +7,16 @@ import {
   BlockDefinition,
   RendrCtx,
   RendrRequest,
+  RedirectPage,
+  ResponsePage,
+  Map,
+  Body,
 } from "./types";
 
 export * from "./types";
 export * from "./errors";
 export * from "./generator";
+export * from "./stream";
 
 export function isObject(data: any): boolean {
   return data !== null && typeof data === "object";
@@ -138,11 +142,7 @@ export function createPage(data: any = {}): Page {
  * @param res
  */
 export function createContext(url: string): RendrCtx {
-  let isServerSide = false;
-
-  if (window) {
-    isServerSide = false;
-  }
+  let isServerSide = typeof process === "object";
 
   const urlInfo = parse(url, true);
 
@@ -165,6 +165,23 @@ export function createContext(url: string): RendrCtx {
     settings: {},
     req: request,
   };
+}
+
+export function createRedirectPage(location: string, statusCode = 301) {
+  const redirect = new RedirectPage();
+  redirect.location = location;
+  redirect.statusCode = statusCode;
+
+  return redirect;
+}
+
+export function createResponsePage(headers: Map, body: Body, statusCode = 200) {
+  const response = new ResponsePage();
+  response.headers = headers;
+  response.body = body;
+  response.statusCode = statusCode;
+
+  return response;
 }
 
 // last page get the priority

@@ -103,34 +103,38 @@ Page {
 
 exports[`test createContext test clientSide context 1`] = `
 Object {
-  "asPath": "https://ekino.com/foobar?foo=bar",
-  "hostname": "ekino.com",
   "isClientSide": true,
   "isServerSide": false,
-  "params": Object {},
-  "pathname": "/foobar",
-  "query": Object {
-    "foo": "bar",
+  "req": Object {
+    "body": "",
+    "headers": Object {},
+    "hostname": "ekino.com",
+    "method": "GET",
+    "params": Object {},
+    "pathname": "/foobar",
+    "query": Object {
+      "foo": "bar",
+    },
   },
-  "req": null,
-  "res": null,
   "settings": Object {},
 }
 `;
 
 exports[`test createContext test clientSide context 2`] = `
 Object {
-  "asPath": "https://ekino.com/foobar?foo=bar",
-  "hostname": "ekino.com",
   "isClientSide": true,
   "isServerSide": false,
-  "params": Object {},
-  "pathname": "/foobar",
-  "query": Object {
-    "foo": "bar",
+  "req": Object {
+    "body": "",
+    "headers": Object {},
+    "hostname": "ekino.com",
+    "method": "GET",
+    "params": Object {},
+    "pathname": "/foobar",
+    "query": Object {
+      "foo": "bar",
+    },
   },
-  "req": null,
-  "res": null,
   "settings": Object {
     "foo": "bar",
   },

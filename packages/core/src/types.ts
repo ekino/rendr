@@ -1,4 +1,3 @@
-import { IncomingMessage, ServerResponse } from "http";
 import { Writable } from "stream";
 
 export interface BlockDefinition {
@@ -28,6 +27,20 @@ export interface Head {
   meta: Settings[];
 }
 
+export type PageType = RedirectPage | ResponsePage | Page;
+export type Body = string | ReadableStream | NodeJS.ReadableStream;
+
+export class RedirectPage {
+  statusCode: number = 200;
+  location: string;
+}
+
+export class ResponsePage {
+  statusCode: number = 200;
+  headers: Map;
+  body: Body;
+}
+
 // -- Page definition
 export class Page {
   public statusCode: number = 200;
@@ -50,20 +63,27 @@ export class Page {
   public path: string = "";
 }
 
-// -- NextJs Controller signature
-export interface RequestCtx {
-  hostname: string; // the hostname requested
-  pathname: string; // the path - without the query string
-  query: Map; // the query string, parsed
-  params: Map; // the params from the routing, ie param from nice url
-  asPath: string; // the complete path - pathname + query
+export interface RendrCtx {
   isServerSide: boolean;
   isClientSide: boolean;
-  req: IncomingMessage;
-  res?: ServerResponse;
-  // anything that need to be set during the life time of the request,
-  // this data will no be exposed on the end user.
   settings: Settings;
+  req: RendrRequest;
+}
+
+export interface RendrRequest {
+  hostname: string; // the hostname requested
+  headers: Map;
+  query: Map; // the query string, parsed
+  pathname: string; // the path - without the query string
+  params: Map; // the params from the routing, ie param from nice url
+  body: Body;
+  method: string;
+}
+
+export interface RendrResponse {
+  headers: Map;
+  body: Body;
+  statusCode: number;
 }
 
 export type Normalizer = (entry: any) => BlockDefinition;

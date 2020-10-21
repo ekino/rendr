@@ -1,5 +1,4 @@
 import { createPage, mergePages, Page, createContext } from "./index";
-import { IncomingMessage } from "http";
 
 describe("test create page", () => {
   it("empty page", () => {
@@ -111,20 +110,16 @@ describe("test mergePages", () => {
 
 describe("test createContext", () => {
   it("test clientSide context", () => {
-    const ctx = createContext({ url: "https://ekino.com/foobar?foo=bar" });
+    const ctx = createContext("https://ekino.com/foobar?foo=bar");
 
     expect(ctx.isClientSide).toBeTruthy();
     expect(ctx.isServerSide).toBeFalsy();
     expect(ctx).toMatchSnapshot();
+    expect(ctx.req.pathname).toBe("/foobar");
 
     // try to set a setting
     ctx.settings["foo"] = "bar";
 
     expect(ctx).toMatchSnapshot();
-  });
-
-  it("test server side context", () => {
-    // need to think about a clean way of mocking the IncomingMessage... without
-    // no much of boilerplate.
   });
 });

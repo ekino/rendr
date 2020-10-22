@@ -112,8 +112,8 @@ describe("test createContext", () => {
   it("test clientSide context", () => {
     const ctx = createContext("https://ekino.com/foobar?foo=bar");
 
-    expect(ctx.isClientSide).toBeTruthy();
-    expect(ctx.isServerSide).toBeFalsy();
+    expect(ctx.isServerSide).toBeTruthy();
+    expect(ctx.isClientSide).toBeFalsy();
     expect(ctx).toMatchSnapshot();
     expect(ctx.req.pathname).toBe("/foobar");
 

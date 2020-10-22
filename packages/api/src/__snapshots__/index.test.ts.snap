@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test createApi it return the redirection page 1`] = `
+RedirectPage {
+  "location": "/redirected-page",
+  "statusCode": 200,
+}
+`;
+
+exports[`test createApi with no valid page found by the loader 1`] = `
+ResponsePage {
+  "body": "{\\"statusCode\\":404,\\"type\\":\\"document\\",\\"template\\":\\"default\\",\\"cache\\":{\\"ttl\\":0},\\"head\\":{\\"titleTemplate\\":\\"%s\\",\\"defaultTitle\\":\\"-\\",\\"title\\":\\"-\\",\\"links\\":[],\\"htmlAttributes\\":{},\\"meta\\":[]},\\"blocks\\":[],\\"settings\\":{},\\"id\\":\\"id\\",\\"path\\":\\"\\"}",
+  "headers": Object {
+    "Cache-Control": "private, max-age=0, no-cache",
+    "Content-Type": "application/json",
+    "X-Rendr-Content-Type": "rendr/document",
+  },
+  "statusCode": 200,
+}
+`;
+
+exports[`test createApi with valid page found by the loader 1`] = `
+ResponsePage {
+  "body": "{\\"statusCode\\":200,\\"type\\":\\"document\\",\\"template\\":\\"default\\",\\"cache\\":{\\"ttl\\":0},\\"head\\":{\\"titleTemplate\\":\\"%s\\",\\"defaultTitle\\":\\"-\\",\\"title\\":\\"-\\",\\"links\\":[],\\"htmlAttributes\\":{},\\"meta\\":[]},\\"blocks\\":[],\\"settings\\":{},\\"id\\":\\"id\\",\\"path\\":\\"\\"}",
+  "headers": Object {
+    "Cache-Control": "private, max-age=0, no-cache",
+    "Content-Type": "application/json",
+    "X-Rendr-Content-Type": "rendr/document",
+  },
+  "statusCode": 200,
+}
+`;

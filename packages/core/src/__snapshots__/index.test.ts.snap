@@ -103,8 +103,8 @@ Page {
 
 exports[`test createContext test clientSide context 1`] = `
 Object {
-  "isClientSide": true,
-  "isServerSide": false,
+  "isClientSide": false,
+  "isServerSide": true,
   "req": Object {
     "body": "",
     "headers": Object {},
@@ -122,8 +122,8 @@ Object {
 
 exports[`test createContext test clientSide context 2`] = `
 Object {
-  "isClientSide": true,
-  "isServerSide": false,
+  "isClientSide": false,
+  "isServerSide": true,
   "req": Object {
     "body": "",
     "headers": Object {},

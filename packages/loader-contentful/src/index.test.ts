@@ -1,4 +1,4 @@
-import { RequestCtx, Page } from "@ekino/rendr-core";
+import { RendrCtx, Page } from "@ekino/rendr-core";
 
 import { createContentfulLoader } from "./index";
 import { createNormalizer } from "./normalizer";
@@ -50,7 +50,7 @@ describe("test loader", () => {
 
     const normalizer = createNormalizer();
 
-    const clientFinder = (ctx: RequestCtx) => {
+    const clientFinder = (ctx: RendrCtx) => {
       return client;
     };
 
@@ -58,7 +58,7 @@ describe("test loader", () => {
 
     const ctx = createContext({});
 
-    const page = await loader(ctx, new Page(), () => {});
+    const page = await loader(ctx, new Page(), (page) => page);
 
     expect(page).toMatchSnapshot();
   });

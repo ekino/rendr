@@ -1,19 +1,12 @@
 import { Entry, ContentfulClientApi } from "contentful";
 import { readFileSync } from "fs";
-import { RequestCtx } from "@ekino/rendr-core";
+import {
+  RendrCtx,
+  createContext as coreCreateContext,
+} from "@ekino/rendr-core";
 
-export function createContext(data: {}): RequestCtx {
-  const ctx: RequestCtx = {
-    // @ts-ignore
-    req: jest.fn(),
-    // @ts-ignore
-    res: jest.fn(),
-    hostname: "ekino.co.uk",
-    pathname: "/",
-    query: {},
-    params: {},
-    asPath: "/",
-  };
+export function createContext(data: {}): RendrCtx {
+  const ctx = coreCreateContext("https://ekino.co.uk/");
 
   return {
     ...ctx,

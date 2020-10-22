@@ -167,7 +167,7 @@ export function createContext(url: string): RendrCtx {
   };
 }
 
-export function createRedirectPage(location: string, statusCode = 301) {
+export function createRedirectPage(statusCode: number, location: string) {
   const redirect = new RedirectPage();
   redirect.location = location;
   redirect.statusCode = statusCode;
@@ -175,7 +175,11 @@ export function createRedirectPage(location: string, statusCode = 301) {
   return redirect;
 }
 
-export function createResponsePage(headers: Map, body: Body, statusCode = 200) {
+export function createResponsePage(
+  statusCode: number,
+  headers: Map,
+  body: Body
+) {
   const response = new ResponsePage();
   response.headers = headers;
   response.body = body;

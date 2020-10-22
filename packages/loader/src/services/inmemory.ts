@@ -48,6 +48,8 @@ export function createInMemoryLoader(paths: InMemorySettings): Loader {
     }
 
     if (page instanceof Page) {
+      page.statusCode = 200; // found a page
+
       return next(await result.pageBuilder(ctx, page));
     } else {
       return next(page);

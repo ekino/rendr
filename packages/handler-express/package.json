@@ -1,5 +1,5 @@
 {
-    "name": "@ekino/rendr-loader",
+    "name": "@ekino/rendr-handler-express",
     "license": "MIT",
     "version": "0.0.21-alpha.1",
     "main": "dist/lib/index.js",
@@ -19,6 +19,6 @@
         "@types/url-parse": "^1.4.3"
     },
     "scripts": {
-        "build": "tsc && tsc -m es6 --outDir dist/lib-esm && tsc -m amd --outFile dist/_bundles/rendr-core.js"
+        "build": "tsc && tsc -m es6 --outDir dist/lib-esm && tsc -m amd --outFile dist/_bundles/rendr-handler-express.js"
     }
 }

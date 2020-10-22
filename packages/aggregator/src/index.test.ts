@@ -14,7 +14,7 @@ describe("test inmemory code", () => {
     const ctx = createMockedContext();
     const aggregator = createAggregatorLoader({});
     const page = new Page();
-    await aggregator(ctx, page, () => {});
+    await aggregator(ctx, page, (page) => page);
 
     expect(page).not.toBeNull();
     // @ts-ignore
@@ -40,7 +40,7 @@ describe("test inmemory code", () => {
       settings: {},
     });
 
-    await aggregator(ctx, page, () => {});
+    await aggregator(ctx, page, (page) => page);
 
     expect(page).toMatchSnapshot();
   });

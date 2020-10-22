@@ -18,6 +18,7 @@
     "packages/api",
     "packages/core",
     "packages/loader",
+    "packages/handler-express",
     "packages/loader-contentful",
     "packages/rendering-gatsby",
     "packages/rendering-nextjs",
@@ -30,7 +31,7 @@
     "clean-lib": "rm -rf node_modules packages/*/node_modules",
     "clean": "yarn clean-lib && yarn clean-examples",
     "setup-drupal": "rsync -r --exclude='vendor' ./packages/cms-drupal/ ./examples/cms-drupal/src/modules/custom/ekino_rendr --delete",
-    "setup-examples": "for i in ./examples/*; do (cd $i && yarn && rm -rf node_modules/@ekino); done",
+    "setup-examples": "for i in ./examples/*; do (cd $i && yarn && rm -rf node_modules/@ekino node_modules/contentful); done",
     "setup-lib": "yarn install && lerna bootstrap && yarn build",
     "setup": "yarn setup-lib && yarn setup-examples",
     "build": "lerna run build",
@@ -51,5 +52,11 @@
     "**/**/lodash": "^4.17.19",
     "**/**/dot-prop": "^5.1.1",
     "**/**/minimist": "^1.2.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testMatch": ["**/*.test.ts(|x)"],
+    "collectCoverageFrom": ["packages/**/*.ts", "!packages/**/dist/**"],
+    "verbose": true
   }
 }

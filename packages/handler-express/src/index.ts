@@ -1,28 +1,33 @@
-import Express from "express";
 import {
   RendrCtx,
   RendrRequest,
   RendrResponse,
   createContext as coreCreateContext,
+  Map,
+  ResponsePage,
 } from "@ekino/rendr-core";
 import parse from "url-parse";
+import { IncomingMessage, ServerResponse } from "http";
 
 /**
  * This code can be called from nodejs or the browser, so the context source will be different
  * @param req
  * @param res
  */
-export function createContext(req: Express.Request | string): RendrCtx {
+export function createContext(req: IncomingMessage | string): RendrCtx {
   if (typeof req === "string") {
     return coreCreateContext(req);
   }
 
   const isServerSide = true;
-  const headers = {};
+  const headers: Map = {};
+  headers['asds'] = 'asds';
 
   // normalize the headers value
   for (let field in req.headers) {
-    headers[field.toLocaleLowerCase()] = req.headers[field];
+    if (req.headers[field] === "string") {
+      headers[field.toLocaleLowerCase()] = req.headers[field] as string;
+    }
   }
 
   let url = `https://${headers["host"]}${req.url}`;
@@ -50,10 +55,8 @@ export function createContext(req: Express.Request | string): RendrCtx {
   };
 }
 
-export function sendResponse(resp: RendrResponse, server: Express.Response) {
-  for (let field in resp.headers) {
-    server.set(field, resp.headers[field]);
-  }
-
-  server.status(resp.statusCode).send(resp.body);
+export function sendResponse(resp: RendrResponse | ResponsePage, server: ServerResponse) {
+  server.writeHead(resp.statusCode, resp.headers)
+  server.write(resp.body);
+  server.end()
 }

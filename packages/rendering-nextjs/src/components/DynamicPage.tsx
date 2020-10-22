@@ -63,9 +63,10 @@ export function createDynamicPage(
 
       return {
         page,
-        query: ctx.query,
-        pathname: ctx.pathname,
-        asPath: ctx.asPath,
+        rendrCtx: ctx,
+        query: nextCtx.query,
+        pathname: nextCtx.pathname,
+        asPath: nextCtx.asPath,
       };
     }
 

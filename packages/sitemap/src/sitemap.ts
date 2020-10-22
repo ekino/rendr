@@ -28,13 +28,17 @@ export async function createSitemapResponse(
    */
   let body = "";
   const writable = new Writable({
-    write: (chunk) => {
+    write: (chunk, encoding, cb) => {
       body += chunk;
+
+      if (cb) {
+        cb();
+      }
     },
   });
 
   const sitemapWritable = createSitemapWritable((name: string) => writable, {
-    basePathIndex: "",
+    basePathIndex: "", // no index
   });
 
   await pipeIteratorToWritable(iter, sitemapWritable);

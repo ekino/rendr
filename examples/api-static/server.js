@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const rendrApi = require("@ekino/rendr-api");
+const rendrExpress = require("@ekino/rendr-handler-express");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const api = require("./services/api");
@@ -23,9 +24,9 @@ app.use(
   })
 );
 
-app.use("/api", rendrApi.createApi(api.loader));
+app.use("/api", rendrExpress.createMiddleware(rendrApi.createApi(api.loader)));
 app.use("/", (req, res) => {
-  res.redirect("/api/", 301);
+  res.redirect(301, "/api/");
 });
 
 // if the file is call directly, then the server is started,

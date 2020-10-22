@@ -5,6 +5,8 @@ import {
   createContext as coreCreateContext,
   Map,
   ResponsePage,
+  Page,
+  RedirectPage,
 } from "@ekino/rendr-core";
 import parse from "url-parse";
 import { IncomingMessage, ServerResponse } from "http";
@@ -21,7 +23,7 @@ export function createContext(req: IncomingMessage | string): RendrCtx {
 
   const isServerSide = true;
   const headers: Map = {};
-  headers['asds'] = 'asds';
+  headers["asds"] = "asds";
 
   // normalize the headers value
   for (let field in req.headers) {
@@ -55,8 +57,40 @@ export function createContext(req: IncomingMessage | string): RendrCtx {
   };
 }
 
-export function sendResponse(resp: RendrResponse | ResponsePage, server: ServerResponse) {
-  server.writeHead(resp.statusCode, resp.headers)
-  server.write(resp.body);
-  server.end()
+export function createMiddleware(fn: Function) {
+  return async (req: IncomingMessage, res: ServerResponse, next: Function) => {
+    const ctx = createContext(req);
+
+    const page = await fn(ctx);
+
+    if (page instanceof Page) {
+      const headers = {
+        "Cache-Control": "private, max-age=0, no-cache",
+        "Content-Type": "application/json",
+      };
+
+      if (page.cache.ttl > 0 && page.statusCode == 200) {
+        headers[
+          "Cache-Control"
+        ] = `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`;
+      }
+
+      res.writeHead(page.statusCode, headers);
+      res.write(JSON.stringify(page));
+      res.end();
+    }
+
+    if (page instanceof ResponsePage) {
+      res.writeHead(page.statusCode, page.headers);
+      res.write(page.body);
+      res.end();
+    }
+
+    if (page instanceof RedirectPage) {
+      res.writeHead(page.statusCode, {
+        Location: page.location,
+      });
+      res.end();
+    }
+  };
 }

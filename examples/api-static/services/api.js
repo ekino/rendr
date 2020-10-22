@@ -1,6 +1,6 @@
 const rendrLoader = require("@ekino/rendr-loader");
 const rendrSitemap = require("@ekino/rendr-sitemap");
-
+const rendrCore = require("@ekino/rendr-core");
 const sitemap = require("./sitemap");
 
 /**
@@ -140,7 +140,7 @@ const routes = {
       container: "body",
       type: "rendr.text",
       settings: {
-        contents: `You are asking for a post with slug: ${ctx.params.slug}`,
+        contents: `You are asking for a post with slug: ${ctx.req.params.slug}`,
       },
     });
 
@@ -193,11 +193,12 @@ const routes = {
     return page;
   },
   "/humans.txt": (ctx, page) => {
-    ctx.res.writeHead(200, {
-      "Content-Type": "text/plain",
-    });
-
-    ctx.res.write(`/* TEAM */
+    return rendrCore.createResponsePage(
+      200,
+      {
+        "Content-Type": "text/plain",
+      },
+      `/* TEAM */
     Chef:Thomas Rabaix
     Contact: thomas.rabaix@ekino.com
     From:Planet Earth
@@ -205,13 +206,12 @@ const routes = {
   /* SITE */
     Built with: ReactJs, nodejs, webpack
     Hosted on: AWS with ECS
-    Cached with nginx`);
-
-    ctx.res.end();
-
-    return;
+    Cached with nginx`
+    );
   },
-  "/sitemap.xml": rendrSitemap.createSitemapPageBuilder(sitemap.generator),
+  "/sitemap.xml": (ctx, page) => {
+    return rendrSitemap.createSitemapResponse(sitemap.generator);
+  },
 };
 
 // Configure a page for each matching url.

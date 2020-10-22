@@ -4,7 +4,7 @@ import { createNormalizer } from "./index";
 import { EntryNormalizerList } from "./types";
 import { Entry } from "contentful";
 import { loadJson, createContext } from "./test";
-import { RequestCtx } from "@ekino/rendr-core";
+import { RendrCtx } from "@ekino/rendr-core";
 
 interface Wheel {
   brand: string;
@@ -107,7 +107,7 @@ describe("test normalizer", () => {
 
   it("with default values with normalizer", () => {
     const normalizers: EntryNormalizerList = {
-      car: (ctx: RequestCtx, entry: Entry<ContentfulCar>, normalizer) => {
+      car: (ctx: RendrCtx, entry: Entry<ContentfulCar>, normalizer) => {
         return {
           speed: entry.fields.speed,
           name: entry.fields.name,
@@ -115,7 +115,7 @@ describe("test normalizer", () => {
           wheel: normalizer(ctx, entry.fields.wheel),
         };
       },
-      wheel: (ctx: RequestCtx, entry: Entry<ContentfulWeel>) => {
+      wheel: (ctx: RendrCtx, entry: Entry<ContentfulWeel>) => {
         const split = entry.fields.info.split(",");
 
         return {

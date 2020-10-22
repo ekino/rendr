@@ -1,5 +1,5 @@
 import { Asset as ContentfulAsset, Entry } from "contentful";
-import { RequestCtx } from "@ekino/rendr-core";
+import { RendrCtx } from "@ekino/rendr-core";
 
 export { Asset as ContentfulAsset } from "contentful";
 
@@ -7,7 +7,7 @@ import { ContentfulClientApi } from "contentful";
 
 export interface EntryNormalizer {
   (
-    ctx: RequestCtx,
+    ctx: RendrCtx,
     entry: Entry<any> | ContentfulAsset,
     normalizers?: EntryNormalizer
   ): any | void;
@@ -18,7 +18,7 @@ export type EntryNormalizerList = {
 };
 
 export interface ClientFactory {
-  (ctx: RequestCtx): ContentfulClientApi;
+  (ctx: RendrCtx): ContentfulClientApi;
 }
 
 export interface Website {

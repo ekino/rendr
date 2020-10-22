@@ -3,6 +3,7 @@
     "packages/aggregator",
     "packages/api",
     "packages/core",
+    "packages/handler-express",
     "packages/loader",
     "packages/loader-contentful",
     "packages/rendering-gatsby",

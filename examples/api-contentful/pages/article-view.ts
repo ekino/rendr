@@ -10,47 +10,46 @@ import {
   NotFoundError,
   InternalServerError,
   BlockDefinition,
+  RendrCtx,
 } from "@ekino/rendr-core";
 
 export const articleView: PageBuilder = async (ctx, page) => {
   // We first load the Article object from contentful
   const entry = await GetArticle(
     defaultContentfulClient(ctx),
-    ctx.params["slug"],
+    ctx.req.params["slug"],
     {
-      domain: ctx.hostname,
+      domain: ctx.req.hostname,
     }
   );
 
   // article does not exist, raise an error
   if (!entry) {
     throw new NotFoundError(
-      `[Demo API] Unable to load the article - path: ${ctx.params["slug"]}, domain: ${ctx.hostname}`
+      `[Demo API] Unable to load the article - path: ${ctx.req.params["slug"]}, domain: ${ctx.req.hostname}`
     );
   }
 
   // we need first to get the page `/articles/:slug` from contentful, as it will hold
   // the current page structure for the whole page.
-  const articlePage = await getPage(
-    {
-      ...ctx,
-      // we need to load the correct page and it cannot be the original path
-      // as it will change on all requests: "/articles/slug-1", "/articles/slug-2", etc ...
-      pathname: "/articles/:slug",
-    },
-    page
-  );
-  articlePage.path = ctx.pathname;
+  const subCtx = JSON.parse(JSON.stringify(ctx)) as RendrCtx;
+
+  // we need to load the correct page and it cannot be the original path
+  // as it will change on all requests: "/articles/slug-1", "/articles/slug-2", etc ...
+  subCtx.req.pathname = "/articles/:slug";
+
+  const articlePage = await getPage(subCtx, page);
+  articlePage.path = subCtx.req.pathname;
 
   // the related layout page does not exist on contentful, so we cannot create the structure
   if (!articlePage) {
     // there is a serious issue here ...
     throw new InternalServerError(
-      `[Demo API] Unable to find the article page on contentful - path: /articles/:slug, domain: ${ctx.hostname}`
+      `[Demo API] Unable to find the article page on contentful - path: /articles/:slug, domain: ${ctx.req.hostname}`
     );
   }
 
-  const article = contentfulNormalizer(entry);
+  const article = contentfulNormalizer(ctx, entry);
 
   // at this point we have the Page and the Article, we need now the "merge" the article into the Page,
   // please remember, the current function must return a Page object corresponding to the final page.

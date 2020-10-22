@@ -1,4 +1,4 @@
-import { BlockDefinition, Page, RequestCtx } from "@ekino/rendr-core";
+import { BlockDefinition, Page, RendrCtx } from "@ekino/rendr-core";
 
 export type HandlerList = {
   [index: string]: Handler;
@@ -6,7 +6,7 @@ export type HandlerList = {
 
 export type Handler = (
   definition: BlockDefinition,
-  ctx: RequestCtx,
+  ctx: RendrCtx,
   page: Page
 ) => Promise<BlockDefinition>;
 

@@ -1,7 +1,6 @@
 import {
   createPage,
   ClientSideError,
-  ResponsePage,
   createResponsePage,
   Map,
   pipePageToClient,
@@ -97,7 +96,7 @@ export function createApiLoader(
           }
         });
 
-        return createResponsePage(headers, response.data, response.status);
+        return createResponsePage(response.status, headers, response.data);
       }
     }
   };

@@ -1,27 +1,17 @@
-import { RequestCtx, Page } from "@ekino/rendr-core";
+import { RendrCtx, Page, createContext } from "@ekino/rendr-core";
 
 import { createAggregatorLoader } from "./index";
 
-function createContext(data: {} = {}): RequestCtx {
-  const ctx: RequestCtx = {
-    // @ts-ignore
-    req: jest.fn(),
-    // @ts-ignore
-    res: jest.fn(),
-    pathname: "/",
-    query: {},
-    params: {},
-  };
-
+function createMockedContext(data: {} = {}): RendrCtx {
   return {
-    ...ctx,
+    ...createContext("/"),
     ...data,
   };
 }
 
 describe("test inmemory code", () => {
   it("test createAggregator - empty init", async () => {
-    const ctx = createContext();
+    const ctx = createMockedContext();
     const aggregator = createAggregatorLoader({});
     const page = new Page();
     await aggregator(ctx, page, () => {});
@@ -32,7 +22,7 @@ describe("test inmemory code", () => {
   });
 
   it("test createAggregator - with handlers", async () => {
-    const ctx = createContext();
+    const ctx = createMockedContext();
     const aggregator = createAggregatorLoader({
       handler: (block) => {
         block.settings.test = "Salut";

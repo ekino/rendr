@@ -3,55 +3,43 @@ import {
   StreamCreator,
   PageReferenceGenerator,
   transformGenerator,
+  createResponsePage,
   pipeIteratorToWritable,
+  ResponsePage,
 } from "@ekino/rendr-core";
-import { PageBuilder } from "@ekino/rendr-loader";
 
 import { Writable } from "stream";
-import Express from "express";
 
 import { Options } from "./types";
-import { ServerResponse } from "http";
 
-export async function sendSitemap(
-  res: ServerResponse,
+export async function createSitemapResponse(
   generator: PageReferenceGenerator
-) {
-  res.setHeader("Content-Type", "application/xml");
-  res.setHeader("X-Rendr-Content-Type", "render/sitemap");
+): Promise<ResponsePage> {
+  const headers = {
+    "Content-Type": "application/xml",
+    "X-Rendr-Content-Type": "render/sitemap",
+  };
 
   const iter = transformGenerator(generator(), toSitemapEntry);
 
-  const sitemapWritable = createSitemapWritable((name: string) => res, {
+  /**
+   * @todo Need to find a clever way to pass any bit written to a reader object
+   *       so there is no potential high memory usage.
+   */
+  let body = "";
+  const writable = new Writable({
+    write: (chunk) => {
+      body += chunk;
+    },
+  });
+
+  const sitemapWritable = createSitemapWritable((name: string) => writable, {
     basePathIndex: "",
   });
 
   await pipeIteratorToWritable(iter, sitemapWritable);
-}
 
-export function createSitemapPageBuilder(
-  generator: PageReferenceGenerator
-): PageBuilder {
-  return async (ctx, page) => {
-    // we don't care about the page, we just return binary to the output content
-    await sendSitemap(ctx.res, generator);
-  };
-}
-
-/**
- * This function can be used to expose on sitemap with less than 50K items.
- *
- * If you have a bigger website, creating a sitemap index is suitable, but this cannot
- * be done on the fly.
- *
- * @param generator
- */
-export function createSitemapRequestHandler(
-  generator: PageReferenceGenerator
-): Express.RequestHandler {
-  return async (req, res, next) => {
-    await sendSitemap(res, generator);
-  };
+  return createResponsePage(200, headers, body);
 }
 
 /**

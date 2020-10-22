@@ -6,7 +6,7 @@ import {
   Loader,
 } from "@ekino/rendr-loader";
 
-import { RequestCtx, BlockDefinition, Page } from "@ekino/rendr-core";
+import { RendrCtx, BlockDefinition, Page } from "@ekino/rendr-core";
 
 import RendrTemplate from "../templates/RendrTemplate";
 
@@ -32,7 +32,7 @@ const templates = {
 // ie: handlers aggregate values and set them into a block.
 //  => Aggregation at the view level is not that good but can be useful in some cases.
 const handlers = {
-  "rendr.agencies": (block: BlockDefinition, ctx: RequestCtx, page: Page) =>
+  "rendr.agencies": (block: BlockDefinition, ctx: RendrCtx, page: Page) =>
     Promise.resolve(block),
 };
 
@@ -46,7 +46,7 @@ const apiLoader: Loader = (ctx, page, next) => {
     url = `${location.origin}/api`;
   } else if (ctx.req.headers["x-original-route"]) {
     // are we on platform.sh ?
-    url = `https://${ctx.hostname}/api`;
+    url = `https://${ctx.req.hostname}/api`;
   } else if (ctx.req.headers["x-now-deployment-url"]) {
     // are we on now.sh ?
     url = `https://${ctx.req.headers["x-now-deployment-url"]}/api`;

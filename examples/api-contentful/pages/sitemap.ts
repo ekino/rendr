@@ -1,7 +1,7 @@
 import {
   createPageReference as ref,
   createPageReferencesGenerator,
-  RequestCtx,
+  RendrCtx,
   Page,
 } from "@ekino/rendr-core";
 import { createSitemapPageBuilder } from "@ekino/rendr-sitemap";
@@ -11,7 +11,7 @@ import { GetArticles } from "../helper/contents";
 
 import { defaultContentfulClient } from "../helper/contentful";
 
-export const sitemap = (ctx: RequestCtx, page: Page) => {
+export const sitemap = (ctx: RendrCtx, page: Page) => {
   const generator = createPageReferencesGenerator({
     pages: () => pagesGenerator(ctx),
     articles: () => articlesGenerator(ctx),
@@ -23,13 +23,13 @@ export const sitemap = (ctx: RequestCtx, page: Page) => {
 /**
  * Return page list on contentful.
  */
-async function* pagesGenerator(ctx: RequestCtx) {
-  const baseUrl = `https://${ctx.hostname}`;
+async function* pagesGenerator(ctx: RendrCtx) {
+  const baseUrl = `https://${ctx.req.hostname}`;
   const date = new Date();
 
   // for now we don't handle pagination...
   const options = {
-    domain: ctx.hostname,
+    domain: ctx.req.hostname,
   };
 
   try {
@@ -51,13 +51,13 @@ async function* pagesGenerator(ctx: RequestCtx) {
 /**
  * Return article available one contentful.
  */
-async function* articlesGenerator(ctx: RequestCtx) {
-  const baseUrl = `https://${ctx.hostname}`;
+async function* articlesGenerator(ctx: RendrCtx) {
+  const baseUrl = `https://${ctx.req.hostname}`;
   const date = new Date();
 
   // for now we don't handle pagination...
   const options = {
-    domain: ctx.hostname,
+    domain: ctx.req.hostname,
   };
 
   try {

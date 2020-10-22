@@ -5,17 +5,14 @@ import {
 
 import { GetArticles } from "../helper/contents";
 
-import { BlockDefinition, RequestCtx } from "@ekino/rendr-core";
+import { BlockDefinition, RendrCtx } from "@ekino/rendr-core";
 
-export const articles = async (
-  definition: BlockDefinition,
-  ctx: RequestCtx
-) => {
+export const articles = async (definition: BlockDefinition, ctx: RendrCtx) => {
   // We first get the articles from contentful
   const articles = await GetArticles(defaultContentfulClient(ctx), {
-    domain: ctx.hostname,
+    domain: ctx.req.hostname,
     limit: 32,
-    page: "page" in ctx.query ? ctx.query.page : 1, // we can deal with the pagination like this.
+    page: "page" in ctx.req.query ? ctx.req.query.page : 1, // we can deal with the pagination like this.
   });
 
   definition.settings.blocks = [];
@@ -49,7 +46,7 @@ export const articles = async (
   });
 
   articles.items.forEach((entry, i) => {
-    const article = contentfulNormalizer(entry);
+    const article = contentfulNormalizer(ctx, entry);
 
     definition.settings.blocks.push({
       container: "body",

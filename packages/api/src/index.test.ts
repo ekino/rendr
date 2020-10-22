@@ -1,52 +1,72 @@
-import Express from "express";
-import { RequestCtx, createPage } from "@ekino/rendr-core";
+import {
+  RendrCtx,
+  createPage,
+  createContext,
+  RedirectPage,
+  PageType,
+} from "@ekino/rendr-core";
+
+import { MaybePage } from "@ekino/rendr-loader";
 
 import { createApi } from "./index";
 
 describe("test createApi", () => {
   it("with no valid page found by the loader", async () => {
-    function loader(ctx: RequestCtx) {}
-
-    const api = createApi(loader);
-    const req = jest.fn<Express.Request, any[]>();
-    const res = jest.fn<Express.Response, any[]>();
-    // @ts-ignore
-    res.set = jest.fn().mockReturnThis();
-
-    const next = jest.fn<Express.NextFunction, any[]>();
-
-    // @ts-ignore
-    const result = await api(req, res, next);
-
-    // @ts-ignore
-    expect(res.set).toBeCalledWith(
-      "X-Rendr-Content-Type",
-      "rendr/octet-stream"
-    );
-    expect(result).toBeUndefined();
-  });
-
-  it("with valid page found by the loader", async () => {
-    async function loader(ctx: RequestCtx) {
-      return await createPage({});
+    async function loader(
+      ctx: RendrCtx,
+      page: PageType,
+      next = (page: PageType) => page
+    ) {
+      return await page;
     }
 
     const api = createApi(loader);
-    const req = jest.fn<Express.Request, any[]>();
-    const res = jest.fn<Express.Response, any[]>();
-    // @ts-ignore
-    res.set = jest.fn().mockReturnThis();
-    // @ts-ignore
-    res.json = jest.fn().mockReturnThis();
 
-    const next = jest.fn<Express.NextFunction, any[]>();
+    const ctx = createContext("http://localhost/");
 
     // @ts-ignore
-    const result = await api(req, res, next);
+    const page = await api(ctx);
 
-    // @ts-ignore
-    expect(res.set).toBeCalledWith("X-Rendr-Content-Type", "rendr/document");
-    // @ts-ignore
-    expect(res.json).toBeCalledWith(createPage({}));
+    expect(page).toMatchSnapshot();
+  });
+
+  it("with valid page found by the loader", async () => {
+    async function loader(
+      ctx: RendrCtx,
+      page: PageType,
+      next = (page: PageType) => page
+    ) {
+      page.statusCode = 200;
+
+      return await next(page);
+    }
+
+    const api = createApi(loader);
+    const ctx = createContext("http://localhost/");
+
+    const page = await api(ctx);
+
+    expect(page).toMatchSnapshot();
+  });
+
+  it("it return the redirection page", async () => {
+    async function loader(
+      ctx: RendrCtx,
+      _page: PageType,
+      next = (page: PageType) => page
+    ) {
+      const page = new RedirectPage();
+      page.location = "/redirected-page";
+      page.statusCode = 200;
+
+      return await page;
+    }
+
+    const api = createApi(loader);
+    const ctx = createContext("http://localhost/");
+
+    const page = await api(ctx);
+
+    expect(page).toMatchSnapshot();
   });
 });

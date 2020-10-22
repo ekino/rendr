@@ -29,16 +29,16 @@ export function createContentfulLoader(
     let site: Website;
 
     try {
-      site = normalizer(ctx, await GetWebsite(client, ctx.hostname));
+      site = normalizer(ctx, await GetWebsite(client, ctx.req.hostname));
     } catch (err) {
       throw new InternalServerError(
-        `[Contentful] Unable to load the website - domain: ${ctx.hostname}`,
+        `[Contentful] Unable to load the website - domain: ${ctx.req.hostname}`,
         err
       );
     }
 
     let queryMainPage = {
-      "fields.path": ctx.pathname,
+      "fields.path": ctx.req.pathname,
       limit: 1,
       content_type: "rendr_page",
       include: 10,
@@ -49,7 +49,7 @@ export function createContentfulLoader(
 
     if (pages.items.length !== 1) {
       throw new NotFoundError(
-        `[Contentful] Unable to get page - path: ${ctx.pathname}, website.id: ${site.id}`
+        `[Contentful] Unable to get page - path: ${ctx.req.pathname}, website.id: ${site.id}`
       );
     }
 

@@ -11,7 +11,7 @@ import {
 import {
   BlockDefinition,
   normalizeBlockDefinition,
-  RequestCtx,
+  RendrCtx,
 } from "@ekino/rendr-core";
 
 import {
@@ -31,7 +31,7 @@ const emptyProfile = {
 };
 
 export function normalizeBlockText(
-  ctx: RequestCtx,
+  ctx: RendrCtx,
   entry: Entry<ContentfulBlockText>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
@@ -50,7 +50,7 @@ export function normalizeBlockText(
 }
 
 export function normalizeBlockRawConfiguration(
-  ctx: RequestCtx,
+  ctx: RendrCtx,
   entry: Entry<ContentfulBlockRawConfiguration>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
@@ -65,7 +65,7 @@ export function normalizeBlockRawConfiguration(
 }
 
 export function normalizeBlockHeader(
-  ctx: RequestCtx,
+  ctx: RendrCtx,
   entry: Entry<ContentfulBlockText>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
@@ -73,7 +73,7 @@ export function normalizeBlockHeader(
 }
 
 export function normalizeBlockFooter(
-  ctx: RequestCtx,
+  ctx: RendrCtx,
   entry: Entry<ContentfulBlockText>,
   normalizers: EntryNormalizer
 ): BlockDefinition {
@@ -81,7 +81,7 @@ export function normalizeBlockFooter(
 }
 
 export function normalizeAuthor(
-  ctx: RequestCtx,
+  ctx: RendrCtx,
   entry: Entry<ContentfulAuthor>,
   normalizers: EntryNormalizer
 ): Author {
@@ -103,7 +103,7 @@ export function normalizeAuthor(
 }
 
 export function normalizeArticle(
-  ctx: RequestCtx,
+  ctx: RendrCtx,
   entry: Entry<ContentfulArticle>,
   normalizer: EntryNormalizer
 ): Article {

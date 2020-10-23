@@ -175,7 +175,7 @@ function ekino_rendr_form_node_form_alter(&$form, FormStateInterface $form_state
             $event = new UrlEvent(
                 'ekino_rendr.api.catchall_preview',
                 [
-                    'path' => UrlGenerator::generatePublicContentUrl($node, $translation),
+                    'path' => UrlGenerator::generatePublicContentUrl($node, $translation, [], ['base_url' => '']),
                     'channel' => $translation->id(),
                     '_preview_token' => $user->get('field_rendr_preview_token')->value,
                 ],

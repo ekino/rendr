@@ -9,7 +9,7 @@ use Drupal\ekino_rendr\Router\RouterSubscriber;
 
 class UrlGenerator
 {
-    public static function generatePublicPageUrl($path, $channel, $arguments = [])
+    public static function generatePublicPageUrl($path, $channel, $arguments = [], $options = [])
     {
         if ('route:<nolink>' == $path || '<nolink>' == $path) { // check how to solve this issue.
             return '#';
@@ -29,7 +29,7 @@ class UrlGenerator
 
         $path = '/'.\trim($path ?? '', '/');
         $channelPath = '/'.\trim($channel->get('path')->value ?? '', '/');
-        $domain = \trim(self::getBaseUrl($channel) ?? '', '/');
+        $domain = \trim(self::getBaseUrl($channel, $options) ?? '', '/');
 
         if ('/' === $channelPath) {
             $channelPath = '';
@@ -100,7 +100,7 @@ class UrlGenerator
         $protocol = !empty($options['https']) ? 'https' : 'http';
         $domain = '';
 
-        if (!empty($options['base_url'])) {
+        if (\array_key_exists('base_url', $options)) {
             $domain = $options['base_url'];
         } elseif (!empty($channel->get('domain')->value)) {
             $domain = $channel->get('domain')->value;

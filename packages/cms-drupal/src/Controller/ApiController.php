@@ -66,7 +66,7 @@ final class ApiController
         try {
             try {
                 // First try a page url that can override a custom route
-                $pageOverride = $this->pageManager->getPage($path, $user, $channel, $preview);
+                $pageOverride = $this->pageManager->getPage($cleanedPath, $user, $channel, $preview);
 
                 // Then if no page was found, we check for a custom route
                 $route = $pageOverride ? $this->router->match(RouterSubscriber::VIEW_BASE_URL.'/page') :

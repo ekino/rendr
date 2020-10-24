@@ -1,8 +1,8 @@
 import React from "react";
 import { NextPageContext } from "next";
 
-import { Page, RedirectPage, ResponsePage } from "@ekino/rendr-core";
-import { createContext } from "@ekino/rendr-handler-express";
+import { Page } from "@ekino/rendr-core";
+import { createContext, send } from "@ekino/rendr-handler-express";
 
 import { Loader } from "@ekino/rendr-loader";
 import {
@@ -28,46 +28,32 @@ export function createDynamicPage(
       // find the page ...
       const page = await loader(ctx, new Page(), (page) => page);
 
-      if (ctx.isServerSide && page instanceof Page) {
-        nextCtx.res.statusCode = page.statusCode;
+      if (page instanceof Page) {
+        if (ctx.isServerSide) {
+          nextCtx.res.statusCode = page.statusCode;
 
-        if (page.cache.ttl > 0 && page.statusCode == 200) {
-          nextCtx.res.setHeader(
-            "Cache-Control",
-            `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`
-          );
-        } else {
-          nextCtx.res.setHeader(
-            "Cache-Control",
-            "private, max-age=0, no-cache"
-          );
+          if (page.cache.ttl > 0 && page.statusCode == 200) {
+            nextCtx.res.setHeader(
+              "Cache-Control",
+              `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`
+            );
+          } else {
+            nextCtx.res.setHeader(
+              "Cache-Control",
+              "private, max-age=0, no-cache"
+            );
+          }
+
+          // cannot serialize the IncomingMessage object
+          ctx.req.body = "";
         }
+
+        return {
+          page,
+        };
       }
 
-      if (ctx.isServerSide && page instanceof ResponsePage) {
-        nextCtx.res.writeHead(page.statusCode, page.headers);
-        nextCtx.res.write(page.body);
-        nextCtx.res.end();
-
-        return;
-      }
-
-      if (ctx.isServerSide && page instanceof RedirectPage) {
-        nextCtx.res.writeHead(page.statusCode, {
-          Location: page.location,
-        });
-        nextCtx.res.end();
-
-        return;
-      }
-
-      return {
-        page,
-        rendrCtx: ctx,
-        query: nextCtx.query,
-        pathname: nextCtx.pathname,
-        asPath: nextCtx.asPath,
-      };
+      send(nextCtx.res, page);
     }
 
     public render() {

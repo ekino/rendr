@@ -45,7 +45,10 @@ export function createApiLoader(
         headers["range"] = ctx.req.headers["range"];
       }
 
-      headers["accept"] = ctx.req.headers["accept"];
+      if ("accept" in ctx.req.headers) {
+        headers["accept"] = ctx.req.headers["accept"];
+      }
+
       // please note: axios does not support br (brotli)
       headers["accept-encoding"] = "gzip, deflate";
 
@@ -62,6 +65,9 @@ export function createApiLoader(
 
     if (!("x-rendr-content-type" in response.headers)) {
       // @todo: check how we can add a logger here
+      console.error(
+        "[rendr:loader/api] missing x-rendr-content-type from response's headers"
+      );
       return next(page);
     }
 

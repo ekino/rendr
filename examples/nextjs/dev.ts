@@ -26,7 +26,7 @@ app
     server.all("*", (req, res) => handle(req, res));
 
     server.listen(8000, () => {
-      console.log(`> Ready on port https://localhost:8000 `);
+      console.log(`> Ready on port http://localhost:8000 `);
     });
   })
   .catch((err) => {

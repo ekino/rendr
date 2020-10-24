@@ -42,9 +42,13 @@ exports.createPagesStatefully = async ({ actions, reporter }) => {
     const url = parseUrl(pageReferences[i].loc)
 
     try {
-      const ctx = createContext({ url: url.pathname + url.query })
-      const page = await loader(ctx, new Page(), () => null)
+      const ctx = createContext(url.pathname + url.query)
+      const page = await loader(ctx, new Page(), (page) => page)
 
+      if (!(page instanceof Page)) {
+        continue
+      }
+      
       createPage({
         path: url.pathname,
         component: rendrTemplate,

@@ -69,7 +69,7 @@ const routes = {
   "/articles": (ctx, page) => {
     const list = [];
     for (let i = 0; i < 32; i++) {
-      list.push(`<li><a href="/post/slug-${i}">Post ${i}</a></li>`);
+      list.push(`<li><a href="/articles/slug-${i}">Post ${i}</a></li>`);
     }
 
     page.blocks.push({
@@ -86,7 +86,7 @@ const routes = {
       type: "rendr.text",
       settings: {
         rawHtml: true,
-        contents: `<a href="/post/page/2">Next Page</a>`,
+        contents: `<a href="/articles/page/2">Next Page</a>`,
       },
     });
 
@@ -94,7 +94,9 @@ const routes = {
   },
   "/articles/page/:number": (ctx, page) => {
     // we have at least 2000 blog posts, 32 elements per page
-    let pageNumber = ctx.params.number ? parseInt(ctx.params.number, 10) : 0;
+    let pageNumber = ctx.req.params.number
+      ? parseInt(ctx.req.params.number, 10)
+      : 0;
 
     if (pageNumber > 2000 / 32) {
       page.blocks.push({
@@ -111,7 +113,7 @@ const routes = {
     const list = [];
     for (let i = 0; i < 32; i++) {
       const x = pageNumber * 32 + i;
-      list.push(`<li><a href="/post/slug-${x}">Post ${x}</a></li>`);
+      list.push(`<li><a href="/articles/slug-${x}">Post ${x}</a></li>`);
     }
 
     page.blocks.push({

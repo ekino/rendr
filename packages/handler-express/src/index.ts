@@ -1,12 +1,14 @@
 import {
   RendrCtx,
   RendrRequest,
-  RendrResponse,
   createContext as coreCreateContext,
   Map,
   ResponsePage,
   Page,
   RedirectPage,
+  PageType,
+  pipe,
+  Body,
 } from "@ekino/rendr-core";
 import parse from "url-parse";
 import { IncomingMessage, ServerResponse } from "http";
@@ -23,11 +25,10 @@ export function createContext(req: IncomingMessage | string): RendrCtx {
 
   const isServerSide = true;
   const headers: Map = {};
-  headers["asds"] = "asds";
 
   // normalize the headers value
   for (let field in req.headers) {
-    if (req.headers[field] === "string") {
+    if (typeof req.headers[field] === "string") {
       headers[field.toLocaleLowerCase()] = req.headers[field] as string;
     }
   }
@@ -63,34 +64,54 @@ export function createMiddleware(fn: Function) {
 
     const page = await fn(ctx);
 
-    if (page instanceof Page) {
-      const headers = {
-        "Cache-Control": "private, max-age=0, no-cache",
-        "Content-Type": "application/json",
-      };
-
-      if (page.cache.ttl > 0 && page.statusCode == 200) {
-        headers[
-          "Cache-Control"
-        ] = `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`;
-      }
-
-      res.writeHead(page.statusCode, headers);
-      res.write(JSON.stringify(page));
-      res.end();
-    }
-
-    if (page instanceof ResponsePage) {
-      res.writeHead(page.statusCode, page.headers);
-      res.write(page.body);
-      res.end();
-    }
-
-    if (page instanceof RedirectPage) {
-      res.writeHead(page.statusCode, {
-        Location: page.location,
-      });
-      res.end();
-    }
+    await send(res, page);
   };
+}
+
+export async function send(res: ServerResponse, page: PageType) {
+  let headers = {
+    "X-Rendr-Content-Type": "rendr/octet-stream",
+    "Content-Type": "application/octet-stream",
+    "Cache-Control": "private, max-age=0, no-cache",
+  };
+
+  let body: Body = "";
+
+  if (page instanceof Page) {
+    headers["Content-Type"] = "application/json";
+    headers["X-Rendr-Content-Type"] = "rendr/document";
+
+    if (page.cache.ttl > 0 && page.statusCode == 200) {
+      headers[
+        "Cache-Control"
+      ] = `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`;
+    }
+
+    body = JSON.stringify(page);
+  }
+
+  if (page instanceof ResponsePage) {
+    headers = {
+      ...headers,
+      ...page.headers,
+    };
+
+    body = page.body;
+  }
+
+  if (page instanceof RedirectPage) {
+    headers = {
+      ...headers,
+      ...{
+        Location: page.location,
+        "X-Rendr-Content-Type": "rendr/redirect",
+      },
+    };
+  }
+
+  res.writeHead(page.statusCode, headers);
+
+  await pipe(body, res);
+
+  res.end();
 }

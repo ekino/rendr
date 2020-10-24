@@ -1,5 +1,5 @@
 import React from "react";
-import { BlockDefinition, Settings, Page } from "@ekino/rendr-core";
+import { BlockDefinition, Settings, Page, RendrCtx } from "@ekino/rendr-core";
 
 export type ReactElement<P> =
   | React.ComponentClass<P>

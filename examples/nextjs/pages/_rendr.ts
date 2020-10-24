@@ -39,7 +39,7 @@ const handlers = {
 export const BUILD_VERSION = "_BUILD_VERSION_";
 
 // initialize related code required to make the page works.
-const apiLoader: Loader = (ctx, page, next) => {
+const apiLoader: Loader = async (ctx, page, next) => {
   let url = "";
 
   if (ctx.isClientSide) {
@@ -62,7 +62,9 @@ const apiLoader: Loader = (ctx, page, next) => {
     return { url, options };
   });
 
-  return loader(ctx, page, next);
+  const loadedPage = await loader(ctx, page, next);
+
+  return loadedPage;
 };
 
 const pageAggregator = createAggregatorLoader(handlers);

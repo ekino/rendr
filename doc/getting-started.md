@@ -71,14 +71,14 @@ Now lets create a second route that will output our `Page` object.
 const express = require("express");
 // Add these lines
 const rendrApi = require("@ekino/rendr-api");
-const rendrExpress = require("@ekino/rendr-handler-express");
+const httpHandler = require("@ekino/rendr-handler-http");
 const services = require("./services/api");
 ...
 // Add the following line
 // we attach our services under the endpoint /api
 // This means any url in the format /api/something will be handled by our Loaders.
 // Loaders behave in a similar way to express middleware
-app.use("/api", rendrExpress.createMiddleware(rendrApi.createApi(services.loader)));
+app.use("/api", httpHandler.createMiddleware(rendrApi.createApi(services.loader)));
 
 app.get('/', (req, res) => res.send('Hello World!'));
 ...

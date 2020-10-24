@@ -18,7 +18,7 @@
     "packages/api",
     "packages/core",
     "packages/loader",
-    "packages/handler-express",
+    "packages/handler-http",
     "packages/loader-contentful",
     "packages/rendering-gatsby",
     "packages/rendering-nextjs",

@@ -2,7 +2,7 @@ import React from "react";
 import { NextPageContext } from "next";
 
 import { Page } from "@ekino/rendr-core";
-import { createContext, send } from "@ekino/rendr-handler-express";
+import { createContext, send } from "@ekino/rendr-handler-http";
 
 import { Loader } from "@ekino/rendr-loader";
 import {

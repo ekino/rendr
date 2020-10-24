@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const rendrApi = require("@ekino/rendr-api");
-const rendrExpress = require("@ekino/rendr-handler-express");
+const httpHandler = require("@ekino/rendr-handler-http");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const api = require("./services/api");
@@ -24,7 +24,7 @@ app.use(
   })
 );
 
-app.use("/api", rendrExpress.createMiddleware(rendrApi.createApi(api.loader)));
+app.use("/api", httpHandler.createMiddleware(rendrApi.createApi(api.loader)));
 app.use("/", (req, res) => {
   res.redirect(301, "/api/");
 });

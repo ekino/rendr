@@ -24,20 +24,20 @@ async function* generator() {
     lastmod: date,
   });
 
-  yield ref(`${baseUrl}/post`, {
+  yield ref(`${baseUrl}/articles`, {
     priority: 0.5,
     lastmod: date,
   });
 
   for (let x = 0; x < 2000; x++) {
     if (x != 0 && x % 32 == 0) {
-      yield ref(`${baseUrl}/post/page/${x / 32}`, {
+      yield ref(`${baseUrl}/articles/page/${x / 32}`, {
         priority: 0.5,
         lastmod: date,
       });
     }
 
-    yield ref(`${baseUrl}/post/slug-${x}`, {
+    yield ref(`${baseUrl}/articles/slug-${x}`, {
       priority: 0.5,
       lastmod: date,
     });

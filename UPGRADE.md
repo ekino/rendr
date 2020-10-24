@@ -65,7 +65,7 @@ For instance, for ExpressJS (based on NodeJS `IncomingMessage`/`ServerResponse`)
 
 ```diff
 import { createApi } from "@ekino/rendr-api";
-+import { createMiddleware } from "@ekino/rendr-handler-express";
++import { createMiddleware } from "@ekino/rendr-handler-http";
 
 import express from "express";
 import cors from "cors";

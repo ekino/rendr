@@ -26,4 +26,4 @@ The rendr project provide an advanced integration with Contentful witht the `@ek
 
 ### run the demo
 
-    CONTENTFUL_SPACE_ID=XXXX CONTENTFUL_ACCESS_TOKEN=XXXX node server.js
+    CONTENTFUL_SPACE_ID=XXXX CONTENTFUL_ACCESS_TOKEN=XXXX yarn ts-node server.ts

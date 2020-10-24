@@ -4,7 +4,7 @@ import {
   RendrCtx,
   Page,
 } from "@ekino/rendr-core";
-import { createSitemapPageBuilder } from "@ekino/rendr-sitemap";
+import { createSitemapResponse } from "@ekino/rendr-sitemap";
 import { GetPages } from "@ekino/rendr-loader-contentful";
 
 import { GetArticles } from "../helper/contents";
@@ -17,7 +17,7 @@ export const sitemap = (ctx: RendrCtx, page: Page) => {
     articles: () => articlesGenerator(ctx),
   });
 
-  return createSitemapPageBuilder(generator)(ctx, page);
+  return createSitemapResponse(generator);
 };
 
 /**

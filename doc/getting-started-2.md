@@ -100,7 +100,7 @@ const vueRendr = async (req, res) => {
   const ctx = rendrCore.createContext(req, res);
   // Use the built-in ApiLoader to fetch the api that we created.
   const apiLoader = rendrLoader.createApiLoader("http://localhost:3000/api");
-  const page = await apiLoader(ctx, new rendrCore.Page(), () => {});
+  const page = await apiLoader(ctx, new rendrCore.Page(), (page) => page);
 
   if (!page) {
     res.status(404).end("No page found!");

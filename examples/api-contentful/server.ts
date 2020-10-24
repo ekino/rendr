@@ -1,4 +1,6 @@
 import { createApi } from "@ekino/rendr-api";
+import { createMiddleware } from "@ekino/rendr-handler-express";
+
 import express from "express";
 import cors from "cors";
 import { IncomingMessage, ServerResponse } from "http";
@@ -34,7 +36,7 @@ app.use((req: IncomingMessage, res: ServerResponse, next) => {
 });
 
 // will return the api
-app.use("/api", createApi(loader));
+app.use("/api", createMiddleware(createApi(loader)));
 app.use("/", (req, res) => {
   res.redirect(301, "/api/");
 });

@@ -142,7 +142,9 @@ export function createPage(data: any = {}): Page {
  * @param res
  */
 export function createContext(url: string): RendrCtx {
-  let isServerSide = typeof window === "undefined";
+  // jest defines a set of global variable, for now, this
+  // is the only reliable option found.
+  let isServerSide = !(window instanceof Window);
 
   const urlInfo = parse(url, true);
 

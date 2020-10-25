@@ -8,7 +8,7 @@ const sitemap = require("./sitemap");
  * Great way to define the header and the footer for instance.
  *
  * @param {Page} page
- * @param {import('@ekino/rendr-core').RequestCtx} ctx
+ * @param {import('@ekino/rendr-core').RendrCtx} ctx
  */
 function basePageLoader(ctx, page, next) {
   page.template = "rendr";

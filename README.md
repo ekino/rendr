@@ -67,7 +67,7 @@ The project uses `lerna` to handle multiple packages in one git repository. Pack
 ### Main data types
 
 - **Page**: a CMS (Headless) must produce this object in order to work with any renderer. If the CMS cannot do that, a loader must be done, see `loader-contentful` for more information. The page can be exposed through a json API and so NO confidential information must be attached to it. It you need to store value, use the `settings` fields.
-- **RequestCtx**: this is a object containing information about the current request, the object will be defined in the different lifecycle of the different component. If you need to store private information, use the `settings` fields.
+- **RendrCtx**: this is a object containing information about the current request, the object will be defined in the different lifecycle of the different component. If you need to store private information, use the `settings` fields.
 
 ## Examples
 

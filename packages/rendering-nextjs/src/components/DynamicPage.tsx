@@ -2,6 +2,11 @@ import React from "react";
 import { NextPageContext } from "next";
 
 import { Page } from "@ekino/rendr-core";
+
+/**
+ * NextJS method signatures only support Node HTTP Api like.
+ * So it safe to use the @ekino/rendr-handler-http.
+ */
 import { createContext, send } from "@ekino/rendr-handler-http";
 
 import { Loader } from "@ekino/rendr-loader";
@@ -28,32 +33,31 @@ export function createDynamicPage(
       // find the page ...
       const page = await loader(ctx, new Page(), (page) => page);
 
-      if (page instanceof Page) {
-        if (ctx.isServerSide) {
-          nextCtx.res.statusCode = page.statusCode;
+      ctx.req.body = "";
 
-          if (page.cache.ttl > 0 && page.statusCode == 200) {
-            nextCtx.res.setHeader(
-              "Cache-Control",
-              `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`
-            );
-          } else {
-            nextCtx.res.setHeader(
-              "Cache-Control",
-              "private, max-age=0, no-cache"
-            );
-          }
-
-          // cannot serialize the IncomingMessage object
-          ctx.req.body = "";
-        }
-
-        return {
-          page,
-        };
+      if (ctx.isServerSide && !(page instanceof Page)) {
+        return await send(nextCtx.res, page);
       }
 
-      send(nextCtx.res, page);
+      if (ctx.isServerSide && page instanceof Page) {
+        nextCtx.res.statusCode = page.statusCode;
+
+        if (page.cache.ttl > 0 && page.statusCode == 200) {
+          nextCtx.res.setHeader(
+            "Cache-Control",
+            `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`
+          );
+        } else {
+          nextCtx.res.setHeader(
+            "Cache-Control",
+            "private, max-age=0, no-cache"
+          );
+        }
+      }
+
+      return {
+        page,
+      };
     }
 
     public render() {

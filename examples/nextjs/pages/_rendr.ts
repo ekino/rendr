@@ -62,9 +62,7 @@ const apiLoader: Loader = async (ctx, page, next) => {
     return { url, options };
   });
 
-  const loadedPage = await loader(ctx, page, next);
-
-  return loadedPage;
+  return await loader(ctx, page, next);
 };
 
 const pageAggregator = createAggregatorLoader(handlers);

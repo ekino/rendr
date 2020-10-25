@@ -142,7 +142,7 @@ export function createPage(data: any = {}): Page {
  * @param res
  */
 export function createContext(url: string): RendrCtx {
-  let isServerSide = typeof process === "object";
+  let isServerSide = typeof window === "undefined";
 
   const urlInfo = parse(url, true);
 

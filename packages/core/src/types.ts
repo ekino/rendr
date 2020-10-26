@@ -28,7 +28,7 @@ export interface Head {
 }
 
 export type PageType = RedirectPage | ResponsePage | Page;
-export type Body = string | ReadableStream | NodeJS.ReadableStream;
+export type Body = string | ReadableStream | NodeJS.ReadableStream | any;
 
 export class RedirectPage {
   statusCode: number = 200;

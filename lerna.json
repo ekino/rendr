@@ -4,6 +4,7 @@
     "packages/api",
     "packages/core",
     "packages/handler-http",
+    "packages/handler-aws-lambda",
     "packages/loader",
     "packages/loader-contentful",
     "packages/rendering-gatsby",

@@ -1,0 +1,99 @@
+{
+    "event": {
+      "resource": "/info",
+      "path": "/info",
+      "httpMethod": "GET",
+      "headers": {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Encoding": "gzip",
+        "Accept-Language": "en,en-US;q=0.8,fr;q=0.5,fr-FR;q=0.3",
+        "Cookie": "__cfduid=XXXXXXXXXX",
+        "DNT": "1",
+        "Early-Data": "1",
+        "Host": "example.com",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:81.0) Gecko/20100101 Firefox/81.0",
+        "X-Amzn-Trace-Id": "Root=Z-XXXXXXXXX-XXXXXXXXXXXXXXX",
+        "X-Forwarded-For": "127.0.0.1",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+      },
+      "multiValueHeaders": {
+        "Accept": [
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+        ],
+        "Accept-Encoding": [
+          "gzip"
+        ],
+        "Accept-Language": [
+          "en,en-US;q=0.8,fr;q=0.5,fr-FR;q=0.3"
+        ],
+        "Cookie": [
+          "__cfduid=XXXXXXXXXX"
+        ],
+        "DNT": [
+          "1"
+        ],
+        "Early-Data": [
+          "1"
+        ],
+        "Host": [
+          "example.com"
+        ],
+        "Upgrade-Insecure-Requests": [
+          "1"
+        ],
+        "User-Agent": [
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:81.0) Gecko/20100101 Firefox/81.0"
+        ],
+        "X-Amzn-Trace-Id": [
+          "Root=Z-XXXXXXXXX-XXXXXXXXXXXXXXX"
+        ],
+        "X-Forwarded-For": [
+          "127.0.0.1"
+        ],
+        "X-Forwarded-Port": [
+          "443"
+        ],
+        "X-Forwarded-Proto": [
+          "https"
+        ]
+      },
+      "queryStringParameters": null,
+      "multiValueQueryStringParameters": null,
+      "pathParameters": null,
+      "stageVariables": null,
+      "requestContext": {
+        "resourceId": "XXXXXX",
+        "resourcePath": "/info",
+        "httpMethod": "GET",
+        "extendedRequestId": "XXXXXXXXXX",
+        "requestTime": "25/Oct/2020:21:46:35 +0000",
+        "path": "/info",
+        "accountId": "11111111111",
+        "protocol": "HTTP/1.1",
+        "stage": "prod",
+        "domainPrefix": "example",
+        "requestTimeEpoch": 1603662395941,
+        "requestId": "11111111-2222-2222-1111-123123123123123",
+        "identity": {
+          "cognitoIdentityPoolId": null,
+          "accountId": null,
+          "cognitoIdentityId": null,
+          "caller": null,
+          "sourceIp": "162.158.155.152",
+          "principalOrgId": null,
+          "accessKey": null,
+          "cognitoAuthenticationType": null,
+          "cognitoAuthenticationProvider": null,
+          "userArn": null,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:81.0) Gecko/20100101 Firefox/81.0",
+          "user": null
+        },
+        "domainName": "example.com",
+        "apiId": "XXXXXXXX"
+      },
+      "body": null,
+      "isBase64Encoded": false
+    }
+  }

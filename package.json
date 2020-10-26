@@ -19,6 +19,7 @@
     "packages/core",
     "packages/loader",
     "packages/handler-http",
+    "packages/handler-aws-lambda",
     "packages/loader-contentful",
     "packages/rendering-gatsby",
     "packages/rendering-nextjs",

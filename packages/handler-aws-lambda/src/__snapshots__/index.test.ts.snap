@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create context createContext from GET request 1`] = `
+Object {
+  "isClientSide": false,
+  "isServerSide": true,
+  "req": Object {
+    "body": undefined,
+    "headers": Object {
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+      "accept-encoding": "gzip",
+      "accept-language": "en,en-US;q=0.8,fr;q=0.5,fr-FR;q=0.3",
+      "cookie": "__cfduid=XXXXXXXXXX",
+      "dnt": "1",
+      "early-data": "1",
+      "host": "example.com",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:81.0) Gecko/20100101 Firefox/81.0",
+      "x-amzn-trace-id": "Root=Z-XXXXXXXXX-XXXXXXXXXXXXXXX",
+      "x-forwarded-for": "127.0.0.1",
+      "x-forwarded-port": "443",
+      "x-forwarded-proto": "https",
+    },
+    "hostname": "example.com",
+    "method": "GET",
+    "params": Object {},
+    "pathname": "/info",
+    "query": Object {},
+  },
+  "settings": Object {},
+}
+`;
+
+exports[`create context createContext from POST request 1`] = `
+Object {
+  "isClientSide": false,
+  "isServerSide": true,
+  "req": Object {
+    "body": Object {
+      "foo": "bar",
+    },
+    "headers": Object {
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+      "accept-encoding": "gzip",
+      "accept-language": "en,en-US;q=0.8,fr;q=0.5,fr-FR;q=0.3",
+      "content-type": "application/x-www-form-urlencoded",
+      "cookie": "__cfduid=XXXXXXXXXX",
+      "dnt": "1",
+      "early-data": "1",
+      "host": "example.com",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:81.0) Gecko/20100101 Firefox/81.0",
+      "x-amzn-trace-id": "Root=Z-XXXXXXXXX-XXXXXXXXXXXXXXX",
+      "x-forwarded-for": "127.0.0.1",
+      "x-forwarded-port": "443",
+      "x-forwarded-proto": "https",
+    },
+    "hostname": "example.com",
+    "method": "POST",
+    "params": Object {},
+    "pathname": "/info",
+    "query": Object {},
+  },
+  "settings": Object {},
+}
+`;

@@ -39,7 +39,7 @@
     "fmt": "prettier --color --write \"**/*.{js,jsx,ts,tsx,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "fmt:check": "prettier --color --list-different \"packages/*/**/*.{js,ts,yml,yaml}\" README.md \"packages/*/README.md\" tsconfig.json \"packages/*/tsconfig.json\"",
     "lint:ts": "tslint -p . -c tslint.json \"packages/*/src/**/*.ts\"",
-    "test": "jest packages examples/api-contentful",
+    "test": "jest",
     "test:all": "yarn fmt:check && yarn lint:ts && yarn test && yarn build",
     "distribute": "yarn audit && yarn build && yarn test && lerna publish --exact --dist-tag=latest --loglevel=debug --force-publish"
   },
@@ -58,14 +58,34 @@
     "**/**/node-forge": "^0.10.0"
   },
   "jest": {
-    "preset": "ts-jest",
-    "testMatch": [
-      "**/*.test.ts(|x)"
-    ],
+    "projects": [{
+      "displayName": {
+        "name": "Packages",
+        "color": "magenta"
+      },
+      "preset": "ts-jest",
+      "testMatch": [
+        "<rootDir>/packages/*/src/*.test.ts",
+        "<rootDir>/packages/*/src/**/*.test.ts"
+      ]
+    }, {
+      "displayName": {
+        "name": "Examples",
+        "color": "blue"
+      },
+      "preset": "ts-jest",
+      "testMatch": [
+        "<rootDir>/examples/api-contentful/**/*.test.ts"
+      ]
+    }],
+    "collectCoverage": true,
     "collectCoverageFrom": [
-      "packages/**/*.ts",
-      "!packages/**/dist/**"
+      "**/*.{ts,tsx}",
+      "!**/*.test.{ts,tsx}",
+      "!**/dist/**",
+      "!**/examples/**"
     ],
+    "coverageDirectory": "<rootDir>/coverage",
     "verbose": true
   }
 }

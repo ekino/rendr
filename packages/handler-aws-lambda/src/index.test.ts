@@ -21,4 +21,15 @@ describe("create context", () => {
 
     expect(ctx).toMatchSnapshot();
   });
+
+  it("createContext from GET request with empty path", async () => {
+    const payload = loadJson(
+      `${__dirname}/__fixtures__/payload_get_empty_path_v2.json`
+    );
+
+    const ctx = createContext(payload.event, {});
+
+    expect(ctx).toMatchSnapshot();
+    expect(ctx.req.pathname).toBe("/");
+  });
 });

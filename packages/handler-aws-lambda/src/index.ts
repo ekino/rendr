@@ -55,7 +55,7 @@ export function createContext(event: any, _context: any): RendrCtx {
 
   const request: RendrRequest = {
     hostname: headers["host"],
-    pathname: event.path,
+    pathname: event.path ? (event.path.length === 0 ? "/" : event.path) : "/",
     query: event.queryStringParameters ?? {},
     params: event.pathParameters ?? {},
     headers,
@@ -111,6 +111,8 @@ export async function send(page: PageType) {
       });
 
       await pipe(page.body, writable);
+    } else {
+      body = page.body;
     }
   }
 
@@ -128,5 +130,23 @@ export async function send(page: PageType) {
     statusCode: page.statusCode,
     headers,
     body,
+  };
+}
+
+export type WrapperOptions = {
+  createContext?: Function;
+};
+
+export function wrapper(fn: Function, options: WrapperOptions) {
+  return async (event: any, context: any) => {
+    const createCtx = options.createContext
+      ? options.createContext
+      : createContext;
+
+    const ctx = createCtx(event, context);
+
+    const page = await fn(ctx);
+
+    return await send(page);
   };
 }

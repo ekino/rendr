@@ -53,9 +53,20 @@ export function createContext(event: any, _context: any): RendrCtx {
     }
   }
 
+  let pathname = "/";
+
+  if (event.path && event.path.length > 0) {
+    pathname = event.path;
+  }
+
+  // specific rendr stuff
+  if (event.pathParameters && "rendr_path" in event.pathParameters) {
+    pathname = `/${event.pathParameters["rendr_path"]}`;
+  }
+
   const request: RendrRequest = {
     hostname: headers["host"],
-    pathname: event.path ? (event.path.length === 0 ? "/" : event.path) : "/",
+    pathname,
     query: event.queryStringParameters ?? {},
     params: event.pathParameters ?? {},
     headers,

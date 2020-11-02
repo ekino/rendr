@@ -39,16 +39,18 @@ export function createContext(event: any, _context: any): RendrCtx {
       ).toString() as string;
     }
 
-    if (headers["content-type"] === "application/x-www-form-urlencoded") {
-      body = parse(body);
-    }
+    if ("content-type" in headers) {
+      if (headers["content-type"] === "application/x-www-form-urlencoded") {
+        body = parse(body);
+      }
 
-    if (headers["content-type"].substr(-4) === "json") {
-      try {
-        body = JSON.parse(body);
-      } catch (err) {
-        // unable to parse the body
-        console.error(event);
+      if (headers["content-type"].substr(-4) === "json") {
+        try {
+          body = JSON.parse(body);
+        } catch (err) {
+          // unable to parse the body
+          console.error(event);
+        }
       }
     }
   }

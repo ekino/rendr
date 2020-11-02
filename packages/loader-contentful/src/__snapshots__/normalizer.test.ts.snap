@@ -12,6 +12,7 @@ exports[`test normalizer test rendr_page.json 1`] = `
 Page {
   "blocks": Array [],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 0,
   },
   "head": Object {
@@ -46,6 +47,7 @@ exports[`test normalizer test rendr_page_missing_field.json 1`] = `
 Page {
   "blocks": Array [],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 0,
   },
   "head": Object {
@@ -76,6 +78,10 @@ Page {
 
 exports[`test normalizer test rendr_website.json 1`] = `
 Object {
+  "cache": Object {
+    "sharedTtl": 0,
+    "ttl": 0,
+  },
   "countryCode": "FRA",
   "culture": "en_GB",
   "domains": Array [
@@ -83,9 +89,11 @@ Object {
   ],
   "enabled": true,
   "id": "75Vqk3IpfxlzQfvhdSASZV",
+  "mainMenu": Object {},
   "name": "Ekino.com",
   "order": 1,
   "path": "/",
+  "settings": Object {},
 }
 `;
 

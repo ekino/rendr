@@ -63,12 +63,16 @@ describe("test mergePages", () => {
     parent.template = "3-columns";
     parent.blocks = [
       {
+        id: "id-1",
+        meta: {},
         container: "header",
         order: 1,
         settings: {},
         type: "type-parent-1",
       },
       {
+        id: "id-2",
+        meta: {},
         container: "header",
         order: 1,
         settings: {},
@@ -89,12 +93,16 @@ describe("test mergePages", () => {
     page.template = "2-columns";
     page.blocks = [
       {
+        id: "id-1",
+        meta: {},
         container: "header",
         order: 1,
         settings: {},
         type: "type-child-1",
       },
       {
+        id: "id-2",
+        meta: {},
         container: "header",
         order: 1,
         settings: {},

@@ -1,11 +1,14 @@
 import { Writable } from "stream";
 
 export interface BlockDefinition {
+  id: string;
   type: string;
   settings: Settings;
   container: string;
   order: number;
+  meta: object;
 }
+
 export interface Settings {
   [index: string]: any;
 }
@@ -16,6 +19,7 @@ export interface Map {
 
 export interface Cache {
   ttl: number;
+  sharedTtl: number;
 }
 
 export interface Head {
@@ -48,6 +52,7 @@ export class Page {
   public template: string = "default";
   public cache: Cache = {
     ttl: 0,
+    sharedTtl: 0,
   };
   public head: Head = {
     titleTemplate: "%s",

@@ -78,7 +78,7 @@
         "<rootDir>/examples/api-contentful/**/*.test.ts"
       ]
     }],
-    "collectCoverage": true,
+    "collectCoverage": false,
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
       "!**/*.test.{ts,tsx}",

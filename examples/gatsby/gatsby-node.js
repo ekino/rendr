@@ -48,7 +48,7 @@ exports.createPagesStatefully = async ({ actions, reporter }) => {
       if (!(page instanceof Page)) {
         continue
       }
-      
+
       createPage({
         path: url.pathname,
         component: rendrTemplate,

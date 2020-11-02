@@ -45,7 +45,7 @@ export function createDynamicPage(
         if (page.cache.ttl > 0 && page.statusCode == 200) {
           nextCtx.res.setHeader(
             "Cache-Control",
-            `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`
+            `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.sharedTtl}`
           );
         } else {
           nextCtx.res.setHeader(

@@ -84,7 +84,7 @@ export async function send(res: ServerResponse, page: PageType) {
     if (page.cache.ttl > 0 && page.statusCode == 200) {
       headers[
         "Cache-Control"
-      ] = `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`;
+      ] = `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.sharedTtl}`;
     }
 
     body = JSON.stringify(page);

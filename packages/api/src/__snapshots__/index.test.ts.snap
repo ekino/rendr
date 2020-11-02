@@ -9,7 +9,7 @@ RedirectPage {
 
 exports[`test createApi with no valid page found by the loader 1`] = `
 ResponsePage {
-  "body": "{\\"statusCode\\":404,\\"type\\":\\"document\\",\\"template\\":\\"default\\",\\"cache\\":{\\"ttl\\":0},\\"head\\":{\\"titleTemplate\\":\\"%s\\",\\"defaultTitle\\":\\"-\\",\\"title\\":\\"-\\",\\"links\\":[],\\"htmlAttributes\\":{},\\"meta\\":[]},\\"blocks\\":[],\\"settings\\":{},\\"id\\":\\"id\\",\\"path\\":\\"\\"}",
+  "body": "{\\"statusCode\\":404,\\"type\\":\\"document\\",\\"template\\":\\"default\\",\\"cache\\":{\\"ttl\\":0,\\"sharedTtl\\":0},\\"head\\":{\\"titleTemplate\\":\\"%s\\",\\"defaultTitle\\":\\"-\\",\\"title\\":\\"-\\",\\"links\\":[],\\"htmlAttributes\\":{},\\"meta\\":[]},\\"blocks\\":[],\\"settings\\":{},\\"id\\":\\"id\\",\\"path\\":\\"\\"}",
   "headers": Object {
     "Cache-Control": "private, max-age=0, no-cache",
     "Content-Type": "application/json",
@@ -21,7 +21,7 @@ ResponsePage {
 
 exports[`test createApi with valid page found by the loader 1`] = `
 ResponsePage {
-  "body": "{\\"statusCode\\":200,\\"type\\":\\"document\\",\\"template\\":\\"default\\",\\"cache\\":{\\"ttl\\":0},\\"head\\":{\\"titleTemplate\\":\\"%s\\",\\"defaultTitle\\":\\"-\\",\\"title\\":\\"-\\",\\"links\\":[],\\"htmlAttributes\\":{},\\"meta\\":[]},\\"blocks\\":[],\\"settings\\":{},\\"id\\":\\"id\\",\\"path\\":\\"\\"}",
+  "body": "{\\"statusCode\\":200,\\"type\\":\\"document\\",\\"template\\":\\"default\\",\\"cache\\":{\\"ttl\\":0,\\"sharedTtl\\":0},\\"head\\":{\\"titleTemplate\\":\\"%s\\",\\"defaultTitle\\":\\"-\\",\\"title\\":\\"-\\",\\"links\\":[],\\"htmlAttributes\\":{},\\"meta\\":[]},\\"blocks\\":[],\\"settings\\":{},\\"id\\":\\"id\\",\\"path\\":\\"\\"}",
   "headers": Object {
     "Cache-Control": "private, max-age=0, no-cache",
     "Content-Type": "application/json",

@@ -4,6 +4,7 @@ exports[`test API Loader test rendr/document mode, ie a Page 1`] = `
 Page {
   "blocks": Array [],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 0,
   },
   "head": Object {

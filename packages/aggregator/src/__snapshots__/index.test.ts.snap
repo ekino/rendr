@@ -13,6 +13,7 @@ Page {
     },
   ],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 0,
   },
   "head": Object {

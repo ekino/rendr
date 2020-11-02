@@ -29,6 +29,7 @@ export function isArray(data: any): boolean {
 export function normalizeCache(data: any): Cache {
   const cache: Cache = {
     ttl: 0,
+    sharedTtl: 0,
   };
 
   if (!isObject(data)) {
@@ -36,6 +37,7 @@ export function normalizeCache(data: any): Cache {
   }
 
   cache.ttl = "ttl" in data ? parseInt(data.ttl, 10) : 0;
+  cache.sharedTtl = "sharedTtl" in data ? parseInt(data.sharedTtl, 10) : 0;
 
   return cache;
 }
@@ -111,6 +113,8 @@ export function normalizeBlockDefinition(data: any): BlockDefinition | void {
   }
 
   return {
+    id: "id" in data ? data.id : "",
+    meta: "meta" in data ? data.meta : {},
     container: "container" in data ? data.container : "body",
     order: "order" in data ? data.order : 0,
     settings:
@@ -196,6 +200,7 @@ export function mergePages(pages: Page[]): Page {
 
   pages.forEach((p) => {
     page.cache.ttl = p.cache.ttl;
+    page.cache.sharedTtl = p.cache.sharedTtl;
     page.head = {
       titleTemplate:
         p.head.titleTemplate.length > 0

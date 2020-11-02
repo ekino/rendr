@@ -4,6 +4,7 @@ exports[`test create page empty page 1`] = `
 Page {
   "blocks": Array [],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 0,
   },
   "head": Object {
@@ -28,6 +29,8 @@ Page {
   "blocks": Array [
     Object {
       "container": "main",
+      "id": "",
+      "meta": Object {},
       "order": 0,
       "settings": Object {
         "foo": "bar",
@@ -36,6 +39,7 @@ Page {
     },
   ],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 0,
   },
   "head": Object {
@@ -59,6 +63,7 @@ exports[`test create page with cache 1`] = `
 Page {
   "blocks": Array [],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 999,
   },
   "head": Object {
@@ -82,6 +87,7 @@ exports[`test create page with head 1`] = `
 Page {
   "blocks": Array [],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 0,
   },
   "head": Object {
@@ -146,30 +152,39 @@ Page {
   "blocks": Array [
     Object {
       "container": "header",
+      "id": "id-1",
+      "meta": Object {},
       "order": 1,
       "settings": Object {},
       "type": "type-parent-1",
     },
     Object {
       "container": "header",
+      "id": "id-2",
+      "meta": Object {},
       "order": 1,
       "settings": Object {},
       "type": "type-parent-2",
     },
     Object {
       "container": "header",
+      "id": "id-1",
+      "meta": Object {},
       "order": 1,
       "settings": Object {},
       "type": "type-child-1",
     },
     Object {
       "container": "header",
+      "id": "id-2",
+      "meta": Object {},
       "order": 1,
       "settings": Object {},
       "type": "type-child-2",
     },
   ],
   "cache": Object {
+    "sharedTtl": 0,
     "ttl": 100,
   },
   "head": Object {

@@ -1,6 +1,6 @@
 # UPGRADE
 
-## v0.0.22
+## v1.0.0
 
 This version comes with a major refactoring on the context object. The `RequestCtx` object is now gone and has been replaced by a `RendrCtx` object.
 

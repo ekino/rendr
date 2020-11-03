@@ -24,8 +24,10 @@ Object {
   ],
   "blocks": Array [
     Object {
-      "container": "header",
-      "order": 0,
+      "container": "body",
+      "id": "57UPFciwX1EEPgkZNh0gXn",
+      "meta": Object {},
+      "order": 99,
       "settings": Object {
         "contents": "The article contents with the markdown format! http://images.ctfassets.net/f5bx295b472q/2pSrRlUsweaxu4tW7w1uVv/dd3e01d59c68d8b07101ddf953a120f7/DSCF2267.jpg?fm=jpg",
         "image": Object {
@@ -42,7 +44,9 @@ Object {
       "type": "rendr.text",
     },
     Object {
-      "container": "header",
+      "container": "body",
+      "id": "3CxKOYXVpLCPCwNCXGdn4N",
+      "meta": Object {},
       "order": 99,
       "settings": Object {
         "contents": "The second part of the journey",
@@ -82,6 +86,10 @@ Object {
   "title": "Headless CMS challenge",
   "type": undefined,
   "website": Object {
+    "cache": Object {
+      "sharedTtl": 0,
+      "ttl": 0,
+    },
     "countryCode": "FRA",
     "culture": "fr_FR",
     "domains": Array [
@@ -89,9 +97,11 @@ Object {
     ],
     "enabled": true,
     "id": "2g5lXpzZ0jPPwQViziSjtK",
+    "mainMenu": Object {},
     "name": "Ekino",
     "order": 99,
     "path": "/",
+    "settings": Object {},
   },
 }
 `;
@@ -130,8 +140,10 @@ Object {
 
 exports[`test normalization test rendr_block_text.json 1`] = `
 Object {
-  "container": "header",
-  "order": 1,
+  "container": "body",
+  "id": "6NS6bLDrWzCC5I2n9NI3nj",
+  "meta": Object {},
+  "order": 99,
   "settings": Object {
     "contents": "Hello, here my content, with the markdown format...",
     "image": Object {

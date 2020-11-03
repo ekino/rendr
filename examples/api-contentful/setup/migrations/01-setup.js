@@ -111,7 +111,7 @@ function getDefaultContainerNames() {
 
 function createAuthor(migration) {
   const author = migration.createContentType("rendr_author", {
-    name: "Rendr > Author",
+    name: "🕸️ Author",
     description: "Author used in pages or articles",
     displayField: "name",
   });
@@ -132,7 +132,7 @@ function createAuthor(migration) {
 
 function createWebsite(migration) {
   const website = migration.createContentType("rendr_website", {
-    name: "Rendr > Site",
+    name: "🕸️ Site",
     description: "Websites used by the platform",
     displayField: "name",
   });
@@ -159,6 +159,16 @@ function createWebsite(migration) {
   createBoolean(website, "enabled", "Enabled", {
     required: true,
   });
+  createInteger(website, "ttl", "Time-To-Live (Browser)");
+  createInteger(website, "sharedTtl", "Time-To-Live (CDN)");
+
+  createField(website, "main_menu", "Main Menu", {
+    type: "Object",
+  });
+
+  createField(website, "settings", "Settings", {
+    type: "Object",
+  });
 }
 
 function createDefault(migration, code, opts) {
@@ -170,22 +180,13 @@ function createDefault(migration, code, opts) {
   createSymbol(block, "internal_title", "Internal Title", {
     required: true,
   });
-  createSymbol(block, "container", "Container", {
-    required: true,
-    validations: [
-      {
-        in: getDefaultContainerNames(),
-      },
-    ],
-  });
-  createInteger(block, "order", "Order");
 
   return block;
 }
 
 function createBasicBlocks(migration) {
   const blockText = createDefault(migration, "rendr_block_text", {
-    name: "Rendr > Block > Text",
+    name: "🧩 Text",
   });
   createSymbol(blockText, "title", "Title");
   createSymbol(blockText, "subtitle", "Sub-Title");
@@ -214,7 +215,7 @@ function createBasicBlocks(migration) {
     migration,
     "rendr_block_raw_configuration",
     {
-      name: "Rendr > Block > Raw Configuration",
+      name: "🧩 Raw Config.",
     }
   );
 
@@ -223,17 +224,17 @@ function createBasicBlocks(migration) {
   });
 
   const blockHeader = createDefault(migration, "rendr_block_header", {
-    name: "Rendr > Block > Header",
+    name: "🧩 Header",
   });
 
   const blockFooter = createDefault(migration, "rendr_block_footer", {
-    name: "Rendr > Block > Footer",
+    name: "🧩 Footer",
   });
 }
 
 function createArticle(migration) {
   const article = migration.createContentType("rendr_article", {
-    name: "Rendr > Article",
+    name: "📝 Article",
     description: "Article",
     displayField: "title",
   });
@@ -299,7 +300,7 @@ function createArticle(migration) {
 
 function createPage(migration) {
   const page = migration.createContentType("rendr_page", {
-    name: "Rendr > Page",
+    name: "🕸️ Page",
     description: "Page with blocks",
     displayField: "title",
   });
@@ -328,7 +329,23 @@ function createPage(migration) {
     linkType: "Entry",
   });
 
-  createField(page, "blocks", "Blocks", {
+  createField(page, "header_blocks", "Header Blocks", {
+    type: "Array",
+    items: {
+      type: "Link",
+      validations: [
+        {
+          linkContentType: [
+            "rendr_block_header",
+            "rendr_block_raw_configuration",
+          ],
+        },
+      ],
+      linkType: "Entry",
+    },
+  });
+
+  createField(page, "nav_blocks", "Nav. Blocks", {
     type: "Array",
     items: {
       type: "Link",
@@ -337,7 +354,53 @@ function createPage(migration) {
           linkContentType: [
             "rendr_block_text",
             "rendr_block_raw_configuration",
-            "rendr_block_header",
+          ],
+        },
+      ],
+      linkType: "Entry",
+    },
+  });
+
+  createField(page, "body_blocks", "Body Blocks", {
+    type: "Array",
+    items: {
+      type: "Link",
+      validations: [
+        {
+          linkContentType: [
+            "rendr_block_text",
+            "rendr_block_raw_configuration",
+          ],
+        },
+      ],
+      linkType: "Entry",
+    },
+  });
+
+  createField(page, "aside_blocks", "Aside Blocks", {
+    type: "Array",
+    items: {
+      type: "Link",
+      validations: [
+        {
+          linkContentType: [
+            "rendr_block_text",
+            "rendr_block_raw_configuration",
+          ],
+        },
+      ],
+      linkType: "Entry",
+    },
+  });
+
+  createField(page, "footer_blocks", "Footer Blocks", {
+    type: "Array",
+    items: {
+      type: "Link",
+      validations: [
+        {
+          linkContentType: [
+            "rendr_block_raw_configuration",
             "rendr_block_footer",
           ],
         },
@@ -355,7 +418,8 @@ function createPage(migration) {
     ],
   });
 
-  createInteger(page, "ttl", "Time-To-Live");
+  createInteger(page, "ttl", "Time-To-Live (Browser)");
+  createInteger(page, "sharedTtl", "Time-To-Live (CDN)");
 
   createField(page, "published_at", "Publication Date", {
     type: "Date",

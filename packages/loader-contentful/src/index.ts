@@ -37,6 +37,9 @@ export function createContentfulLoader(
       );
     }
 
+    // attach the current site to the Ctx for later use if required
+    ctx.settings.rendr_site = site;
+
     let queryMainPage = {
       "fields.path": ctx.req.pathname,
       limit: 1,

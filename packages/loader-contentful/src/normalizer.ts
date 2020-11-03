@@ -130,6 +130,13 @@ export function normalizePage(
   entry: Entry<ContentfulPage>,
   normalizer: EntryNormalizer
 ): Page {
+  const ttl = ctx.settings.rendr_site
+    ? (ctx.settings.rendr_site as Website).cache.ttl
+    : 0;
+  const sharedTtl = ctx.settings.rendr_site
+    ? (ctx.settings.rendr_site as Website).cache.sharedTtl
+    : 0;
+
   const data = {
     id: entry.sys.id,
     head: {
@@ -141,15 +148,39 @@ export function normalizePage(
     settings: entry.fields.settings,
     blocks: [] as BlockDefinition[],
     cache: {
-      ttl: entry.fields.ttl ?? 0,
+      ttl: entry.fields.ttl ?? ttl,
+      sharedTtl: entry.fields.sharedTtl ?? sharedTtl,
     },
   };
 
-  if (entry.fields.blocks) {
-    data.blocks = entry.fields.blocks.map((block: Entry<any>) => {
-      return normalizer(ctx, block);
+  Object.keys(entry.fields).forEach((key, index) => {
+    // NAME_blocks convention
+    if (key.substr(-7) !== "_blocks") {
+      return;
+    }
+
+    // @ts-ignore
+    const blocks = entry.fields[key] as Entry<any>[];
+    const container = ((word: string) => {
+      const words = word.split("_blocks");
+      words.pop();
+
+      return words.join();
+    })(key);
+
+    if (!blocks) {
+      return;
+    }
+
+    blocks.map((block: Entry<any>, index: number) => {
+      const def = normalizer(ctx, block);
+      def.id = block.sys.id;
+      def.container = container;
+      def.order = index;
+
+      data.blocks.push(def);
     });
-  }
+  });
 
   if (entry.fields.seo_keywords && entry.fields.seo_keywords.length > 0) {
     data.head.meta.push({
@@ -190,6 +221,12 @@ export function normalizeWebsite(
     countryCode: site.fields.country_code,
     order: site.fields.order ? site.fields.order : 99,
     enabled: !!site.fields.enabled,
+    cache: {
+      sharedTtl: site.fields.sharedTtl ? site.fields.sharedTtl : 0,
+      ttl: site.fields.ttl ? site.fields.ttl : 0,
+    },
+    mainMenu: site.fields.main_menu ? site.fields.main_menu : {},
+    settings: site.fields.settings ? site.fields.settings : {},
   };
 }
 
@@ -199,9 +236,11 @@ export function createBlockDefinition(
   settings: Settings
 ): BlockDefinition {
   return {
-    container: entry.fields.container,
-    order: entry.fields.order >= 0 ? entry.fields.order : 99,
+    id: entry.sys.id,
+    container: "body", // default value for now
+    order: 99, // default value for now
     settings: settings,
     type: type,
+    meta: {},
   };
 }

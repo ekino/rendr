@@ -5,6 +5,8 @@ Page {
   "blocks": Array [
     Object {
       "container": "body",
+      "id": "",
+      "meta": Object {},
       "order": 0,
       "settings": Object {
         "test": "Salut",

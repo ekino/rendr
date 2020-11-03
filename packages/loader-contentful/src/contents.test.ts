@@ -91,6 +91,9 @@ describe("Contents loading from ", () => {
       countryCode: "GDB",
       order: 0,
       enabled: true,
+      settings: {},
+      cache: {ttl: 0, sharedTtl: 0},
+      mainMenu: {}
     };
 
     try {
@@ -124,6 +127,9 @@ describe("Contents loading from ", () => {
       countryCode: "GDB",
       order: 0,
       enabled: true,
+      settings: {},
+      cache: {ttl: 0, sharedTtl: 0},
+      mainMenu: {}
     };
 
     expect(await GetPage(client, website, "/")).toMatchSnapshot();

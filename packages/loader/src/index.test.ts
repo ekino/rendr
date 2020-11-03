@@ -16,6 +16,8 @@ const loader1: Loader = (ctx, page, next) => {
   }
 
   page.blocks.push({
+    id: "",
+    meta: {},
     type: "block1",
     order: 0,
     settings: {},
@@ -30,6 +32,8 @@ const loader2: Loader = (ctx, page, next) => {
   }
 
   page.blocks.push({
+    id: "",
+    meta: {},
     type: "block2",
     order: 0,
     settings: {},

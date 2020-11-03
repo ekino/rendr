@@ -29,6 +29,8 @@ const blockRenderer = createBlockRenderer(registry);
 describe("Test renderer", () => {
   test("test simple component", () => {
     const block: BlockDefinition = {
+      id: "",
+      meta: {},
       type: "one",
       settings: {},
       container: "body",
@@ -45,6 +47,8 @@ describe("Test renderer", () => {
   test("test nested components", () => {
     const block: BlockDefinition = {
       type: "article.view",
+      id: "",
+      meta: {},
       settings: {
         blocks: [
           {

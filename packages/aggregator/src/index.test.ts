@@ -34,6 +34,8 @@ describe("test inmemory code", () => {
     let page = new Page();
 
     page.blocks.push({
+      id: "",
+      meta: {},
       order: 0,
       container: "body",
       type: "handler",

@@ -9,7 +9,7 @@ import loader from "./helper/loader";
 
 if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
   console.error(
-    "Please set CONTENTFUL_ACCESS_TOKEN and CONTENTFUL_ACCESS_TOKEN env variables"
+    "Please set CONTENTFUL_SPACE_ID and CONTENTFUL_ACCESS_TOKEN env variables"
   );
 
   process.exit(1);

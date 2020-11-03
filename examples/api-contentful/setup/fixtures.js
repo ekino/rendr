@@ -52,7 +52,6 @@ const loadFixtures = async () => {
         "en-US": [
           "localhost",
           "127.0.0.1",
-          "contentful-api.rande.now.sh",
           "contentful.api.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
           "nextjs.view.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
           "nextjs.view.demo.develop-sr3snxi-g4cifmmuhuaz2.eu-4.platformsh.site",
@@ -98,9 +97,6 @@ const loadFixtures = async () => {
   for (let i = 0; i < 40; i++) {
     const block = await create(env, "rendr_block_text", {
       fields: {
-        container: {
-          "en-US": "body",
-        },
         internal_title: {
           "en-US": "The main content of this article",
         },
@@ -166,9 +162,6 @@ async function createHomePage(env, website) {
       title: {
         "en-US": "Homepage",
       },
-      container: {
-        "en-US": "body",
-      },
       internal_title: {
         "en-US": "The welcoming message",
       },
@@ -203,16 +196,13 @@ async function createHomePage(env, website) {
           sys: { type: "Link", linkType: "Entry", id: website.sys.id },
         },
       },
-      blocks: {
+      body_blocks: {
         "en-US": [
           { sys: { type: "Link", linkType: "Entry", id: welcomeBlock.sys.id } },
         ],
       },
       layout: {
         "en-US": "default",
-      },
-      ttl: {
-        "en-US": 3600,
       },
       settings: {
         "en-US": {},
@@ -227,9 +217,6 @@ async function createHomePage(env, website) {
 async function createAboutPage(env, website) {
   const aboutText = await create(env, "rendr_block_text", {
     fields: {
-      container: {
-        "en-US": "body",
-      },
       internal_title: {
         "en-US": "The about message",
       },
@@ -265,16 +252,13 @@ async function createAboutPage(env, website) {
           sys: { type: "Link", linkType: "Entry", id: website.sys.id },
         },
       },
-      blocks: {
+      body_blocks: {
         "en-US": [
           { sys: { type: "Link", linkType: "Entry", id: aboutText.sys.id } },
         ],
       },
       layout: {
         "en-US": "default",
-      },
-      ttl: {
-        "en-US": 3600,
       },
       settings: {
         "en-US": {},
@@ -289,28 +273,16 @@ async function createAboutPage(env, website) {
 async function createBasePage(env, website) {
   const headerBlock = await create(env, "rendr_block_header", {
     fields: {
-      container: {
-        "en-US": "header",
-      },
       internal_title: {
         "en-US": "The header message",
-      },
-      order: {
-        "en-US": 0,
       },
     },
   });
 
   const footerBlock = await create(env, "rendr_block_footer", {
     fields: {
-      container: {
-        "en-US": "footer",
-      },
       internal_title: {
         "en-US": "The footer message",
-      },
-      order: {
-        "en-US": 1000,
       },
     },
   });
@@ -337,17 +309,18 @@ async function createBasePage(env, website) {
           sys: { type: "Link", linkType: "Entry", id: website.sys.id },
         },
       },
-      blocks: {
+      header_blocks: {
         "en-US": [
           { sys: { type: "Link", linkType: "Entry", id: headerBlock.sys.id } },
+        ],
+      },
+      footer_blocks: {
+        "en-US": [
           { sys: { type: "Link", linkType: "Entry", id: footerBlock.sys.id } },
         ],
       },
       layout: {
         "en-US": "default",
-      },
-      ttl: {
-        "en-US": 3600,
       },
       settings: {
         "en-US": {},
@@ -362,16 +335,11 @@ async function createBasePage(env, website) {
 async function createArticlePage(env, website) {
   const articleViewBlock = await create(env, "rendr_block_raw_configuration", {
     fields: {
-      container: {
-        "en-US": "body",
-      },
       internal_title: {
         "en-US": "The article view",
       },
       configuration: {
         "en-US": {
-          container: "body",
-          order: 1,
           "settings:": {},
           type: "article.view",
         },
@@ -401,7 +369,7 @@ async function createArticlePage(env, website) {
           sys: { type: "Link", linkType: "Entry", id: website.sys.id },
         },
       },
-      blocks: {
+      body_blocks: {
         "en-US": [
           {
             sys: {
@@ -414,9 +382,6 @@ async function createArticlePage(env, website) {
       },
       layout: {
         "en-US": "default",
-      },
-      ttl: {
-        "en-US": 3600,
       },
       settings: {
         "en-US": {},
@@ -431,16 +396,11 @@ async function createArticlePage(env, website) {
 async function createArticleListPage(env, website) {
   const articleListBlock = await create(env, "rendr_block_raw_configuration", {
     fields: {
-      container: {
-        "en-US": "body",
-      },
       internal_title: {
         "en-US": "The article view",
       },
       configuration: {
         "en-US": {
-          container: "body",
-          order: 1,
           "settings:": {},
           type: "article.list",
         },
@@ -470,7 +430,7 @@ async function createArticleListPage(env, website) {
           sys: { type: "Link", linkType: "Entry", id: website.sys.id },
         },
       },
-      blocks: {
+      body_blocks: {
         "en-US": [
           {
             sys: {
@@ -483,9 +443,6 @@ async function createArticleListPage(env, website) {
       },
       layout: {
         "en-US": "default",
-      },
-      ttl: {
-        "en-US": 3600,
       },
       settings: {
         "en-US": {},

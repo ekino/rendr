@@ -1,5 +1,5 @@
 import { Asset as ContentfulAsset, Entry } from "contentful";
-import { RendrCtx } from "@ekino/rendr-core";
+import { RendrCtx, Cache } from "@ekino/rendr-core";
 
 export { Asset as ContentfulAsset } from "contentful";
 
@@ -30,6 +30,9 @@ export interface Website {
   countryCode: string;
   order: number;
   enabled: boolean;
+  settings: object;
+  mainMenu: object;
+  cache: Cache;
 }
 
 export interface Asset {
@@ -37,6 +40,7 @@ export interface Asset {
   title: string;
   id: string;
 }
+
 export interface ContentfulWebsite {
   name: string;
   domains: string[];
@@ -45,6 +49,10 @@ export interface ContentfulWebsite {
   country_code: string;
   order: number;
   enabled: boolean;
+  settings: object;
+  main_menu: object;
+  sharedTtl: number;
+  ttl: number;
 }
 
 export interface ContentfulPage {
@@ -56,15 +64,18 @@ export interface ContentfulPage {
   path: string;
   website: ContentfulWebsite;
   layout: string;
+  sharedTtl: number;
   ttl: number;
   settings: object;
   published_at: string;
-  blocks: Entry<any>[];
+  footer_blocks: Entry<any>[];
+  body_blocks: Entry<any>[];
+  aside_blocks: Entry<any>[];
+  header_blocks: Entry<any>[];
+  nav_blocks: Entry<any>[];
   code: string;
 }
 
 export interface BaseContentfulBlock {
   internal_title: string;
-  container: string;
-  order: number;
 }

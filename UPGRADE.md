@@ -101,9 +101,19 @@ The update also required to change how request information is used:
 
 The block definition must now have :
 
- - a `id` field: you can used that id if you need to link the block edition to a CMS for intance.
- - a `meta` field: you can use that field to store any information you like, this information are not intended to be used on the frontend to display information (this is the purpose of the `settings` key). This can be usefull if you want to add references to CMS links to edit entities used in that block.
+ - a `id` field: use that value to link the block edition to a CMS for intance.
+ - a `meta` field: use that value to store any information you like, this information are not intended to be used on the frontend to display information (this is the purpose of the `settings` key). This can be usefull if you want to add references to CMS links to edit entities used in that block.
 
 ## Cache TTL
 
 The `Page.cache` property now have a `sharedTtl` key to be used in the `s-maxage` header field. `ttl` field is used for the `max-age` attribute.
+
+```diff
+  if (page.cache.ttl > 0 && page.statusCode == 200) {
+    nextCtx.res.setHeader(
+      "Cache-Control",
+-      `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.ttl}`
++      `public, max-age=${page.cache.ttl}, s-maxage=${page.cache.sharedTtl}`
+    );
+  } else {
+    nextCtx.res.setHeader(

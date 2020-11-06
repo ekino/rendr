@@ -53,6 +53,7 @@ export async function GetWebsite(
 
   const sites = await GetWebsites(client, { ...options });
 
+  // @ts-ignore
   const result = sites.find((site) => {
     if (!site.fields.domains) {
       return false;

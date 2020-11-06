@@ -73,6 +73,10 @@ export function createNormalizer(
       return normalizers[key](ctx, entry, normalizer);
     } catch (err) {
       // log error
+      if (err instanceof NormalizationError) {
+        throw err;
+      }
+
       throw new NormalizationError(err);
     }
   };

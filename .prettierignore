@@ -6,3 +6,4 @@ examples/gatsby/public
 packages/cms-drupal
 examples/cms-drupal
 .travis.yml
+.webpack

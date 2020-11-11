@@ -342,9 +342,15 @@ final class PageUpsertForm extends ContentEntityForm
                 $message = 'The <a href="'.$this->entity->toUrl('edit-form')->toString().'">"%label%"</a> page was updated.';
 
                 break;
+            case SAVED_DELETED:
+                $message = 'The <a href="'.$this->entity->toUrl('edit-form')->toString().'">"%label%"</a> page was deleted.';
+                break;
+            // Used in case of workflow module
             default:
-                throw new \LogicException();
+                $message = 'The <a href="'.$this->entity->toUrl('edit-form')->toString().'">"%label%"</a> page was changed.';
+                break;
         }
+
         \Drupal::logger('content')->notice(
             "%username has updated the page <a href='@url'>%label</a>.",
             [

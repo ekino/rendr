@@ -48,11 +48,11 @@ export function createNormalizer(
     ...extraNormalizers,
   };
 
-  return function normalizer(
+  return async function normalizer(
     ctx: RendrCtx,
     entry: Entry<any> | ContentfulAsset,
     normalizerFn?: EntryNormalizer
-  ): any {
+  ): Promise<any> {
     if (!validEntry(entry)) {
       return;
     }
@@ -70,7 +70,7 @@ export function createNormalizer(
     }
 
     try {
-      return normalizers[key](ctx, entry, normalizer);
+      return await normalizers[key](ctx, entry, normalizer);
     } catch (err) {
       // log error
       if (err instanceof NormalizationError) {
@@ -129,11 +129,11 @@ export function validEntry(
   return entity.sys.contentType.sys.id === contentType;
 }
 
-export function normalizePage(
+export async function normalizePage(
   ctx: RendrCtx,
   entry: Entry<ContentfulPage>,
   normalizer: EntryNormalizer
-): Page {
+): Promise<Page> {
   const ttl = ctx.settings.rendr_site
     ? (ctx.settings.rendr_site as Website).cache.ttl
     : 0;
@@ -157,10 +157,14 @@ export function normalizePage(
     },
   };
 
-  Object.keys(entry.fields).forEach((key, index) => {
+  const keys = Object.keys(entry.fields);
+
+  for (let k in keys) {
+    const key = keys[k];
+
     // NAME_blocks convention
     if (key.substr(-7) !== "_blocks") {
-      return;
+      continue;
     }
 
     // @ts-ignore
@@ -173,18 +177,25 @@ export function normalizePage(
     })(key);
 
     if (!blocks) {
-      return;
+      continue;
     }
 
-    blocks.map((block: Entry<any>, index: number) => {
-      const def = normalizer(ctx, block);
+    for (let index in blocks) {
+      const block = blocks[index];
+
+      const def = await normalizer(ctx, block);
+
+      if (!def) {
+        return;
+      }
+
       def.id = block.sys.id;
       def.container = container;
       def.order = index;
 
       data.blocks.push(def);
-    });
-  });
+    }
+  }
 
   if (entry.fields.seo_keywords && entry.fields.seo_keywords.length > 0) {
     data.head.meta.push({

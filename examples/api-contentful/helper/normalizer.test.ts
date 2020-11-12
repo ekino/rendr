@@ -21,7 +21,7 @@ const files = [
 
 describe("test normalization", () => {
   files.forEach((file) => {
-    it(`test ${file}.json`, () => {
+    it(`test ${file}.json`, async () => {
       const ctx = createContext({});
       const normalizer = createNormalizer({
         rendr_author: normalizeAuthor,
@@ -35,7 +35,7 @@ describe("test normalization", () => {
       const entry = loadJson(
         `${__dirname}/__fixtures__/normalizer/${file}.json`
       );
-      const block = normalizer(ctx, entry);
+      const block = await normalizer(ctx, entry);
 
       expect(block).toBeDefined();
       expect(block).toMatchSnapshot();

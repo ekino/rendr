@@ -3,6 +3,8 @@ import { Loader } from "@ekino/rendr-loader";
 import { Page } from "@ekino/rendr-core";
 import { createHandlerRegistry } from "./services/registries";
 
+export { createHandlerRegistry } from "./services/registries";
+
 export function createAggregatorLoader(handlers: HandlerList): Loader {
   const handlerRegistry = createHandlerRegistry(handlers);
 

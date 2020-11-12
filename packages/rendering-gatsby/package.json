@@ -1,7 +1,7 @@
 {
     "name": "@ekino/rendr-rendering-gatsby",
     "license": "MIT",
-    "version": "1.0.0-alpha.1",
+    "version": "1.0.0-alpha.2",
     "main": "dist/lib/index.js",
     "typing": "dist/lib/index.d.ts",
     "module": "dist/lib-esm/index.js",
@@ -10,9 +10,9 @@
         "access": "public"
     },
     "dependencies": {
-        "@ekino/rendr-core": "1.0.0-alpha.1",
-        "@ekino/rendr-loader": "1.0.0-alpha.1",
-        "@ekino/rendr-template-react": "1.0.0-alpha.1",
+        "@ekino/rendr-core": "1.0.0-alpha.2",
+        "@ekino/rendr-loader": "1.0.0-alpha.2",
+        "@ekino/rendr-template-react": "1.0.0-alpha.2",
         "gatsby": "^2.24.85"
     },
     "devDependencies": {

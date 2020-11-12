@@ -30,18 +30,18 @@ const emptyProfile = {
   url: "",
 };
 
-export function normalizeBlockText(
+export async function normalizeBlockText(
   ctx: RendrCtx,
   entry: Entry<ContentfulBlockText>,
   normalizers: EntryNormalizer
-): BlockDefinition {
+): Promise<BlockDefinition> {
   return createBlockDefinition(entry, "rendr.text", {
     title: entry.fields.title ? entry.fields.title : "",
     subtitle: entry.fields.subtitle ? entry.fields.subtitle : "",
     contents: entry.fields.contents ? fixImageUrl(entry.fields.contents) : "",
     mode: entry.fields.mode ? entry.fields.mode : "standard",
     image: entry.fields.image
-      ? normalizers(ctx, entry.fields.image)
+      ? await normalizers(ctx, entry.fields.image)
       : emptyPicture,
     image_position: entry.fields.image_position
       ? entry.fields.image_position
@@ -102,34 +102,42 @@ export function normalizeAuthor(
   };
 }
 
-export function normalizeArticle(
+export async function normalizeArticle(
   ctx: RendrCtx,
   entry: Entry<ContentfulArticle>,
   normalizer: EntryNormalizer
-): Article {
+): Promise<Article> {
+  let authors = [];
+  if (entry.fields.authors) {
+    const entries = entry.fields.authors.filter((entry) => validEntry(entry));
+    for (let a in entries) {
+      authors.push(await normalizer(ctx, entries[a]));
+    }
+  }
+
+  let blocks = [];
+  if (entry.fields.blocks) {
+    const entries = entry.fields.blocks.filter((entry) => validEntry(entry));
+    for (let a in entries) {
+      blocks.push(await normalizer(ctx, entries[a]));
+    }
+  }
+
   return {
     id: entry.sys.id,
     type: entry.fields.type,
     abstract: entry.fields.abstract ? entry.fields.abstract : "",
     images: {
       list: entry.fields.image_list
-        ? normalizer(ctx, entry.fields.image_list)
+        ? await normalizer(ctx, entry.fields.image_list)
         : emptyPicture,
       header: entry.fields.image_header
-        ? normalizer(ctx, entry.fields.image_header)
+        ? await normalizer(ctx, entry.fields.image_header)
         : emptyPicture,
     },
     title: entry.fields.title ? entry.fields.title : "",
-    authors: entry.fields.authors
-      ? entry.fields.authors
-          .filter((entry) => validEntry(entry))
-          .map((entry) => normalizer(ctx, entry))
-      : [],
-    blocks: entry.fields.blocks
-      ? entry.fields.blocks
-          .filter((entry) => validEntry(entry))
-          .map((entry) => normalizer(ctx, entry))
-      : [],
+    authors,
+    blocks,
     slug: entry.fields.slug ? entry.fields.slug : "",
     seo: {
       description: entry.fields.seo_description,
@@ -137,7 +145,7 @@ export function normalizeArticle(
     },
     published_at: entry.fields.published_at,
     website: entry.fields.website
-      ? normalizer(ctx, entry.fields.website)
+      ? await normalizer(ctx, entry.fields.website)
       : undefined,
   };
 }

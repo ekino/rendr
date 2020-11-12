@@ -87,7 +87,7 @@ describe("test validEntry", () => {
 });
 
 describe("test normalizer", () => {
-  it("with default values (no normalizer)", () => {
+  it("with default values (no normalizer)", async () => {
     const normalizer = createNormalizer();
 
     const ctx = createContext({});
@@ -100,19 +100,19 @@ describe("test normalizer", () => {
       }),
     });
 
-    const result = normalizer(ctx, entry);
+    const result = await normalizer(ctx, entry);
 
     expect(result).toBeUndefined();
   });
 
-  it("with default values with normalizer", () => {
+  it("with default values with normalizer", async () => {
     const normalizers: EntryNormalizerList = {
-      car: (ctx: RendrCtx, entry: Entry<ContentfulCar>, normalizer) => {
+      car: async (ctx: RendrCtx, entry: Entry<ContentfulCar>, normalizer) => {
         return {
           speed: entry.fields.speed,
           name: entry.fields.name,
           data: parseInt(entry.fields.data, 10),
-          wheel: normalizer(ctx, entry.fields.wheel),
+          wheel: await normalizer(ctx, entry.fields.wheel),
         };
       },
       wheel: (ctx: RendrCtx, entry: Entry<ContentfulWeel>) => {
@@ -138,7 +138,7 @@ describe("test normalizer", () => {
     entry.sys.contentType.sys.id = "car"; // so the normalizer can catch the value
     entry.fields.wheel.sys.contentType.sys.id = "wheel";
 
-    const result = normalizer(ctx, entry);
+    const result = await normalizer(ctx, entry);
 
     expect(result).toMatchSnapshot();
   });
@@ -153,12 +153,12 @@ describe("test normalizer", () => {
   const ctx = createContext({});
 
   files.forEach((file) => {
-    it(`test ${file}.json`, () => {
+    it(`test ${file}.json`, async () => {
       const normalizer = createNormalizer({});
       const entry = loadJson(
         `${__dirname}/__fixtures__/normalizer/${file}.json`
       );
-      const block = normalizer(ctx, entry);
+      const block = await normalizer(ctx, entry);
 
       expect(block).toBeDefined();
       expect(block).toMatchSnapshot();

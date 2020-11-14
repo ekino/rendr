@@ -51,7 +51,7 @@ export interface ContentfulWebsite {
   enabled: boolean;
   settings: object;
   main_menu: object;
-  sharedTtl: number;
+  shared_ttl: number;
   ttl: number;
 }
 
@@ -64,7 +64,7 @@ export interface ContentfulPage {
   path: string;
   website: Entry<ContentfulWebsite>;
   layout: string;
-  sharedTtl: number;
+  shared_ttl: number;
   ttl: number;
   settings: object;
   published_at: string;

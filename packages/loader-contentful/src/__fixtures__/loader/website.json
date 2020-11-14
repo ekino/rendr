@@ -45,7 +45,9 @@
                 "culture": "en_GB",
                 "country_code": "GDB",
                 "enabled": true,
-                "order": 2
+                "order": 2,
+                "ttl": 1234,
+                "shared_ttl": 5678
             }
         },
         {
@@ -87,7 +89,9 @@
                 "culture": "fr_FR",
                 "country_code": "FRA",
                 "enabled": true,
-                "order": 1
+                "order": 1,
+                "ttl": 1234,
+                "shared_ttl": 5678
             }
         }
     ]

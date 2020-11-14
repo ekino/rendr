@@ -153,7 +153,7 @@ export async function normalizePage(
     blocks: [] as BlockDefinition[],
     cache: {
       ttl: entry.fields.ttl ?? ttl,
-      sharedTtl: entry.fields.sharedTtl ?? sharedTtl,
+      sharedTtl: entry.fields.shared_ttl ?? sharedTtl,
     },
   };
 
@@ -237,8 +237,8 @@ export function normalizeWebsite(
     order: site.fields.order ? site.fields.order : 99,
     enabled: !!site.fields.enabled,
     cache: {
-      sharedTtl: site.fields.sharedTtl ? site.fields.sharedTtl : 0,
-      ttl: site.fields.ttl ? site.fields.ttl : 0,
+      sharedTtl: site.fields.shared_ttl ?? 0,
+      ttl: site.fields.ttl ?? 0,
     },
     mainMenu: site.fields.main_menu ? site.fields.main_menu : {},
     settings: site.fields.settings ? site.fields.settings : {},

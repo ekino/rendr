@@ -80,7 +80,9 @@
                         "path": "/uk",
                         "culture": "en_GB",
                         "country_code": "GDB",
-                        "enabled": true
+                        "enabled": true,
+                        "ttl": 1234,
+                        "shared_ttl": 5678
                     }
                 },
                 "blocks": [
@@ -205,7 +207,9 @@
                     "path": "/uk",
                     "culture": "en_GB",
                     "country_code": "GDB",
-                    "enabled": true
+                    "enabled": true,
+                    "ttl": 1234,
+                    "shared_ttl": 5678
                 }
             }
         ]

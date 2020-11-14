@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
-import { createContext } from "./index";
+import { createResponsePage } from "@ekino/rendr-core";
+import { createContext, send } from "./index";
 
 describe("create context", () => {
   function loadJson(path: string) {
@@ -33,3 +34,17 @@ describe("create context", () => {
     expect(ctx.req.pathname).toBe("/");
   });
 });
+
+
+describe("test send ", () => {
+  it("return a object from a ResponsePage", async () => {
+    const resp = createResponsePage(200, {
+      'Content-Type': 'text/plain; encoding=utf-8'
+    }, "Hello World");
+
+    const result = await send(resp)
+
+    expect(result).toMatchSnapshot()
+    expect(result.body).toBe("Hello World")
+  })
+})

@@ -95,3 +95,15 @@ Object {
   "settings": Object {},
 }
 `;
+
+exports[`test send  return a object from a ResponsePage 1`] = `
+Object {
+  "body": "Hello World",
+  "headers": Object {
+    "Cache-Control": "private, max-age=0, no-cache",
+    "Content-Type": "text/plain; encoding=utf-8",
+    "X-Rendr-Content-Type": "rendr/octet-stream",
+  },
+  "statusCode": 200,
+}
+`;

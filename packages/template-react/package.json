@@ -1,7 +1,7 @@
 {
     "name": "@ekino/rendr-template-react",
     "license": "MIT",
-    "version": "1.0.0-alpha.2",
+    "version": "1.0.0-alpha.3",
     "main": "dist/lib/index.js",
     "typing": "dist/lib/index.d.ts",
     "module": "dist/lib-esm/index.js",
@@ -10,8 +10,8 @@
         "access": "public"
     },
     "dependencies": {
-        "@ekino/rendr-core": "1.0.0-alpha.2",
-        "@ekino/rendr-loader": "1.0.0-alpha.2"
+        "@ekino/rendr-core": "1.0.0-alpha.3",
+        "@ekino/rendr-loader": "1.0.0-alpha.3"
     },
     "devDependencies": {
         "@types/node": "^14.6.4",

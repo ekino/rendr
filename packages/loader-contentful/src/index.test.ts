@@ -14,27 +14,15 @@ describe("test loader", () => {
 
         if (call === 1) {
           expect(query).toEqual({
-            content_type: "rendr_website",
-            limit: 100,
-            skip: 0,
-          });
-
-          return loadJson(`${__dirname}/__fixtures__/loader/website.json`);
-        }
-
-        if (call === 2) {
-          expect(query).toEqual({
             content_type: "rendr_page",
             "fields.path": "/",
-            "fields.website.sys.id": "632kl7enPots4PISSnD6DV",
             include: 10,
-            limit: 1,
           });
 
           return loadJson(`${__dirname}/__fixtures__/loader/main_page.json`);
         }
 
-        if (call === 3) {
+        if (call === 2) {
           expect(query).toEqual({
             content_type: "rendr_page",
             "fields.code": "root",

@@ -62,7 +62,7 @@ export interface ContentfulPage {
   seo_keywords: string;
   extends: string;
   path: string;
-  website: ContentfulWebsite;
+  website: Entry<ContentfulWebsite>;
   layout: string;
   sharedTtl: number;
   ttl: number;

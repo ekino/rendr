@@ -3,6 +3,7 @@ import {
   mergePages,
   NotFoundError,
   InternalServerError,
+  Page,
 } from "@ekino/rendr-core";
 
 import {
@@ -12,6 +13,7 @@ import {
   Website,
 } from "./types";
 import { GetWebsite } from "./contents";
+import { Entry } from "contentful";
 export * from "./normalizer";
 export * from "./contents";
 export * from "./types";
@@ -27,41 +29,53 @@ export function createContentfulLoader(
 
     // find the related site
     let site: Website;
-
-    try {
-      site = await normalizer(ctx, await GetWebsite(client, ctx.req.hostname));
-    } catch (err) {
-      throw new InternalServerError(
-        `[Contentful] Unable to load the website - domain: ${ctx.req.hostname}`,
-        err
-      );
-    }
+    let rawPage: Entry<ContentfulPage>;
 
     // attach the current site to the Ctx for later use if required
-    ctx.settings.rendr_site = site;
-
     let queryMainPage = {
       "fields.path": ctx.req.pathname,
-      limit: 1,
       content_type: "rendr_page",
       include: 10,
-      "fields.website.sys.id": site.id,
     };
 
     const pages = await client.getEntries<ContentfulPage>(queryMainPage);
 
     if (pages.items.length !== 1) {
       throw new NotFoundError(
-        `[Contentful] Unable to get page - path: ${ctx.req.pathname}, website.id: ${site.id}`
+        `[Contentful] Unable to get page - path: ${ctx.req.pathname}, hostname: ${ctx.req.hostname}`
       );
     }
 
-    if (!pages.items[0].fields.extends) {
-      return await normalizer(ctx, pages.items[0]);
+    // try to find the website in the matching pages
+    for (let p in pages.items) {
+      rawPage = pages.items[p];
+      const website = pages.items[p].fields.website;
+
+      if (!website || !website.fields.domains) {
+        continue;
+      }
+
+      if (website.fields.domains.includes(ctx.req.hostname)) {
+        site = await normalizer(ctx, website);
+        page = await normalizer(ctx, pages.items[p]);
+        break;
+      }
+    }
+
+    if (!site) {
+      throw new InternalServerError(
+        `[Contentful] Unable to load the website - domain: ${ctx.req.hostname}`
+      );
+    }
+
+    ctx.settings.rendr_site = site;
+
+    if (!rawPage.fields.extends) {
+      return page;
     }
 
     const parentPage = await client.getEntries<ContentfulPage>({
-      "fields.code": pages.items[0].fields.extends,
+      "fields.code": rawPage.fields.extends,
       limit: 1,
       content_type: "rendr_page",
       include: 10,
@@ -70,13 +84,10 @@ export function createContentfulLoader(
 
     if (parentPage.items.length !== 1) {
       throw new InternalServerError(
-        `[Contentful] Unable to get parent page - code: ${pages.items[0].fields.extends}, website.id: ${site.id}`
+        `[Contentful] Unable to get parent page - code: ${rawPage.fields.extends}, website.id: ${site.id}`
       );
     }
 
-    return mergePages([
-      await normalizer(ctx, parentPage.items[0]),
-      await normalizer(ctx, pages.items[0]),
-    ]);
+    return mergePages([await normalizer(ctx, parentPage.items[0]), page]);
   };
 }

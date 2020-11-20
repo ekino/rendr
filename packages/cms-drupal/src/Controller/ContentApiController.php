@@ -166,6 +166,16 @@ final class ContentApiController
 
         $content = $content->getTranslation($channel->language()->getId());
 
+        // Get the latest revision in case of preview mode
+        if ($preview) {
+            $revisions = $this->entityTypeManager->getStorage('node')->getQuery()
+                ->latestRevision()->condition('nid', $content->id())
+                ->execute();
+            $revisionIds = \array_keys($revisions);
+            $revision = $this->entityTypeManager->getStorage('node')->loadRevision(\reset($revisionIds));
+            $content = $revision ?: $content;
+        }
+
         return $content;
     }
 }

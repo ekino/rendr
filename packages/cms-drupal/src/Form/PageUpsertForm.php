@@ -155,9 +155,11 @@ final class PageUpsertForm extends ContentEntityForm
             '#weight' => 53,
         ];
 
-        $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#group'] = 'meta';
+        // force new revision
+        $form['revision']['#attributes']['checked'] = 'checked';
+        $form['revision']['#attributes']['disabled'] = true;
+        $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#group'] = 'revision_information';
         $form[$entityType->getRevisionMetadataKey('revision_log_message')]['#weight'] = 22;
-
         $form['parent_page']['#group'] = 'sidebar_details';
         $form['langcode']['#group'] = 'sidebar_details';
         $form['channels']['#group'] = 'sidebar_details';
@@ -330,25 +332,26 @@ final class PageUpsertForm extends ContentEntityForm
         $this->entity->setNewRevision(true);
         $this->entity->setRevisionCreationTime($this->time->getRequestTime());
         $this->entity->setRevisionUserId($this->currentUser ? $this->currentUser->id() : 1);
+        $logKey = $this->entity->getEntityType()->getRevisionMetadataKey('revision_log_message');
+        $logMessage = $formState->getValue($logKey);
+        $this->entity->setRevisionLogMessage(!empty($logMessage) ? $logMessage[0]['value'] : '');
 
         $result = parent::save($form, $formState);
 
         switch ($result) {
             case SAVED_NEW:
                 $message = 'The "%label%" page was created.';
-
                 break;
             case SAVED_UPDATED:
                 $message = 'The <a href="'.$this->entity->toUrl('edit-form')->toString().'">"%label%"</a> page was updated.';
-
                 break;
             case SAVED_DELETED:
                 $message = 'The <a href="'.$this->entity->toUrl('edit-form')->toString().'">"%label%"</a> page was deleted.';
                 break;
             // Used in case of workflow module
             default:
-                $message = 'The <a href="'.$this->entity->toUrl('edit-form')->toString().'">"%label%"</a> page was changed.';
-                break;
+              $message = 'The <a href="'.$this->entity->toUrl('edit-form')->toString().'">"%label%"</a> page was changed.';
+              break;
         }
 
         \Drupal::logger('content')->notice(

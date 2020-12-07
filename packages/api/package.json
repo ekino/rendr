@@ -1,15 +1,15 @@
 {
     "name": "@ekino/rendr-api",
     "license": "MIT",
-    "version": "1.0.0-alpha.4",
+    "version": "1.0.0-alpha.5",
     "main": "dist/lib/index.js",
     "typing": "dist/lib/index.d.ts",
     "publishConfig": {
         "access": "public"
     },
     "dependencies": {
-        "@ekino/rendr-core": "1.0.0-alpha.4",
-        "@ekino/rendr-loader": "1.0.0-alpha.4",
+        "@ekino/rendr-core": "1.0.0-alpha.5",
+        "@ekino/rendr-loader": "1.0.0-alpha.5",
         "express": "^4.16.4"
     },
     "devDependencies": {

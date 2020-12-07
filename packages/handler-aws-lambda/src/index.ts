@@ -159,7 +159,7 @@ export function wrapper(fn: Function, options: WrapperOptions) {
     const ctx = createCtx(event, context);
 
     const page = await fn(ctx);
-  
+
     return await send(page);
   };
 }

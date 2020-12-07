@@ -58,7 +58,7 @@ export function createContentfulLoader(
       if (website.fields.domains.includes(ctx.req.hostname)) {
         site = await normalizer(ctx, website);
         ctx.settings.rendr_site = site;
-        
+
         page = await normalizer(ctx, pages.items[p]);
         break;
       }

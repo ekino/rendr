@@ -48,6 +48,10 @@ export function createNormalizer(
     ...extraNormalizers,
   };
 
+  // check for recursive loop, and protect against
+  // infinite loop.
+  const stack: string[] = [];
+
   return async function normalizer(
     ctx: RendrCtx,
     entry: Entry<any> | ContentfulAsset,
@@ -55,6 +59,11 @@ export function createNormalizer(
   ): Promise<any> {
     if (!validEntry(entry)) {
       return;
+    }
+
+    if (stack.includes(entry.sys.id)) {
+      // recursive call cannot normalize
+      return false;
     }
 
     let key;
@@ -69,6 +78,8 @@ export function createNormalizer(
       return;
     }
 
+    stack.push(entry.sys.id);
+
     try {
       return await normalizers[key](ctx, entry, normalizer);
     } catch (err) {
@@ -78,6 +89,8 @@ export function createNormalizer(
       }
 
       throw new NormalizationError(err);
+    } finally {
+      stack.pop();
     }
   };
 }

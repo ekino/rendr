@@ -35,16 +35,19 @@ describe("create context", () => {
   });
 });
 
-
 describe("test send ", () => {
   it("return a object from a ResponsePage", async () => {
-    const resp = createResponsePage(200, {
-      'Content-Type': 'text/plain; encoding=utf-8'
-    }, "Hello World");
+    const resp = createResponsePage(
+      200,
+      {
+        "Content-Type": "text/plain; encoding=utf-8",
+      },
+      "Hello World"
+    );
 
-    const result = await send(resp)
+    const result = await send(resp);
 
-    expect(result).toMatchSnapshot()
-    expect(result.body).toBe("Hello World")
-  })
-})
+    expect(result).toMatchSnapshot();
+    expect(result.body).toBe("Hello World");
+  });
+});

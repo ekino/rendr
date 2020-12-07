@@ -136,7 +136,9 @@ describe("test normalizer", () => {
       }),
     });
     entry.sys.contentType.sys.id = "car"; // so the normalizer can catch the value
+    entry.sys.id = "01";
     entry.fields.wheel.sys.contentType.sys.id = "wheel";
+    entry.fields.wheel.sys.id = "02";
 
     const result = await normalizer(ctx, entry);
 

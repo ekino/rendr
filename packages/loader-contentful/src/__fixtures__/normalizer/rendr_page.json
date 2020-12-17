@@ -37,6 +37,13 @@
         "blocks": [
             {
                 "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "fNkFQ8yAxWDmXereg2S8Z"
+                }
+            },
+            {
+                "sys": {
                     "space": {
                         "sys": {
                             "type": "Link",

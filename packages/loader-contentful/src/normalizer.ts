@@ -75,6 +75,8 @@ export function createNormalizer(
     ) {
       key = entry.sys.contentType.sys.id;
     } else {
+      // entry.sys.type == 'Link' if an entity is not resolvable
+      // ie: Contentful API returns a `notResolvable` error.
       return;
     }
 
@@ -199,7 +201,7 @@ export async function normalizePage(
       const def = await normalizer(ctx, block);
 
       if (!def) {
-        return;
+        continue;
       }
 
       def.id = block.sys.id;

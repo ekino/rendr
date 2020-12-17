@@ -20,13 +20,6 @@ import {
   BaseContentfulBlock,
 } from "./types";
 
-const ASSET_REGEXP = /(images\.(ctfassets\.net|contentful\.com)([0-9a-zA-Z/\-_]*)\.([a-z]{1,4}))/g;
-const ASSET_FORMATS: Map = {
-  jpg: "jpg",
-  jpeg: "jpg",
-  png: "png",
-};
-
 export const emptyPicture = {
   enabled: false,
   id: "-",
@@ -95,34 +88,6 @@ export function createNormalizer(
       stack.pop();
     }
   };
-}
-
-export function fixImageUrl(content: string) {
-  if (!content) {
-    return "";
-  }
-
-  return content.replace(ASSET_REGEXP, (replacement, ...params: string[]) => {
-    if (params[3] in ASSET_FORMATS) {
-      return `images.ctfassets.net${params[2]}.${params[3]}?fm=${
-        ASSET_FORMATS[params[3]]
-      }`;
-    }
-
-    return replacement;
-  });
-}
-
-export function fixHttps(url: string) {
-  if (url.length < 2) {
-    return url;
-  }
-
-  if (url.substr(0, 2) == "//") {
-    return `https:${url}`;
-  }
-
-  return url;
 }
 
 export function validEntry(
@@ -233,7 +198,7 @@ export function normalizePicture(ctx: RendrCtx, entry: ContentfulAsset): Asset {
   return {
     id: entry.sys.id,
     title: entry.fields.title,
-    url: fixHttps(fixImageUrl(entry.fields.file.url)),
+    url: entry.fields.file.url,
   };
 }
 

@@ -1,4 +1,4 @@
-import { fixImageUrl, validEntry } from "./normalizer";
+import { validEntry } from "./normalizer";
 import { createDummyEntry } from "./test";
 import { createNormalizer } from "./index";
 import { EntryNormalizerList } from "./types";
@@ -28,35 +28,6 @@ interface ContentfulCar {
   data: string;
   wheel: Entry<ContentfulWeel>;
 }
-
-describe("test fix url", () => {
-  it("should fix single url", () => {
-    const contents = [
-      {
-        source:
-          "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpg",
-        expected:
-          "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpg?fm=jpg",
-      },
-      {
-        source:
-          "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.png hello //images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpeg",
-        expected:
-          "//images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.png?fm=png hello //images.ctfassets.net/95wnqgvmhlea/2IPecD9vXywcucqKWiQu8S/3e6cf50875e99bb6230cd7dc54553206/anne-marte.jpeg?fm=jpg",
-      },
-      {
-        source:
-          '<a href="//images.contentful.com/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png"><img alt="Figure 3. Screenshot illustrating the way to run a jupyter notebook cell." src="//images.contentful.com/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png"></a>',
-        expected:
-          '<a href="//images.ctfassets.net/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png?fm=png"><img alt="Figure 3. Screenshot illustrating the way to run a jupyter notebook cell." src="//images.ctfassets.net/95wnqgvmhlea/2lffMyV2ccEuI2cMkqyigs/367f93360c80948ae3e208662724e14a/run.png?fm=png"></a>',
-      },
-    ];
-
-    contents.forEach((v) => {
-      expect(fixImageUrl(v.source)).toEqual(v.expected);
-    });
-  });
-});
 
 describe("test validEntry", () => {
   it("with invalid entry", () => {

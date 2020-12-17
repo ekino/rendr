@@ -4,7 +4,7 @@ exports[`test normalizer test asset.json 1`] = `
 Object {
   "id": "8VoLF5Jla5JcMnhNV74Oj",
   "title": "test",
-  "url": "https://images.ctfassets.net/f5bx295b472q/8VoLF5Jla5JcMnhNV74Oj/4f3afcf599ffbcc55528e2026e40cd0d/Screenshot_2019-07-18_at_16.39.23.png",
+  "url": "//images.ctfassets.net/f5bx295b472q/8VoLF5Jla5JcMnhNV74Oj/4f3afcf599ffbcc55528e2026e40cd0d/Screenshot_2019-07-18_at_16.39.23.png",
 }
 `;
 

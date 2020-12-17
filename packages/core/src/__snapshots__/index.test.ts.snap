@@ -212,3 +212,50 @@ Page {
   "type": "document",
 }
 `;
+
+exports[`test mergePages should not generate an error if on entry is not defined 1`] = `
+Page {
+  "blocks": Array [
+    Object {
+      "container": "header",
+      "id": "id-1",
+      "meta": Object {},
+      "order": 1,
+      "settings": Object {},
+      "type": "type-child-1",
+    },
+    Object {
+      "container": "header",
+      "id": "id-2",
+      "meta": Object {},
+      "order": 1,
+      "settings": Object {},
+      "type": "type-child-2",
+    },
+  ],
+  "cache": Object {
+    "sharedTtl": 0,
+    "ttl": 100,
+  },
+  "head": Object {
+    "defaultTitle": "-",
+    "htmlAttributes": Object {
+      "foo": "bar",
+    },
+    "links": Array [],
+    "meta": Array [
+      Object {
+        "property": "value",
+      },
+    ],
+    "title": "-",
+    "titleTemplate": "%s",
+  },
+  "id": "the child page",
+  "path": "/the-child",
+  "settings": Object {},
+  "statusCode": 403,
+  "template": "2-columns",
+  "type": "document",
+}
+`;

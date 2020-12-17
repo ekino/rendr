@@ -114,6 +114,42 @@ describe("test mergePages", () => {
 
     expect(p).toMatchSnapshot();
   });
+
+  it("should not generate an error if on entry is not defined", () => {
+    const page = new Page();
+    page.id = "the child page";
+    page.head.defaultTitle = "";
+    page.head.htmlAttributes = {
+      foo: "bar",
+    };
+    page.head.meta = [{ property: "value" }];
+    page.cache.ttl = 100;
+    page.path = "/the-child";
+    page.statusCode = 403;
+    page.template = "2-columns";
+    page.blocks = [
+      {
+        id: "id-1",
+        meta: {},
+        container: "header",
+        order: 1,
+        settings: {},
+        type: "type-child-1",
+      },
+      {
+        id: "id-2",
+        meta: {},
+        container: "header",
+        order: 1,
+        settings: {},
+        type: "type-child-2",
+      },
+    ];
+
+    const p = mergePages([undefined, null, page]);
+
+    expect(p).toMatchSnapshot();
+  });
 });
 
 describe("test createContext", () => {

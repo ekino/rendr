@@ -198,35 +198,37 @@ export function createResponsePage(
 export function mergePages(pages: Page[]): Page {
   const page = new Page();
 
-  pages.forEach((p) => {
-    page.cache.ttl = p.cache.ttl;
-    page.cache.sharedTtl = p.cache.sharedTtl;
-    page.head = {
-      titleTemplate:
-        p.head.titleTemplate.length > 0
-          ? p.head.titleTemplate
-          : page.head.titleTemplate,
-      defaultTitle:
-        p.head.defaultTitle.length > 0
-          ? p.head.defaultTitle
-          : page.head.defaultTitle,
-      title: p.head.title.length > 0 ? p.head.title : page.head.title,
-      links: [...page.head.links, ...p.head.links],
-      htmlAttributes:
-        Object.keys(p.head.htmlAttributes).length > 0
-          ? p.head.htmlAttributes
-          : page.head.htmlAttributes,
-      // for meta, we append from parent
-      meta: [...page.head.meta, ...p.head.meta],
-    };
-    page.path = p.path;
-    page.template = p.template.length > 0 ? p.template : page.template;
-    page.type = p.type.length > 0 ? p.type : page.type;
-    page.id = p.id; // we always need to return the last id
-    page.statusCode = p.statusCode;
-    page.settings = { ...page.settings, ...p.settings };
-    page.blocks = [...page.blocks, ...p.blocks];
-  });
+  pages
+    .filter((p) => p) // make sure page is defined
+    .forEach((p) => {
+      page.cache.ttl = p.cache.ttl;
+      page.cache.sharedTtl = p.cache.sharedTtl;
+      page.head = {
+        titleTemplate:
+          p.head.titleTemplate.length > 0
+            ? p.head.titleTemplate
+            : page.head.titleTemplate,
+        defaultTitle:
+          p.head.defaultTitle.length > 0
+            ? p.head.defaultTitle
+            : page.head.defaultTitle,
+        title: p.head.title.length > 0 ? p.head.title : page.head.title,
+        links: [...page.head.links, ...p.head.links],
+        htmlAttributes:
+          Object.keys(p.head.htmlAttributes).length > 0
+            ? p.head.htmlAttributes
+            : page.head.htmlAttributes,
+        // for meta, we append from parent
+        meta: [...page.head.meta, ...p.head.meta],
+      };
+      page.path = p.path;
+      page.template = p.template.length > 0 ? p.template : page.template;
+      page.type = p.type.length > 0 ? p.type : page.type;
+      page.id = p.id; // we always need to return the last id
+      page.statusCode = p.statusCode;
+      page.settings = { ...page.settings, ...p.settings };
+      page.blocks = [...page.blocks, ...p.blocks];
+    });
 
   return page;
 }

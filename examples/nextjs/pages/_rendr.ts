@@ -67,6 +67,9 @@ const apiLoader: Loader = async (ctx, page, next) => {
 
 const pageAggregator = createAggregatorLoader(handlers);
 
+// define the loader to get the page definitioin
 const loader = createChainedLoader([apiLoader, pageAggregator]);
+
+// define the loader to encapsulate the NextJs response.
 
 export default createPage(components, templates, loader);

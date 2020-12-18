@@ -22,3 +22,8 @@ entity.ekino_rendr_page.edit_form:
   title: Edit
   route_name: entity.ekino_rendr_page.edit_form
   base_route: entity.ekino_rendr_page.canonical
+
+entity.ekino_rendr_page.version_history:
+  route_name: entity.ekino_rendr_page.version_history
+  base_route: entity.ekino_rendr_page.canonical
+  title: 'Revisions'

@@ -27,16 +27,7 @@ class UrlGenerator
             return $path;
         }
 
-        $path = '/'.\trim($path ?? '', '/');
-        $channelPath = '/'.\trim($channel->get('path')->value ?? '', '/');
-        $domain = \trim(self::getBaseUrl($channel, $options) ?? '', '/');
-
-        if ('/' === $channelPath) {
-            $channelPath = '';
-        }
-
-        $url = \sprintf('%s%s%s', $domain, $channelPath, $path);
-
+        $url = '/'.\trim($path ?? '', '/');
         $request = \Drupal::request();
 
         if ($request->get('_preview_token') && $request->get('_preview')) {

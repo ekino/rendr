@@ -139,6 +139,15 @@ class PageRepository implements ContentRepositoryInterface
         return \Drupal::entityTypeManager()->getStorage('ekino_rendr_page')->loadMultiple($result);
     }
 
+    public function getLatestRevision($id)
+    {
+        $revisions = \Drupal::entityTypeManager()->getStorage('ekino_rendr_page')->getQuery()
+            ->latestRevision()->condition('id', $id)->execute();
+        $revisionIds = \array_keys($revisions);
+
+        return \Drupal::entityTypeManager()->getStorage('ekino_rendr_page')->loadRevision(\reset($revisionIds));
+    }
+
     private function getParentPath(PageInterface $page)
     {
         $explodedPath = \explode('/', $page->getPath());

@@ -24,6 +24,7 @@ use Drupal\ekino_rendr\Repository\PageRepository;
  *   data_table = "ekino_rendr_page_field_data",
  *   revision_table = "ekino_rendr_page_revision",
  *   revision_data_table = "ekino_rendr_page_field_revision",
+ *   show_revision_ui = TRUE,
  *   bundle_entity_type = "ekino_rendr_template",
  *   bundle_label = @Translation("Template"),
  *   entity_keys={
@@ -48,6 +49,9 @@ use Drupal\ekino_rendr\Repository\PageRepository;
  *          "html"="Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
  *      },
  *     "views_data" = "Drupal\views\EntityViewsData",
+ *   },
+ *   revision_metadata_keys = {
+ *     "revision_log_message" = "revision_log_message"
  *   },
  *   label_collection=@Translation("Pages"),
  *   label_count=@PluralTranslation(

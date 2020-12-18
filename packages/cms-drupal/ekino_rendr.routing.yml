@@ -32,6 +32,65 @@ entity.ekino_rendr_page.form_change_template:
     requirements:
         _permission: 'update ekino_rendr_page+administer ekino_rendr_page'
 
+entity.ekino_rendr_page.version_history:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/revisions'
+    defaults:
+        _title: 'Revisions'
+        _controller: '\Drupal\ekino_rendr\Controller\PageController::revisionOverview'
+    requirements:
+        ekino_rendr_page: \d+
+        _permission: 'view ekino_rendr_page revisions+administer ekino_rendr_page'
+    options:
+        parameters:
+            ekino_rendr_page:
+                type: entity:ekino_rendr_page
+
+entity.ekino_rendr_page.revision:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/revisions/{page_revision}/view'
+    defaults:
+        _controller: '\Drupal\ekino_rendr\Controller\PageController::revisionShow'
+    requirements:
+        page_revision: \d+
+        _permission: 'view ekino_rendr_page revisions+administer ekino_rendr_page'
+
+entity.ekino_rendr_page.latest_version:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/latest'
+    defaults:
+        _controller: '\Drupal\ekino_rendr\Controller\PageController::showLatest'
+    requirements:
+        pageId: \d+
+        _permission: 'view ekino_rendr_page revisions+administer ekino_rendr_page'
+
+ekino_rendr_page.revision_revert_confirm:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/revisions/{page_revision}/revert'
+    defaults:
+        _form: '\Drupal\ekino_rendr\Form\PageRevisionRevertForm'
+        _title: 'Revert to earlier revision'
+    requirements:
+        ekino_rendr_page: \d+
+        page_revision: \d+
+        _permission: 'revert ekino_rendr_page revisions+administer ekino_rendr_page'
+
+ekino_rendr_page.revision_revert_translation_confirm:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/revisions/{page_revision}/revert/{langcode}'
+    defaults:
+        _form: '\Drupal\ekino_rendr\Form\PageRevisionRevertTranslationForm'
+        _title: 'Revert to earlier revision of a translation'
+    requirements:
+        ekino_rendr_page: \d+
+        page_revision: \d+
+        _permission: 'revert ekino_rendr_page revisions+administer ekino_rendr_page'
+
+ekino_rendr_page.revision_delete_confirm:
+    path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}/revisions/{page_revision}/delete'
+    defaults:
+        _form: '\Drupal\ekino_rendr\Form\PageRevisionDeleteForm'
+        _title: 'Delete earlier revision'
+    requirements:
+        ekino_rendr_page: \d+
+        page_revision: \d+
+        _permission: 'delete ekino_rendr_page revisions+administer ekino_rendr_page'
+
 entity.ekino_rendr_page.canonical:
     path: '/admin/content/ekino_rendr_page/{ekino_rendr_page}'
     defaults:

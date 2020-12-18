@@ -39,3 +39,12 @@ view ekino_rendr_page:
 
 view ekino_rendr_channel:
   title: "View ekino_rendr channels"
+
+revert ekino_rendr_page revisions:
+  title: "Revert ekino_rendr revisions"
+
+delete ekino_rendr_page revisions:
+  title: "Delete ekino_rendr revisions"
+
+view ekino_rendr_page revisions:
+  title: "View ekino_rendr revisions"

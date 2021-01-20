@@ -110,7 +110,8 @@ class UrlGenerator
             return '';
         }
 
-        $addProtocol = 0 === \strpos($domain, 'http');
+        $domain = \trim($domain);
+        $addProtocol = 0 !== \strpos($domain, 'http');
 
         return $addProtocol ? \sprintf('%s://%s', $protocol, $domain) : $domain;
     }

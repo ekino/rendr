@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\Tests\ekino_rendr\Unit\Tool;
 
 use Drupal\ekino_rendr\Tool\ArrayHelper;
-use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
-class ArrayHelperTest extends UnitTestCase
+class ArrayHelperTest extends TestCase
 {
     public function testAlterNestedKey(): void
     {

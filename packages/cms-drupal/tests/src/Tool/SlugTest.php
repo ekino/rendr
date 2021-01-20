@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\Tests\ekino_rendr\Unit\Tool;
 
 use Drupal\ekino_rendr\Tool\Slug;
-use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
-class SlugTest extends UnitTestCase
+class SlugTest extends TestCase
 {
     public function testSlugify(): void
     {

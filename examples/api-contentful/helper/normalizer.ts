@@ -1,7 +1,6 @@
 import { Entry } from "contentful";
 import {
   EntryNormalizer,
-  fixImageUrl,
   normalizePicture,
   emptyPicture,
   validEntry,
@@ -38,7 +37,7 @@ export async function normalizeBlockText(
   return createBlockDefinition(entry, "rendr.text", {
     title: entry.fields.title ? entry.fields.title : "",
     subtitle: entry.fields.subtitle ? entry.fields.subtitle : "",
-    contents: entry.fields.contents ? fixImageUrl(entry.fields.contents) : "",
+    contents: entry.fields.contents ? entry.fields.contents : "",
     mode: entry.fields.mode ? entry.fields.mode : "standard",
     image: entry.fields.image
       ? await normalizers(ctx, entry.fields.image)
@@ -90,7 +89,7 @@ export function normalizeAuthor(
     name: entry.fields.name,
     jobTitle: entry.fields.job_title,
     slug: entry.fields.slug,
-    biography: fixImageUrl(entry.fields.biography),
+    biography: entry.fields.biography,
     social: {
       twitter: entry.fields.social_twitter,
       facebook: entry.fields.social_facebook,

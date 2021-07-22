@@ -308,7 +308,7 @@ function createArticle(migration) {
     required: true,
   });
   createSymbol(article, "type", "Type");
-  createText(article, "abstract", "Abstract");
+  createLongText(article, "abstract", "Abstract");
   createSymbol(article, "seo_description", "Seo Description");
   createSymbol(article, "seo_keywords", "Seo Keywords");
 

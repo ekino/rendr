@@ -1,0 +1,164 @@
+{
+    "contentTypes": {
+        "rendr_article": {
+            "general": {
+                "label": "General",
+                "sections": [
+                    {
+                        "fields": [
+                            "title",
+                            "slug",
+                            "type"
+                        ]
+                    }
+                ]
+            },
+            "content": {
+                "label": "Contents",
+                "sections": [
+                    {
+                        "fields": [
+                            "abstract",
+                            "body"
+                        ]
+                    }
+                ]
+            },
+            "SEO": {
+                "label": "SEO",
+                "sections": [
+                    {
+                        "fields": [
+                            "seo_description",
+                            "seo_keywords"
+                        ]
+                    }
+                ]
+            },
+            "publishing": {
+                "label": "Publishing options",
+                "sections": [
+                    {
+                        "fields": [
+                            "image_list",
+                            "image_header",
+                            "published_at",
+                            "authors",
+                            "website"
+                        ]
+                    }
+                ]
+            }
+        },
+        "rendr_page": {
+            "general": {
+                "label": "General",
+                "sections": [
+                    {
+                        "fields": [
+                            "title",
+                            "extends",
+                            "path",
+                            "website"
+                        ]
+                    }
+                ]
+            },
+            "contents": {
+                "label": "Contents",
+                "sections": [
+                    {
+                        "fields": [
+                            "layout",
+                            "header_blocks",
+                            "nav_blocks",
+                            "body_blocks",
+                            "aside_blocks",
+                            "footer_blocks"
+                        ]
+                    }
+                ]
+            },
+            "publishing": {
+                "label": "Publishing options",
+                "sections": [
+                    {
+                        "fields": [
+                            "ttl",
+                            "sharedTtl",
+                            "published_at",
+                            "authors",
+                            "website"
+                        ]
+                    }
+                ]
+            },
+            "advanced": {
+                "label": "Advanced",
+                "sections": [
+                    {
+                        "fields": [
+                            "settings",
+                            "code"
+                        ]
+                    }
+                ]
+            }
+        },
+        "rendr_author": {
+            "general": {
+                "label": "General",
+                "sections": [
+                    {
+                        "fields": [
+                            "name",
+                            "job_title",
+                            "slug",
+                            "social_twitter",
+                            "social_facebook",
+                            "social_linkedin",
+                            "biography",
+                            "image"
+                        ]
+                    }
+                ]
+            }
+        },
+        "rendr_website": {
+            "general": {
+                "label": "General",
+                "sections": [
+                    {
+                        "fields": [
+                            "name",
+                            "domains",
+                            "path",
+                            "culture",
+                            "country_code",
+                            "order",
+                            "enabled",
+                            "ttl",
+                            "sharedTtl",
+                            "main_menu",
+                            "settings"
+                        ]
+                    }
+                ]
+            }
+        },
+        "rendr_fragment": {
+            "general": {
+                "label": "General",
+                "sections": [
+                    {
+                        "fields": [
+                            "internal_title",
+                            "title",
+                            "type"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

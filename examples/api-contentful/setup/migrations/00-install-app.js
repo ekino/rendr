@@ -1,26 +1,5 @@
 const contentful = require("contentful-management");
-
-async function getOrganizationId(client) {
-  const organizations = await client.getOrganizations();
-  if (organizations.total > 1) {
-    // unable to guess the organisation id, please provide a valid value
-    console.log("\n\n");
-
-    organizations.items.forEach((o) => {
-      console.log(
-        "Please define a CONTENTFUL_ORGANIZATION_ID env value, with one of the following values:"
-      );
-      console.log(
-        ` > ${o.name} => ${o.sys.id} - CONTENTFUL_ORGANIZATION_ID=${o.sys.id}`
-      );
-    });
-
-    console.log("\n\n");
-    throw new Error("Unable to find one organisation");
-  }
-
-  return organizations.items[0].sys.id;
-}
+const shared = require("./shared");
 
 module.exports = async function (migration, { spaceId, accessToken }) {
   const client = contentful.createClient({
@@ -28,7 +7,7 @@ module.exports = async function (migration, { spaceId, accessToken }) {
   });
 
   const organisationId =
-    process.env.CONTENTFUL_ORGANIZATION_ID || (await getOrganizationId(client));
+    process.env.CONTENTFUL_ORGANIZATION_ID || (await shared.getOrganizationId(client));
 
   const organisation = await client.getOrganization(organisationId);
   const appDefinitions = await organisation.getAppDefinitions();
@@ -57,7 +36,7 @@ module.exports = async function (migration, { spaceId, accessToken }) {
         src: "https://cf.ekino.app/editor/v/0.2.6",
         locations: [
           {
-            location: "entry-sidebar",
+            location: "entry-editor",
           },
           {
             location: "app-config",

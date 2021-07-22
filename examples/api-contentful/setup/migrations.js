@@ -20,6 +20,7 @@ const files = [
   "02-update-published-at",
   "03-update-slug",
   "04-update-bulk",
+  "05-enable-editor",
 ];
 
 (async () => {

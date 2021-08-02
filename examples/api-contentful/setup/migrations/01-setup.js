@@ -349,6 +349,10 @@ function createArticle(migration) {
   createAsset(article, "image_list", "List image");
   createAsset(article, "image_header", "Header image");
 
+  createField(article, "seo", "SEO", {
+    type: "Object",
+  });
+
   return article;
 }
 
@@ -411,6 +415,10 @@ function createPage(migration) {
   });
 
   createSymbol(page, "code", "Code");
+
+  createField(article, "seo", "SEO", {
+    type: "Object",
+  });
 
   return page;
 }

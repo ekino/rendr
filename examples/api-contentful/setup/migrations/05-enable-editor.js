@@ -27,6 +27,7 @@ module.exports = async function (migration, { spaceId, accessToken }) {
     "rendr_article",
     "rendr_page",
     "rendr_fragment",
+    "rendr_author",
   ];
 
   for (const i in types) {

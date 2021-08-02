@@ -2,8 +2,8 @@ import { createApi } from "@ekino/rendr-api";
 import { createMiddleware } from "@ekino/rendr-handler-http";
 
 import express from "express";
+import { RequestHandler } from "express-serve-static-core";
 import cors from "cors";
-import { IncomingMessage, ServerResponse } from "http";
 
 import loader from "./helper/loader";
 
@@ -25,7 +25,7 @@ app.use(
   })
 );
 
-app.use((req: IncomingMessage, res: ServerResponse, next) => {
+app.use((req, res, next) => {
   const message = `[${new Date().toISOString()}] api-contentful - ${
     req.method
   } ${req.url}`;
@@ -36,7 +36,7 @@ app.use((req: IncomingMessage, res: ServerResponse, next) => {
 });
 
 // will return the api
-app.use("/api", createMiddleware(createApi(loader)));
+app.use("/api", createMiddleware(createApi(loader)) as RequestHandler);
 app.use("/", (req, res) => {
   res.redirect(301, "/api/");
 });
@@ -44,11 +44,7 @@ app.use("/", (req, res) => {
 // if the file is call directly, then the server is started,
 // if the file is imported, the server is not started
 if (require.main === module) {
-  app.listen(port, (err: Error) => {
-    if (err) {
-      throw err;
-    }
-
+  app.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
   });
 }

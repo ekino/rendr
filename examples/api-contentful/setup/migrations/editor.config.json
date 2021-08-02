@@ -1,164 +1,197 @@
 {
-    "contentTypes": {
-        "rendr_article": {
-            "general": {
-                "label": "General",
-                "sections": [
-                    {
-                        "fields": [
-                            "title",
-                            "slug",
-                            "type"
-                        ]
-                    }
-                ]
-            },
-            "content": {
-                "label": "Contents",
-                "sections": [
-                    {
-                        "fields": [
-                            "abstract",
-                            "body"
-                        ]
-                    }
-                ]
-            },
-            "SEO": {
-                "label": "SEO",
-                "sections": [
-                    {
-                        "fields": [
-                            "seo_description",
-                            "seo_keywords"
-                        ]
-                    }
-                ]
-            },
-            "publishing": {
-                "label": "Publishing options",
-                "sections": [
-                    {
-                        "fields": [
-                            "image_list",
-                            "image_header",
-                            "published_at",
-                            "authors",
-                            "website"
-                        ]
-                    }
-                ]
-            }
-        },
-        "rendr_page": {
-            "general": {
-                "label": "General",
-                "sections": [
-                    {
-                        "fields": [
-                            "title",
-                            "extends",
-                            "path",
-                            "website"
-                        ]
-                    }
-                ]
-            },
-            "contents": {
-                "label": "Contents",
-                "sections": [
-                    {
-                        "fields": [
-                            "layout",
-                            "header_blocks",
-                            "nav_blocks",
-                            "body_blocks",
-                            "aside_blocks",
-                            "footer_blocks"
-                        ]
-                    }
-                ]
-            },
-            "publishing": {
-                "label": "Publishing options",
-                "sections": [
-                    {
-                        "fields": [
-                            "ttl",
-                            "sharedTtl",
-                            "published_at",
-                            "authors",
-                            "website"
-                        ]
-                    }
-                ]
-            },
-            "advanced": {
-                "label": "Advanced",
-                "sections": [
-                    {
-                        "fields": [
-                            "settings",
-                            "code"
-                        ]
-                    }
-                ]
-            }
-        },
-        "rendr_author": {
-            "general": {
-                "label": "General",
-                "sections": [
-                    {
-                        "fields": [
-                            "name",
-                            "job_title",
-                            "slug",
-                            "social_twitter",
-                            "social_facebook",
-                            "social_linkedin",
-                            "biography",
-                            "image"
-                        ]
-                    }
-                ]
-            }
-        },
-        "rendr_website": {
-            "general": {
-                "label": "General",
-                "sections": [
-                    {
-                        "fields": [
-                            "name",
-                            "domains",
-                            "path",
-                            "culture",
-                            "country_code",
-                            "order",
-                            "enabled",
-                            "ttl",
-                            "sharedTtl",
-                            "main_menu",
-                            "settings"
-                        ]
-                    }
-                ]
-            }
-        },
-        "rendr_fragment": {
-            "general": {
-                "label": "General",
-                "sections": [
-                    {
-                        "fields": [
-                            "internal_title",
-                            "title",
-                            "type"
-                        ]
-                    }
-                ]
-            }
-        }
-    }
+	"contentTypes": {
+		"rendr_article": {
+			"general": {
+				"label": "General",
+				"sections": [{
+						"fields": [
+							"title",
+							"slug",
+							"type",
+							"website"
+						]
+					},
+					{
+						"sections": [{
+							"heading": "Publishing options",
+							"fields": [
+								"image_list",
+								"image_header",
+								"published_at",
+								"authors"
+							]
+						}]
+					}
+				]
+			},
+			"content": {
+				"label": "Contents",
+				"sections": [{
+					"fields": [
+						"abstract",
+						"body"
+					]
+				}]
+			},
+			"SEO": {
+				"label": "SEO",
+				"sections": [{
+					"fields": [{
+						"id": "seo",
+						"settings": {
+							"widgetId": "ekSeoManager"
+						}
+					}]
+				}]
+			}
+		},
+		"rendr_page": {
+			"general": {
+				"label": "General",
+				"sections": [{
+						"fields": [
+							"title",
+							"extends",
+							"path",
+							"website"
+						]
+					},
+					{
+						"sections": [{
+							"heading": "Publishing options",
+							"fields": [
+								"ttl",
+								"sharedTtl",
+								"published_at",
+								"authors"
+							]
+						}]
+					}
+				]
+			},
+			"contents": {
+				"label": "Contents",
+				"sections": [{
+					"fields": [
+						"layout",
+						"header_blocks",
+						"nav_blocks",
+						"body_blocks",
+						"aside_blocks",
+						"footer_blocks"
+					]
+				}]
+			},
+			"seo": {
+				"label": "SEO",
+				"sections": [{
+					"fields": [{
+						"id": "seo",
+						"settings": {
+							"widgetId": "ekSeoManager"
+						}
+					}]
+				}]
+			},
+			"advanced": {
+				"label": "Advanced",
+				"sections": [{
+					"fields": [
+						"settings",
+						"code"
+					]
+				}]
+			}
+		},
+		"rendr_author": {
+			"general": {
+				"label": "General",
+				"sections": [{
+					"fields": [
+						"name",
+						"slug"
+					]
+				}, {
+					"sections": [
+						{
+							"heading": "Additional Information",
+							"fields": [
+								"job_title",
+								"biography",
+								"image"
+							]
+						},
+						{
+							"heading": "Social",
+							"fields": [
+								"social_twitter",
+						    "social_facebook",
+						    "social_linkedin"
+							]
+						}
+					]
+				}]
+			}
+		},
+		"rendr_website": {
+			"general": {
+				"label": "General",
+				"sections": [{
+						"fields": [
+							"enabled",
+							"name",
+							"domains",
+							"path",
+							"order"
+						]
+					},
+					{
+						"sections": [{
+								"heading": "Internationalisation",
+								"fields": [
+									"culture",
+									"country_code"
+								]
+							},
+							{
+								"heading": "Publishing options",
+								"fields": [
+									"ttl",
+									"sharedTtl"
+								]
+							}
+						]
+					}
+				]
+			},
+			"contents": {
+				"label": "Contents",
+				"sections": [{
+					"fields": [
+						"main_menu"
+					]
+				}]
+			},
+			"advanced": {
+				"label": "Advanced",
+				"sections": [{
+					"fields": [
+						"settings"
+					]
+				}]
+			}
+		},
+		"rendr_fragment": {
+			"general": {
+				"label": "General",
+				"sections": [{
+					"fields": [
+						"internal_title",
+						"title",
+						"type"
+					]
+				}]
+			}
+		}
+	}
 }

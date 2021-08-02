@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 final class ContentApiController
 {
-    protected $entityTypeManager;
-    protected $pageManager;
+    private $entityTypeManager;
+    private $pageManager;
 
     public function __construct(
         EntityTypeManagerInterface $entity_type_manager,
@@ -117,7 +117,7 @@ final class ContentApiController
         return PageResponse::createJsonResponse($pageData);
     }
 
-    protected function getContent($contentType, $slug, $channel = null, $preview = false)
+    private function getContent($contentType, $slug, $channel = null, $preview = false)
     {
         /** @var FieldableEntityInterface[] $contents */
         $conditions = [

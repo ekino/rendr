@@ -46,11 +46,11 @@ class PageNormalizer extends ContentEntityNormalizer
         $attributes = PageResponse::createPage();
         $containers = \array_filter($data, static function ($key) {
             return \preg_match(Template::CONTAINER_KEY_PATTERN, $key);
-        }, ARRAY_FILTER_USE_KEY);
+        }, \ARRAY_FILTER_USE_KEY);
 
         $display = $this->entityDisplayRepository->getFormDisplay('ekino_rendr_page', $object->bundle());
         $fieldDefinitions = $display->toArray();
-        \uksort($containers, function ($a, $b) use ($object, $fieldDefinitions) {
+        \uksort($containers, function ($a, $b) use ($fieldDefinitions) {
             return $fieldDefinitions['content'][$a]['weight'] <=> $fieldDefinitions['content'][$b]['weight'];
         });
 

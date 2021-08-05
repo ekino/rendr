@@ -233,6 +233,10 @@ function createWebsite(migration) {
   createField(website, "settings", "Settings", {
     type: "Object",
   });
+
+  createField(website, "seo", "SEO", {
+    type: "Object",
+  });
 }
 
 function createDefault(migration, code, opts) {
@@ -309,8 +313,9 @@ function createArticle(migration) {
   });
   createSymbol(article, "type", "Type");
   createLongText(article, "abstract", "Abstract");
-  createSymbol(article, "seo_description", "Seo Description");
-  createSymbol(article, "seo_keywords", "Seo Keywords");
+  createField(article, "seo", "SEO", {
+    type: "Object",
+  });
 
   createSymbol(article, "slug", "Slug", {
     required: true,
@@ -362,8 +367,9 @@ function createPage(migration) {
   createSymbol(page, "title", "Page title", {
     required: true,
   });
-  createSymbol(page, "seo_description", "Seo Description");
-  createSymbol(page, "seo_keywords", "Seo Keywords");
+  createField(page, "seo", "SEO", {
+    type: "Object",
+  });
   createSymbol(page, "extends", "Extends", {
     validations: [
       {

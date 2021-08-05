@@ -1,13 +1,16 @@
 const contentful = require("contentful-management");
 const shared = require("./shared");
 
+const editorConfig = require("./editor.config.json");
+
 module.exports = async function (migration, { spaceId, accessToken }) {
   const client = contentful.createClient({
     accessToken: accessToken,
   });
 
   const organisationId =
-    process.env.CONTENTFUL_ORGANIZATION_ID || (await shared.getOrganizationId(client));
+    process.env.CONTENTFUL_ORGANIZATION_ID ||
+    (await shared.getOrganizationId(client));
 
   const organisation = await client.getOrganization(organisationId);
   const appDefinitions = await organisation.getAppDefinitions();
@@ -32,7 +35,7 @@ module.exports = async function (migration, { spaceId, accessToken }) {
       method: "POST",
       url: `https://api.contentful.com/organizations/${organisationId}/app_definitions`,
       data: {
-        name: "Ekino Contentful Editor",
+        name: "Ekino Editor",
         src: "https://cf.ekino.app/editor/v/0.2.6",
         locations: [
           {
@@ -80,8 +83,7 @@ module.exports = async function (migration, { spaceId, accessToken }) {
       url: `https://api.contentful.com/spaces/${spaceId}/environments/${env.sys.id}/app_installations/${app.sys.id}`,
       data: {
         parameters: {
-          editorStructure:
-            '{"rendr_article":{"general":{"label":"General","sections":[{"fields":["title","slug","type","abstract"]}]},"content":{"label":"Contents","sections":[{"fields":["blocks"]}]},"SEO":{"label":"SEO","sections":[{"fields":["seo_description","seo_keywords"]}]},"publishing":{"label":"Publishing options","sections":[{"fields":["image_list","image_header","published_at","authors","website"]}]}}}',
+          editorStructure: JSON.stringify(editorConfig),
         },
       },
     });

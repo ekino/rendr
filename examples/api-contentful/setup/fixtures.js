@@ -11,6 +11,12 @@ async function create(env, ...args) {
   return result;
 }
 
+function f(v, lang = "en-US") {
+  return {
+    [lang]: v,
+  };
+}
+
 const loadFixtures = async () => {
   const space = await client.getSpace(process.env.CONTENTFUL_SPACE_ID);
   const env = await space.getEnvironment(
@@ -45,106 +51,102 @@ const loadFixtures = async () => {
 
   const website = await create(env, "rendr_website", {
     fields: {
-      name: {
-        "en-US": "Entry title",
-      },
-      domains: {
-        "en-US": [
-          "localhost",
-          "127.0.0.1",
-          "contentful.api.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
-          "nextjs.view.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
-          "nextjs.view.demo.develop-sr3snxi-g4cifmmuhuaz2.eu-4.platformsh.site",
-          "contentful.api.demo.develop-sr3snxi-g4cifmmuhuaz2.eu-4.platformsh.site",
-        ],
-      },
-      path: {
-        "en-US": "/",
-      },
-      culture: {
-        "en-US": "en_GB",
-      },
-      country_code: {
-        "en-US": "GDB",
-      },
-      order: {
-        "en-US": 1,
-      },
-      enabled: {
-        "en-US": true,
-      },
+      name: f("Default Website"),
+      domains: f([
+        "localhost",
+        "127.0.0.1",
+        "contentful.api.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
+        "nextjs.view.demo.master-7rqtwti-g4cifmmuhuaz2.eu-4.platformsh.site",
+        "nextjs.view.demo.develop-sr3snxi-g4cifmmuhuaz2.eu-4.platformsh.site",
+        "contentful.api.demo.develop-sr3snxi-g4cifmmuhuaz2.eu-4.platformsh.site",
+      ]),
+      seo: f({
+        title: "The default SEO title for all pages",
+        description: "The default description for all pages",
+        twitter: {
+          card: "summary",
+        },
+      }),
+      path: f("/"),
+      culture: f("en_GB"),
+      country_code: f("GDB"),
+      order: f(1),
+      enabled: f(true),
     },
   });
 
   const author = await create(env, "rendr_author", {
     fields: {
-      name: {
-        "en-US": "John Doe",
-      },
-
-      job_title: {
-        "en-US": "Unknown",
-      },
-      slug: {
-        "en-US": "john-doe",
-      },
-      biography: {
-        "en-US": "may refer to an unidentified person",
-      },
+      name: f("John Doe"),
+      job_title: f("Unknown"),
+      slug: f("john-doe"),
+      biography: f("may refer to an unidentified person"),
     },
   });
 
-  for (let i = 0; i < 40; i++) {
-    const block = await create(env, "rendr_block_text", {
-      fields: {
-        internal_title: {
-          "en-US": "The main content of this article",
+  for (let i = 0; i < 4; i++) {
+    const richText = {
+      data: {},
+      content: [
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              marks: [],
+              value:
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna elit aliqua. Ut enim elit ad. Ut enim elit ad minim veniam, quis nostrud.",
+              nodeType: "text",
+            },
+          ],
+          nodeType: "paragraph",
         },
-        title: {
-          "en-US": `The title of block rendr_block_text ${i}`,
+      ],
+      nodeType: "document",
+    };
+
+    const seo = {
+      image: {
+        url:
+          "//images.ctfassets.net/4f3d8xgkdmfk/4fLXaq0tOHpyuyMh9eMQID/7bed3ede2f21195e6d2ad6886353cfa2/cloudflare-worker-logo.png",
+        details: {
+          size: 663588,
+          image: {
+            width: 1000,
+            height: 1000,
+          },
         },
-        contents: {
-          "en-US":
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        },
+        fileName: "cloudflare-worker-logo.png",
+        contentType: "image/png",
+        title: "Cloudflare logo",
+        status: "published",
+        id: "4fLXaq0tOHpyuyMh9eMQID",
       },
-    });
+      title: "The page",
+      description: "The descriptioni",
+      og: {
+        title: "og title",
+        description: "og descriptioin",
+      },
+      twitter: {
+        card: "summary",
+      },
+    };
 
     await create(env, "rendr_article", {
       fields: {
-        title: {
-          "en-US": `Article #${i}`,
-        },
-        abstract: {
-          "en-US": `The super awesome abstract #${i}`,
-        },
-        seo_description: {
-          "en-US": "The description",
-        },
-        seo_keywords: {
-          "en-US": "The description",
-        },
-        slug: {
-          "en-US": `slug-${i}`,
-        },
-        website: {
-          "en-US": {
-            sys: { type: "Link", linkType: "Entry", id: website.sys.id },
-          },
-        },
-        blocks: {
-          "en-US": [
-            { sys: { type: "Link", linkType: "Entry", id: block.sys.id } },
-          ],
-        },
-        authors: {
-          "en-US": [
-            { sys: { type: "Link", linkType: "Entry", id: author.sys.id } },
-          ],
-        },
-        published_at: {
-          "en-US": "2019-08-20T18:28:43.549Z",
-        },
+        title: f(`Article #${i}`),
+        abstract: f(`The super awesome abstract #${i}`),
+        seo: f(seo),
+        slug: f(`slug-${i}`),
+        website: f({
+          sys: { type: "Link", linkType: "Entry", id: website.sys.id },
+        }),
+        body: f(richText),
+        authors: f([
+          { sys: { type: "Link", linkType: "Entry", id: author.sys.id } },
+        ]),
+        published_at: f("2019-08-20T18:28:43.549Z"),
       },
     });
   }
@@ -157,299 +159,275 @@ const loadFixtures = async () => {
 };
 
 async function createHomePage(env, website) {
-  const welcomeBlock = await create(env, "rendr_block_text", {
+  const welcomeBlock = await create(env, "rendr_fragment", {
     fields: {
-      title: {
-        "en-US": "Homepage",
-      },
-      internal_title: {
-        "en-US": "The welcoming message",
-      },
-      title: {
-        "en-US": "Welcome",
-      },
-      contents: {
-        "en-US": "This is the welcome text, enjoy this website",
-      },
+      internal_title: f("The welcoming message"),
+      title: f("Welcome"),
+      type: f("Rendr Text"),
+      rich_text_1: f({
+        data: {},
+        content: [
+          {
+            data: {},
+            content: [
+              {
+                data: {},
+                marks: [],
+                value: "This is the welcome text, enjoy this website.",
+                nodeType: "text",
+              },
+            ],
+            nodeType: "paragraph",
+          },
+        ],
+        nodeType: "document",
+      }),
     },
   });
 
-  await create(env, "rendr_page", {
-    fields: {
-      title: {
-        "en-US": "Homepage",
-      },
-      seo_description: {
-        "en-US": "The homepage",
-      },
-      seo_keywords: {
-        "en-US": "The homepage, awesome",
-      },
-      extends: {
-        "en-US": "root",
-      },
-      path: {
-        "en-US": "/",
-      },
-      website: {
-        "en-US": {
-          sys: { type: "Link", linkType: "Entry", id: website.sys.id },
+  const seo = {
+    image: {
+      url:
+        "//images.ctfassets.net/4f3d8xgkdmfk/4fLXaq0tOHpyuyMh9eMQID/7bed3ede2f21195e6d2ad6886353cfa2/cloudflare-worker-logo.png",
+      details: {
+        size: 663588,
+        image: {
+          width: 1000,
+          height: 1000,
         },
       },
-      body_blocks: {
-        "en-US": [
-          { sys: { type: "Link", linkType: "Entry", id: welcomeBlock.sys.id } },
-        ],
-      },
-      layout: {
-        "en-US": "default",
-      },
-      settings: {
-        "en-US": {},
-      },
-      published_at: {
-        "en-US": "2019-08-20T18:28:43.549Z",
-      },
+      fileName: "cloudflare-worker-logo.png",
+      contentType: "image/png",
+      title: "Cloudflare logo",
+      status: "published",
+      id: "4fLXaq0tOHpyuyMh9eMQID",
+    },
+    title: "The homepage",
+    description: "The homepage description",
+    og: {
+      title: "og title",
+      description: "og description",
+    },
+    twitter: {
+      card: "summary",
+    },
+  };
+
+  await create(env, "rendr_page", {
+    fields: {
+      title: f("Homepage"),
+      seo: f(seo),
+      extends: f("root"),
+      path: f("/"),
+      website: f({
+        sys: { type: "Link", linkType: "Entry", id: website.sys.id },
+      }),
+      body_blocks: f([
+        { sys: { type: "Link", linkType: "Entry", id: welcomeBlock.sys.id } },
+      ]),
+      layout: f("default"),
+      settings: f({}),
+      published_at: f("2019-08-20T18:28:43.549Z"),
     },
   });
 }
 
 async function createAboutPage(env, website) {
-  const aboutText = await create(env, "rendr_block_text", {
+  const aboutText = await create(env, "rendr_fragment", {
     fields: {
-      internal_title: {
-        "en-US": "The about message",
-      },
-      title: {
-        "en-US": "About",
-      },
-      contents: {
-        "en-US":
-          "This is a demo website of the CMD integration with a rendering engine. If you want more information please go to ...",
-      },
+      internal_title: f("The about message"),
+      title: f("About"),
+      type: f("Rendr Text"),
+      rich_text_1: f({
+        data: {},
+        content: [
+          {
+            data: {},
+            content: [
+              {
+                data: {},
+                marks: [],
+                value:
+                  "This is a demo website of the CMD integration with a rendering engine. If you want more information please go to ...",
+                nodeType: "text",
+              },
+            ],
+            nodeType: "paragraph",
+          },
+        ],
+        nodeType: "document",
+      }),
     },
   });
 
+  const seo = {
+    title: "About Us",
+    description: "Discover who we are.",
+    og: {
+      title: "og title",
+      description: "og description",
+    },
+    twitter: {
+      card: "summary",
+    },
+  };
+
   await create(env, "rendr_page", {
     fields: {
-      title: {
-        "en-US": "Homepage",
-      },
-      seo_description: {
-        "en-US": "About page",
-      },
-      seo_keywords: {
-        "en-US": "about",
-      },
-      extends: {
-        "en-US": "root",
-      },
-      path: {
-        "en-US": "/about",
-      },
-      website: {
-        "en-US": {
-          sys: { type: "Link", linkType: "Entry", id: website.sys.id },
-        },
-      },
-      body_blocks: {
-        "en-US": [
-          { sys: { type: "Link", linkType: "Entry", id: aboutText.sys.id } },
-        ],
-      },
-      layout: {
-        "en-US": "default",
-      },
-      settings: {
-        "en-US": {},
-      },
-      published_at: {
-        "en-US": "2019-08-20T18:28:43.549Z",
-      },
+      title: f("About Page"),
+      seo: f(seo),
+      extends: f("root"),
+      path: f("/about"),
+      website: f({
+        sys: { type: "Link", linkType: "Entry", id: website.sys.id },
+      }),
+      body_blocks: f([
+        { sys: { type: "Link", linkType: "Entry", id: aboutText.sys.id } },
+      ]),
+      layout: f("default"),
+      settings: f({}),
+      published_at: f("2019-08-20T18:28:43.549Z"),
     },
   });
 }
 
 async function createBasePage(env, website) {
-  const headerBlock = await create(env, "rendr_block_header", {
+  const headerBlock = await create(env, "rendr_fragment", {
     fields: {
-      internal_title: {
-        "en-US": "The header message",
-      },
+      title: f("Header"),
+      internal_title: f("The Header fragment"),
+      title: f("Header"),
+      type: f("Rendr > Header"),
     },
   });
 
-  const footerBlock = await create(env, "rendr_block_footer", {
+  const footerBlock = await create(env, "rendr_fragment", {
     fields: {
-      internal_title: {
-        "en-US": "The footer message",
-      },
+      title: f("Footer"),
+      internal_title: f("The Footer fragment"),
+      title: f("Footer"),
+      type: f("Rendr > Footer"),
     },
   });
+
+  const seo = {};
 
   await create(env, "rendr_page", {
     fields: {
-      title: {
-        "en-US": "Base page",
-      },
-      seo_description: {
-        "en-US": "The homepage",
-      },
-      seo_keywords: {
-        "en-US": "The homepage, awesome",
-      },
-      code: {
-        "en-US": "root",
-      },
-      path: {
-        "en-US": "/_/cms-root",
-      },
-      website: {
-        "en-US": {
-          sys: { type: "Link", linkType: "Entry", id: website.sys.id },
-        },
-      },
-      header_blocks: {
-        "en-US": [
-          { sys: { type: "Link", linkType: "Entry", id: headerBlock.sys.id } },
-        ],
-      },
-      footer_blocks: {
-        "en-US": [
-          { sys: { type: "Link", linkType: "Entry", id: footerBlock.sys.id } },
-        ],
-      },
-      layout: {
-        "en-US": "default",
-      },
-      settings: {
-        "en-US": {},
-      },
-      published_at: {
-        "en-US": "2019-08-20T18:28:43.549Z",
-      },
+      title: f("Base page"),
+      seo: f(seo),
+      code: f("root"),
+      path: f("/_/cms-root"),
+      website: f({
+        sys: { type: "Link", linkType: "Entry", id: website.sys.id },
+      }),
+      header_blocks: f([
+        { sys: { type: "Link", linkType: "Entry", id: headerBlock.sys.id } },
+      ]),
+      footer_blocks: f([
+        { sys: { type: "Link", linkType: "Entry", id: footerBlock.sys.id } },
+      ]),
+      layout: f("default"),
+      settings: f({}),
+      published_at: f("2019-08-20T18:28:43.549Z"),
     },
   });
 }
 
 async function createArticlePage(env, website) {
-  const articleViewBlock = await create(env, "rendr_block_raw_configuration", {
+  const articleViewBlock = await create(env, "rendr_fragment", {
     fields: {
-      internal_title: {
-        "en-US": "The article view",
-      },
-      configuration: {
-        "en-US": {
-          "settings:": {},
-          type: "article.view",
-        },
-      },
+      internal_title: f("The article view"),
+      type: f("Rendr Raw Config."),
+      json_1: f({
+        "settings:": {},
+        type: "article.view",
+      }),
     },
   });
 
+  const seo = {
+    title: "This should be overwritten by code using article metadata.",
+    description: "This should be overwritten by code using article metadata.",
+    og: {
+      title: "og title",
+      description: "og description",
+    },
+    twitter: {
+      card: "summary",
+    },
+  };
+
   await create(env, "rendr_page", {
     fields: {
-      title: {
-        "en-US": "Article View",
-      },
-      seo_description: {
-        "en-US": "The description",
-      },
-      seo_keywords: {
-        "en-US": "The description",
-      },
-      extends: {
-        "en-US": "root",
-      },
-      path: {
-        "en-US": "/articles/:slug",
-      },
-      website: {
-        "en-US": {
-          sys: { type: "Link", linkType: "Entry", id: website.sys.id },
-        },
-      },
-      body_blocks: {
-        "en-US": [
-          {
-            sys: {
-              type: "Link",
-              linkType: "Entry",
-              id: articleViewBlock.sys.id,
-            },
+      title: f("Article View"),
+      seo: f(seo),
+      extends: f("root"),
+      path: f("/articles/:slug"),
+      website: f({
+        sys: { type: "Link", linkType: "Entry", id: website.sys.id },
+      }),
+      body_blocks: f([
+        {
+          sys: {
+            type: "Link",
+            linkType: "Entry",
+            id: articleViewBlock.sys.id,
           },
-        ],
-      },
-      layout: {
-        "en-US": "default",
-      },
-      settings: {
-        "en-US": {},
-      },
-      published_at: {
-        "en-US": "2019-08-20T18:28:43.549Z",
-      },
+        },
+      ]),
+      layout: f("default"),
+      settings: f({}),
+      published_at: f("2019-08-20T18:28:43.549Z"),
     },
   });
 }
 
 async function createArticleListPage(env, website) {
-  const articleListBlock = await create(env, "rendr_block_raw_configuration", {
+  const articleListBlock = await create(env, "rendr_fragment", {
     fields: {
-      internal_title: {
-        "en-US": "The article view",
-      },
-      configuration: {
-        "en-US": {
-          "settings:": {},
-          type: "article.list",
-        },
-      },
+      internal_title: f("The article list"),
+      type: f("Rendr Raw Config."),
+      json_1: f({
+        "settings:": {},
+        type: "article.list",
+      }),
     },
   });
 
+  const seo = {
+    title: "List of articles",
+    description: "Enjoy this currated list of articles.",
+    og: {
+      title: "og title",
+      description: "og description",
+    },
+    twitter: {
+      card: "summary",
+    },
+  };
+
   await create(env, "rendr_page", {
     fields: {
-      title: {
-        "en-US": "Articles List",
-      },
-      seo_description: {
-        "en-US": "The description",
-      },
-      seo_keywords: {
-        "en-US": "The description",
-      },
-      extends: {
-        "en-US": "root",
-      },
-      path: {
-        "en-US": "/articles",
-      },
-      website: {
-        "en-US": {
-          sys: { type: "Link", linkType: "Entry", id: website.sys.id },
-        },
-      },
-      body_blocks: {
-        "en-US": [
-          {
-            sys: {
-              type: "Link",
-              linkType: "Entry",
-              id: articleListBlock.sys.id,
-            },
+      title: f("Articles List"),
+      seo: f(seo),
+      extends: f("root"),
+      path: f("/articles"),
+      website: f({
+        sys: { type: "Link", linkType: "Entry", id: website.sys.id },
+      }),
+      body_blocks: f([
+        {
+          sys: {
+            type: "Link",
+            linkType: "Entry",
+            id: articleListBlock.sys.id,
           },
-        ],
-      },
-      layout: {
-        "en-US": "default",
-      },
-      settings: {
-        "en-US": {},
-      },
-      published_at: {
-        "en-US": "2019-08-20T18:28:43.549Z",
-      },
+        },
+      ]),
+      layout: f("default"),
+      settings: f({}),
+      published_at: f("2019-08-20T18:28:43.549Z"),
     },
   });
 }

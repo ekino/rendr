@@ -1,7 +1,6 @@
 import { Entry } from "contentful";
 import {
   Page,
-  Map,
   BlockDefinition,
   Settings,
   NormalizationError,

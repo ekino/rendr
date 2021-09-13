@@ -10,7 +10,7 @@ Object {
       "image": Object {
         "id": "2pSrRlUsweaxu4tW7w1uVv",
         "title": "Thomas Rabaix's Picture",
-        "url": "https://images.ctfassets.net/f5bx295b472q/2pSrRlUsweaxu4tW7w1uVv/dd3e01d59c68d8b07101ddf953a120f7/DSCF2267.jpg?fm=jpg",
+        "url": "//images.ctfassets.net/f5bx295b472q/2pSrRlUsweaxu4tW7w1uVv/dd3e01d59c68d8b07101ddf953a120f7/DSCF2267.jpg",
       },
       "jobTitle": "CTO London",
       "name": "Thomas Rabaix",
@@ -29,7 +29,7 @@ Object {
       "meta": Object {},
       "order": 99,
       "settings": Object {
-        "contents": "The article contents with the markdown format! http://images.ctfassets.net/f5bx295b472q/2pSrRlUsweaxu4tW7w1uVv/dd3e01d59c68d8b07101ddf953a120f7/DSCF2267.jpg?fm=jpg",
+        "contents": "The article contents with the markdown format! http://images.ctfassets.net/f5bx295b472q/2pSrRlUsweaxu4tW7w1uVv/dd3e01d59c68d8b07101ddf953a120f7/DSCF2267.jpg",
         "image": Object {
           "enabled": false,
           "id": "-",
@@ -69,12 +69,12 @@ Object {
     "header": Object {
       "id": "5vV7exdcps9vwi2I1XEFfP",
       "title": "Header image",
-      "url": "https://images.ctfassets.net/f5bx295b472q/5vV7exdcps9vwi2I1XEFfP/da39b569566d118b2711f8e5ec210c76/Screenshot_2019-08-21_at_12.02.06.png",
+      "url": "//images.ctfassets.net/f5bx295b472q/5vV7exdcps9vwi2I1XEFfP/da39b569566d118b2711f8e5ec210c76/Screenshot_2019-08-21_at_12.02.06.png",
     },
     "list": Object {
       "id": "4BRlYkVTQwQBcGb2Gft8Nb",
       "title": "Main image",
-      "url": "https://images.ctfassets.net/f5bx295b472q/4BRlYkVTQwQBcGb2Gft8Nb/700ef1992bd71efbe6ce42f6741a1ca2/Screenshot_2019-08-21_at_12.02.00.png",
+      "url": "//images.ctfassets.net/f5bx295b472q/4BRlYkVTQwQBcGb2Gft8Nb/700ef1992bd71efbe6ce42f6741a1ca2/Screenshot_2019-08-21_at_12.02.00.png",
     },
   },
   "published_at": "2019-08-15T00:00",

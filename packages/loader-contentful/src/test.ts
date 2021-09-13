@@ -37,6 +37,9 @@ export function createDummyEntry<T>(data: T): Entry<T> {
         },
       },
     },
+    metadata: {
+      tags: []
+    },
     fields: data,
     toPlainObject: () => ({}),
     update: () => Promise.resolve(this),
@@ -79,6 +82,12 @@ export function getMockClient(
       throw new Error("The method should not be called");
     },
     sync: async (query: any) => {
+      throw new Error("The method should not be called");
+    },
+    getTag: async (id: string) => {
+      throw new Error("The method should not be called");
+    },
+    getTags: async (query?: any) => {
       throw new Error("The method should not be called");
     },
     ...methods,

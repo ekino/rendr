@@ -13,7 +13,7 @@
         "@ekino/rendr-core": "1.0.0-alpha.6",
         "@ekino/rendr-loader": "1.0.0-alpha.6",
         "@types/lodash": "^4.14.162",
-        "contentful": "^7.14.8",
+        "contentful": "^8.5.7",
         "lodash": "^4.17.15"
     },
     "devDependencies": {

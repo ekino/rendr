@@ -21,5 +21,6 @@
     },
     "scripts": {
         "build": "tsc && tsc -m es6 --outDir dist/lib-esm && tsc -m amd --outFile dist/_bundles/rendr-loader.js"
-    }
+    },
+    "gitHead": "ce4e75fdd430bc5941d9ce129fa392006e7ff3c4"
 }

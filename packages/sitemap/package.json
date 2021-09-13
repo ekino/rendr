@@ -19,5 +19,6 @@
         "@ekino/rendr-core": "1.0.0-alpha.7",
         "@ekino/rendr-loader": "1.0.0-alpha.7",
         "express": "^4.16.4"
-    }
+    },
+    "gitHead": "ce4e75fdd430bc5941d9ce129fa392006e7ff3c4"
 }

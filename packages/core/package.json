@@ -18,5 +18,6 @@
     "dependencies": {
         "@types/url-parse": "^1.4.3",
         "url-parse": "^1.4.7"
-    }
+    },
+    "gitHead": "ce4e75fdd430bc5941d9ce129fa392006e7ff3c4"
 }

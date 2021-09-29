@@ -1,10 +1,52 @@
+const richTextOptions = {
+  validations: [
+    {
+      enabledNodeTypes: [
+        "heading-3",
+        "heading-4",
+        "heading-5",
+        "heading-6",
+        "ordered-list",
+        "unordered-list",
+        "hr",
+        "blockquote",
+        "embedded-entry-block",
+        "hyperlink",
+      ],
+      message:
+        "Only heading 3, heading 4, heading 5, heading 6, ordered list, unordered list, horizontal rule, quote, block entry, and link to Url nodes are allowed",
+    },
+    {
+      nodes: {
+        "embedded-entry-block": [
+          {
+            linkContentType: ["rendr_fragment"],
+            message: null,
+          },
+        ],
+      },
+    },
+  ],
+};
+
+const blocksDefaultOptions = {
+  type: "Array",
+  items: {
+    type: "Link",
+    validations: [
+      {
+        linkContentType: ["rendr_fragment"],
+      },
+    ],
+    linkType: "Entry",
+  },
+};
+
 async function cleanSpace(makeRequest, migration) {
   const rendrTypes = [
     "rendr_author",
     "rendr_block_text",
-    "rendr_block_raw_configuration",
-    "rendr_block_header",
-    "rendr_block_footer",
+    "rendr_fragment",
     "rendr_website",
     "rendr_page",
     "rendr_article",
@@ -37,6 +79,7 @@ async function cleanSpace(makeRequest, migration) {
   const installedTypes = contentTypes.items
     .map((element) => element.sys.id)
     .filter((id) => id.substr(0, 5) === "rendr");
+
   for (let x = 0; x < rendrTypes.length; x++) {
     const type = rendrTypes[x];
 
@@ -93,7 +136,15 @@ function createInteger(entity, id, name, opts = {}) {
 }
 
 function createText(entity, id, name, opts = {}) {
+  createField(entity, id, name, { ...opts, type: "Symbol" });
+}
+
+function createLongText(entity, id, name, opts = {}) {
   createField(entity, id, name, { ...opts, type: "Text" });
+}
+
+function createRichText(entity, id, name, opts = {}) {
+  createField(entity, id, name, { ...opts, type: "RichText" });
 }
 
 function createAsset(entity, id, name, opts = {}) {
@@ -102,6 +153,19 @@ function createAsset(entity, id, name, opts = {}) {
     type: "Link",
     validations: [],
     linkType: "Asset",
+  });
+}
+
+function createAssets(entity, id, name, opts = {}) {
+  createField(entity, id, name, {
+    ...opts,
+    type: "Array",
+    validations: [],
+    items: {
+      type: "Link",
+      validations: [],
+      linkType: "Asset",
+    },
   });
 }
 
@@ -169,6 +233,10 @@ function createWebsite(migration) {
   createField(website, "settings", "Settings", {
     type: "Object",
   });
+
+  createField(website, "seo", "SEO", {
+    type: "Object",
+  });
 }
 
 function createDefault(migration, code, opts) {
@@ -184,51 +252,52 @@ function createDefault(migration, code, opts) {
   return block;
 }
 
-function createBasicBlocks(migration) {
-  const blockText = createDefault(migration, "rendr_block_text", {
-    name: "🧩 Text",
+function createFragment(migration) {
+  const fragment = createDefault(migration, "rendr_fragment", {
+    name: "🧩 Fragment",
   });
-  createSymbol(blockText, "title", "Title");
-  createSymbol(blockText, "subtitle", "Sub-Title");
-  createField(blockText, "contents", "Contents", {
-    type: "Text",
-  });
-  createSymbol(blockText, "mode", "Mode", {
-    required: false,
-    validations: [
-      {
-        in: ["jumbotron", "standard", "image", "quote"],
-      },
-    ],
-  });
-  createAsset(blockText, "image", "Image");
-  createSymbol(blockText, "image_position", "Image Position", {
-    required: false,
-    validations: [
-      {
-        in: ["left", "right"],
-      },
-    ],
-  });
-
-  const blockRawConfiguration = createDefault(
-    migration,
-    "rendr_block_raw_configuration",
-    {
-      name: "🧩 Raw Config.",
-    }
-  );
-
-  createField(blockRawConfiguration, "configuration", "Configuration", {
+  createSymbol(fragment, "title", "Title");
+  createSymbol(fragment, "type", "Type ");
+  createField(fragment, "json_1", "json_1", {
     type: "Object",
+    localized: true,
+  });
+  createField(fragment, "json_2", "json_2", {
+    type: "Object",
+    localized: true,
+  });
+  createField(fragment, "json_3", "json_3", {
+    type: "Object",
+    localized: true,
   });
 
-  const blockHeader = createDefault(migration, "rendr_block_header", {
-    name: "🧩 Header",
-  });
+  createBoolean(fragment, "bool_1", "bool_1");
+  createBoolean(fragment, "bool_2", "bool_2");
+  createBoolean(fragment, "bool_3", "bool_3");
 
-  const blockFooter = createDefault(migration, "rendr_block_footer", {
-    name: "🧩 Footer",
+  createLongText(fragment, "long_text_1", "long_text_1");
+  createLongText(fragment, "long_text_2", "long_text_2");
+  createLongText(fragment, "long_text_3", "long_text_3");
+
+  createRichText(fragment, "rich_text_1", "rich_text_1", richTextOptions);
+  createRichText(fragment, "rich_text_2", "rich_text_2", richTextOptions);
+  createRichText(fragment, "rich_text_3", "rich_text_3", richTextOptions);
+
+  createAssets(fragment, "images_1", "images_1");
+  createAssets(fragment, "images_2", "images_2");
+  createAssets(fragment, "images_3", "images_3");
+
+  createField(fragment, "fragments_1", "fragments_1", {
+    type: "Array",
+    items: {
+      type: "Link",
+      validations: [
+        {
+          linkContentType: ["rendr_fragment"],
+        },
+      ],
+      linkType: "Entry",
+    },
   });
 }
 
@@ -243,26 +312,16 @@ function createArticle(migration) {
     required: true,
   });
   createSymbol(article, "type", "Type");
-  createText(article, "abstract", "Abstract");
-  createSymbol(article, "seo_description", "Seo Description");
-  createSymbol(article, "seo_keywords", "Seo Keywords");
+  createLongText(article, "abstract", "Abstract");
+  createField(article, "seo", "SEO", {
+    type: "Object",
+  });
 
   createSymbol(article, "slug", "Slug", {
     required: true,
   });
 
-  createField(article, "blocks", "Blocks", {
-    type: "Array",
-    items: {
-      type: "Link",
-      validations: [
-        {
-          linkContentType: ["rendr_block_text"],
-        },
-      ],
-      linkType: "Entry",
-    },
-  });
+  createRichText(article, "body", "Body", richTextOptions);
 
   createField(article, "published_at", "Publication Date", {
     type: "Date",
@@ -308,8 +367,9 @@ function createPage(migration) {
   createSymbol(page, "title", "Page title", {
     required: true,
   });
-  createSymbol(page, "seo_description", "Seo Description");
-  createSymbol(page, "seo_keywords", "Seo Keywords");
+  createField(page, "seo", "SEO", {
+    type: "Object",
+  });
   createSymbol(page, "extends", "Extends", {
     validations: [
       {
@@ -329,85 +389,11 @@ function createPage(migration) {
     linkType: "Entry",
   });
 
-  createField(page, "header_blocks", "Header Blocks", {
-    type: "Array",
-    items: {
-      type: "Link",
-      validations: [
-        {
-          linkContentType: [
-            "rendr_block_header",
-            "rendr_block_raw_configuration",
-          ],
-        },
-      ],
-      linkType: "Entry",
-    },
-  });
-
-  createField(page, "nav_blocks", "Nav. Blocks", {
-    type: "Array",
-    items: {
-      type: "Link",
-      validations: [
-        {
-          linkContentType: [
-            "rendr_block_text",
-            "rendr_block_raw_configuration",
-          ],
-        },
-      ],
-      linkType: "Entry",
-    },
-  });
-
-  createField(page, "body_blocks", "Body Blocks", {
-    type: "Array",
-    items: {
-      type: "Link",
-      validations: [
-        {
-          linkContentType: [
-            "rendr_block_text",
-            "rendr_block_raw_configuration",
-          ],
-        },
-      ],
-      linkType: "Entry",
-    },
-  });
-
-  createField(page, "aside_blocks", "Aside Blocks", {
-    type: "Array",
-    items: {
-      type: "Link",
-      validations: [
-        {
-          linkContentType: [
-            "rendr_block_text",
-            "rendr_block_raw_configuration",
-          ],
-        },
-      ],
-      linkType: "Entry",
-    },
-  });
-
-  createField(page, "footer_blocks", "Footer Blocks", {
-    type: "Array",
-    items: {
-      type: "Link",
-      validations: [
-        {
-          linkContentType: [
-            "rendr_block_raw_configuration",
-            "rendr_block_footer",
-          ],
-        },
-      ],
-      linkType: "Entry",
-    },
-  });
+  createField(page, "header_blocks", "Header Blocks", blocksDefaultOptions);
+  createField(page, "nav_blocks", "Nav. Blocks", blocksDefaultOptions);
+  createField(page, "body_blocks", "Body Blocks", blocksDefaultOptions);
+  createField(page, "aside_blocks", "Aside Blocks", blocksDefaultOptions);
+  createField(page, "footer_blocks", "Footer Blocks", blocksDefaultOptions);
 
   createSymbol(page, "layout", "Layout", {
     required: true,
@@ -440,9 +426,8 @@ module.exports = async function (
   { makeRequest, spaceId, accessToken }
 ) {
   await cleanSpace(makeRequest, migration);
-
   createAuthor(migration);
-  createBasicBlocks(migration);
+  createFragment(migration);
   createWebsite(migration);
   createPage(migration);
   createArticle(migration);

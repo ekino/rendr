@@ -6,7 +6,7 @@ This repository is a demo site running NextJS with a Headless CMS (Contentful). 
 
 The rendr project provide an advanced integration with Contentful witht the `@ekino/rendr-loader-contentful` module. Current features:
 
- - migration to create Page, Block, Article and Author models
+ - migration to create Page, Block (via fragment), Article and Author models
  - data normalization layers 
  - API to access models
 

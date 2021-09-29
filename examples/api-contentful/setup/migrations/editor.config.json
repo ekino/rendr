@@ -1,0 +1,207 @@
+{
+    "contentTypes": {
+        "rendr_article": {
+            "general": {
+                "label": "General",
+                "sections": [{
+                        "fields": [
+                            "title",
+                            "slug",
+                            "type",
+                            "website",
+                            "published_at"
+                        ]
+                    },
+                    {
+                        "sections": [{
+                            "heading": "Publishing options",
+                            "fields": [
+                                "image_list",
+                                "image_header",
+                                "authors"
+                            ]
+                        }]
+                    }
+                ]
+            },
+            "content": {
+                "label": "Contents",
+                "sections": [{
+                    "fields": [
+                        "abstract",
+                        "body"
+                    ]
+                }]
+            },
+            "seo": {
+                "label": "SEO",
+                "sections": [{
+                    "fields": [{
+                        "id": "seo",
+                        "settings": {
+                            "widgetId": "ekSeoManager"
+                        }
+                    }]
+                }]
+            }
+        },
+        "rendr_page": {
+            "general": {
+                "label": "General",
+                "sections": [{
+                        "fields": [
+                            "title",
+                            "extends",
+                            "path",
+                            "published_at",
+                            "website"
+                        ]
+                    }
+                ]
+            },
+            "contents": {
+                "label": "Contents",
+                "sections": [{
+                    "fields": [
+                        "layout",
+                        "body_blocks"
+                    ]
+                },
+                {
+                    "sections": [{
+                        "heading": "Other blocks",
+                        "fields": [
+                            "header_blocks",
+                            "nav_blocks",
+                            "aside_blocks",
+                            "footer_blocks"
+                        ]
+                    }]
+                }]
+            },
+            "seo": {
+                "label": "SEO",
+                "sections": [{
+                    "fields": [{
+                        "id": "seo",
+                        "settings": {
+                            "widgetId": "ekSeoManager"
+                        }
+                    }]
+                }]
+            },
+            "advanced": {
+                "label": "Advanced",
+                "sections": [{
+                    "fields": [
+                        "ttl",
+                        "sharedTtl",
+                        "settings",
+                        "code"
+                    ]
+                }]
+            }
+        },
+        "rendr_author": {
+            "general": {
+                "label": "General",
+                "sections": [{
+                    "fields": [
+                        "name",
+                        "slug"
+                    ]
+                }, {
+                    "sections": [
+                        {
+                            "heading": "Additional Information",
+                            "fields": [
+                                "job_title",
+                                "biography",
+                                "image"
+                            ]
+                        },
+                        {
+                            "heading": "Social",
+                            "fields": [
+                                "social_twitter",
+                                "social_facebook",
+                                "social_linkedin"
+                            ]
+                        }
+                    ]
+                }]
+            }
+        },
+        "rendr_website": {
+            "general": {
+                "label": "General",
+                "sections": [{
+                        "fields": [
+                            "enabled",
+                            "name",
+                            "domains",
+                            "path",
+                            "order"
+                        ]
+                    },
+                    {
+                        "sections": [{
+                                "heading": "Internationalisation",
+                                "fields": [
+                                    "culture",
+                                    "country_code"
+                                ]
+                            },
+                            {
+                                "heading": "Publishing options",
+                                "fields": [
+                                    "ttl",
+                                    "sharedTtl"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "contents": {
+                "label": "Contents",
+                "sections": [{
+                    "fields": [
+                        "main_menu"
+                    ]
+                }]
+            },
+            "seo": {
+                "label": "SEO",
+                "sections": [{
+                    "fields": [{
+                        "id": "seo",
+                        "settings": {
+                            "widgetId": "ekSeoManager"
+                        }
+                    }]
+                }]
+            },
+            "advanced": {
+                "label": "Advanced",
+                "sections": [{
+                    "fields": [
+                        "settings"
+                    ]
+                }]
+            }
+        },
+        "rendr_fragment": {
+            "general": {
+                "label": "General",
+                "sections": [{
+                    "fields": [
+                        "internal_title",
+                        "title",
+                        "type"
+                    ]
+                }]
+            }
+        }
+    }
+}

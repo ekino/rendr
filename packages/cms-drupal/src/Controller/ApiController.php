@@ -21,10 +21,10 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 final class ApiController
 {
-    protected $entityTypeManager;
-    protected $pageManager;
-    protected $router;
-    protected $argumentMetadataFactory;
+    private $entityTypeManager;
+    private $pageManager;
+    private $router;
+    private $argumentMetadataFactory;
 
     public function __construct(
         EntityTypeManagerInterface $entity_type_manager,
@@ -127,7 +127,7 @@ final class ApiController
         return PageResponse::createJsonResponse($pageData);
     }
 
-    protected function forwardFromRoute(array $route, Request $request, ChannelInterface $channel = null, $preview = false)
+    private function forwardFromRoute(array $route, Request $request, ChannelInterface $channel = null, $preview = false)
     {
         $subRequest = clone $request;
         $subRequest->attributes = new ParameterBag($route);
@@ -151,7 +151,7 @@ final class ApiController
         ]));
     }
 
-    protected function forward(array $controller, array $arguments)
+    private function forward(array $controller, array $arguments)
     {
         $computedArguments = [];
 
@@ -164,7 +164,7 @@ final class ApiController
         return $controller[0]->{$controller[1]}(...$computedArguments);
     }
 
-    protected function getUser(Request $request)
+    private function getUser(Request $request)
     {
         $session = $request->getSession() ?? new Session();
 

@@ -69,8 +69,8 @@ use Drupal\user\EntityOwnerTrait;
 final class Channel extends RevisionableContentEntityBase implements EntityOwnerInterface, ChannelInterface
 {
     use EntityChangedTrait;
-    use EntityPublishedTrait;
     use EntityOwnerTrait;
+    use EntityPublishedTrait;
 
     const ID = 'ekino_rendr_channel';
 

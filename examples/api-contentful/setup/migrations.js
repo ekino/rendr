@@ -14,11 +14,22 @@ async function run(name) {
   });
 }
 
-const migrations = async () => {
-  await run("01-setup");
-  await run("02-update-published-at");
-  await run("03-update-slug");
-  await run("04-update-bulk");
-};
+const files = [
+  "00-install-app",
+  "01-setup",
+  "02-update-published-at",
+  "03-update-slug",
+  "04-update-bulk",
+  "05-enable-editor",
+];
 
-migrations();
+(async () => {
+  for (let i in files) {
+    console.log(`Execute ${files[i]}`);
+    try {
+      await run(files[i]);
+    } catch (e) {
+      console.error(`An error occurs while executing ${files[i]}`, e);
+    }
+  }
+})();

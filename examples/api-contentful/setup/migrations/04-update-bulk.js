@@ -14,9 +14,4 @@ module.exports = async function (migration) {
       bulkEditing: true,
     });
   });
-
-  const article = migration.editContentType("rendr_article");
-  article.changeFieldControl("blocks", "entryLinksEditor", "builtin", {
-    bulkEditing: true,
-  });
 };

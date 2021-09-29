@@ -92,7 +92,7 @@ class ChannelResolver implements ArgumentValueResolverInterface
             $path
         );
 
-        return  \reset($channels) ?: null;
+        return \reset($channels) ?: null;
     }
 
     public static function findMatchingChannels(array $channels, $domain, $path)

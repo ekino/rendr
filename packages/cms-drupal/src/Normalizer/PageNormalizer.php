@@ -102,7 +102,8 @@ class PageNormalizer extends ContentEntityNormalizer
         ];
         $attributes['path'] = $object->getDefaultPath();
         $attributes['blocks'] = $blocks;
-        $attributes['cache'] = ['ttl' => $context['preview'] ? 0 : $object->getTtl($context['channel'])];
+        $ttl = $context['preview'] ? 0 : $object->getTtl($context['channel']);
+        $attributes['cache'] = ['ttl' => $ttl, 'sharedTtl' => $ttl];
         $attributes['settings'] = ['preview' => $context['preview'] ?? false];
         $attributes['settings']['published'] = (bool) $object->get('published')->value;
         $attributes['channel'] = $channelData;

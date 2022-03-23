@@ -36,6 +36,11 @@ class PageManager implements PageManagerInterface
             return null;
         }
 
+        // Get the latest revision in case of preview mode
+        if ($preview) {
+            $page = $this->pageRepository->getLatestRevision($page->id());
+        }
+
         return $this->serializer->normalize($page, 'rendr_json', [
             'preview' => $preview,
             'slug' => $slug,

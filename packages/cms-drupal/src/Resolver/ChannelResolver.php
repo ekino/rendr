@@ -138,8 +138,13 @@ class ChannelResolver implements ArgumentValueResolverInterface
         }
 
         $channelPath = $channel->get('path')->value ?: '';
+        $channelPath = \trim($channelPath, '/');
 
-        if (empty($channelPath) || '/' === $channelPath) {
+        if ($path === \sprintf('/%s', $channelPath)) {
+            return '/';
+        }
+
+        if (empty($channelPath) || '/' === $channelPath || 0 !== \strpos($path, \sprintf('/%s/', $channelPath))) {
             return $path;
         }
 
